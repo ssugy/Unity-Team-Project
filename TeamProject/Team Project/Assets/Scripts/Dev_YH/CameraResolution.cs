@@ -9,7 +9,7 @@ public class CameraResolution : MonoBehaviour
 {
     public Vector2 targetRatio; // 해상도 비율
 
-    // 카메라의 screen.width height가져와서그걸 카메라 rect에 맞춘다는 의미
+    // 카메라의 screen.width height 가져와서그걸 카메라 rect에 맞춘다는 의미
     private void Awake()
     {
         Camera cam = GetComponent<Camera>();
