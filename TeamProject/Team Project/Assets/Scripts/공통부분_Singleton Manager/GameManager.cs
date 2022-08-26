@@ -37,6 +37,6 @@ public class GameManager : MonoBehaviour
 
     public void LoadScene(int index)
     {
-        SceneManager.LoadScene(index, LoadSceneMode.Single);
+        LoadingSceneController.LoadScene(index);    // 로딩씬을 이용한 로딩
     }
 }

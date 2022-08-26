@@ -16,7 +16,7 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         InitAudioSources();
-        SoundPlay(SOUND_NAME.BGM);  // 배경음 실행
+        SoundPlay(SOUND_NAME.BGM, 0.45f);  // 배경음 실행
     }
 
 
@@ -38,4 +38,12 @@ public class AudioManager : MonoBehaviour
     {
         sources[name].Play();
     }
+
+    public void SoundPlay(SOUND_NAME name, float volume = 0.5f)
+    {
+        sources[name].volume = volume;
+        sources[name].Play();
+    }
+
+    
 }
