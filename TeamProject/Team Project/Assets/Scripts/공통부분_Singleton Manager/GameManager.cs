@@ -14,9 +14,10 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+
     private void Start()
     {
-
+        //AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BGM);
     }
 
     private void Update()
