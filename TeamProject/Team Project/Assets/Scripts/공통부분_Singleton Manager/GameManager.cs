@@ -34,10 +34,12 @@ public class GameManager : MonoBehaviour
         MakeCharacter,
         World,
         Dungeon,
+        Dungeon_Fire,
     }
-
+    public SceneName currentScene;
     public void LoadScene(int index)
     {
+        currentScene = SceneName.Loading;   // 로딩이 시작되면 Loading씬으로 변경한 뒤, 끝나면 목적씬으로 변경
         LoadingSceneController.LoadScene(index);    // 로딩씬을 이용한 로딩
     }
 }

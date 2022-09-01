@@ -43,11 +43,11 @@ public class LoadingSceneController : MonoBehaviour
             {
                 // 페이크 로딩 - 90프로 부터 100프로까지는 1초간 채웁니다.
                 timer += Time.unscaledDeltaTime;    // https://bloodstrawberry.tistory.com/779 실제 지나간 시간
-                print(Time.unscaledDeltaTime);
                 progressBar.fillAmount = Mathf.Lerp(0.9f, 1f, timer);   // lerp에서 t는 선형보간의 퍼센트 값으로 1이면 b값이라는 의미이다.
                 if (progressBar.fillAmount >= 1f)
                 {
                     op.allowSceneActivation = true;
+                    GameManager.s_instance.currentScene = (GameManager.SceneName)nextSceneIndex;
                     yield break;
                 }
             }
