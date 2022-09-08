@@ -16,9 +16,41 @@ public class LoadingSceneController : MonoBehaviour
         SceneManager.LoadScene(1);  // 항상 로딩씬으로 이동한 뒤 진행
     }
 
+    public GameObject[] loadingBGImgs;
+    public GameObject[] loadingMents;
     private void Start()
     {
+        SetBGImgAndMent();
         StartCoroutine(LoadSceneProcess());
+    }
+
+    private void SetBGImgAndMent()
+    {
+        int selectedImgNum = Random.Range(0, loadingBGImgs.Length);
+        int selectedMentNum = Random.Range(0, loadingMents.Length);
+        for (int i = 0; i < loadingBGImgs.Length; i++)
+        {
+            if (i == selectedImgNum)
+            {
+                loadingBGImgs[i].SetActive(true);
+            }
+            else
+            {
+                loadingBGImgs[i].SetActive(false);
+            }
+        }
+
+        for (int i = 0; i < loadingMents.Length; i++)
+        {
+            if (i == selectedMentNum)
+            {
+                loadingMents[i].SetActive(true);
+            }
+            else
+            {
+                loadingMents[i].SetActive(false);
+            }
+        }
     }
 
     IEnumerator LoadSceneProcess()
