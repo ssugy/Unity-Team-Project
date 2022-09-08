@@ -43,17 +43,4 @@ public class GameManager : MonoBehaviour
         currentScene = SceneName.Loading;   // 로딩이 시작되면 Loading씬으로 변경한 뒤, 끝나면 목적씬으로 변경
         LoadingSceneController.LoadScene(index);    // 로딩씬을 이용한 로딩
     }
-
-    #region 인트로 옵션 창
-    public GameObject introOptionPannel;
-    public void ShowIntroOptionPannel()
-    {
-        introOptionPannel.SetActive(true);
-    }
-
-    public void CloseOptionPannel()
-    {
-        introOptionPannel.SetActive(false);
-    }
-    #endregion
 }
