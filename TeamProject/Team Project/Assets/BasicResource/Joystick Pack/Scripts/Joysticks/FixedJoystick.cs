@@ -4,5 +4,12 @@ using UnityEngine;
 
 public class FixedJoystick : Joystick
 {
+    public static FixedJoystick instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
 
 }
