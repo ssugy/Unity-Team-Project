@@ -10,6 +10,4 @@ public class FixedJoystick : Joystick
     {
         instance = this;
     }
-
-
 }

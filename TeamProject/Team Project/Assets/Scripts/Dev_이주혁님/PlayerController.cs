@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
         playerAxis = transform.parent;
         player = transform;
         playerAni = GetComponent<Animator>();
-        playerSpeed = 5f;
+        playerSpeed = 8f;
         playerJoysitck = FixedJoystick.instance;
     }
 
@@ -52,11 +52,11 @@ public class PlayerController : MonoBehaviour
                 Quaternion.LookRotation(movement), 5 * Time.deltaTime);
             /** movement가 0이 아니라는 것은 플레이어가 움직인다는 뜻.
              * 따라서 플레이어의 애니메이션 상태를 전환함. */
-            playerAni.SetBool("isMove", true);
+            playerAni.SetFloat("isMove", movement.magnitude);
         }
         else if (movement == Vector3.zero)
         {
-            playerAni.SetBool("isMove", false);
+            playerAni.SetFloat("isMove", 0f);
         }        
         mainCam.camAxis.position = player.position; // 카메라 중심 축이 플레이어 포지션을 따라다니도록 함.
     }
