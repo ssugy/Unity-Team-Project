@@ -33,7 +33,7 @@ public class PlayerBattle : MonoBehaviour
                 //transform.forward = new Vector3(camAxis.forward.x, 0, camAxis.forward.z);
                 Vector3 movement = new Vector3(playerJoysitck.Horizontal, 0,
                 playerJoysitck.Vertical);
-                transform.forward += movement;
+                transform.rotation *= Quaternion.Euler(movement);
                 playerAni.Play("Player Attack 1");                
             }
             /*else if (comboStep == 1)
@@ -48,7 +48,7 @@ public class PlayerBattle : MonoBehaviour
                 //transform.forward = new Vector3(camAxis.forward.x, 0, camAxis.forward.z);
                 Vector3 movement = new Vector3(playerJoysitck.Horizontal, 0,
                 playerJoysitck.Vertical);
-                transform.forward += movement;                              
+                transform.rotation *= Quaternion.Euler(movement);
             }
         }        
         playerAni.SetBool("isCombo", true);
@@ -94,7 +94,7 @@ public class PlayerBattle : MonoBehaviour
         
         Vector3 movement = new Vector3(playerJoysitck.Horizontal, 0,
                 playerJoysitck.Vertical);
-        transform.forward += movement;
+        transform.rotation *= Quaternion.Euler(movement);
         InvokeRepeating("_RollMove", 0.1f, 0.01f);
         Invoke("Cancel_RollMove", 0.9f);
         
