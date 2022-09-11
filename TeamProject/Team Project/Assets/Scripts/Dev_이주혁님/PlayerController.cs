@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
         {
             playerAni.SetFloat("isMove", 0f);
         }        
-        mainCam.camAxis.position = player.position; // 카메라 중심 축이 플레이어 포지션을 따라다니도록 함.
+        
     }
     
     void Update()
@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour
         if (enableAct)  // 공격 중일 땐 이동을 못하게 함.
         {
             PlayerMove();
-        }         
+        }
+        mainCam.camAxis.position = player.position; // 카메라 중심 축이 플레이어 포지션을 따라다니도록 함.
     }
 }

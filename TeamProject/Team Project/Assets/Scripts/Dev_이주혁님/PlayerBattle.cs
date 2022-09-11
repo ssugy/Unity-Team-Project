@@ -24,28 +24,28 @@ public class PlayerBattle : MonoBehaviour
         comboStep = 0;
         playerAni.SetBool("isCombo", false);
     }   
-    void NormalAttack()
+    public void NormalAttack()
     {
         if (atkPossible)
         {
             if (comboStep == 0)
             {
-                transform.forward = new Vector3(camAxis.forward.x, 0, camAxis.forward.z);
+                //transform.forward = new Vector3(camAxis.forward.x, 0, camAxis.forward.z);
                 Vector3 movement = new Vector3(playerJoysitck.Horizontal, 0,
                 playerJoysitck.Vertical);
                 transform.forward += movement;
                 playerAni.Play("Player Attack 1");                
             }
-            else if (comboStep == 1)
+            /*else if (comboStep == 1)
             {
-                transform.forward = new Vector3(camAxis.forward.x, 0, camAxis.forward.z);
+                //transform.forward = new Vector3(camAxis.forward.x, 0, camAxis.forward.z);
                 Vector3 movement = new Vector3(playerJoysitck.Horizontal, 0,
                 playerJoysitck.Vertical);
                 transform.forward += movement;                             
-            }
+            }*/
             else
             {
-                transform.forward = new Vector3(camAxis.forward.x, 0, camAxis.forward.z);
+                //transform.forward = new Vector3(camAxis.forward.x, 0, camAxis.forward.z);
                 Vector3 movement = new Vector3(playerJoysitck.Horizontal, 0,
                 playerJoysitck.Vertical);
                 transform.forward += movement;                              
@@ -77,6 +77,36 @@ public class PlayerBattle : MonoBehaviour
     void ComboBlock()
     {
         playerAni.SetBool("isCombo", false);
+    }
+    public void Roll()
+    {
+        
+        playerAni.SetBool("isRoll", true);
+        CancelInvoke("_Roll");
+        Invoke("_Roll", 0.4f);        
+    }
+    void _Roll()
+    {
+        playerAni.SetBool("isRoll", false);
+    }
+    void RollMove()
+    {
+        
+        Vector3 movement = new Vector3(playerJoysitck.Horizontal, 0,
+                playerJoysitck.Vertical);
+        transform.forward += movement;
+        InvokeRepeating("_RollMove", 0.1f, 0.01f);
+        Invoke("Cancel_RollMove", 0.9f);
+        
+    }
+    void _RollMove()
+    {
+        transform.parent.position = Vector3.Lerp(transform.parent.position, 
+            transform.parent.position + transform.forward * 6f, 0.01f);
+    }
+    void Cancel_RollMove()
+    {
+        CancelInvoke("_RollMove");
     }
 }
 
