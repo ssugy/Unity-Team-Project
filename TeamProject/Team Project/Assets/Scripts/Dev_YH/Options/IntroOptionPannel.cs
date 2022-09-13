@@ -8,12 +8,13 @@ public class IntroOptionPannel : MonoBehaviour
     public GameObject introOptionPannel;
     public void ShowIntroOptionPannel()
     {
-        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.CLICK);
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.CLICK_01);
         introOptionPannel.SetActive(true);
     }
 
     public void CloseOptionPannel()
     {
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.CLICK_02);
         introOptionPannel.SetActive(false);
     }
 
@@ -22,6 +23,7 @@ public class IntroOptionPannel : MonoBehaviour
     public Image[] optionMenuPannelImgs;    // 왼쪽의 메뉴 패널의 img컴포넌트
     public void ShowDetailPannel(GameObject go)
     {
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.CLICK_02);
         int num = int.Parse(go.name.Split('_')[0]);
         for (int i = 0; i < optionDetailPannels.Length; i++)
         {
@@ -52,6 +54,7 @@ public class IntroOptionPannel : MonoBehaviour
     public Image[] languageMenuImgs;
     public void SelectLanguage(GameObject go)
     {
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.CLICK_02);
         int num = int.Parse(go.name.Split('_')[0]);
         selectedLang = (Langs)num;
         for (int i = 0; i < languageMenuImgs.Length; i++)

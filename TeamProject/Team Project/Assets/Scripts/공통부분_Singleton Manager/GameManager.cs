@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
         #region 테스트 코드 - 사운드체크
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.CLICK);
+            AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.CLICK_01);
         }
         #endregion
     }
