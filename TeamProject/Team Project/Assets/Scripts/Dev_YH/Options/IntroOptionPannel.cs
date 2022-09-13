@@ -8,6 +8,7 @@ public class IntroOptionPannel : MonoBehaviour
     public GameObject introOptionPannel;
     public void ShowIntroOptionPannel()
     {
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.CLICK);
         introOptionPannel.SetActive(true);
     }
 
