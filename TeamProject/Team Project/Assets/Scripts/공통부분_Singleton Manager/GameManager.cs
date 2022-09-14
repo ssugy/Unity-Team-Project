@@ -11,8 +11,15 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        _unique = this;
-        DontDestroyOnLoad(gameObject);
+        if (_unique == null)
+        {
+            _unique = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
 

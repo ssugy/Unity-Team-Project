@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TreeEditor;
+using Unity.VisualScripting;
 using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
@@ -12,8 +14,15 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        _unique = this;
-        DontDestroyOnLoad(gameObject);
+        if (_unique == null)
+        {
+            _unique = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
@@ -48,16 +57,31 @@ public class AudioManager : MonoBehaviour
         {
             sources.Add((SOUND_NAME)i, clips[i]);
         }
+
+        bgmVolumePivot = 1;
+        effectVolumePivot = 1;
+        beforeEffectVolumePivot = effectVolumePivot;
+        isBGMMute = false;
+        isEffectMute = false;
     }
 
     public void SoundPlay(SOUND_NAME name, bool isLoop = false, float volume = 0.5f)
     {
         GameObject go = new GameObject(name.ToString());
-        go.transform.SetParent(transform);
         AudioSource goAudio = go.AddComponent<AudioSource>();
         goAudio.clip = sources[name];
         goAudio.loop = isLoop;
-        goAudio.volume = volume;
+        go.transform.SetParent(transform);
+        if (name.Equals(SOUND_NAME.BGM))
+        {
+            // 사운드 옵션때문에 배경음은 따로취급.
+            goAudio.volume = volume * bgmVolumePivot;
+            bgmAudioSource = goAudio;
+        }
+        else
+        {
+            goAudio.volume = volume * effectVolumePivot;
+        }
         goAudio.Play();
 
         if (!isLoop)
@@ -79,5 +103,64 @@ public class AudioManager : MonoBehaviour
         }
 
         Destroy(audioSource.gameObject);
+    }
+
+    /**
+     * 1. 사운드 옵션을 제작하기 위해서는, 배경음 오브젝트는 따로 저장을 해 둬야 하고,
+     * 2. 효과음 사운드는, 변수 하나 추가해서 해당변수를 곱한 값으로 사운드를 변경.
+     * 3. mute기능은 현재의 배경음을 배경음용 파라미터 변수와 곱하는 방향으로 해야지 끄지않고 변경이 가능하다.
+     */
+    private float bgmVolumePivot;
+    private float effectVolumePivot;
+    private float beforeEffectVolumePivot;
+    private AudioSource bgmAudioSource;
+    private bool isBGMMute;
+    private bool isEffectMute;
+
+    // 슬라이더 값은 
+    public void BGMSliderValueChanged(Slider slider)
+    {
+        bgmVolumePivot = slider.value;
+        if (!isBGMMute)
+        {
+            bgmAudioSource.volume = slider.value;
+        }
+    }
+
+    public void BGMMute(Toggle toggle)
+    {
+        if (toggle.isOn)
+        {
+            isBGMMute = true;
+            bgmAudioSource.volume = 0;
+        }
+        else
+        {
+            isBGMMute = false;
+            bgmAudioSource.volume = bgmVolumePivot;
+        }
+    }
+
+    public void EffectSliderValueChanged(Slider slider)
+    {
+        beforeEffectVolumePivot = slider.value;
+        if (!isEffectMute)
+        {
+            effectVolumePivot = slider.value;   // 이펙터 소리는 이후에 나타날 이펙터들의 소리에 영향을 미치게 적용
+        }
+    }
+
+    public void EffectMute(Toggle toggle)
+    {
+        if (toggle.isOn)
+        {
+            isEffectMute = true;
+            effectVolumePivot = 0;
+        }
+        else
+        {
+            isEffectMute= false;
+            effectVolumePivot = beforeEffectVolumePivot;
+        }
     }
 }
