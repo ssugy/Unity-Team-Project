@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class PlayerBattle : MonoBehaviour
 {
-    private bool atkPossible;                  // 공격 가능 여부 표시.        
-    private int comboStep;                     // 콤보 진행 단계.
+    private bool atkPossible;                  // 공격 가능 여부 표시.          
     private Transform camAxis;                 // 카메라 중심축의 forward를 가져오기 위해 변수를 선언.       
     private Animator playerAni;                // 플레이어의 애니메이터.            
     private PlayerController playerController; // enableAct를 전달하기 위해 선언함.    
@@ -17,42 +16,36 @@ public class PlayerBattle : MonoBehaviour
         playerController = GetComponent<PlayerController>();
         playerJoysitck = FixedJoystick.instance;
         atkPossible = true;
-    }           
-    void ResetCombo()
-    {
-        atkPossible = true;        
-        comboStep = 0;
-        playerAni.SetBool("isCombo", false);
-    }   
+    }               
     public void NormalAttack()
     {
         if (atkPossible)
+        {                            
+                Vector3 movement = new Vector3(playerJoysitck.Horizontal, 0,
+                playerJoysitck.Vertical);
+                transform.rotation *= Quaternion.Euler(movement);
+                playerAni.Play("Player NormalAttack");                                      
+        }                              
+    }
+    public void Skill_1()
+    {
+        if (atkPossible)
         {
-            if (comboStep == 0)
-            {
-                //transform.forward = new Vector3(camAxis.forward.x, 0, camAxis.forward.z);
-                Vector3 movement = new Vector3(playerJoysitck.Horizontal, 0,
-                playerJoysitck.Vertical);
-                transform.rotation *= Quaternion.Euler(movement);
-                playerAni.Play("Player Attack 1");                
-            }
-            /*else if (comboStep == 1)
-            {
-                //transform.forward = new Vector3(camAxis.forward.x, 0, camAxis.forward.z);
-                Vector3 movement = new Vector3(playerJoysitck.Horizontal, 0,
-                playerJoysitck.Vertical);
-                transform.forward += movement;                             
-            }*/
-            else
-            {
-                //transform.forward = new Vector3(camAxis.forward.x, 0, camAxis.forward.z);
-                Vector3 movement = new Vector3(playerJoysitck.Horizontal, 0,
-                playerJoysitck.Vertical);
-                transform.rotation *= Quaternion.Euler(movement);
-            }
-        }        
-        playerAni.SetBool("isCombo", true);
-               
+            Vector3 movement = new Vector3(playerJoysitck.Horizontal, 0,
+            playerJoysitck.Vertical);
+            transform.rotation *= Quaternion.Euler(movement);
+            playerAni.Play("Player Skill 1");
+        }
+    }
+    public void Skill_2()
+    {
+        if (atkPossible)
+        {
+            Vector3 movement = new Vector3(playerJoysitck.Horizontal, 0,
+            playerJoysitck.Vertical);
+            transform.rotation *= Quaternion.Euler(movement);
+            playerAni.Play("Player Skill 2");
+        }
     }
     void FreezePlayer()     
     {
@@ -61,11 +54,7 @@ public class PlayerBattle : MonoBehaviour
     void UnFreezePlayer()   
     {
         playerController.enableAct = true;
-    }    
-    void ComboStack()
-    {
-        comboStep++;
-    }
+    }        
     void AtkBlock()
     {
         atkPossible = false;        
@@ -73,11 +62,7 @@ public class PlayerBattle : MonoBehaviour
     void AtkPossible()
     {
         atkPossible = true;
-    }   
-    void ComboBlock()
-    {
-        playerAni.SetBool("isCombo", false);
-    }
+    }       
     public void Roll()
     {
         
@@ -107,6 +92,14 @@ public class PlayerBattle : MonoBehaviour
     void Cancel_RollMove()
     {
         CancelInvoke("_RollMove");
+    }
+    public void LArmDown()
+    {
+        playerAni.SetBool("isLArm", true);
+    }
+    public void LArmUp()
+    {
+        playerAni.SetBool("isLArm", false);
     }
 }
 
