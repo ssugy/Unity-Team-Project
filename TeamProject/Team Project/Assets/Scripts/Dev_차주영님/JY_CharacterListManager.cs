@@ -35,7 +35,14 @@ public class JY_CharacterListManager : MonoBehaviour
     {
         //SingleTone 생성
         if (instance == null)
+        {
             instance = this;
+            DontDestroyOnLoad(gameObject);
+        } 
+        else
+        {
+            Destroy(gameObject);
+        }
         //Json파일 로드
         path = Application.dataPath + "/XML_JSON/" + "JY_Lobby_test.json";
         jsonData = File.ReadAllText(path);
