@@ -6,14 +6,15 @@ public class PlayerController : MonoBehaviour
 {    
     // 플레이어 오브젝트를 움직이는 컴포넌트 제작.
     // 플레이어가 움직일 때 오브젝트 회전을 카메라 회전과 맞추기 위한 변수 선언.
-    public MainCamController mainCam;
-    public Transform playerAxis;
-    public Transform player;
-    public Animator playerAni;
-    public float playerSpeed;
+    public Transform camAxis;                     // 캠 축.
+    public Transform player;                      // 플레이어. = transform
+    public Rigidbody playerrb;                    // 플레이어의 리지드바디
+    public Animator playerAni;                    // 플레이어의 애니메이션.
+    public FixedJoystick playerJoysitck;          // 조이스틱 입력을 받아옴.
+    [HideInInspector] public float rotateSpeed;
+    [HideInInspector] public float moveSpeed;
     [HideInInspector] public Vector3 movement;    // 플레이어의 이동 방향.
     [HideInInspector] public bool enableAct;      // 플레이어의 이동 가능 여부를 표시. (공격 기능을 구현했을 때, 이동하면서 공격할 수 없도록)
-    public FixedJoystick playerJoysitck;          // 조이스틱 입력을 받아옴.
 
     private void Awake()
     {
@@ -21,13 +22,14 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Start()
-    {
-        mainCam = Camera.main.transform.GetComponent<MainCamController>();
-        playerAxis = transform.parent;
+    {        
+        camAxis = Camera.main.transform.parent;        
         player = transform;
+        playerrb = GetComponent<Rigidbody>();
         playerAni = GetComponent<Animator>();
-        playerSpeed = 8f;
         playerJoysitck = FixedJoystick.instance;
+        rotateSpeed = 5f;
+        moveSpeed = 8f;        
     }
 
     void PlayerMove()
@@ -38,24 +40,20 @@ public class PlayerController : MonoBehaviour
             playerJoysitck.Vertical);        
         if (movement != Vector3.zero)   // 무브먼트가 영벡터가 아닐 때 캐릭터 이동.
         {
-            // 플레이어 축의 회전을 카메라 회전과 맞춰줌. x축, z축 회전은 없음.
-            playerAxis.rotation = Quaternion.Euler(new Vector3(
-                0, mainCam.camAxis.rotation.y +
-                mainCam.rotateX, 0) * mainCam.camSpeed);
-            // Translate 함수를 이용해 movement 방향으로 플레이어 축을 움직임.
-            playerAxis.Translate(movement * Time.deltaTime * playerSpeed);
-            /* Slerp 메소드는 플레이어의 현재 회전으로부터,
-             * 목표 방향(movement가 가리키는 방향) 사이의 회전을 반환한다.
-             * RotateTowards와 달리 보간을 사용하여 자연스러운 회전을 구현한다.
-             * movement는 벡터3이므로 쿼터니언으로 변환하였다.*/
-            player.localRotation = Quaternion.Slerp(player.localRotation, 
-                Quaternion.LookRotation(movement), 5 * Time.deltaTime);
+            Quaternion target = Quaternion.Euler(new Vector3(0, camAxis.rotation.eulerAngles.y, 0))
+                * Quaternion.LookRotation(movement);
+            // 플레이어의 회전은 현재 카메라가 바라보는 방향에서 조이스틱 입력값만큼 회전한 값을 구면보간한 것.
+            player.rotation = Quaternion.Slerp(player.rotation,
+                target, rotateSpeed * Time.deltaTime);
+            // 리지드바디의 velocity를 조정하여 움직임을 구현함.            
+            playerrb.velocity = player.forward * movement.magnitude * moveSpeed;                      
             /** movement가 0이 아니라는 것은 플레이어가 움직인다는 뜻.
              * 따라서 플레이어의 애니메이션 상태를 전환함. */
             playerAni.SetFloat("isMove", movement.magnitude);
         }
         else if (movement == Vector3.zero)
         {
+            playerrb.velocity = Vector3.zero;
             playerAni.SetFloat("isMove", 0f);
         }        
         
@@ -67,6 +65,6 @@ public class PlayerController : MonoBehaviour
         {
             PlayerMove();
         }
-        mainCam.camAxis.position = player.position; // 카메라 중심 축이 플레이어 포지션을 따라다니도록 함.
+        camAxis.position = player.position; // 카메라 중심 축이 플레이어 포지션을 따라다니도록 함.        
     }
 }

@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class PlayerBattle : MonoBehaviour
 {
-    private bool atkPossible;                  // 공격 가능 여부 표시.          
-    private Transform camAxis;                 // 카메라 중심축의 forward를 가져오기 위해 변수를 선언.       
+    private bool atkPossible;                  // 공격 가능 여부 표시.
+    private Rigidbody playerrb;                // 플레이어의 리지드바디
     private Animator playerAni;                // 플레이어의 애니메이터.            
     private PlayerController playerController; // enableAct를 전달하기 위해 선언함.    
-    private FixedJoystick playerJoysitck;       // 조이스틱 입력을 받아옴.
+    private FixedJoystick playerJoysitck;      // 조이스틱 입력을 받아옴.
     void Start()
     {
-        camAxis = Camera.main.transform.parent;
+        playerrb = GetComponent<Rigidbody>();
         playerAni = GetComponent<Animator>();
         playerController = GetComponent<PlayerController>();
         playerJoysitck = FixedJoystick.instance;
@@ -64,8 +64,7 @@ public class PlayerBattle : MonoBehaviour
         atkPossible = true;
     }       
     public void Roll()
-    {
-        
+    {        
         playerAni.SetBool("isRoll", true);
         CancelInvoke("_Roll");
         Invoke("_Roll", 0.4f);        
@@ -86,12 +85,12 @@ public class PlayerBattle : MonoBehaviour
     }
     void _RollMove()
     {
-        transform.parent.position = Vector3.Lerp(transform.parent.position, 
-            transform.parent.position + transform.forward * 6f, 0.01f);
+        playerrb.velocity = transform.forward *6f;        
     }
     void Cancel_RollMove()
     {
         CancelInvoke("_RollMove");
+        playerrb.velocity = Vector3.zero;
     }
     public void LArmDown()
     {

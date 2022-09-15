@@ -6,11 +6,11 @@ public class MainCamController : MonoBehaviour
 {       
     // 카메라의 회전만을 담당. 카메라의 위치는 플레이어 오브젝트를 따라다님.
     [HideInInspector] public Transform camAxis;       // 메인 카메라의 부모 오브젝트.
-    [HideInInspector] public Transform mainCam;               // 메인 카메라 오브젝트. transform과 같음.
-    [HideInInspector] public float camSpeed;                  // 카메라 회전 속도.
-    [HideInInspector] public float rotateX;                   // 카메라의 상하 회전 값.
-    [HideInInspector] public float rotateY;                   // 카메라의 좌우 회전 값.
-    public DragOn dragOn;                                     // 카메라 회전을 위한 화면 드래그 값을 받아옴.
+    [HideInInspector] public Transform mainCam;       // 메인 카메라 오브젝트. = transform
+    [HideInInspector] public float camSpeed;          // 카메라 회전 속도.
+    [HideInInspector] public float rotateX;           // 카메라의 상하 회전 값.
+    [HideInInspector] public float rotateY;           // 카메라의 좌우 회전 값.
+    public DragOn dragOn;                             // 카메라 회전을 위한 화면 드래그 값을 받아옴.
 
     void Start()
     {        

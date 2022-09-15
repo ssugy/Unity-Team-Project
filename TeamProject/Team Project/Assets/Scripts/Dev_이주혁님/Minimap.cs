@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class Minimap : MonoBehaviour
 {
-    Transform camAxis;
-    Camera minimap;
+    Transform camAxis;    
     // Start is called before the first frame update
     void Start()
     {
-        camAxis = Camera.main.transform.parent;
-        minimap = GetComponent<Camera>();
+        camAxis = Camera.main.transform.parent;        
     }
 
     // Update is called once per frame

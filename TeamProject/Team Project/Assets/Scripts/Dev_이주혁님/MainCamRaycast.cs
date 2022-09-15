@@ -5,40 +5,42 @@ using UnityEngine;
 public class MainCamRaycast : MonoBehaviour
 {
     public Transform player;
-    float distance;
-    Renderer obstacle;
-    Material obsMat;
-    Color obsColor;
+    RaycastHit[] hits;
 
     private void Start()
     {
-        obstacle = null;
-        obsMat = null;        
+        hits = new RaycastHit[0];
     }
 
     void Update()
     {
-        distance = Vector3.Distance(transform.position , player.position + new Vector3(0, 1, 0));
-        Vector3 dir = Vector3.Normalize(player.position + new Vector3(0, 1, 0) - transform.position);
-        RaycastHit hitInfo;
-        if(Physics.Raycast(transform.position,dir,out hitInfo, distance))
+        float distance = Vector3.Distance(transform.position, player.position + new Vector3(0, 0.1f, 0)) - 0.05f;
+        Vector3 dir = Vector3.Normalize(player.position + new Vector3(0, 1f, 0) - transform.position);
+        
+        
+        for (int i = 0; i < hits.Length; ++i)
         {
-            obstacle = hitInfo.collider.gameObject.GetComponent<Renderer>();
-            if (obstacle != null)
+            RaycastHit hitInfo = hits[i];
+            MeshRenderer obstacle = hitInfo.transform.GetComponent<MeshRenderer>();
+            if (obstacle)
             {
-                obsMat = obstacle.material;                
-                obsColor = obsMat.color;
-                obsColor.a = 0.3f;
-                obsMat.color = obsColor;
+                Color tmpColor = obstacle.material.color;
+                tmpColor.a = 1f;
+                obstacle.material.color = tmpColor;
             }
         }
-        else
+
+        hits = Physics.RaycastAll(transform.position, dir, distance);
+        for (int i = 0; i < hits.Length; ++i)
         {
-            if(obstacle != null)
+            RaycastHit hitInfo = hits[i];
+            MeshRenderer obstacle = hitInfo.transform.GetComponent<MeshRenderer>();
+            if (obstacle)
             {
-                obsColor.a = 1f;
-                obsMat.color = obsColor;
+                Color tmpColor = obstacle.material.color;                
+                tmpColor.a = 0.3f;
+                obstacle.material.color = tmpColor;
             }
-        }
+        }        
     }
 }
