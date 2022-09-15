@@ -18,6 +18,7 @@ public class infoData
     public string name;
     public int level;
     public string job;
+    public string gender;
     public string species;
 }
 //데이터 변경 저장을 위한 class
@@ -30,6 +31,8 @@ public class JY_CharacterListManager : MonoBehaviour
     //파일 경로 및 json road에 쓰이는 string 변수
     string path;
     string jsonData;
+    //캐릭터선택번호
+    public int selectNum;
 
     private void Awake()
     {
@@ -38,6 +41,7 @@ public class JY_CharacterListManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            selectNum = -1;
         } 
         else
         {
@@ -65,6 +69,7 @@ public class JY_CharacterListManager : MonoBehaviour
                 characterData.infoDataList[i].isNull = characterData.infoDataList[i + 1].isNull;
                 characterData.infoDataList[i].level = characterData.infoDataList[i + 1].level;
                 characterData.infoDataList[i].job = characterData.infoDataList[i + 1].job;
+                characterData.infoDataList[i].gender = characterData.infoDataList[i + 1].gender;
                 characterData.infoDataList[i].species = characterData.infoDataList[i + 1].species;
             }
             else
@@ -73,6 +78,7 @@ public class JY_CharacterListManager : MonoBehaviour
                 characterData.infoDataList[i].isNull =true;
                 characterData.infoDataList[i].level =0;
                 characterData.infoDataList[i].job =null;
+                characterData.infoDataList[i].gender =null;
                 characterData.infoDataList[i].species =null;
             }
         }
@@ -87,7 +93,6 @@ public class JY_CharacterListManager : MonoBehaviour
             File.WriteAllText(path, json);
         }
     }
-
 
 }
 

@@ -18,8 +18,30 @@ public class JY_ListSwap : MonoBehaviour
     public TextMeshProUGUI jobTxt;
     public TextMeshProUGUI speciesTxt;
 
-    private void Start()
+    //캐릭터 선택시/데이터 로드시 변경 UI
+    public Image frameBackground;
+    public Image portraitImage;
+    
+    //소스 이미지 
+    Sprite sourceImg_R;
+    Sprite sourceImg_B;
+    Sprite warriorM;
+    Sprite warriorF;
+    Sprite magicianM;
+    Sprite magicianF;
+
+
+    private void Awake()
     {
+        //소스이미지 로드
+        sourceImg_R = Resources.Load<Sprite>("UI_Change/Button Background/Background_r_red");
+        sourceImg_B = Resources.Load<Sprite>("UI_Change/Button Background/Background_r_grey");
+
+        warriorM = Resources.Load<Sprite>("UI_Change/Portrait/27");
+        warriorF = Resources.Load<Sprite>("UI_Change/Portrait/7");
+        magicianM = Resources.Load<Sprite>("UI_Change/Portrait/21");
+        magicianF = Resources.Load<Sprite>("UI_Change/Portrait/6");
+
     }
 
     void Update()
@@ -39,17 +61,24 @@ public class JY_ListSwap : MonoBehaviour
         {
             infoGroup.SetActive(false);
             createButton.SetActive(true);
-
         }
         else
         {
             createButton.SetActive(false);
             infoGroup.SetActive(true);
-            textDataRenew();
+            DataRenew();
+            if (listNum == JY_CharacterListManager.instance.selectNum)
+            {
+                frameBackground.sprite = sourceImg_R;
+            }
+            else
+            {
+                frameBackground.sprite = sourceImg_B;
+            }
         }
     }
     //Character Info의 Text 갱신
-    void textDataRenew()
+    void DataRenew()
     {
         string leveltxt;
 
@@ -64,6 +93,33 @@ public class JY_ListSwap : MonoBehaviour
         }
         levelTxt.text = leveltxt;
         jobTxt.text = JY_CharacterListManager.instance.characterData.infoDataList[listNum].job;
+        jobTxt.text = JY_CharacterListManager.instance.characterData.infoDataList[listNum].job;
+        portraitImage.sprite = switchPortrait(JY_CharacterListManager.instance.characterData.infoDataList[listNum].gender,
+                                              JY_CharacterListManager.instance.characterData.infoDataList[listNum].job);
         speciesTxt.text = JY_CharacterListManager.instance.characterData.infoDataList[listNum].species;
+    }
+
+    public void deleteButton()
+    {
+        JY_CharacterListManager.instance.deleteCharacter(listNum);
+    }
+
+    public void selectCharacter()
+    {
+        JY_CharacterListManager.instance.selectNum = listNum;
+    }
+
+    Sprite switchPortrait(string gender, string job)
+    {
+        Sprite source;
+        if (gender.Equals("M") && job.Equals("전사"))
+            source = warriorM;
+        else if (gender.Equals("M") && job.Equals("마법사"))
+            source = magicianM;
+        else if (gender.Equals("F") && job.Equals("전사"))
+            source = warriorF;
+        else
+            source = magicianF;
+        return source;
     }
 }
