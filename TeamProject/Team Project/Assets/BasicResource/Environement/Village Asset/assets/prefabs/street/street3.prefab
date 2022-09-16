@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8723605221417663960}
   - component: {fileID: 309479562458728430}
   - component: {fileID: 6302778259462650647}
-  - component: {fileID: 157456732019389793}
+  - component: {fileID: 896565961187923232}
   m_Layer: 0
   m_Name: street3
   m_TagString: Untagged
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &157456732019389793
-MeshCollider:
+--- !u!65 &896565961187923232
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,7 +94,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -1200698202071264396, guid: a1fc66357a8821840ac11cb9b866b2fd, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 17.225164, y: 0.2, z: 17.225166}
+  m_Center: {x: -0.000020027159, y: 0.15598845, z: -0.0000019073485}
