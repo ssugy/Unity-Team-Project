@@ -26,6 +26,8 @@ public class infoData
 public class JY_CharacterListManager : MonoBehaviour
 {
     public static JY_CharacterListManager instance;
+    public static JY_CharacterListManager s_instance { get { return instance; } }
+
     //Data 관리 클래스(리스트)
     public CharacterData characterData;
     //파일 경로 및 json road에 쓰이는 string 변수
@@ -33,6 +35,7 @@ public class JY_CharacterListManager : MonoBehaviour
     string jsonData;
     //캐릭터선택번호
     public int selectNum;
+    public Sprite selectPortrait;
 
     private void Awake()
     {

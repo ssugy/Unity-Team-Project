@@ -106,7 +106,9 @@ public class JY_ListSwap : MonoBehaviour
 
     public void selectCharacter()
     {
-        JY_CharacterListManager.instance.selectNum = listNum;
+        JY_CharacterListManager.s_instance.selectNum = listNum;
+        JY_CharacterListManager.s_instance.selectPortrait =  switchPortrait(JY_CharacterListManager.instance.characterData.infoDataList[listNum].gender,
+                                              JY_CharacterListManager.instance.characterData.infoDataList[listNum].job);;
     }
 
     Sprite switchPortrait(string gender, string job)
