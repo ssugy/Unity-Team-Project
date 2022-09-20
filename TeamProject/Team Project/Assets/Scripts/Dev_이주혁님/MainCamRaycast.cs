@@ -14,8 +14,8 @@ public class MainCamRaycast : MonoBehaviour
 
     void Update()
     {
-        float distance = Vector3.Distance(transform.position, player.position + new Vector3(0, 0.1f, 0)) - 0.05f;
-        Vector3 dir = Vector3.Normalize(player.position + new Vector3(0, 1f, 0) - transform.position);
+        float distance = Vector3.Distance(transform.position, player.position + new Vector3(0, 0.9f, 0)) ;
+        Vector3 dir = Vector3.Normalize(player.position + new Vector3(0, 0.9f, 0) - transform.position);
         
         
         for (int i = 0; i < hits.Length; ++i)

@@ -50,6 +50,7 @@ public class PlayerBattle : MonoBehaviour
     void FreezePlayer()     
     {
         playerController.enableAct = false;
+        playerrb.velocity += new Vector3(0, -9.8f, 0);
     }
     void UnFreezePlayer()   
     {
