@@ -5,17 +5,17 @@ using UnityEngine;
 public class PlayerBattle : MonoBehaviour
 {
     private bool atkPossible;                  // 공격 가능 여부 표시.
-    private Rigidbody playerrb;                // 플레이어의 리지드바디
+    public CharacterController playerController;
     private Animator playerAni;                // 플레이어의 애니메이터.            
-    private PlayerController playerController; // enableAct를 전달하기 위해 선언함.    
+    private PlayerMove playerMove;             // enableAct를 전달하기 위해 선언함.    
     private FixedJoystick playerJoysitck;      // 조이스틱 입력을 받아옴.
     public Transform rWeaponDummy;              // 오른손 무기 더미.
     public TrailRenderer rWeaponEffect;        // 오른손 무기 이펙트. (검기)
     void Start()
     {
-        playerrb = GetComponent<Rigidbody>();
+        playerController = GetComponent<CharacterController>();
         playerAni = GetComponent<Animator>();
-        playerController = GetComponent<PlayerController>();
+        playerMove = GetComponent<PlayerMove>();
         playerJoysitck = FixedJoystick.instance;
         atkPossible = true;
         rWeaponEffect = rWeaponDummy.GetChild(0).GetChild(2).GetComponent<TrailRenderer>();
@@ -52,12 +52,11 @@ public class PlayerBattle : MonoBehaviour
     }
     void FreezePlayer()     
     {
-        playerController.enableAct = false;
-        playerrb.velocity += new Vector3(0, -9.8f, 0);
+        playerMove.enableAct = false;        
     }
     void UnFreezePlayer()   
     {
-        playerController.enableAct = true;
+        playerMove.enableAct = true;
     }        
     void AtkBlock()
     {
@@ -70,8 +69,9 @@ public class PlayerBattle : MonoBehaviour
     public void Roll()
     {        
         playerAni.SetBool("isRoll", true);
+        
         CancelInvoke("_Roll");
-        Invoke("_Roll", 0.4f);        
+        Invoke("_Roll", 0.4f);       
     }
     void _Roll()
     {
@@ -83,18 +83,18 @@ public class PlayerBattle : MonoBehaviour
         Vector3 movement = new Vector3(playerJoysitck.Horizontal, 0,
                 playerJoysitck.Vertical);
         transform.rotation *= Quaternion.Euler(movement);
-        InvokeRepeating("_RollMove", 0.1f, 0.01f);
+        InvokeRepeating("_RollMove", 0.1f, Time.deltaTime);
         Invoke("Cancel_RollMove", 0.9f);
         
     }
     void _RollMove()
-    {
-        playerrb.velocity = transform.forward *6f;        
+    {             
+        playerController.Move(transform.forward * 6f *
+            Time.deltaTime + new Vector3(0, playerMove.gravity * Time.deltaTime, 0));
     }
     void Cancel_RollMove()
     {
-        CancelInvoke("_RollMove");
-        playerrb.velocity = Vector3.zero;
+        CancelInvoke("_RollMove");        
     }
     public void LArmDown()
     {
