@@ -6,10 +6,12 @@ public class MainCamRaycast : MonoBehaviour
 {
     public Transform player;
     RaycastHit[] hits;
+    int layerMask;
 
     private void Start()
     {
         hits = new RaycastHit[0];
+        layerMask = 1 << LayerMask.NameToLayer("Obstacle");
     }
 
     void Update()
@@ -30,7 +32,7 @@ public class MainCamRaycast : MonoBehaviour
             }
         }
 
-        hits = Physics.RaycastAll(transform.position, dir, distance);
+        hits = Physics.RaycastAll(transform.position, dir, distance, layerMask);
         for (int i = 0; i < hits.Length; ++i)
         {
             RaycastHit hitInfo = hits[i];

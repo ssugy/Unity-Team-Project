@@ -11,33 +11,52 @@ public class MainCamController : MonoBehaviour
     [HideInInspector] public float rotateX;           // 카메라의 상하 회전 값.
     [HideInInspector] public float rotateY;           // 카메라의 좌우 회전 값.
     public DragOn dragOn;                             // 카메라 회전을 위한 화면 드래그 값을 받아옴.
+    public Transform player;    
+    int layerMask;
 
     void Start()
     {        
         camAxis = transform.parent;
         mainCam = transform;
         camSpeed = 20f;        
-        rotateY = 1f; // 게임이 실행되었을 때, 카메라의 x축 회전을 기본값으로 맞춰줌.       
+        rotateY = 1f; // 게임이 실행되었을 때, 카메라의 x축 회전을 기본값으로 맞춰줌.
+        layerMask = 1 << LayerMask.NameToLayer("Building");
     }
 
-    void Move()
+    void Rotate()
     {
         Vector3 tmp = mainCam.position;          // 현재 카메라의 위치. 
         rotateX += dragOn.xAngle;                
         rotateY += dragOn.yAngle * -1;           // 드래그 방향과 카메라 회전 방향을 맞추기 위해 -1을 곱함.
         dragOn.xAngle = 0;
         dragOn.yAngle = 0;        
-        if (rotateY > 1f) rotateY = 1f;          // 카메라가 너무 많이 회전하는 것을 방지하는 코드.
-        if (rotateY < -0.5f) rotateY = -0.5f;
+        if (rotateY > 1.3f) rotateY = 1.3f;          // 카메라가 너무 많이 회전하는 것을 방지하는 코드.
+        if (rotateY < -0.3f) rotateY = -0.3f;
         /** 카메라의 중심축을 화면을 드래그한 값만큼 회전시킴.
          * 카메라는 중심축의 자식 오브젝트이므로 함께 회전함. */
         camAxis.rotation = Quaternion.Euler(new Vector3(
             camAxis.rotation.x + rotateY,
             camAxis.rotation.y + rotateX, 0f) * camSpeed);        
-    }           
+    }          
+    void Move()
+    {
+        
+        float distance = Vector3.Distance(transform.position, player.position);
+        Vector3 dir = Vector3.Normalize(transform.position - (player.position + new Vector3(0, 0.9f, 0)));
+        RaycastHit hitInfo;
+        if (Physics.Raycast(player.position + new Vector3(0, 0.9f, 0), dir, out hitInfo, distance, layerMask)) 
+        {
+            transform.position = hitInfo.point;
+        }
+        else
+        {
+            transform.localPosition = new Vector3(0, 1.8f, -5f);
+        }
+    }
         
     void Update()
     {
+        Rotate();
         Move();        
     }
 }
