@@ -9,6 +9,8 @@ public class PlayerBattle : MonoBehaviour
     private Animator playerAni;                // 플레이어의 애니메이터.            
     private PlayerController playerController; // enableAct를 전달하기 위해 선언함.    
     private FixedJoystick playerJoysitck;      // 조이스틱 입력을 받아옴.
+    public Transform rWeaponDummy;              // 오른손 무기 더미.
+    public TrailRenderer rWeaponEffect;        // 오른손 무기 이펙트. (검기)
     void Start()
     {
         playerrb = GetComponent<Rigidbody>();
@@ -16,6 +18,7 @@ public class PlayerBattle : MonoBehaviour
         playerController = GetComponent<PlayerController>();
         playerJoysitck = FixedJoystick.instance;
         atkPossible = true;
+        rWeaponEffect = rWeaponDummy.GetChild(0).GetChild(2).GetComponent<TrailRenderer>();
     }               
     public void NormalAttack()
     {
@@ -100,6 +103,14 @@ public class PlayerBattle : MonoBehaviour
     public void LArmUp()
     {
         playerAni.SetBool("isLArm", false);
+    }
+    public void WeaponEffectOn()
+    {
+        rWeaponEffect.emitting = true;
+    }
+    public void WeaponEffectOff()
+    {
+        rWeaponEffect.emitting = false;
     }
 }
 
