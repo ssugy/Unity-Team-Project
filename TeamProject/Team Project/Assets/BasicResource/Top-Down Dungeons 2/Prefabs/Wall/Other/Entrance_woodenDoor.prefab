@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 400000}
   - component: {fileID: 6503942}
+  - component: {fileID: 5343221487434771203}
   m_Layer: 0
   m_Name: Entrance_woodenDoor
   m_TagString: Untagged
@@ -55,8 +56,21 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.72, y: 2.39, z: 2.37}
-  m_Center: {x: 0, y: 1.34, z: 0}
+  m_Size: {x: 0.72, y: 2.39, z: 0.7}
+  m_Center: {x: 0, y: 1.15, z: 1}
+--- !u!65 &5343221487434771203
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.72, y: 2.39, z: 0.7}
+  m_Center: {x: 0, y: 1.15, z: -1}
 --- !u!1 &100002
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,6 +166,7 @@ GameObject:
   - component: {fileID: 3300002}
   - component: {fileID: 2300002}
   - component: {fileID: 7533734395567866341}
+  - component: {fileID: 6975201852423742753}
   - component: {fileID: 4653678568706435650}
   m_Layer: 0
   m_Name: door_1
@@ -237,6 +252,19 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 3, y: 1.842253, z: 3}
+  m_Center: {x: 0.47903013, y: 0.9144335, z: 0.008215001}
+--- !u!65 &6975201852423742753
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100004}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.1374803, y: 1.842253, z: 0.23671207}
   m_Center: {x: 0.47903013, y: 0.9144335, z: 0.008215001}
 --- !u!114 &4653678568706435650
 MonoBehaviour:

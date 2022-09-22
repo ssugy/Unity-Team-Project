@@ -128,6 +128,8 @@ GameObject:
   - component: {fileID: 3390486}
   - component: {fileID: 6565906}
   - component: {fileID: 2378158}
+  - component: {fileID: 7765543224412583932}
+  - component: {fileID: 776368290921814266}
   m_Layer: 0
   m_Name: Physics
   m_TagString: Untagged
@@ -213,3 +215,29 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7765543224412583932
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 156576}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.2, y: 7, z: 0.3}
+  m_Center: {x: 0.05, y: -0.6, z: 0.6}
+--- !u!65 &776368290921814266
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 156576}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.2, y: 7, z: 0.3}
+  m_Center: {x: 0.05, y: -0.6, z: -0.6}

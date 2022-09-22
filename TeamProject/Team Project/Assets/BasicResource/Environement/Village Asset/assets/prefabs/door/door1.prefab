@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2278366259305147995}
   - component: {fileID: 5522234898960978594}
   - component: {fileID: 2866880607572496790}
+  - component: {fileID: 1290469974318223249}
   - component: {fileID: 2180004100310529372}
   m_Layer: 0
   m_Name: door1
@@ -98,6 +99,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4, y: 2.6440568, z: 4}
   m_Center: {x: 0.00000029802322, y: 0.08014649, z: -0.08421753}
+--- !u!65 &1290469974318223249
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6097378485398382206}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.430062, y: 2.6440568, z: 0.18421829}
+  m_Center: {x: 0.00000029802322, y: 0.08014649, z: -0.08421753}
 --- !u!114 &2180004100310529372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,3 +125,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorButton: {fileID: 0}
+  isClose: 0

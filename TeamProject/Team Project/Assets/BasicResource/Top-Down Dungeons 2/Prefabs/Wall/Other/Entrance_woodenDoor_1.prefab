@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 469692}
   - component: {fileID: 6570790}
+  - component: {fileID: 7506575857267657373}
   - component: {fileID: 3097876440865415552}
   m_Layer: 0
   m_Name: Entrance_woodenDoor_1
@@ -46,8 +47,21 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.41, y: 2.11, z: 1.72}
-  m_Center: {x: 0, y: 0.98, z: 0}
+  m_Size: {x: 0.41, y: 2.11, z: 0.3}
+  m_Center: {x: 0, y: 0.98, z: 0.7}
+--- !u!65 &7506575857267657373
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102276}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.41, y: 2.11, z: 0.3}
+  m_Center: {x: 0, y: 0.98, z: -0.7}
 --- !u!114 &3097876440865415552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,6 +171,8 @@ GameObject:
   - component: {fileID: 3332708}
   - component: {fileID: 2390054}
   - component: {fileID: 9181666618229273176}
+  - component: {fileID: 3674667148981823366}
+  - component: {fileID: 8798175061766103817}
   m_Layer: 0
   m_Name: door_1
   m_TagString: Untagged
@@ -242,6 +258,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3, y: 1.842253, z: 3}
   m_Center: {x: 0.47903013, y: 0.9144335, z: 0.008215008}
+--- !u!65 &3674667148981823366
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185202}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.1374803, y: 1.842253, z: 0.23671207}
+  m_Center: {x: 0.47903013, y: 0.9144335, z: 0.008215008}
+--- !u!114 &8798175061766103817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0179c65b681e384e976d911e4d2a70f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doorButton: {fileID: 0}
+  isClose: 0
 --- !u!1 &287636048746875040
 GameObject:
   m_ObjectHideFlags: 0
