@@ -5,8 +5,7 @@ using UnityEngine;
 public class MainCamController : MonoBehaviour
 {       
     // 카메라의 회전과 카메라 축의 이동을 담당. 카메라의 축은 플레이어의 위치를 따라다님.
-    [HideInInspector] public Transform camAxis;       // 메인 카메라의 부모 오브젝트.
-    [HideInInspector] public Transform mainCam;       // 메인 카메라 오브젝트. = transform
+    [HideInInspector] public Transform camAxis;       // 메인 카메라의 부모 오브젝트.    
     [HideInInspector] public float camSpeed;          // 카메라 회전 속도.
     [HideInInspector] public float rotateX;           // 카메라의 상하 회전 값.
     [HideInInspector] public float rotateY;           // 카메라의 좌우 회전 값.
@@ -16,8 +15,7 @@ public class MainCamController : MonoBehaviour
 
     void Start()
     {        
-        camAxis = transform.parent;
-        mainCam = transform;
+        camAxis = transform.parent;        
         camSpeed = 20f;        
         rotateY = 1f; // 게임이 실행되었을 때, 카메라의 x축 회전을 기본값으로 맞춰줌.
         layerMask = 1 << LayerMask.NameToLayer("Building");
@@ -25,8 +23,7 @@ public class MainCamController : MonoBehaviour
 
     void Rotate()
     {
-        Vector3 tmp = mainCam.position;          // 현재 카메라의 위치. 
-        rotateX += dragOn.xAngle;                
+        rotateX += dragOn.xAngle * 5;                
         rotateY += dragOn.yAngle * -1;           // 드래그 방향과 카메라 회전 방향을 맞추기 위해 -1을 곱함.
         dragOn.xAngle = 0;
         dragOn.yAngle = 0;        
