@@ -26,6 +26,8 @@ public class AvatarSceneManager : MonoBehaviour
     private Dictionary<string, int> mapOptionNames;
     private string[] strOptionNames = {"Heads", "Hairs", "Torsos", "Legs" };
 
+    private List<float> legOptions = new List<float>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,7 +42,8 @@ public class AvatarSceneManager : MonoBehaviour
 
         gender = Gender.MALE;
         ShowCharacter();
-        ShowOption();
+        //첫번째 버튼을 누른것으로 간주함
+        ShowOption((int)currentOption);
     }
 
     // Update is called once per frame
@@ -121,7 +124,7 @@ public class AvatarSceneManager : MonoBehaviour
         }
     }
 
-    public void OnClickNext()
+    public void OnClickNext( )
     {
         if(currentStep < Steps.SAVE)
         {
@@ -151,12 +154,12 @@ public class AvatarSceneManager : MonoBehaviour
         ShowCharacter();
     }
 
-    private void ShowOption()
+    private void ShowOption(int option)
     {
         HideAllOption();
 
+        currentOption = (MoreOptions)mapOptionNames[strOptionNames[option]];
         options[currentOptionPanel].SetActive(true);
-
     }
 
     public void HideAllOption()
@@ -172,8 +175,7 @@ public class AvatarSceneManager : MonoBehaviour
         currentOptionPanel = option;
         if (mapOptionNames.ContainsKey(strOptionNames[option]))
         {
-            currentOption = (MoreOptions)mapOptionNames[strOptionNames[option]];
-            ShowOption();
+            ShowOption(option);
         }
     }
 
@@ -205,6 +207,18 @@ public class AvatarSceneManager : MonoBehaviour
         {
             optionSubs[i] = sub;
             GameObject addedObj = targetScript.AddItem(targetScript.itemGroups[i], optionSubs[i]);
+
+            if (i == (int)MoreOptions.LEGS)
+            {
+                GameObject child = addedObj.transform.GetChild(0).gameObject;
+                //legOptions = child.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight();
+            }
+
         }
+    }
+
+    public void OnChangeSlide(float vol)
+    {
+        Debug.Log("vol is: " + vol);
     }
 }
