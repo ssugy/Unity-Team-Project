@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MainCamController : MonoBehaviour
 {       
-    // 카메라의 회전만을 담당. 카메라의 위치는 플레이어 오브젝트를 따라다님.
+    // 카메라의 회전과 카메라 축의 이동을 담당. 카메라의 축은 플레이어의 위치를 따라다님.
     [HideInInspector] public Transform camAxis;       // 메인 카메라의 부모 오브젝트.
     [HideInInspector] public Transform mainCam;       // 메인 카메라 오브젝트. = transform
     [HideInInspector] public float camSpeed;          // 카메라 회전 속도.
@@ -40,7 +40,7 @@ public class MainCamController : MonoBehaviour
     }          
     void Move()
     {
-        
+        camAxis.position = player.position;
         float distance = Vector3.Distance(transform.position, player.position);
         Vector3 dir = Vector3.Normalize(transform.position - (player.position + new Vector3(0, 0.9f, 0)));
         RaycastHit hitInfo;

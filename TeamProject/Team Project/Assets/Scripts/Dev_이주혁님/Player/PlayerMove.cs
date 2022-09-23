@@ -73,7 +73,7 @@ public class PlayerMove : MonoBehaviour
     void FixedUpdate()
     {                
         Move();        
-        camAxis.position = transform.position; // 카메라 중심 축이 플레이어 포지션을 따라다니도록 함.
+        
         if (!playerController.isGrounded)
         {            
             Invoke("Fall", 0.1f);

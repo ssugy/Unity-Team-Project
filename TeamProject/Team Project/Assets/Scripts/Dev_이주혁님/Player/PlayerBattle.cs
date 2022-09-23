@@ -77,25 +77,11 @@ public class PlayerBattle : MonoBehaviour
     {
         playerAni.SetBool("isRoll", false);
     }
-    void RollMove()
-    {
-        
-        Vector3 movement = new Vector3(playerJoysitck.Horizontal, 0,
-                playerJoysitck.Vertical);
-        transform.rotation *= Quaternion.Euler(movement);
-        InvokeRepeating("_RollMove", 0.1f, Time.deltaTime);
-        Invoke("Cancel_RollMove", 0.9f);
-        
-    }
-    void _RollMove()
-    {             
+    public void RollMove()
+    {                
         playerController.Move(transform.forward * 6f *
-            Time.deltaTime + new Vector3(0, playerMove.gravity * Time.deltaTime, 0));
-    }
-    void Cancel_RollMove()
-    {
-        CancelInvoke("_RollMove");        
-    }
+            Time.deltaTime + new Vector3(0, playerMove.gravity * Time.deltaTime, 0));           }
+    
     public void LArmDown()
     {
         playerAni.SetBool("isLArm", true);
@@ -111,6 +97,18 @@ public class PlayerBattle : MonoBehaviour
     public void WeaponEffectOff()
     {
         rWeaponEffect.emitting = false;
+    }
+    public void Die()
+    {            
+        Camera.main.GetComponent<MainCamController>().enabled = false;   // 플레이어가 사망하면 더 이상 카메라가 움직이지 않게 함.    
+        Camera.main.GetComponent<WhenPlayerDie>().enabled = true;
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Die"))
+        {
+            Die();
+        }
     }
 }
 
