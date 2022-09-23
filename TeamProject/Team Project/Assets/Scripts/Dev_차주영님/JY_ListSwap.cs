@@ -13,10 +13,10 @@ public class JY_ListSwap : MonoBehaviour
     public int listNum;
 
     //텍스트 변경
-    public TextMeshProUGUI nameTxt;
-    public TextMeshProUGUI levelTxt;
-    public TextMeshProUGUI jobTxt;
-    public TextMeshProUGUI speciesTxt;
+    public Text nameTxt;
+    public Text levelTxt;
+    public Text jobTxt;
+    public Text speciesTxt;
 
     //캐릭터 선택시/데이터 로드시 변경 UI
     public Image frameBackground;
@@ -54,8 +54,8 @@ public class JY_ListSwap : MonoBehaviour
     //nullcheck = false일 때 Character info 활성화
     void panelSwitch(bool nullCheck)
     {
-        //캐릭터 생성 check
-        check = JY_CharacterListManager.instance.characterData.infoDataList[listNum].isNull;
+          //캐릭터 생성 check
+        check = JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].isNull;
 
         if (nullCheck)
         {
@@ -67,7 +67,7 @@ public class JY_ListSwap : MonoBehaviour
             createButton.SetActive(false);
             infoGroup.SetActive(true);
             DataRenew();
-            if (listNum == JY_CharacterListManager.instance.selectNum)
+            if (listNum == JY_CharacterListManager.s_instance.selectNum)
             {
                 frameBackground.sprite = sourceImg_R;
             }
@@ -106,6 +106,13 @@ public class JY_ListSwap : MonoBehaviour
 
     public void selectCharacter()
     {
+        //선택 취소 구현
+        if (JY_CharacterListManager.s_instance.selectNum == listNum)
+        {
+            JY_CharacterListManager.s_instance.selectNum = -1;
+            JY_CharacterListManager.s_instance.selectPortrait = null;
+            return;
+        }
         JY_CharacterListManager.s_instance.selectNum = listNum;
         JY_CharacterListManager.s_instance.selectPortrait =  switchPortrait(JY_CharacterListManager.instance.characterData.infoDataList[listNum].gender,
                                               JY_CharacterListManager.instance.characterData.infoDataList[listNum].job);;
@@ -114,14 +121,18 @@ public class JY_ListSwap : MonoBehaviour
     Sprite switchPortrait(string gender, string job)
     {
         Sprite source;
-        if (gender.Equals("M") && job.Equals("전사"))
-            source = warriorM;
-        else if (gender.Equals("M") && job.Equals("마법사"))
-            source = magicianM;
-        else if (gender.Equals("F") && job.Equals("전사"))
-            source = warriorF;
-        else
-            source = magicianF;
-        return source;
+        if (!JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].isNull)
+        {
+            if (gender.Equals("M") && job.Equals("전사"))
+                source = warriorM;
+            else if (gender.Equals("M") && job.Equals("마법사"))
+                source = magicianM;
+            else if (gender.Equals("F") && job.Equals("전사"))
+                source = warriorF;
+            else
+                source = magicianF;
+            return source;
+        }
+        return null;
     }
 }
