@@ -12,7 +12,7 @@ public class AvatarManager : MonoBehaviour
     public List<GameObject> prefabs;
     private List<GameObject> avatars = new List<GameObject>();
 
-
+    int[] avatarData;
     static public AvatarManager GetInstance()
     {
         if (instance == null)
@@ -34,6 +34,8 @@ public class AvatarManager : MonoBehaviour
             instance = this;
             LoadAvatars();
         }
+
+        avatarData = new int[4];
     }
 
     private void LoadAvatars()

@@ -1087,7 +1087,7 @@ GameObject:
   - component: {fileID: 89385705}
   - component: {fileID: 89385704}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: Character Name Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4034,7 +4034,7 @@ GameObject:
   - component: {fileID: 356727172}
   - component: {fileID: 356727171}
   m_Layer: 5
-  m_Name: InputField (Legacy)
+  m_Name: Character Name InputField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6822,7 +6822,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1605443578}
         m_TargetAssemblyTypeName: AvatarSceneManager, Assembly-CSharp
-        m_MethodName: OnClickNext
+        m_MethodName: saveCreateCharacterData
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19757,6 +19757,7 @@ MonoBehaviour:
   - {fileID: 422961370}
   charMale: {fileID: 4249502086946605048}
   charFemale: {fileID: 1896802304301531}
+  charName: {fileID: 356727171}
 --- !u!1 &1612379501
 GameObject:
   m_ObjectHideFlags: 0

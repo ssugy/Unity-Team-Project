@@ -10,7 +10,7 @@ public class JY_LoadScene : MonoBehaviour
 
     public void enterScene()
     {
-        if (JY_CharacterListManager.s_instance.selectNum == -1)
+        if (JY_CharacterListManager.s_instance.selectNum == -1 && targetSceneNum == 4)
         {
             onAlarm();
             Invoke("offAlarm", 1f);

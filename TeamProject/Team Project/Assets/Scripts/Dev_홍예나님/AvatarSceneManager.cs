@@ -5,12 +5,13 @@ using UnityEditor;
 using UnityEngine;
 using static CartoonHeroes.SetCharacter;
 using static GameManager;
+using UnityEngine.UI;
 
 public class AvatarSceneManager : MonoBehaviour
 {
     private enum Steps{ SELECT_JOB, SELECT_BODY, SELECT_NAME, SAVE}
     private enum MoreOptions { FACE, HAIR, TORSO, LEGS, LAST}
-    public enum Gender { MALE, FEMALE, NEUTRAL}
+    public enum Gender { M, F, NEUTRAL}
     private Steps currentStep = Steps.SELECT_JOB;
     private MoreOptions currentOption = MoreOptions.FACE;
     private int currentOptionPanel = 0;
@@ -20,12 +21,14 @@ public class AvatarSceneManager : MonoBehaviour
     public List<GameObject> options;
     public GameObject charMale;
     public GameObject charFemale;
+    public InputField charName;
+
+
     private Gender gender;
     private List<int> optionSubs;
     private SetCharacter targetScript;
     private Dictionary<string, int> mapOptionNames;
     private string[] strOptionNames = {"Heads", "Hairs", "Torsos", "Legs" };
-
     private List<float> legOptions = new List<float>();
 
     // Start is called before the first frame update
@@ -40,7 +43,7 @@ public class AvatarSceneManager : MonoBehaviour
         }
         mapOptionNames = new Dictionary<string, int>();
 
-        gender = Gender.MALE;
+        gender = Gender.M;
         ShowCharacter();
         //첫번째 버튼을 누른것으로 간주함
         ShowOption((int)currentOption);
@@ -65,7 +68,7 @@ public class AvatarSceneManager : MonoBehaviour
 
     private void ShowCharacter()
     {
-        if(gender == Gender.FEMALE)
+        if(gender == Gender.F)
         {
             charMale.SetActive(false);
             charFemale.SetActive(true);
@@ -144,13 +147,13 @@ public class AvatarSceneManager : MonoBehaviour
 
     public void OnClickFemale()
     {
-        gender = Gender.FEMALE;
+        gender = Gender.F;
         ShowCharacter();
     }
 
     public void OnClickMale()
     {
-        gender = Gender.MALE;
+        gender = Gender.M;
         ShowCharacter();
     }
 
@@ -220,5 +223,31 @@ public class AvatarSceneManager : MonoBehaviour
     public void OnChangeSlide(float vol)
     {
         Debug.Log("vol is: " + vol);
+    }
+
+    // Lobby 씬으로 이동 전 Character Data Save함수
+    public void saveCreateCharacterData()
+    {
+        for (int i = 0; i < 4; i++) {
+            if(JY_CharacterListManager.s_instance.characterData.infoDataList[i].isNull == true)
+            {
+                //데이터 입력
+                JY_CharacterListManager.s_instance.characterData.infoDataList[i].name = charName.text;
+                JY_CharacterListManager.s_instance.characterData.infoDataList[i].characterAvatar[0] = optionSubs[0];
+                JY_CharacterListManager.s_instance.characterData.infoDataList[i].characterAvatar[1] = optionSubs[1];
+                JY_CharacterListManager.s_instance.characterData.infoDataList[i].characterAvatar[2] = optionSubs[2];
+                JY_CharacterListManager.s_instance.characterData.infoDataList[i].characterAvatar[3] = optionSubs[3];
+                JY_CharacterListManager.s_instance.characterData.infoDataList[i].gender = gender.ToString();
+                JY_CharacterListManager.s_instance.characterData.infoDataList[i].species = "인간";
+                JY_CharacterListManager.s_instance.characterData.infoDataList[i].job = "전사";
+                JY_CharacterListManager.s_instance.characterData.infoDataList[i].level = 1;
+                JY_CharacterListManager.s_instance.characterData.infoDataList[i].isNull = false;
+                //데이터 저장후 for문 break
+                JY_CharacterListManager.s_instance.saveListData();
+                break;
+            }
+        }
+        //씬 이동
+        GameManager.s_instance.LoadScene(2);
     }
 }

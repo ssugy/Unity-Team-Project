@@ -20,6 +20,7 @@ public class infoData
     public string job;
     public string gender;
     public string species;
+    public int[] characterAvatar;
 }
 //데이터 변경 저장을 위한 class
 
@@ -88,7 +89,7 @@ public class JY_CharacterListManager : MonoBehaviour
         saveListData();
     }
     //캐릭터생성, 삭제 시 데이터 갱신사항 Json파일에 Save
-    void saveListData()
+    public void saveListData()
     {
         for(int i=0; i<4; i++)
         {
