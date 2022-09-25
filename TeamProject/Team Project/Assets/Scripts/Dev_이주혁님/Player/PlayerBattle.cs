@@ -5,19 +5,19 @@ using UnityEngine;
 public class PlayerBattle : MonoBehaviour
 {
     private bool atkPossible;                  // 공격 가능 여부 표시.
-    public CharacterController playerController;
+    private CharacterController playerController;
     private Animator playerAni;                // 플레이어의 애니메이터.            
     private PlayerMove playerMove;             // enableAct를 전달하기 위해 선언함.    
     private FixedJoystick playerJoysitck;      // 조이스틱 입력을 받아옴.
     public Transform rWeaponDummy;              // 오른손 무기 더미.
-    public TrailRenderer rWeaponEffect;        // 오른손 무기 이펙트. (검기)
+    private TrailRenderer rWeaponEffect;        // 오른손 무기 이펙트. (검기)
     void Start()
     {
         playerController = GetComponent<CharacterController>();
         playerAni = GetComponent<Animator>();
         playerMove = GetComponent<PlayerMove>();
         playerJoysitck = FixedJoystick.instance;
-        atkPossible = true;
+        atkPossible = true;        
         rWeaponEffect = rWeaponDummy.GetChild(0).GetChild(2).GetComponent<TrailRenderer>();
     }               
     public void NormalAttack()

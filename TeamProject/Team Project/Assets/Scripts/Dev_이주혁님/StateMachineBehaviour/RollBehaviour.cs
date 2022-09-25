@@ -2,22 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Roll : StateMachineBehaviour
+public class RollBehaviour : StateMachineBehaviour
 {
-    PlayerBattle pb;
-    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+    private PlayerBattle playerBattle;    
+    private float time; // 애니메이션 중 0.1초에서 0.8초 사이에만 이동할 수 있도록 하기 위해 시간을 저장할 변수.
+    
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        pb = animator.transform.GetComponent<PlayerBattle>();
+        playerBattle = animator.transform.GetComponent<PlayerBattle>();
         Vector3 movement = new Vector3(FixedJoystick.instance.Horizontal, 0,
                 FixedJoystick.instance.Vertical);
         animator.transform.rotation *= Quaternion.Euler(movement);
+        time = 0f;
     }
-
-    // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
+    
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        pb.RollMove();              
+        time += Time.deltaTime;
+        if (time>0.1f && time < 0.8f)
+        {
+            playerBattle.RollMove();
+        }                  
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
