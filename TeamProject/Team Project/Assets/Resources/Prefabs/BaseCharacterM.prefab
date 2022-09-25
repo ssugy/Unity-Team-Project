@@ -2855,6 +2855,7 @@ GameObject:
   - component: {fileID: 2139777293}
   - component: {fileID: 2005552344365993861}
   - component: {fileID: 2139777303}
+  - component: {fileID: 1981564670060625492}
   m_Layer: 0
   m_Name: BaseCharacterM
   m_TagString: Untagged
@@ -2958,10 +2959,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camAxis: {fileID: 0}
-  player: {fileID: 0}
   playerAni: {fileID: 0}
   playerJoysitck: {fileID: 0}
-  characterController: {fileID: 0}
+  playerController: {fileID: 0}
   rotateSpeed: 0
   moveSpeed: 0
   gravity: 0
@@ -3000,6 +3000,21 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!114 &1981564670060625492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1668188202801692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2fa318dca69e774b96ba29a538dc313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  empty: {fileID: 0}
+  inventoryUI: {fileID: 0}
+  quickSlotSet: {fileID: 0}
 --- !u!1 &1672909316657688
 GameObject:
   m_ObjectHideFlags: 0
