@@ -114,6 +114,7 @@ public class JY_ListSwap : MonoBehaviour
             return;
         }
         JY_CharacterListManager.s_instance.selectNum = listNum;
+        JY_AvatarLoad.s_instance.LoadModelData(listNum);
         JY_CharacterListManager.s_instance.selectPortrait =  switchPortrait(JY_CharacterListManager.instance.characterData.infoDataList[listNum].gender,
                                               JY_CharacterListManager.instance.characterData.infoDataList[listNum].job);;
     }

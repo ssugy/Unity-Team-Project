@@ -9,9 +9,9 @@ using UnityEngine.UI;
 
 public class AvatarSceneManager : MonoBehaviour
 {
-    private enum Steps{ SELECT_JOB, SELECT_BODY, SELECT_NAME, SAVE}
-    private enum MoreOptions { FACE, HAIR, TORSO, LEGS, LAST}
-    public enum Gender { M, F, NEUTRAL}
+    private enum Steps { SELECT_JOB, SELECT_BODY, SELECT_NAME, SAVE }
+    private enum MoreOptions { FACE, HAIR, TORSO, LEGS, LAST }
+    public enum Gender { M, F, NEUTRAL }
     private Steps currentStep = Steps.SELECT_JOB;
     private MoreOptions currentOption = MoreOptions.FACE;
     private int currentOptionPanel = 0;
@@ -26,9 +26,9 @@ public class AvatarSceneManager : MonoBehaviour
 
     private Gender gender;
     private List<int> optionSubs;
-    private SetCharacter targetScript;
+    public SetCharacter targetScript;
     private Dictionary<string, int> mapOptionNames;
-    private string[] strOptionNames = {"Heads", "Hairs", "Torsos", "Legs" };
+    private string[] strOptionNames = { "Heads", "Hairs", "Torsos", "Legs" };
     private List<float> legOptions = new List<float>();
 
     // Start is called before the first frame update
@@ -37,7 +37,7 @@ public class AvatarSceneManager : MonoBehaviour
         ShowCanvas();
 
         optionSubs = new List<int>();
-        for(int i = 0; i < (int)MoreOptions.LAST; i++)
+        for (int i = 0; i < (int)MoreOptions.LAST; i++)
         {
             optionSubs.Add(0);
         }
@@ -52,7 +52,7 @@ public class AvatarSceneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void SetMap()
@@ -68,7 +68,7 @@ public class AvatarSceneManager : MonoBehaviour
 
     private void ShowCharacter()
     {
-        if(gender == Gender.F)
+        if (gender == Gender.F)
         {
             charMale.SetActive(false);
             charFemale.SetActive(true);
@@ -82,7 +82,13 @@ public class AvatarSceneManager : MonoBehaviour
         }
         SetMap();
     }
-
+    public void getSetCharacter(string gender)
+    {
+        if (gender == "M")
+            targetScript = charFemale.GetComponent<SetCharacter>();
+        else
+            targetScript = charMale.GetComponent<SetCharacter>();
+    }
     private void HideAllCanvases()
     {
         foreach (var canvas in canvases)
@@ -93,7 +99,7 @@ public class AvatarSceneManager : MonoBehaviour
 
     private void ShowCanvas()
     {
-        if(currentStep >= Steps.SELECT_JOB && currentStep <= Steps.SELECT_NAME)
+        if (currentStep >= Steps.SELECT_JOB && currentStep <= Steps.SELECT_NAME)
         {
             HideAllCanvases();
             canvases[(int)currentStep].SetActive(true);
@@ -117,7 +123,7 @@ public class AvatarSceneManager : MonoBehaviour
 
     public void OnClickPauseAvatar()
     {
-        if(Time.timeScale > 0)
+        if (Time.timeScale > 0)
         {
             Time.timeScale = 0;
         }
@@ -127,9 +133,9 @@ public class AvatarSceneManager : MonoBehaviour
         }
     }
 
-    public void OnClickNext( )
+    public void OnClickNext()
     {
-        if(currentStep < Steps.SAVE)
+        if (currentStep < Steps.SAVE)
         {
             currentStep++;
             ShowCanvas();
@@ -202,6 +208,26 @@ public class AvatarSceneManager : MonoBehaviour
         }
 
     }
+    public void DeleteSubOption(int i)
+    {
+        i = (int)currentOption;
+        for (int j = 0; j < targetScript.itemGroups[i].slots; j++)
+        {
+            if (targetScript.HasItem(targetScript.itemGroups[i], j))
+            {
+                List<GameObject> removedObjs = targetScript.GetRemoveObjList(targetScript.itemGroups[i], j);
+                for (int m = 0; m < removedObjs.Count; m++)
+                {
+                    if (removedObjs[m] != null)
+                    {
+                        DestroyImmediate(removedObjs[m]);
+                    }
+                }
+                //if (GUILayout.Button("Add Item"))
+            }
+        }
+
+    }
 
     public void OnClickSubOption(int sub)
     {
@@ -228,8 +254,9 @@ public class AvatarSceneManager : MonoBehaviour
     // Lobby 씬으로 이동 전 Character Data Save함수
     public void saveCreateCharacterData()
     {
-        for (int i = 0; i < 4; i++) {
-            if(JY_CharacterListManager.s_instance.characterData.infoDataList[i].isNull == true)
+        for (int i = 0; i < 4; i++)
+        {
+            if (JY_CharacterListManager.s_instance.characterData.infoDataList[i].isNull == true)
             {
                 //데이터 입력
                 JY_CharacterListManager.s_instance.characterData.infoDataList[i].name = charName.text;

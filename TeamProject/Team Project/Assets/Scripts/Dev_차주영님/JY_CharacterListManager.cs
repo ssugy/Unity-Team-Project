@@ -97,6 +97,5 @@ public class JY_CharacterListManager : MonoBehaviour
             File.WriteAllText(path, json);
         }
     }
-
 }
 
