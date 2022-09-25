@@ -40,11 +40,12 @@ public class IntroOptionPannel : MonoBehaviour
         }
     }
 
+    // 영어, 한국어, 일본어, 독일어, 프랑스어, 중국어(스프레드 시트와 동일한 순서)
     private enum Langs
     {
+        US,
         KR,
         JP,
-        US,
         DE,
         FR,
         CN
@@ -56,6 +57,7 @@ public class IntroOptionPannel : MonoBehaviour
     {
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.CLICK_02);
         int num = int.Parse(go.name.Split('_')[0]);
+        GameManager.s_instance.currentLanguage = num;
         selectedLang = (Langs)num;
         for (int i = 0; i < languageMenuImgs.Length; i++)
         {
