@@ -19,6 +19,7 @@ public class AvatarSceneManager : MonoBehaviour
     private MoreOptions currentOption = MoreOptions.FACE;
     private int currentOptionPanel = 0;
 
+
     public GameObject popup;
     public List<GameObject> canvases;
     public List<GameObject> options;
@@ -26,6 +27,7 @@ public class AvatarSceneManager : MonoBehaviour
     public GameObject charFemale;
     private Gender gender;
     private List<int> optionSubs;
+    public InputField CharacterNameInput;
     private SetCharacter targetScript;
     private Dictionary<string, int> mapOptionNames;
 
@@ -169,12 +171,50 @@ public class AvatarSceneManager : MonoBehaviour
         }
     }
 
-    public void OnClickNext( )
+    public void OnClickNext()
     {
         if(currentStep < Steps.SAVE)
         {
             currentStep++;
             ShowCanvas();
+        }
+
+        else
+        {
+            //주영
+            //캐릭터 생성 버튼을 누른 경우 로비씬으로 데이터를 넘깁니다.
+            //로비씬을 경유하여 캐릭터메이킹씬을 시작했을 때에만 로비씬으로 데이터를 넘깁니다.
+            //상황에 따라 추후에 게임매니저와 병합하는 작업이 필요할 것 같습니다.
+            if (JY_CharacterListManager.s_instance != null)
+            {
+                //빈슬롯 찾은 후 작성 및 break
+                for (int i = 0; i < 4; i++)
+                {
+                    if (JY_CharacterListManager.s_instance.characterData.infoDataList[i].isNull == true)
+                    {
+                        if (CharacterNameInput!=null)
+                        {
+                            //스테이터스 작성
+                            JY_CharacterListManager.s_instance.characterData.infoDataList[i].name = CharacterNameInput.text;
+                            JY_CharacterListManager.s_instance.characterData.infoDataList[i].isNull = false;
+                            JY_CharacterListManager.s_instance.characterData.infoDataList[i].level = 1;
+                            JY_CharacterListManager.s_instance.characterData.infoDataList[i].job = "전사";
+                            JY_CharacterListManager.s_instance.characterData.infoDataList[i].gender = (gender == 0 ? "M" : "F");
+                            JY_CharacterListManager.s_instance.characterData.infoDataList[i].species = "인간";
+                            //모델링 작성
+                            JY_CharacterListManager.s_instance.characterData.infoDataList[i].characterAvatar[0] = optionSubs[0];
+                            JY_CharacterListManager.s_instance.characterData.infoDataList[i].characterAvatar[1] = optionSubs[1];
+                            JY_CharacterListManager.s_instance.characterData.infoDataList[i].characterAvatar[2] = optionSubs[2];
+                            JY_CharacterListManager.s_instance.characterData.infoDataList[i].characterAvatar[3] = optionSubs[3];
+                            break;
+                        }
+                    }
+                }
+                //데이터 세이브
+                JY_CharacterListManager.s_instance.saveListData();
+                if (GameManager.s_instance != null)
+                    GameManager.s_instance.LoadScene(2);
+            }
         }
     }
 

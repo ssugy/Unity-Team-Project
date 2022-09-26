@@ -1,20 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using CartoonHeroes;
+using static CartoonHeroes.SetCharacter;
 using UnityEngine;
 
-public class JY_AvatarLoad : AvatarSceneManager
+public class JY_AvatarLoad : MonoBehaviour
 {
     public static JY_AvatarLoad instance;
     public static JY_AvatarLoad s_instance { get { return instance; } }
     public GameObject origin;
+
+    public GameObject charMale;
+    public GameObject charFemale;
+
+    public SetCharacter setChara;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (instance == null)
+        {
             instance = this;
+        }
         origin = GameObject.FindWithTag("Player");
         charMale = findGameObjectInChild("BaseCharacterM", origin.transform).gameObject;
-        charFemale= findGameObjectInChild("BaseCharacterF", origin.transform).gameObject;
+        charFemale = findGameObjectInChild("BaseCharacterF", origin.transform).gameObject;
+    }
+
+    private void Start()
+    {
+        
     }
 
     public Transform findGameObjectInChild(string nodename, Transform origin)
@@ -37,6 +51,32 @@ public class JY_AvatarLoad : AvatarSceneManager
 
     }
 
+    void DeleteSubOption(int currentOption)
+    {
+        for (int j = 0; j < setChara.itemGroups[currentOption].slots; j++)
+        {
+            if (setChara.HasItem(setChara.itemGroups[currentOption], j))
+            {
+                List<GameObject> removedObjs = setChara.GetRemoveObjList(setChara.itemGroups[currentOption], j);
+                for (int m = 0; m < removedObjs.Count; m++)
+                {
+                    if (removedObjs[m] != null)
+                    {
+                        DestroyImmediate(removedObjs[m]);
+                    }
+                }
+            }
+        }
+
+    }
+    public void subOptionLoad(int currentOption,int sub)
+    {
+        DeleteSubOption(currentOption);
+        {
+            GameObject addedObj = setChara.AddItem(setChara.itemGroups[currentOption], sub);
+        }
+    }
+
     public void LoadModelData(int listNum)
     {
         if (JY_CharacterListManager.s_instance.selectNum == -1)
@@ -47,33 +87,22 @@ public class JY_AvatarLoad : AvatarSceneManager
         else
         {
             //gender °»½Å
-            if (JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].gender == "M")
+            if (JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].gender == "F")
             {
                 charMale.SetActive(false);
                 charFemale.SetActive(true);
-                //getSetCharacter("M"); //¿ëÈÆ
+                setChara = charFemale.GetComponent<SetCharacter>();
             }
             else
             {
                 charMale.SetActive(true);
                 charFemale.SetActive(false);
-                //getSetCharacter("F"); //¿ëÈÆ
+                setChara = charMale.GetComponent<SetCharacter>();
             }
 
-            //Customizing °»½Å
-            for(int i=0; i < 4;i++)
+            for(int i=0; i<4; i++)
             {
-                //¿ëÈÆ
-                //DeleteSubOption(i);
-                //{
-                //    GameObject addedObj = targetScript.AddItem(targetScript.itemGroups[i],
-                //    JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].characterAvatar[i]);
-                //    if (i == 3)
-                //    {
-                //        GameObject child = addedObj.transform.GetChild(0).gameObject;
-                //        //legOptions = child.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight();
-                //    }
-                //}
+                subOptionLoad(i, JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].characterAvatar[i]);
             }
         }
     }
