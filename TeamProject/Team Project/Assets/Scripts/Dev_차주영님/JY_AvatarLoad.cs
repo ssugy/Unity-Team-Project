@@ -51,28 +51,29 @@ public class JY_AvatarLoad : AvatarSceneManager
             {
                 charMale.SetActive(false);
                 charFemale.SetActive(true);
-                getSetCharacter("M");
+                //getSetCharacter("M"); //¿ëÈÆ
             }
             else
             {
                 charMale.SetActive(true);
                 charFemale.SetActive(false);
-                getSetCharacter("F");
+                //getSetCharacter("F"); //¿ëÈÆ
             }
 
             //Customizing °»½Å
             for(int i=0; i < 4;i++)
             {
-                DeleteSubOption(i);
-                {
-                    GameObject addedObj = targetScript.AddItem(targetScript.itemGroups[i],
-                    JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].characterAvatar[i]);
-                    if (i == 3)
-                    {
-                        GameObject child = addedObj.transform.GetChild(0).gameObject;
-                        //legOptions = child.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight();
-                    }
-                }
+                //¿ëÈÆ
+                //DeleteSubOption(i);
+                //{
+                //    GameObject addedObj = targetScript.AddItem(targetScript.itemGroups[i],
+                //    JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].characterAvatar[i]);
+                //    if (i == 3)
+                //    {
+                //        GameObject child = addedObj.transform.GetChild(0).gameObject;
+                //        //legOptions = child.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight();
+                //    }
+                //}
             }
         }
     }

@@ -3,15 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using static CartoonHeroes.SetCharacter;
 using static GameManager;
-using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class AvatarSceneManager : MonoBehaviour
 {
-    private enum Steps { SELECT_JOB, SELECT_BODY, SELECT_NAME, SAVE }
-    private enum MoreOptions { FACE, HAIR, TORSO, LEGS, LAST }
-    public enum Gender { M, F, NEUTRAL }
+    private enum Steps{ SELECT_JOB, SELECT_BODY, SELECT_NAME, SAVE}
+    private enum MoreOptions { FACE, HAIR, TORSO, LEGS, LAST}
+    public enum Gender { MALE, FEMALE, NEUTRAL}
+    const float WEIGHT_SCALE = 100.0f;
     private Steps currentStep = Steps.SELECT_JOB;
     private MoreOptions currentOption = MoreOptions.FACE;
     private int currentOptionPanel = 0;
@@ -21,44 +24,83 @@ public class AvatarSceneManager : MonoBehaviour
     public List<GameObject> options;
     public GameObject charMale;
     public GameObject charFemale;
-    public InputField charName;
-
-
     private Gender gender;
     private List<int> optionSubs;
-    public SetCharacter targetScript;
+    private SetCharacter targetScript;
     private Dictionary<string, int> mapOptionNames;
-    private string[] strOptionNames = { "Heads", "Hairs", "Torsos", "Legs" };
-    private List<float> legOptions = new List<float>();
+
+    private string[] strOptionNames = {"Heads", "Hairs", "Torsos", "Legs" };
+    private int[] numBlendOptions = { 6, 2, 4, 1 };
+
+    // 각 Item Group별로 Option(n개)값을 저장하기 위한 변수가 필요합니다
+    private List<float> currentBlendOption;
+    private List<float> legOptions = new List<float>(); // Leg용 옵션들
+    private List<float> hairOptions = new List<float>(); // hair용 옵션들
+    private List<float> headOptions = new List<float>(); // head용 옵션들
+    private List<float> torsoOptions = new List<float>(); // torso용 옵션들
+    private SkinnedMeshRenderer currentSkinnedMesh = null;
 
     // Start is called before the first frame update
     void Start()
     {
         ShowCanvas();
 
+        // 1. Item group(4개) 별로 MapOptionNames Dictionary를 초기화 합니다. 
         optionSubs = new List<int>();
-        for (int i = 0; i < (int)MoreOptions.LAST; i++)
+        for(int i = 0; i < (int)MoreOptions.LAST; i++)
         {
             optionSubs.Add(0);
         }
         mapOptionNames = new Dictionary<string, int>();
+        // 2. Item Group 별로 setting가능한 blendOption 값(n개)의 갯수를 초기화 합니다.
+        for (int i = 0; i < (int)MoreOptions.LAST; i++)
+        {
+            List<float> blendOption;
+            switch ((MoreOptions)i)
+            {
+                case MoreOptions.FACE:
+                    blendOption = headOptions;
+                    break;
+                case MoreOptions.HAIR:
+                    blendOption = hairOptions;
+                    break;
+                case MoreOptions.TORSO:
+                    blendOption = torsoOptions;
+                    break;
+                default:
+                    blendOption = legOptions;
+                    break;
+            }
+            for (int j = 0; j < numBlendOptions[i]; j++)
+            {
+                blendOption.Add(0);
+            }
 
-        gender = Gender.M;
+        }
+
+        gender = Gender.MALE;
         ShowCharacter();
         //첫번째 버튼을 누른것으로 간주함
-        ShowOption((int)currentOption);
+        ShowOption(0);
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
+    // key-value 검색을 위한 Dictionary의 초기화, 즉 option 목록을 만든다.
+    // key 는 strOptionNames 의 4가지 이름이다.
+    // value는 targetscript(SetCharacter.cs)에서 제공하는 ItemGroup 이름이다.
     private void SetMap()
     {
         mapOptionNames.Clear();
         int i = 0;
+        // 각 Itemgroup의 이름을 가져와서 Dictionary에 채워넣는다.
+        // Key 는 이름이고, Value는 그 이름이 차지하고 있는 순서이다.
+        // 즉, Legs가 가장 먼저 들어있다면 Legs의 순서는 0이 된다.
         foreach (var itemGroup in targetScript.itemGroups)
         {
             mapOptionNames.Add(itemGroup.name, i);
@@ -68,7 +110,7 @@ public class AvatarSceneManager : MonoBehaviour
 
     private void ShowCharacter()
     {
-        if (gender == Gender.F)
+        if(gender == Gender.FEMALE)
         {
             charMale.SetActive(false);
             charFemale.SetActive(true);
@@ -82,13 +124,7 @@ public class AvatarSceneManager : MonoBehaviour
         }
         SetMap();
     }
-    public void getSetCharacter(string gender)
-    {
-        if (gender == "M")
-            targetScript = charFemale.GetComponent<SetCharacter>();
-        else
-            targetScript = charMale.GetComponent<SetCharacter>();
-    }
+
     private void HideAllCanvases()
     {
         foreach (var canvas in canvases)
@@ -99,7 +135,7 @@ public class AvatarSceneManager : MonoBehaviour
 
     private void ShowCanvas()
     {
-        if (currentStep >= Steps.SELECT_JOB && currentStep <= Steps.SELECT_NAME)
+        if(currentStep >= Steps.SELECT_JOB && currentStep <= Steps.SELECT_NAME)
         {
             HideAllCanvases();
             canvases[(int)currentStep].SetActive(true);
@@ -123,7 +159,7 @@ public class AvatarSceneManager : MonoBehaviour
 
     public void OnClickPauseAvatar()
     {
-        if (Time.timeScale > 0)
+        if(Time.timeScale > 0)
         {
             Time.timeScale = 0;
         }
@@ -133,9 +169,9 @@ public class AvatarSceneManager : MonoBehaviour
         }
     }
 
-    public void OnClickNext()
+    public void OnClickNext( )
     {
-        if (currentStep < Steps.SAVE)
+        if(currentStep < Steps.SAVE)
         {
             currentStep++;
             ShowCanvas();
@@ -153,22 +189,52 @@ public class AvatarSceneManager : MonoBehaviour
 
     public void OnClickFemale()
     {
-        gender = Gender.F;
+        gender = Gender.FEMALE;
         ShowCharacter();
     }
 
     public void OnClickMale()
     {
-        gender = Gender.M;
+        gender = Gender.MALE;
         ShowCharacter();
     }
 
     private void ShowOption(int option)
     {
         HideAllOption();
-
+        // 1. strOptionNames 에는 Item Group의 Name이 들어있다.
+        //    우리가 원하는 Group의 이름 및 option버튼의 순서는 이미 알고있다. (Hairs = 0, Heads, Torsos, Legs = 3)
+        //    이 이름은 strOptionNames에 순서대로 들어있다.
+        // 2. mapOptionNames는 key-value 검색을 위한 Dictionary이다.
+        //    mapOptionNames는 이미 SetMap으로 초기화 되어 있다.
+        // 3. int option은 내가 누른 버튼의 순서이다.
+        //    strOptionNames[option]은 내가 누른 버튼이 지정하는 Group의 이름이다.
+        //    mapOptionNames[strOptionNames[option]]은 내가 누른 버튼의 group이름을 통해 얻어진 Item Group의 실제 Index이다.
+        //    그것이 currentOption이다.
+        // 4. current Option값은 추후 targetScript.itemGroups[ current Option ] 이런식으로 사용된다.
         currentOption = (MoreOptions)mapOptionNames[strOptionNames[option]];
         options[currentOptionPanel].SetActive(true);
+        switch ((MoreOptions)option)
+        {
+            case MoreOptions.FACE:
+                currentBlendOption = headOptions;
+                break;
+            case MoreOptions.HAIR:
+                currentBlendOption = hairOptions;
+                break;
+            case MoreOptions.TORSO:
+                currentBlendOption = torsoOptions;
+                break;
+            case MoreOptions.LEGS:
+                currentBlendOption = legOptions;
+                break;
+        }
+        currentSkinnedMesh = GetSkinnedMesh();
+        if (currentSkinnedMesh != null)
+        {
+            Debug.Log("Found");
+        }
+
     }
 
     public void HideAllOption()
@@ -188,6 +254,7 @@ public class AvatarSceneManager : MonoBehaviour
         }
     }
 
+    // head1나 hair2등의 subOption 선택버튼을 눌렀을때 기존에 존재하는 head 또는 hair를 삭제한다.
     private void DeleteSubOption()
     {
         int i = (int)currentOption;
@@ -208,25 +275,41 @@ public class AvatarSceneManager : MonoBehaviour
         }
 
     }
-    public void DeleteSubOption(int i)
+
+    // 현재 있는 모델에서 주어진 option에 해당하는 child Object를 찾아낸다.
+    // 예를 들어, 현재 currentOption이 hair라면 hair에 해당되는 object를 찾아낸다.
+    private SkinnedMeshRenderer GetSkinnedMesh()
     {
-        i = (int)currentOption;
-        for (int j = 0; j < targetScript.itemGroups[i].slots; j++)
+        Transform[] allChildren = targetScript.GetAllCharacterChildren();
+
+        //List<GameObject> selectedList = new List<GameObject>();
+
+        for (int i = 0; i < allChildren.Length; i++)
         {
-            if (targetScript.HasItem(targetScript.itemGroups[i], j))
+            for (int j = 0; j < targetScript.itemGroups[(int)currentOption].slots; j++)
+            if (targetScript.BelongsToItem(allChildren[i], targetScript.itemGroups[(int)currentOption], j))
             {
-                List<GameObject> removedObjs = targetScript.GetRemoveObjList(targetScript.itemGroups[i], j);
-                for (int m = 0; m < removedObjs.Count; m++)
+                //selectedList.Add(allChildren[i].gameObject);
+                GameObject candidate = allChildren[i].gameObject;
+                if (candidate != null)
                 {
-                    if (removedObjs[m] != null)
+                    if (candidate.GetComponent<SkinnedMeshRenderer>() != null)
                     {
-                        DestroyImmediate(removedObjs[m]);
+                        return candidate.GetComponent<SkinnedMeshRenderer>();
                     }
+                    if (candidate.transform.childCount > 0)
+                    {
+                        candidate = candidate.transform.GetChild(0).gameObject;
+                        if (candidate.GetComponent<SkinnedMeshRenderer>() != null)
+                        {
+                            return candidate.GetComponent<SkinnedMeshRenderer>();
+                        }
+                    }
+
                 }
-                //if (GUILayout.Button("Add Item"))
             }
         }
-
+        return null;
     }
 
     public void OnClickSubOption(int sub)
@@ -237,44 +320,66 @@ public class AvatarSceneManager : MonoBehaviour
             optionSubs[i] = sub;
             GameObject addedObj = targetScript.AddItem(targetScript.itemGroups[i], optionSubs[i]);
 
-            if (i == (int)MoreOptions.LEGS)
+            /*
+             나중에 지우세요
+            if (addedObj.transform.childCount > 0)
             {
                 GameObject child = addedObj.transform.GetChild(0).gameObject;
                 //legOptions = child.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight();
             }
-
-        }
-    }
-
-    public void OnChangeSlide(float vol)
-    {
-        Debug.Log("vol is: " + vol);
-    }
-
-    // Lobby 씬으로 이동 전 Character Data Save함수
-    public void saveCreateCharacterData()
-    {
-        for (int i = 0; i < 4; i++)
-        {
-            if (JY_CharacterListManager.s_instance.characterData.infoDataList[i].isNull == true)
+            */
+            currentSkinnedMesh = GetSkinnedMesh();
+            if (currentSkinnedMesh != null)
             {
-                //데이터 입력
-                JY_CharacterListManager.s_instance.characterData.infoDataList[i].name = charName.text;
-                JY_CharacterListManager.s_instance.characterData.infoDataList[i].characterAvatar[0] = optionSubs[0];
-                JY_CharacterListManager.s_instance.characterData.infoDataList[i].characterAvatar[1] = optionSubs[1];
-                JY_CharacterListManager.s_instance.characterData.infoDataList[i].characterAvatar[2] = optionSubs[2];
-                JY_CharacterListManager.s_instance.characterData.infoDataList[i].characterAvatar[3] = optionSubs[3];
-                JY_CharacterListManager.s_instance.characterData.infoDataList[i].gender = gender.ToString();
-                JY_CharacterListManager.s_instance.characterData.infoDataList[i].species = "인간";
-                JY_CharacterListManager.s_instance.characterData.infoDataList[i].job = "전사";
-                JY_CharacterListManager.s_instance.characterData.infoDataList[i].level = 1;
-                JY_CharacterListManager.s_instance.characterData.infoDataList[i].isNull = false;
-                //데이터 저장후 for문 break
-                JY_CharacterListManager.s_instance.saveListData();
-                break;
+                Debug.Log("Found");
             }
         }
-        //씬 이동
-        GameManager.s_instance.LoadScene(2);
+    }
+    private void OnChangeSlide(int index, float val)
+    {
+        val *= WEIGHT_SCALE;
+        currentBlendOption[index] = val;
+        if (currentSkinnedMesh != null)
+        {
+            if (currentSkinnedMesh.sharedMesh.blendShapeCount > index)
+            {
+                currentSkinnedMesh.SetBlendShapeWeight(index, val);
+            }
+        }
+    }
+    public void OnChangeSlide1(float val)
+    {
+        Debug.Log("slide 1 is: " + val);
+        OnChangeSlide(0, val);
+    }
+
+    public void OnChangeSlide2(float val)
+    {
+        Debug.Log("slide 2 is: " + val);
+        OnChangeSlide(1, val);
+    }
+
+    public void OnChangeSlide3(float val)
+    {
+        Debug.Log("slide 3 is: " + val);
+        OnChangeSlide(2, val);
+    }
+
+    public void OnChangeSlide4(float val)
+    {
+        Debug.Log("slide 4 is: " + val);
+        OnChangeSlide(3, val);
+    }
+
+    public void OnChangeSlide5(float val)
+    {
+        Debug.Log("slide 5 is: " + val);
+        OnChangeSlide(4, val);
+    }
+
+    public void OnChangeSlide6(float val)
+    {
+        Debug.Log("slide 6 is: " + val);
+        OnChangeSlide(5, val);
     }
 }
