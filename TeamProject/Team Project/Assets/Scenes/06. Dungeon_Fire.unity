@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.35872698, a: 1}
+  m_IndirectSpecularColor: {r: 0.3708984, g: 0.37837017, b: 0.35722536, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &4
 LightmapSettings:
@@ -4267,6 +4267,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e865cb26b2674348abd094bb4146ac9, type: 3}
+--- !u!1 &146523313 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 170346, guid: 88e480c990c9d6a458b5fc85fe1da2aa, type: 3}
+  m_PrefabInstance: {fileID: 1910356746}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &146523316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146523313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1ecdaa454fad1e41b58e2d29b8a97eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _level: 7
+  _hp: 300
+  _maxHp: 300
+  _attack: 25
+  _defense: 20
+  _moveSpeed: 5
 --- !u!4 &150270395 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 415138, guid: cd1692c21789fbe49a19604099ec1ffb, type: 3}
@@ -5144,6 +5167,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &213394766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213394762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bfa70a1e6094a948b32a0563b14aba2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 0
+  currentHp: 0
+  atk: 0
+  def: 0
 --- !u!4 &213419072 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 493074, guid: 56e374f281eac6647ad65b24e4bd2d3a, type: 3}
@@ -27384,6 +27423,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 455840, guid: f2e4f209d35467a428f5d8600dd58fce, type: 3}
   m_PrefabInstance: {fileID: 1233176296}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1234643511 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
+  m_PrefabInstance: {fileID: 2144313222}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1234643514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234643511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1ecdaa454fad1e41b58e2d29b8a97eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _level: 3
+  _hp: 150
+  _maxHp: 150
+  _attack: 15
+  _defense: 7
+  _moveSpeed: 5
 --- !u!1001 &1235364778
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29111,7 +29173,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1713781036754730, guid: 0f8a471e5537f864ebdb454fe82308eb, type: 3}
       propertyPath: m_Name
-      value: StoneMonster
+      value: Monster_Stone
       objectReference: {fileID: 0}
     - target: {fileID: 4788319935855200, guid: 0f8a471e5537f864ebdb454fe82308eb, type: 3}
       propertyPath: m_RootOrder
@@ -29119,15 +29181,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4788319935855200, guid: 0f8a471e5537f864ebdb454fe82308eb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.423595
+      value: 14.8
       objectReference: {fileID: 0}
     - target: {fileID: 4788319935855200, guid: 0f8a471e5537f864ebdb454fe82308eb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.9999995
+      value: 3.97
       objectReference: {fileID: 0}
     - target: {fileID: 4788319935855200, guid: 0f8a471e5537f864ebdb454fe82308eb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 65.58216
+      value: 66.06
       objectReference: {fileID: 0}
     - target: {fileID: 4788319935855200, guid: 0f8a471e5537f864ebdb454fe82308eb, type: 3}
       propertyPath: m_LocalRotation.w
@@ -37794,6 +37856,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 439678, guid: 080370de29187cc43a1a0cab200ddafe, type: 3}
   m_PrefabInstance: {fileID: 1611603108}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1613437327 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1342959200176554030, guid: 71c2b86e4d7bc49b894c67d7b7a7b83f, type: 3}
+  m_PrefabInstance: {fileID: 1912831725}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1613437330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1613437327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1ecdaa454fad1e41b58e2d29b8a97eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _level: 5
+  _hp: 200
+  _maxHp: 200
+  _attack: 20
+  _defense: 13
+  _moveSpeed: 5
 --- !u!1001 &1617587673
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44331,7 +44416,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 170346, guid: 88e480c990c9d6a458b5fc85fe1da2aa, type: 3}
       propertyPath: m_Name
-      value: Green
+      value: Monster_GreenDragon
       objectReference: {fileID: 0}
     - target: {fileID: 476204, guid: 88e480c990c9d6a458b5fc85fe1da2aa, type: 3}
       propertyPath: m_RootOrder
@@ -44542,7 +44627,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1342959200176554030, guid: 71c2b86e4d7bc49b894c67d7b7a7b83f, type: 3}
       propertyPath: m_Name
-      value: monster_orc
+      value: Monster_orc
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71c2b86e4d7bc49b894c67d7b7a7b83f, type: 3}
@@ -47918,6 +48003,10 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: PlayerController, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 1482406538525424989, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.14611816
+      objectReference: {fileID: 0}
     - target: {fileID: 6448476276534477457, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -50473,7 +50562,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
       propertyPath: m_Name
-      value: Skeleton@Skin
+      value: Monster_Skeleton
       objectReference: {fileID: 0}
     - target: {fileID: 400078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
       propertyPath: m_RootOrder
