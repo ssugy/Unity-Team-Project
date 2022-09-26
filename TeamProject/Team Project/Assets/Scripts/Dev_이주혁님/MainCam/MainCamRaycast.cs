@@ -10,6 +10,7 @@ public class MainCamRaycast : MonoBehaviour
 
     private void Start()
     {
+        player = PlayerController.player;
         hits = new RaycastHit[0];
         layerMask = 1 << LayerMask.NameToLayer("Obstacle");
     }

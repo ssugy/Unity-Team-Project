@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.EventSystems;
 public class PlayerController : MonoBehaviour
 {
     public Transform camAxis;                     // 메인 카메라 축.      
@@ -20,11 +20,18 @@ public class PlayerController : MonoBehaviour
     public Transform rWeaponDummy;              // 오른손 무기 더미.
     private TrailRenderer rWeaponEffect;        // 오른손 무기 이펙트. (검기)
 
+    public static Transform player;
+
     private void Awake()
     {
+        player = null;
         enableMove = true;
         enableAtk = true;
         movement = Vector3.zero;
+    }
+    private void OnEnable()
+    {
+        player = transform;
     }
 
     private void Start()
@@ -36,7 +43,11 @@ public class PlayerController : MonoBehaviour
         rotateSpeed = 5f;
         moveSpeed = 8f;        
         gravity = 0f;
-        rWeaponEffect = rWeaponDummy.GetChild(0).GetChild(2).GetComponent<TrailRenderer>();
+        if (rWeaponDummy.childCount != 0)
+        {
+            rWeaponEffect = rWeaponDummy.GetChild(0).GetChild(2).GetComponent<TrailRenderer>();
+        }
+        
     }
 
     void Move()
@@ -143,21 +154,27 @@ public class PlayerController : MonoBehaviour
             Time.deltaTime + new Vector3(0, gravity * Time.deltaTime, 0));
     }
 
-    public void LArmDown()
+    public void LArmDown(PointerEventData data)
     {
         playerAni.SetBool("isLArm", true);
     }
-    public void LArmUp()
+    public void LArmUp(PointerEventData data)
     {
         playerAni.SetBool("isLArm", false);
     }
     public void WeaponEffectOn()
     {
-        rWeaponEffect.emitting = true;
+        if (rWeaponEffect != null)
+        {
+            rWeaponEffect.emitting = true;
+        }        
     }
     public void WeaponEffectOff()
     {
-        rWeaponEffect.emitting = false;
+        if (rWeaponEffect != null)
+        {
+            rWeaponEffect.emitting = false;
+        }        
     }
     public void Die()
     {
