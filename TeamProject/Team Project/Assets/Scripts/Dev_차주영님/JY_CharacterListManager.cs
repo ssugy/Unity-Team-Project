@@ -71,7 +71,7 @@ public class JY_CharacterListManager : MonoBehaviour
         {
             JY_AvatarLoad.s_instance.charMale = JY_AvatarLoad.s_instance.findGameObjectInChild("BaseCharacterM", JY_AvatarLoad.s_instance.origin.transform).gameObject;
             JY_AvatarLoad.s_instance.charFemale = JY_AvatarLoad.s_instance.findGameObjectInChild("BaseCharacterF", JY_AvatarLoad.s_instance.origin.transform).gameObject;
-            //JY_AvatarLoad.s_instance.LoadModelData(selectNum);
+            JY_AvatarLoad.s_instance.LoadModelData(selectNum);
         }
     }
     void Update()
