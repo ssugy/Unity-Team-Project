@@ -2928,9 +2928,8 @@ GameObject:
   - component: {fileID: 4639521340397212751}
   - component: {fileID: 4701360694588880471}
   - component: {fileID: 4754428426783493899}
-  - component: {fileID: 5492157564760563063}
-  - component: {fileID: 4122266896678135948}
   - component: {fileID: 16554411}
+  - component: {fileID: 5492157564760563063}
   - component: {fileID: 16554410}
   m_Layer: 0
   m_Name: BaseCharacterF
@@ -3022,40 +3021,6 @@ MonoBehaviour:
     - prefab: {fileID: 100000, guid: 7e462abb283b73a4ba97438461785130, type: 3}
     slots: 4
   disabledGraySkeleton: {fileID: 0}
---- !u!114 &5492157564760563063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4641566208725042821}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a94871114be19384097d9180eb4625ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  camAxis: {fileID: 0}
-  playerAni: {fileID: 0}
-  playerJoysitck: {fileID: 0}
-  playerController: {fileID: 0}
-  rotateSpeed: 0
-  moveSpeed: 0
-  gravity: 0
-  movement: {x: 0, y: 0, z: 0}
-  enableAct: 0
---- !u!114 &4122266896678135948
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4641566208725042821}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 386b2d325af6aec4197d93793edf18c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rWeaponDummy: {fileID: 898127006}
 --- !u!143 &16554411
 CharacterController:
   m_ObjectHideFlags: 0
@@ -3074,6 +3039,28 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.85, z: 0}
+--- !u!114 &5492157564760563063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4641566208725042821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a94871114be19384097d9180eb4625ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camAxis: {fileID: 0}
+  playerAni: {fileID: 0}
+  playerJoysitck: {fileID: 0}
+  controller: {fileID: 0}
+  rotateSpeed: 0
+  moveSpeed: 0
+  gravity: 0
+  movement: {x: 0, y: 0, z: 0}
+  enableAct: 0
+  rWeaponDummy: {fileID: 898127006}
 --- !u!114 &16554410
 MonoBehaviour:
   m_ObjectHideFlags: 0

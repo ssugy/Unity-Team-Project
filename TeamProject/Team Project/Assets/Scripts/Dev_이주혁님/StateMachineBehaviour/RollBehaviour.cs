@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class RollBehaviour : StateMachineBehaviour
 {
-    private PlayerBattle playerBattle;    
+    private PlayerController playerController;    
     private float time; // 애니메이션 중 0.1초에서 0.8초 사이에만 이동할 수 있도록 하기 위해 시간을 저장할 변수.
     
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        playerBattle = animator.transform.GetComponent<PlayerBattle>();
-        Vector3 movement = new Vector3(FixedJoystick.instance.Horizontal, 0,
+        playerController = animator.transform.GetComponent<PlayerController>();
+        /*Vector3 movement = new Vector3(FixedJoystick.instance.Horizontal, 0,
                 FixedJoystick.instance.Vertical);
-        animator.transform.rotation *= Quaternion.Euler(movement);
+        animator.transform.rotation *= Quaternion.Euler(movement);*/
+        playerController.SetRotate();
         time = 0f;
     }
     
@@ -21,7 +22,7 @@ public class RollBehaviour : StateMachineBehaviour
         time += Time.deltaTime;
         if (time>0.1f && time < 0.8f)
         {
-            playerBattle.RollMove();
+            playerController.RollMove();
         }                  
     }
 
