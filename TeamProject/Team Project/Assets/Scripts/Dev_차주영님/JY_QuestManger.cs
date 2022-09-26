@@ -10,6 +10,7 @@ public class JY_QuestManger : MonoBehaviour
     public static JY_QuestManger s_instance { get { return instance; } }
     
     public List<string[]> QuestDataList;
+    public GameObject dialogButton;
     string path;
 
     // Start is called before the first frame update
@@ -37,11 +38,26 @@ public class JY_QuestManger : MonoBehaviour
             sr.Close();
         }
     }
-    public void QuestChecker(int QuestNum)
+    public void QuestProgress(int QuestNum)
     {
-        int now = int.Parse(JY_QuestManger.s_instance.QuestDataList[QuestNum][3]);
+        int now = int.Parse(QuestDataList[QuestNum][3]);
         now++;
-        JY_QuestManger.s_instance.QuestDataList[QuestNum][3] = now.ToString();
+        QuestDataList[QuestNum][3] = now.ToString();
+    }
+
+    public void QuestChecker(int QuestNum) {
+        //Äù½ºÆ® ¼ö·É
+        if (QuestDataList[QuestNum][5] == "FALSE")
+        {
+            QuestDataList[QuestNum][5] = "TRUE";
+            Debug.Log("Äù½ºÆ® ¼ö·É");
+        }
+        //Äù½ºÆ® ¿Ï·á
+        else if (QuestDataList[QuestNum][5]=="TRUE" && QuestDataList[QuestNum][3] == QuestDataList[QuestNum][4])
+        {
+            QuestDataList[QuestNum][7] = "TRUE";
+            Debug.Log("Äù½ºÆ® ¿Ï·á");
+        }
     }
 
 }

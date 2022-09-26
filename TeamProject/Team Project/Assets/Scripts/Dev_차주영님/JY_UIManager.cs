@@ -7,14 +7,17 @@ public class JY_UIManager : MonoBehaviour
 
     public Transform profileGroup;
     public Transform profileMenuGroup;
+    public Transform questMenuGroup;
 
     bool profileSwitch;
     bool profileMenuSwitch;
+    bool questMenuSwitch;
 
     private void Awake()
     {
         profileSwitch = false;
         profileMenuSwitch = false;
+        questMenuSwitch = false;
     }
 
     //프로필 On/Off 함수
@@ -45,6 +48,20 @@ public class JY_UIManager : MonoBehaviour
         {
             profileMenuGroup.gameObject.SetActive(false);
             profileMenuSwitch = false;
+        }
+    }
+    //퀘스트 메뉴 On/Off함수
+    public void switchQuestMenu()
+    {
+        if (questMenuSwitch == false)
+        {
+            questMenuGroup.gameObject.SetActive(true);
+            questMenuSwitch = true;
+        }
+        else
+        {
+            questMenuGroup.gameObject.SetActive(false);
+            questMenuSwitch = false;
         }
     }
     // 게임 나가기
