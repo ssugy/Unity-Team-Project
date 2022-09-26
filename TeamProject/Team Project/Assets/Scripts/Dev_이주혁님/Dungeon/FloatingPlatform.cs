@@ -1,0 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class FloatingPlatform : MonoBehaviour
+{
+    public Vector3 startPos;
+    public Vector3 endPos;
+    public float moveSpeed;
+    private CharacterController player;    
+    
+    // Update is called once per frame
+    void Update()
+    {
+        transform.localPosition = Vector3.MoveTowards(transform.localPosition, endPos, Time.deltaTime * moveSpeed);
+        if (Vector3.Distance(transform.localPosition, endPos) < 0.1f)
+        {
+            Vector3 tmp = startPos;
+            startPos = endPos;
+            endPos = tmp;
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            player = other.GetComponent<CharacterController>();
+        }
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        player.Move((endPos - transform.localPosition).normalized * Time.deltaTime * moveSpeed);
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        player = null;
+    }
+}
