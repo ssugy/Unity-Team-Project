@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
     // 탭으로 구분 할 수 있게 export format을 tsv로 설정
     const string translateURL = "https://docs.google.com/spreadsheets/d/1Ry_qSRYWiida2KRXf_h1HIhuqmBYh4C6xKT2FPH_i3o/export?format=tsv";
     public List <LanguageTranslate> languages;  // 번역된 데이터는 여기에 클래스별(언어별)로 저장되어있다.
-    public int currentLanguage = 1;    // 영어:0, 한국어:1, 일본어, 독일어, 프랑스어, 중국어(스프레드 시트와 동일한 순서)
+    public int currentLanguage;    // 영어:0, 한국어:1, 일본어, 독일어, 프랑스어, 중국어(스프레드 시트와 동일한 순서)
 
     //여기서 이벤트 등록 처리하기.
     public Action LocalizeChanged;
@@ -82,6 +82,7 @@ public class GameManager : MonoBehaviour
     [ContextMenu("번역 가져오기")]
     void GetTranlate()
     {
+        currentLanguage = 1;
         StartCoroutine(GetTranlateCoroutine());
     }
 
@@ -123,8 +124,8 @@ public class GameManager : MonoBehaviour
             }
             languages.Add(lang);
         }
+        LocalizeChanged();
     }
-
     
     #endregion
 }

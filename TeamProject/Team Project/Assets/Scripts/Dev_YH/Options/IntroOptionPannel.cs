@@ -57,7 +57,9 @@ public class IntroOptionPannel : MonoBehaviour
     {
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.CLICK_02);
         int num = int.Parse(go.name.Split('_')[0]);
-        GameManager.s_instance.currentLanguage = num;
+        GameManager.s_instance.currentLanguage = num;   // 현재 선택된 언어를 알려주기.
+        GameManager.s_instance.LocalizeChanged();   // 변환된 언어로 변경하기.
+
         selectedLang = (Langs)num;
         for (int i = 0; i < languageMenuImgs.Length; i++)
         {

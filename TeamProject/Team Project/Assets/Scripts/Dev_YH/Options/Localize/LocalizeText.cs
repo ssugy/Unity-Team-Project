@@ -10,9 +10,10 @@ public class LocalizeText : MonoBehaviour
 {
     public string keyText;
 
-    private void Start()
+    private void Awake()
     {
-        LocalizeChange();
+        print(name);
+        // 비활성화 단계에서는 실행이 안됨. 그래서 이렇게 이벤트 등록보다, 직접 배열에 넣어서 지정하는 방법이 가장 정확할 것 같다는 생각이 든다.
         GameManager.s_instance.LocalizeChanged += LocalizeChange;   // 액션에 추가
     }
 
@@ -39,6 +40,6 @@ public class LocalizeText : MonoBehaviour
         int keyIndex = GameManager.s_instance.languages[0].value.FindIndex(x => x.Equals(key));
 
         Debug.Log($"keyIndex : {keyIndex}");
-        return GameManager.s_instance.languages[GameManager.s_instance.currentLanguage].value[keyIndex];
+        return GameManager.s_instance.languages[GameManager.s_instance.currentLanguage + 1].value[keyIndex];
     }
 }
