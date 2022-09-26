@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
     public int currentLanguage;    // 영어:0, 한국어:1, 일본어, 독일어, 프랑스어, 중국어(스프레드 시트와 동일한 순서)
 
     //여기서 이벤트 등록 처리하기.
-    public Action LocalizeChanged;
+    public Action LocalizeChanged = () => { };
 
     [ContextMenu("번역 가져오기")]
     void GetTranlate()
@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
             }
             languages.Add(lang);
         }
-        LocalizeChanged();
+       LocalizeChanged();
     }
     
     #endregion
