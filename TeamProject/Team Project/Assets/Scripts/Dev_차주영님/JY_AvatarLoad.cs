@@ -26,9 +26,9 @@ public class JY_AvatarLoad : MonoBehaviour
         charFemale = findGameObjectInChild("BaseCharacterF", origin.transform).gameObject;
     }
 
-    private void Start()
+    void Start()
     {
-        
+
     }
 
     public Transform findGameObjectInChild(string nodename, Transform origin)

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.IO;
 
 //사용하는 JsonData
@@ -51,9 +52,6 @@ public class JY_CharacterListManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
-            JY_AvatarLoad.s_instance.origin = GameObject.FindWithTag("Player");
-            JY_AvatarLoad.s_instance.charMale = JY_AvatarLoad.s_instance.findGameObjectInChild("BaseCharacterM", JY_AvatarLoad.s_instance.origin.transform).gameObject;
-            JY_AvatarLoad.s_instance.charFemale = JY_AvatarLoad.s_instance.findGameObjectInChild("BaseCharacterF", JY_AvatarLoad.s_instance.origin.transform).gameObject;
         }
         //Json파일 로드
         path = Application.dataPath + "/XML_JSON/" + "JY_Lobby_test.json";
@@ -61,6 +59,21 @@ public class JY_CharacterListManager : MonoBehaviour
         characterData = JsonUtility.FromJson<CharacterData>(jsonData);
     }
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        
+        JY_AvatarLoad.s_instance.origin = GameObject.FindWithTag("Player");
+        if(JY_AvatarLoad.s_instance.origin != null)
+        {
+            JY_AvatarLoad.s_instance.charMale = JY_AvatarLoad.s_instance.findGameObjectInChild("BaseCharacterM", JY_AvatarLoad.s_instance.origin.transform).gameObject;
+            JY_AvatarLoad.s_instance.charFemale = JY_AvatarLoad.s_instance.findGameObjectInChild("BaseCharacterF", JY_AvatarLoad.s_instance.origin.transform).gameObject;
+            //JY_AvatarLoad.s_instance.LoadModelData(selectNum);
+        }
+    }
     void Update()
     {
     }
