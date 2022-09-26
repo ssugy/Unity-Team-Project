@@ -22,7 +22,7 @@ public class FloatingPlatform : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.CompareTag("Evasion") || other.CompareTag("Dead") || other.CompareTag("Attacked")) 
         {
             player = other.GetComponent<CharacterController>();
         }

@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     {
         enableMove = true;
         enableAtk = true;
+        movement = Vector3.zero;
     }
 
     private void Start()
@@ -125,22 +126,7 @@ public class PlayerController : MonoBehaviour
             playerAni.Play("Player Skill 2");
         }
     }
-    void FreezePlayer()
-    {
-        enableMove = false;
-    }
-    void UnFreezePlayer()
-    {
-        enableMove = true;
-    }
-    void AtkBlock()
-    {
-        enableAtk = false;
-    }
-    void AtkPossible()
-    {
-        enableAtk = true;
-    }
+    
     public void Roll()
     {
         playerAni.SetBool("isRoll", true);
@@ -175,6 +161,8 @@ public class PlayerController : MonoBehaviour
     }
     public void Die()
     {
+        playerAni.SetBool("isDead", true);
+        transform.tag = "Dead";
         Camera.main.GetComponent<MainCamController>().enabled = false;   // 플레이어가 사망하면 더 이상 카메라가 움직이지 않게 함.    
         Camera.main.GetComponent<WhenPlayerDie>().enabled = true;
     }
@@ -185,4 +173,30 @@ public class PlayerController : MonoBehaviour
             Die();
         }
     }
+
+    // 애니메이션 이벤트 함수.
+    void SetEvasion()
+    {
+        transform.tag = "Evasion";
+    }       // 플레이어의 태그를 Evasion으로 바꿈.
+    void ResetEvasion()
+    {
+        transform.tag = "Player";
+    }     // 플레이어의 태그를 Player로 바꿈.
+    void FreezePlayer()
+    {
+        enableMove = false;
+    }     // 플레이어가 이동할 수 없게 함.
+    void UnFreezePlayer()
+    {
+        enableMove = true;
+    }   // 플레이어가 이동할 수 있게 함.
+    void AtkBlock()
+    {
+        enableAtk = false;
+    }         // 플레이어가 공격할 수 없게 함.
+    void AtkPossible()
+    {
+        enableAtk = true;
+    }      // 플레이어가 공격할 수 있게 함.
 }

@@ -2933,7 +2933,7 @@ GameObject:
   - component: {fileID: 16554410}
   m_Layer: 0
   m_Name: BaseCharacterF
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3059,7 +3059,8 @@ MonoBehaviour:
   moveSpeed: 0
   gravity: 0
   movement: {x: 0, y: 0, z: 0}
-  enableAct: 0
+  enableMove: 0
+  enableAtk: 0
   rWeaponDummy: {fileID: 898127006}
 --- !u!114 &16554410
 MonoBehaviour:

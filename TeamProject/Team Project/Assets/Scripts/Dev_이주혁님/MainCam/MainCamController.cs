@@ -37,17 +37,16 @@ public class MainCamController : MonoBehaviour
     }          
     void Move()
     {
-        camAxis.position = player.position;
-        float distance = Vector3.Distance(transform.position, player.position);
+        camAxis.position = player.position;        
         Vector3 dir = Vector3.Normalize(transform.position - (player.position + new Vector3(0, 0.9f, 0)));
         RaycastHit hitInfo;
-        if (Physics.Raycast(player.position + new Vector3(0, 0.9f, 0), dir, out hitInfo, distance, layerMask)) 
+        if (Physics.Raycast(player.position + new Vector3(0, 0.9f, 0), dir, out hitInfo, 5.3f, layerMask)) 
         {
             transform.position = hitInfo.point;
         }
         else
         {
-            transform.localPosition = new Vector3(0, 1.8f, -5f);
+            transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(0f, 1.8f, -5f), Time.deltaTime*2);
         }
     }
         
