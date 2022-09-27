@@ -12,7 +12,6 @@ public class JY_QuestManger : MonoBehaviour
     public List<string[]> QuestDataList;
     public GameObject dialogButton;
     string path;
-
     // Start is called before the first frame update
     void Awake()
     {
@@ -38,6 +37,7 @@ public class JY_QuestManger : MonoBehaviour
             sr.Close();
         }
     }
+
     public void QuestProgress(int QuestNum)
     {
         int now = int.Parse(QuestDataList[QuestNum][3]);
@@ -46,6 +46,8 @@ public class JY_QuestManger : MonoBehaviour
     }
 
     public void QuestChecker(int QuestNum) {
+        if (QuestDataList[QuestNum][6] == "TRUE")
+            return;
         //Äù½ºÆ® ¼ö·É
         if (QuestDataList[QuestNum][5] == "FALSE")
         {
@@ -53,9 +55,9 @@ public class JY_QuestManger : MonoBehaviour
             Debug.Log("Äù½ºÆ® ¼ö·É");
         }
         //Äù½ºÆ® ¿Ï·á
-        else if (QuestDataList[QuestNum][5]=="TRUE" && QuestDataList[QuestNum][3] == QuestDataList[QuestNum][4])
+        else if (QuestDataList[QuestNum][5]=="TRUE" && int.Parse(QuestDataList[QuestNum][3]) >= int.Parse(QuestDataList[QuestNum][4]))
         {
-            QuestDataList[QuestNum][7] = "TRUE";
+            QuestDataList[QuestNum][6] = "TRUE";
             Debug.Log("Äù½ºÆ® ¿Ï·á");
         }
     }

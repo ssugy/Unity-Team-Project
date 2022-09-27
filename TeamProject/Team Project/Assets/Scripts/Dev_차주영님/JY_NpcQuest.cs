@@ -6,19 +6,28 @@ public class JY_NpcQuest : MonoBehaviour
 {
     public GameObject questMark;
     public GameObject questMark2;
-    public Transform target;
-    public Transform target2;
-
+    public Transform targetCam;
+    public Transform Player;
+    public GameObject dialogBtn;
+    Transform playerTr;
     // Start is called before the first frame update
     void Start()
     {
+        for (int i = 0; i < Player.childCount ;i++)
+        {
+            if (Player.GetChild(i).gameObject.activeSelf == true)
+            {
+                playerTr = Player.GetChild(i).transform;
+            }
+            break;
+        }
         QuestNpcChecker(gameObject.name);
-        target = Camera.main.transform;
     }
 
     // Update is called once per frame
     void Update()
     {
+        QuestNpcChecker(gameObject.name);
         markBillborad();
         DialogBtnActivate();
     }
@@ -29,12 +38,10 @@ public class JY_NpcQuest : MonoBehaviour
             //해당 npc에게 player가 받지 않은 퀘스트가 있을경우 questmark 활성화
             if (JY_QuestManger.s_instance.QuestDataList[i][7] == npcName )
             {
-                if (JY_QuestManger.s_instance.QuestDataList[i][6] == "TRUE")
-                    continue;
                 if(JY_QuestManger.s_instance.QuestDataList[i][5] == "FALSE")
                     questMark.SetActive(true);
                 else if(JY_QuestManger.s_instance.QuestDataList[i][5] == "TRUE" &&
-                        JY_QuestManger.s_instance.QuestDataList[i][3] == JY_QuestManger.s_instance.QuestDataList[i][4] &&
+                        int.Parse(JY_QuestManger.s_instance.QuestDataList[i][3]) >= int.Parse(JY_QuestManger.s_instance.QuestDataList[i][4]) &&
                         JY_QuestManger.s_instance.QuestDataList[i][6] == "FALSE")
                 {
                     questMark.SetActive(false);
@@ -51,14 +58,14 @@ public class JY_NpcQuest : MonoBehaviour
 
     public void markBillborad()
     {
-        questMark.transform.LookAt(target);
-        questMark2.transform.LookAt(target);
+        questMark.transform.LookAt(targetCam);
+        questMark2.transform.LookAt(targetCam);
     }
 
     public void DialogBtnActivate()
     {
         //float distance = Vector3.Distance(JY_AvatarLoad.s_instance.origin.transform.position,transform.position);
-        float distance = Vector3.Distance(target2.position,transform.position);
+        float distance = Vector3.Distance(playerTr.position,transform.position);
 
         if (distance < 2f)
         {
