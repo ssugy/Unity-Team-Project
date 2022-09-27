@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6545674}
   - component: {fileID: 6506742}
   - component: {fileID: 6527216}
+  - component: {fileID: 244040601561315394}
   m_Layer: 0
   m_Name: wooden_construction_7
   m_TagString: Untagged
@@ -140,6 +141,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.4, y: 0.21, z: 1.417972}
   m_Center: {x: 0.62, y: 0.83, z: 0.007867992}
+--- !u!65 &244040601561315394
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.19, y: 2.419403, z: 1}
+  m_Center: {x: 1.1, y: 1.2002265, z: 0}
 --- !u!1 &156818
 GameObject:
   m_ObjectHideFlags: 0
