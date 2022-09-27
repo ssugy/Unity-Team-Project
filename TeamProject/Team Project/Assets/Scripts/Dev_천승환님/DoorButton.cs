@@ -6,6 +6,7 @@ public class DoorButton : MonoBehaviour
 {
     /*  static: 자주변하지않는 일정한 값 혹은 설정 정보 , 인스턴스에 종속된 변수가아니라 스크립트 클래스 그 자체에 종속된 변수
      */
+    public GameObject doorLocked;
     public static DoorButton instance;         // 도어버튼에 어디서든 접근할수있도록 인스턴스선언(다른스크립트포함) 
     public static Transform door;              // 열고 닫을 문 , 버튼이 플레이어가 문에 가까이갔을때 인식할수있도록 트랜스폼으로 지정
 
@@ -31,6 +32,11 @@ public class DoorButton : MonoBehaviour
     }
     public void Door()
     {
+        if (door.GetComponentInChildren<Door>().isLocked == true)
+        {
+            doorLocked.SetActive(true);
+            return;
+        }
         if (door.GetComponentInChildren<Door>().isClose)  // 자식door오브젝트에서 Door스크립트를 받아오고 isClose가 false이면 열리고
         {
             DoorOpen();

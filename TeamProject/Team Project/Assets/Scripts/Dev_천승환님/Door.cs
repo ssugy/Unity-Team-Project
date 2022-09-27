@@ -15,14 +15,13 @@ public class Door : MonoBehaviour //접근 제한자, 클래스명 : 상속
      * 모듈: 다중 파일을 다루는 일부 닷넷 바이너리
     */
     Transform doorPivot;         //doorPivot 트랜스폼
-
-
     public DoorButton doorButton;
 
     /* bool: 부울값 참과 거짓을 나타내는 구조체 형식
      * isClose : 필드 클래스 또는 구조체에 직접선언되는 모든 형식의 변수
      */
-    public bool isClose;         //isClose 라는이름의 bool변수                             
+    public bool isClose;         //isClose 라는이름의 bool변수
+    public bool isLocked;
 
 
     /*void(반환형식) : 로컬 함수의 반환 형식으로 사용되는 메서드가 값을 반환하지않도록 지정한다.
@@ -32,16 +31,8 @@ public class Door : MonoBehaviour //접근 제한자, 클래스명 : 상속
     {
         doorPivot = transform.parent;                        //doorPivot = 부모오브젝트
         doorButton = DoorButton.instance;                    //도어버튼을 인스턴스로 접근 어떤 스크립트에서라도 접근할수있도록 만듬
-        isClose = true;
-    }
-
-    /*void(반환형식) : 로컬 함수의 반환 형식으로 사용되는 메서드가 값을 반환하지않도록 지정한다.
-     * Update() : 유니티 기본함수, 누가멈추지않는이상 매프레임마다 계속 호출되는 함수
-     */
-    void Update()
-    {
-
-    }
+        isClose = true;        
+    }    
     /*private: 클래스의 내부에서만 접근가능 , 액세스중에서도 가장낮은 수준의 액서스 접근한정자를 사용하지않으면 기본값으로 private로 접근 수준이설정된다.
      * void : 반환형식
      * OnTriggerEnter : 게임오브젝트가 다른 게임오브젝트와 충돌하면 유니티는 OnTriggerEnter를 호출한다.
