@@ -231,12 +231,14 @@ public class AvatarSceneManager : MonoBehaviour
     {
         gender = Gender.FEMALE;
         ShowCharacter();
+        ShowOption(0);
     }
 
     public void OnClickMale()
     {
         gender = Gender.MALE;
         ShowCharacter();
+        ShowOption(0);
     }
 
     private void ShowOption(int option)
