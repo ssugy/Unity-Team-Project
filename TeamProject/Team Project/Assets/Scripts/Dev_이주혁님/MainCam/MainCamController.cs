@@ -47,7 +47,7 @@ public class MainCamController : MonoBehaviour
         }
         else
         {
-            transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(0f, 1.8f, -5f), Time.deltaTime*2);
+            transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(0f, 1.6f, -6f), Time.deltaTime*2);
         }
     }
         
