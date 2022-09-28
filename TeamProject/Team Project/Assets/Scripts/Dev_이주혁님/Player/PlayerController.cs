@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 public class PlayerController : MonoBehaviour
-{
+{    
+
     public Transform camAxis;                     // 메인 카메라 축.      
     [Header("플레이어의 컴포넌트")]
     public Animator playerAni;                    // 플레이어의 애니메이션.
@@ -32,6 +33,10 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         player = transform;
+    }
+    private void OnDisable()
+    {
+        player = null;
     }
 
     private void Start()
