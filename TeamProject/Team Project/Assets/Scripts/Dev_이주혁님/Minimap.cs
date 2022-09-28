@@ -12,11 +12,15 @@ public class Minimap : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         Vector3 tmp = transform.position;
         tmp.x = camAxis.position.x;
         tmp.z = camAxis.position.z;
         transform.position = tmp;
+        tmp = Vector3.zero;
+        tmp.x = 90f;
+        tmp.y = camAxis.rotation.eulerAngles.y;
+        transform.rotation = Quaternion.Euler(tmp);
     }
 }

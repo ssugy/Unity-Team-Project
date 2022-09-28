@@ -51,7 +51,7 @@ public class MainCamController : MonoBehaviour
         }
     }
         
-    void Update()
+    void FixedUpdate()
     {
         Rotate();
         Move();        
