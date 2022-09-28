@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
     public BoxCollider meleeArea;
     public bool isChase;
     public bool isAttack;
+    public Transform player;
+    Vector3 originPos;
 
     Rigidbody rigid;
     BoxCollider boxCollider;
@@ -26,23 +28,17 @@ public class Enemy : MonoBehaviour
         //mat = GetComponentInChildren<MeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
+        
 
         Invoke("ChaseStart", 2);
+        originPos = transform.position;
     }
     void ChaseStart()
     {
         isChase = true;
         anim.SetBool("isWalk", true);
     }
-    void Update()
-    {
-        if(nav.enabled)
-        {
-            nav.SetDestination(target.position);
-            nav.isStopped = !isChase;
-        }
-            
-    }
+   
 
     void FreezeVelocity ()
     {
@@ -52,12 +48,13 @@ public class Enemy : MonoBehaviour
             rigid.angularVelocity = Vector3.zero;
         }
         
+
     }
 
     void Targeting()
     {
-        float targetRadius = 1.5f;
-        float targetRange = 0.3f;
+        float targetRadius = 1.8f;
+        float targetRange = 0.1f;
 
         RaycastHit[] rayHits =
             Physics.SphereCastAll(transform.position,
@@ -93,6 +90,17 @@ public class Enemy : MonoBehaviour
     {
         Targeting();
         FreezeVelocity();
+
+        float distance = (transform.position - target.position).magnitude;
+        if (distance <= 10f)
+        {
+            nav.SetDestination(target.position);
+            nav.isStopped = !isChase;
+        }
+        else
+        {
+            nav.SetDestination(originPos);
+        }
     }
 
 
