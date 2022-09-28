@@ -6,6 +6,7 @@ public class PopupMessage : MonoBehaviour
 {
     private void OnEnable()
     {
+        CancelInvoke("Inactive");
         Invoke("Inactive", 1.5f);
     }
     private void Inactive()

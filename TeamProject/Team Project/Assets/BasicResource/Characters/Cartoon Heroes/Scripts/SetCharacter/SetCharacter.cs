@@ -47,6 +47,15 @@ namespace CartoonHeroes
             Item item = itemGroup.items[itemSlot];
             GameObject itemInstance = GameObject.Instantiate(item.prefab);
             itemInstance.name = itemInstance.name.Substring(0, itemInstance.name.Length - "(Clone)".Length);
+
+            // 추가한 코드.
+            SkinnedMeshRenderer tmp = itemInstance.GetComponentInChildren<SkinnedMeshRenderer>();
+            if (tmp != null)
+            {
+                tmp.receiveShadows = false;
+            }
+            
+            
             RemoveAnimator(itemInstance);
             ParentObjectAndBones(itemInstance);
 
