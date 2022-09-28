@@ -25,7 +25,9 @@ public class Weapon : MonoBehaviour
             Enemy enemy = other.GetComponent<Enemy>();
             if (enemy != null)
             {
-                //enemy.EnemyStat.curHP -= playerState.AttackDamage(atkMag, enemy.EnemyStat.defMag);
+                Debug.Log("АјАн");
+                enemy.enemyStat.curHP -= playerState.AttackDamage(atkMag, enemy.enemyStat.defMag);
+                Debug.Log(playerState.AttackDamage(atkMag, enemy.enemyStat.defMag));
             }
         }               
     }

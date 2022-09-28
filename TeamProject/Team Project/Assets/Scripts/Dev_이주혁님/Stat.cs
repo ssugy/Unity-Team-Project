@@ -87,7 +87,10 @@ public class PlayerStat
     }
     // 캐릭터 생성 시, 혹은 스탯 초기화 시 할당할 클래스별 초기스탯.
 }
+[System.Serializable]
 public class EnemyStat
 {
-
+    public int HP;
+    public int curHP;
+    public float defMag;
 }
