@@ -173,7 +173,7 @@ public class AvatarSceneManager : MonoBehaviour
 
     public void OnClickNext()
     {
-        if(currentStep < Steps.SAVE)
+        if(currentStep < Steps.SELECT_NAME)
         {
             currentStep++;
             ShowCanvas();

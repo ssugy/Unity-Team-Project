@@ -9,29 +9,40 @@ public class JY_QuestSwap : MonoBehaviour
     public Text Quest_Title;
     public Text Quest_Main;
     public Text Quest_check;
+
     public int QuestNum;
 
     void QuestRenew(int QuestNum)
     {
-        Quest_Title.text = JY_QuestManger.s_instance.QuestDataList[QuestNum][0];
-        Quest_Main.text = JY_QuestManger.s_instance.QuestDataList[QuestNum][1];
-
-        string checkText;
-        int now = int.Parse(JY_QuestManger.s_instance.QuestDataList[QuestNum][3]);
-        int goal = int.Parse(JY_QuestManger.s_instance.QuestDataList[QuestNum][4]);
-
-        if (now < goal)
+        if(JY_QuestManager.s_instance.QuestDataList[QuestNum][5] == "TRUE" && JY_QuestManager.s_instance.QuestDataList[QuestNum][6] == "FALSE")
         {
-            checkText = JY_QuestManger.s_instance.QuestDataList[QuestNum][2] + " "
-                      + JY_QuestManger.s_instance.QuestDataList[QuestNum][3] + "/"
-                      + JY_QuestManger.s_instance.QuestDataList[QuestNum][4];
+            Quest_Title.text = JY_QuestManager.s_instance.QuestDataList[QuestNum][0];
+            Quest_Main.text = JY_QuestManager.s_instance.QuestDataList[QuestNum][1];
+
+            string checkText;
+            int now = int.Parse(JY_QuestManager.s_instance.QuestDataList[QuestNum][3]);
+            int goal = int.Parse(JY_QuestManager.s_instance.QuestDataList[QuestNum][4]);
+
+            if (now < goal)
+            {
+                checkText = JY_QuestManager.s_instance.QuestDataList[QuestNum][2] + " "
+                          + JY_QuestManager.s_instance.QuestDataList[QuestNum][3] + "/"
+                          + JY_QuestManager.s_instance.QuestDataList[QuestNum][4];
+            }
+            else
+            {
+                checkText = "완료";
+            }
+            Quest_check.text = checkText;
         }
         else
         {
-            checkText = "완료";
+            Quest_Title.text = null;
+            Quest_Main.text = null;
+            Quest_check.text = null;
         }
-        Quest_check.text = checkText;
     }
+
     // Update is called once per frame
     void Update()
     {

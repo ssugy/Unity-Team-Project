@@ -8,7 +8,6 @@ public class JY_NpcQuest : MonoBehaviour
     public GameObject questMark2;
     public Transform targetCam;
     public Transform Player;
-    public GameObject dialogBtn;
     Transform playerTr;
     // Start is called before the first frame update
     void Start()
@@ -18,8 +17,8 @@ public class JY_NpcQuest : MonoBehaviour
             if (Player.GetChild(i).gameObject.activeSelf == true)
             {
                 playerTr = Player.GetChild(i).transform;
+                break;
             }
-            break;
         }
         QuestNpcChecker(gameObject.name);
     }
@@ -33,16 +32,16 @@ public class JY_NpcQuest : MonoBehaviour
     }
     public void QuestNpcChecker(string npcName)
     {
-        for (int i = 0; i < JY_QuestManger.s_instance.QuestDataList.Count; i++)
+        for (int i = 0; i < JY_QuestManager.s_instance.QuestDataList.Count; i++)
         {
             //해당 npc에게 player가 받지 않은 퀘스트가 있을경우 questmark 활성화
-            if (JY_QuestManger.s_instance.QuestDataList[i][7] == npcName )
+            if (JY_QuestManager.s_instance.QuestDataList[i][7] == npcName )
             {
-                if(JY_QuestManger.s_instance.QuestDataList[i][5] == "FALSE")
+                if(JY_QuestManager.s_instance.QuestDataList[i][5] == "FALSE")
                     questMark.SetActive(true);
-                else if(JY_QuestManger.s_instance.QuestDataList[i][5] == "TRUE" &&
-                        int.Parse(JY_QuestManger.s_instance.QuestDataList[i][3]) >= int.Parse(JY_QuestManger.s_instance.QuestDataList[i][4]) &&
-                        JY_QuestManger.s_instance.QuestDataList[i][6] == "FALSE")
+                else if(JY_QuestManager.s_instance.QuestDataList[i][5] == "TRUE" &&
+                        int.Parse(JY_QuestManager.s_instance.QuestDataList[i][3]) >= int.Parse(JY_QuestManager.s_instance.QuestDataList[i][4]) &&
+                        JY_QuestManager.s_instance.QuestDataList[i][6] == "FALSE")
                 {
                     questMark.SetActive(false);
                     questMark2.SetActive(true);
@@ -64,16 +63,15 @@ public class JY_NpcQuest : MonoBehaviour
 
     public void DialogBtnActivate()
     {
-        //float distance = Vector3.Distance(JY_AvatarLoad.s_instance.origin.transform.position,transform.position);
         float distance = Vector3.Distance(playerTr.position,transform.position);
 
         if (distance < 2f)
         {
-            JY_QuestManger.s_instance.dialogButton.SetActive(true);
+            JY_QuestManager.s_instance.dialogButton.SetActive(true);
         }
         else
         {
-            JY_QuestManger.s_instance.dialogButton.SetActive(false);
+            JY_QuestManager.s_instance.dialogButton.SetActive(false);
         }
     }
 }

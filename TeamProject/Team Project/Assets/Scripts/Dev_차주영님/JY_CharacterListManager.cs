@@ -23,6 +23,13 @@ public class infoData
     public string gender;
     public string species;
     public int[] characterAvatar;
+    /// <summary>
+    /// index 0 : 공격력
+    /// index 1 : 지구력
+    /// index 2 : 힘
+    /// index 3 : 민첩
+    /// </summary>
+    public int[] status;
 }
 //데이터 변경 저장을 위한 class
 

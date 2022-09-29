@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.6318939, g: 0.8729151, b: 0.9891737, a: 1}
+  m_IndirectSpecularColor: {r: 0.6321356, g: 0.87369376, b: 0.9915845, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2544,7 +2544,6 @@ MonoBehaviour:
   questMark2: {fileID: 255806834}
   targetCam: {fileID: 764654249}
   Player: {fileID: 961547126}
-  dialogBtn: {fileID: 0}
 --- !u!1 &1773703413
 GameObject:
   m_ObjectHideFlags: 0
@@ -3455,6 +3454,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1601556370041250607, guid: b946fba4b5894d34b9095d65513e3af8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -8.29
+      objectReference: {fileID: 0}
+    - target: {fileID: 2504660206523993861, guid: b946fba4b5894d34b9095d65513e3af8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 38.4
+      objectReference: {fileID: 0}
     - target: {fileID: 2504660206523993864, guid: b946fba4b5894d34b9095d65513e3af8, type: 3}
       propertyPath: portalUI
       value: 
@@ -3506,6 +3513,10 @@ PrefabInstance:
     - target: {fileID: 2504660207165352655, guid: b946fba4b5894d34b9095d65513e3af8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6616403076457713329, guid: b946fba4b5894d34b9095d65513e3af8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.02
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b946fba4b5894d34b9095d65513e3af8, type: 3}
