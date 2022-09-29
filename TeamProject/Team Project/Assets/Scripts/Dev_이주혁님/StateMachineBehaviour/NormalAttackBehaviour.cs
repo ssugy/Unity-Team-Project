@@ -4,24 +4,28 @@ using UnityEngine;
 
 public class NormalAttackBehaviour : StateMachineBehaviour
 {
-    BoxCollider weaponHitbox;
-    Weapon weapon;
-    float time;
+    private BoxCollider weaponHitbox;
+    private Weapon weapon;
+    private float time;
+
+    public float atkMag;
+    public float startFrame;
+    public float endFrame;
     
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        weaponHitbox = PlayerController.player.GetComponent<PlayerController>().rWeaponDummy.GetComponentInChildren<BoxCollider>();
-        weapon = weaponHitbox.transform.GetComponent<Weapon>();
+        weaponHitbox = Weapon.weapoonHitbox;
+        weapon = Weapon.weapon;
         time = 0f;
-        weapon.atkMag = 1.05f;
+        weapon.atkMag = atkMag;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         time += Time.deltaTime;
-        if (time > 0.28f && time < 0.44f)
+        if (time > startFrame && time < endFrame)
         {
             weaponHitbox.enabled = true;
         }

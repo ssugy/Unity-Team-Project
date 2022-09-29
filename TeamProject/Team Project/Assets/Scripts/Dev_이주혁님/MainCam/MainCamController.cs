@@ -19,7 +19,7 @@ public class MainCamController : MonoBehaviour
         camSpeed = 20f;        
         rotateY = 1f; // 게임이 실행되었을 때, 카메라의 x축 회전을 기본값으로 맞춰줌.
         layerMask = 1 << LayerMask.NameToLayer("Building");
-        player = PlayerController.player;
+        player = Player.instance.transform;
     }
 
     void Rotate()

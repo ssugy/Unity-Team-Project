@@ -150,10 +150,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7506685615275698785}
   - component: {fileID: 4557878553728970485}
-  - component: {fileID: 667291777}
   m_Layer: 0
   m_Name: Weapon_Hitbox
-  m_TagString: Weapon_Hitbox
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -186,21 +185,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &667291777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4331595778933669146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f43a394be63bcd543bd6e3237d8a2dd0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  atkPoint: 30
-  atkMag: 0
-  playerState: {fileID: 0}
 --- !u!1 &8873664431462332687
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,6 +194,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8873664431462332686}
+  - component: {fileID: 8134101584442080539}
+  - component: {fileID: 632107083867198151}
   m_Layer: 0
   m_Name: Sword_1
   m_TagString: Untagged
@@ -235,6 +221,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8134101584442080539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8873664431462332687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f43a394be63bcd543bd6e3237d8a2dd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  atkPoint: 30
+  atkMag: 0
+  playerState: {fileID: 0}
+--- !u!54 &632107083867198151
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8873664431462332687}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &8974739888243736088
 GameObject:
   m_ObjectHideFlags: 0

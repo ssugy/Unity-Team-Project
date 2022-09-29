@@ -3013,7 +3013,7 @@ GameObject:
   - component: {fileID: 4701360694588880471}
   - component: {fileID: 4754428426783493899}
   - component: {fileID: 16554411}
-  - component: {fileID: 5492157564760563063}
+  - component: {fileID: 7222883438136761241}
   - component: {fileID: 16554410}
   m_Layer: 0
   m_Name: BaseCharacterF
@@ -3124,7 +3124,7 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.85, z: 0}
---- !u!114 &5492157564760563063
+--- !u!114 &7222883438136761241
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3133,9 +3133,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 4641566208725042821}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a94871114be19384097d9180eb4625ce, type: 3}
+  m_Script: {fileID: 11500000, guid: 7caceec27850aba49952e33ce0fec907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerStat:
+    health: 0
+    stamina: 0
+    strength: 0
+    dexterity: 0
+    characterClass: 0
+    sex: 0
+    level: 0
+    customized: 
+    equiped: 
+    Exp: 0
+    curExp: 0
+    HP: 0
+    curHP: 0
+    SP: 0
+    curSP: 0
+    criPro: 0
+    defPoint: 0
+    defMag: 0
+    statPoint: 0
+    atkPoint: 0
+    gold: 0
+    isDead: 0
   camAxis: {fileID: 0}
   playerAni: {fileID: 0}
   playerJoysitck: {fileID: 0}

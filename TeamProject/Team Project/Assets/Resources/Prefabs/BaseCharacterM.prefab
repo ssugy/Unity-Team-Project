@@ -2853,9 +2853,8 @@ GameObject:
   - component: {fileID: 95844511793012932}
   - component: {fileID: 114380782822982968}
   - component: {fileID: 2139777303}
-  - component: {fileID: 6464241596696843887}
   - component: {fileID: 1981564670060625492}
-  - component: {fileID: 7521236668048096841}
+  - component: {fileID: 4476257686687804683}
   m_Layer: 10
   m_Name: BaseCharacterM
   m_TagString: Player
@@ -2965,29 +2964,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.9, z: 0}
---- !u!114 &6464241596696843887
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1668188202801692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a94871114be19384097d9180eb4625ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  camAxis: {fileID: 0}
-  playerAni: {fileID: 0}
-  playerJoysitck: {fileID: 0}
-  controller: {fileID: 0}
-  rotateSpeed: 0
-  moveSpeed: 0
-  gravity: 0
-  movement: {x: 0, y: 0, z: 0}
-  enableMove: 0
-  enableAtk: 0
-  rWeaponDummy: {fileID: 436675578}
 --- !u!114 &1981564670060625492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3003,7 +2979,7 @@ MonoBehaviour:
   empty: {fileID: 0}
   inventoryUI: {fileID: 0}
   quickSlotSet: {fileID: 0}
---- !u!114 &7521236668048096841
+--- !u!114 &4476257686687804683
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3012,14 +2988,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1668188202801692}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce2919afb1cb6db4d83b43d9cfccf872, type: 3}
+  m_Script: {fileID: 11500000, guid: 7caceec27850aba49952e33ce0fec907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerStat:
-    health: 0
-    stamina: 0
-    strength: 0
-    dexterity: 0
+    health: 5
+    stamina: 5
+    strength: 5
+    dexterity: 5
     characterClass: 0
     sex: 0
     level: 0
@@ -3035,9 +3011,20 @@ MonoBehaviour:
     defPoint: 0
     defMag: 0
     statPoint: 0
-    atkPoint: 0
+    atkPoint: 100
     gold: 0
     isDead: 0
+  camAxis: {fileID: 0}
+  playerAni: {fileID: 0}
+  playerJoysitck: {fileID: 0}
+  controller: {fileID: 0}
+  rotateSpeed: 0
+  moveSpeed: 0
+  gravity: 0
+  movement: {x: 0, y: 0, z: 0}
+  enableMove: 0
+  enableAtk: 0
+  rWeaponDummy: {fileID: 436675578}
 --- !u!1 &1672909316657688
 GameObject:
   m_ObjectHideFlags: 0
