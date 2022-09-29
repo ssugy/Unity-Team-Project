@@ -12,6 +12,8 @@ public class JY_AvatarLoad : MonoBehaviour
 
     public GameObject charMale;
     public GameObject charFemale;
+    public GameObject charWeaponDummy;
+    public GameObject charWeapon;
 
     public SetCharacter setChara;
     // Start is called before the first frame update
@@ -83,6 +85,7 @@ public class JY_AvatarLoad : MonoBehaviour
         {
             charMale.SetActive(false);
             charFemale.SetActive(false);
+            charWeaponDummy = null;
         }
         else
         {
@@ -99,11 +102,33 @@ public class JY_AvatarLoad : MonoBehaviour
                 charFemale.SetActive(false);
                 setChara = charMale.GetComponent<SetCharacter>();
             }
-
+            equipWeapon(listNum);
             for(int i=0; i<4; i++)
             {
                 subOptionLoad(i, JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].characterAvatar[i]);
             }
         }
+    }
+
+    public void equipWeapon(int listNum)
+    {
+        if( JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].gender == "M")
+        {
+            charWeaponDummy = findGameObjectInChild("Character R Weapon Slot", charMale.transform).gameObject;
+        }
+        else if(JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].gender == "F")
+        {
+            charWeaponDummy = findGameObjectInChild("Character R Weapon Slot", charFemale.transform).gameObject;
+        }
+        GameObject weaponSc = Resources.Load<GameObject>("Item/Weapon/Sword_1");
+        if(charWeapon == null)
+        {
+            charWeapon = GameObject.Instantiate<GameObject>(weaponSc);
+        }
+        charWeapon.transform.SetParent(charWeaponDummy.transform);
+        charWeapon.transform.localPosition = Vector3.zero;
+        charWeapon.transform.localRotation = Quaternion.identity;
+
+
     }
 }
