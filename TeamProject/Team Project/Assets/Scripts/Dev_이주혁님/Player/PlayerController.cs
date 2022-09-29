@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public Transform camAxis;                     // 메인 카메라 축.      
     [Header("플레이어의 컴포넌트")]
     public Animator playerAni;                    // 플레이어의 애니메이션.
-    public FixedJoystick playerJoysitck;          // 조이스틱 입력을 받아옴.
+    public FloatingJoystick playerJoysitck;          // 조이스틱 입력을 받아옴.
     public CharacterController controller;        // 플레이어의 캐릭터 컨트롤러.
     [Header("이동 관련 변수")]
     [HideInInspector] public float rotateSpeed;
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     {        
         camAxis = Camera.main.transform.parent;                
         playerAni = GetComponent<Animator>();
-        playerJoysitck = FixedJoystick.instance;
+        playerJoysitck = FloatingJoystick.instance;
         controller = GetComponent<CharacterController>();
         rotateSpeed = 5f;
         moveSpeed = 8f;        
