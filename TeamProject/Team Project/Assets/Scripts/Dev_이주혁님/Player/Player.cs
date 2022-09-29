@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UniRx;
 
 public class Player : MonoBehaviour
 {    
@@ -24,6 +25,7 @@ public class Player : MonoBehaviour
 
     public Transform rWeaponDummy;              // 오른손 무기 더미.
     private TrailRenderer rWeaponEffect;        // 오른손 무기 이펙트. (검기)
+    public bool isGround;
 
     
 
@@ -34,6 +36,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        isGround = true;
         camAxis = Camera.main.transform.parent;
         playerAni = GetComponent<Animator>();
         playerJoysitck = FloatingJoystick.instance;
@@ -49,6 +52,8 @@ public class Player : MonoBehaviour
             rWeaponEffect = rWeaponDummy.GetChild(0).GetChild(2).GetComponent<TrailRenderer>();
         }
         SetState();
+        controller.ObserveEveryValueChanged(_ => _.isGrounded).ThrottleFrame(10).Subscribe(_ => isGround = _);  
+        // UniRx를 이용하여 isGrounded 프로퍼티가 0.3초 이상 유지되어야 상태가 전이되게끔 함. isGrounded가 정교하지 않기 때문.
     }
 
     void Move()
@@ -92,13 +97,12 @@ public class Player : MonoBehaviour
     {
         Move();
 
-        if (!controller.isGrounded)
+        if (!isGround)
         {
-            Invoke("Fall", 0.1f);
+            playerAni.SetBool("isGround", false);
         }
         else
-        {
-            CancelInvoke("Fall");
+        {            
             playerAni.SetBool("isGround", true);
         }
     }
@@ -119,21 +123,25 @@ public class Player : MonoBehaviour
         SetRotate();
         playerAni.SetTrigger("isAttack");        
     }
-    public void Skill_1()
-    {
-        if (enableAtk)
-        {
-            SetRotate();
-            playerAni.Play("Player Skill 1");
-        }
+    public void PowerStrike()       // 스킬 1.
+    {        
+        SetRotate();
+        playerAni.Play("Player Skill 1");        
     }
-    public void Skill_2()
+    public void TurnAttack()        // 스킬 2.
     {
-        if (enableAtk)
-        {
-            SetRotate();
-            playerAni.Play("Player Skill 2");
-        }
+        SetRotate();
+        playerAni.Play("Player Skill 2");        
+    }
+    public void JumpAttack()        // 스킬 3.
+    {
+        SetRotate();
+        playerAni.Play("Player Skill 3");
+    }
+    public void Warcry()            // 스킬 4.
+    {
+        SetRotate();
+        playerAni.Play("Player Skill 4");
     }
 
     public void Roll()
@@ -206,8 +214,17 @@ public class Player : MonoBehaviour
     {
         enableMove = true;
     }   // 플레이어가 이동할 수 있게 함.
-
+    void HitboxOn()
+    {
+        Weapon.weapoonHitbox.enabled = true;
+    }
+    void HitboxOff()
+    {
+        Weapon.weapoonHitbox.enabled = false;
+    }
     
+
+
 
     public void InitializeStat()                  // 스탯 초기화
     {

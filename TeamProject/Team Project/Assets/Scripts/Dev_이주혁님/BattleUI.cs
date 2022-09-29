@@ -23,8 +23,8 @@ public class BattleUI : MonoBehaviour
     {
         player = Player.instance;
         normalAtk.onClick.AddListener(player.NormalAttack);
-        skill_1.onClick.AddListener(player.Skill_1);
-        skill_2.onClick.AddListener(player.Skill_2);
+        skill_1.onClick.AddListener(player.PowerStrike);
+        skill_2.onClick.AddListener(player.JumpAttack);
         evasion.onClick.AddListener(player.Roll);
         // 이하는 이벤트트리거에 동적으로 pointer up/down 이벤트에 함수를 할당하는 방법. (매개변수 필요)
         lArm_PointerDown = new EventTrigger.Entry();
