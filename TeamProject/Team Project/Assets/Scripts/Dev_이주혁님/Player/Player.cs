@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
     }
 
     private void Start()
-    {
+    {        
         isGround = true;
         camAxis = Camera.main.transform.parent;
         playerAni = GetComponent<Animator>();
@@ -119,29 +119,43 @@ public class Player : MonoBehaviour
         transform.rotation *= Quaternion.Euler(tmp);
     }
     public void NormalAttack()
-    {        
+    {   
+        
         SetRotate();
         playerAni.SetTrigger("isAttack");        
     }
     public void PowerStrike()       // 스킬 1.
-    {        
-        SetRotate();
-        playerAni.Play("Player Skill 1");        
+    {
+        if (enableAtk == true)
+        {
+            SetRotate();
+            playerAni.Play("Player Skill 1");
+        }
     }
     public void TurnAttack()        // 스킬 2.
     {
-        SetRotate();
-        playerAni.Play("Player Skill 2");        
+        if (enableAtk == true)
+        {
+            SetRotate();
+            playerAni.Play("Player Skill 2");
+        }
+              
     }
     public void JumpAttack()        // 스킬 3.
     {
-        SetRotate();
-        playerAni.Play("Player Skill 3");
+        if (enableAtk == true)
+        {
+            SetRotate();
+            playerAni.Play("Player Skill 3");
+        }
     }
     public void Warcry()            // 스킬 4.
     {
-        SetRotate();
-        playerAni.Play("Player Skill 4");
+        if (enableAtk == true)
+        {
+            SetRotate();
+            playerAni.Play("Player Skill 4");
+        }
     }
 
     public void Roll()
@@ -222,7 +236,15 @@ public class Player : MonoBehaviour
     {
         Weapon.weapoonHitbox.enabled = false;
     }
-    
+    void EnableAtk()
+    {
+        enableAtk = true;
+    }
+    void DisableAtk()
+    {
+        enableAtk = false;
+    }
+
 
 
 
@@ -297,7 +319,80 @@ public class Player : MonoBehaviour
         {
             _criDamage = 1f;
         }
-        int _damage = Mathf.CeilToInt(playerStat.atkPoint * _atkMag * _enemyDef * _criDamage * Random.Range(0.95f, 1.05f));
+        int _damage = Mathf.CeilToInt(playerStat.atkPoint * _atkMag * _enemyDef * _criDamage 
+            * Random.Range(0.95f, 1.05f));
         return _damage;
+    }
+    public void Attack(Collider _enemy)
+    {
+        Debug.Log("공격");
+        Enemy enemy = _enemy.GetComponent<Enemy>();
+        if (enemy != null)
+        {       
+            // 아직 적 체력 기능이 구현되지 않아 일단은 빈 칸으로 두었습니다.
+            // 개인적으로 Enemy 스크립트를 수정하여 테스트해보았을 때,
+            // 적 체력이 정상적으로 감소하는 것을 확인하였습니다.
+            //enemy.enemyStat.curHP -= player.AttackDamage(Weapon.weapon.atkMag, enemy.enemyStat.defMag);
+            //Debug.Log(playerState.AttackDamage(atkMag, enemy.enemyStat.defMag));
+        }
+    }
+    public void PowerStrikeDamage()
+    {
+        int layerMask = 1 << 11;
+        Vector3 halfHitbox = new Vector3(0.3f, 3f, 0.2f);
+        Collider[] enemys = Physics.OverlapBox(transform.position + transform.forward, halfHitbox, transform.rotation, layerMask);
+        if (enemys != null)
+        {
+            foreach(Collider col in enemys)
+            {
+                Attack(col);
+            }
+        }
+    }
+    public void TurnAttackDamage()
+    {
+        int layerMask = 1 << 11;
+        Vector3 halfHitbox = new Vector3(0.6f, 3f, 0.3f);
+        Collider[] enemys = Physics.OverlapBox(transform.position + transform.forward, halfHitbox, transform.rotation, layerMask);
+        if (enemys != null)
+        {
+            foreach (Collider col in enemys)
+            {
+                Attack(col);
+            }
+        }
+    }
+    public void JumpAttackDamage()
+    {
+        int layerMask = 1 << 11;        
+        Collider[] enemys = Physics.OverlapSphere(transform.position, 2f, layerMask);
+        if (enemys != null)
+        {
+            foreach (Collider col in enemys)
+            {
+                Attack(col);
+            }
+        }
+    }
+    public void WarcryDamage()
+    {
+        int layerMask = 1 << 11;
+        Collider[] enemys = Physics.OverlapSphere(transform.position, 1.5f, layerMask);
+        if (enemys != null)
+        {
+            foreach (Collider col in enemys)
+            {
+                Attack(col);
+            }
+        }
+    }
+    public void ShieldOn()
+    {
+        playerStat.defMag += 0.3f;
+    }
+
+    public void ShieldOff()
+    {
+        playerStat.defMag -= 0.3f;
     }
 }

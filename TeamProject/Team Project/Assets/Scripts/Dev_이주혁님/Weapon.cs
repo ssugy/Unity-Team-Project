@@ -34,17 +34,10 @@ public class Weapon : MonoBehaviour
     }
     
     private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("충돌");
+    {        
         if (other.CompareTag("Enemy"))
         {
-            Enemy enemy = other.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                Debug.Log("공격");
-                //enemy.enemyStat.curHP -= playerState.AttackDamage(atkMag, enemy.enemyStat.defMag);
-                //Debug.Log(playerState.AttackDamage(atkMag, enemy.enemyStat.defMag));
-            }
+            player.Attack(other);            
         }               
     }
 }

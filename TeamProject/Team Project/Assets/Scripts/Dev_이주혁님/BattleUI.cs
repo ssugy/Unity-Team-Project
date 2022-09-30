@@ -11,20 +11,22 @@ public class BattleUI : MonoBehaviour
     public Button normalAtk;
     public Button skill_1;
     public Button skill_2;
+    public Button skill_3;
+    public Button skill_4;
     public Button evasion;
     public EventTrigger lArm;           // lArm 기능은 버튼이 아닌 이벤트트리거를 사용함.
     private EventTrigger.Entry lArm_PointerDown;
     private EventTrigger.Entry lArm_PointerUp;
     public Sprite upFrame;
-    public Sprite downFrame;
-
-    // Start is called before the first frame update
+    public Sprite downFrame;        
     void Start()
     {
         player = Player.instance;
         normalAtk.onClick.AddListener(player.NormalAttack);
         skill_1.onClick.AddListener(player.PowerStrike);
-        skill_2.onClick.AddListener(player.JumpAttack);
+        skill_2.onClick.AddListener(player.TurnAttack);
+        skill_3.onClick.AddListener(player.JumpAttack);
+        skill_4.onClick.AddListener(player.Warcry);
         evasion.onClick.AddListener(player.Roll);
         // 이하는 이벤트트리거에 동적으로 pointer up/down 이벤트에 함수를 할당하는 방법. (매개변수 필요)
         lArm_PointerDown = new EventTrigger.Entry();
