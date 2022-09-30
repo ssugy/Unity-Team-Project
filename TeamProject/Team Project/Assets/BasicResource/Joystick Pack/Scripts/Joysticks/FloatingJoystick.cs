@@ -13,7 +13,7 @@ public class FloatingJoystick : Joystick
     private void Awake()
     {
         instance = this;
-        initial = joystick.position;
+        initial = joystick.localPosition;
     }
     public override void OnPointerDown(PointerEventData eventData)
     {
@@ -24,7 +24,7 @@ public class FloatingJoystick : Joystick
     {
         input = Vector2.zero;
         handle.anchoredPosition = Vector2.zero;
-        joystick.position = initial;
+        joystick.localPosition = initial;
     }
 
 }
