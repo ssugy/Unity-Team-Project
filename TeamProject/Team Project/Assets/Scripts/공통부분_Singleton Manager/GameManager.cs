@@ -126,6 +126,12 @@ public class GameManager : MonoBehaviour
         }
        LocalizeChanged();
     }
-    
+    #endregion
+
+    #region 안드로이드 디버그체크
+    public void ShowConsoleDebug()
+    {
+        LunarConsolePlugin.LunarConsole.Show();
+    }
     #endregion
 }
