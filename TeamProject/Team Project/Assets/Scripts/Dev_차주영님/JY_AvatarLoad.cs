@@ -23,14 +23,13 @@ public class JY_AvatarLoad : MonoBehaviour
         {
             instance = this;
         }
-        origin = GameObject.FindWithTag("Player");
-        charMale = findGameObjectInChild("BaseCharacterM", origin.transform).gameObject;
-        charFemale = findGameObjectInChild("BaseCharacterF", origin.transform).gameObject;
     }
 
     void Start()
     {
-
+        origin = JY_PlayerReturn.instance.getPlayerOrigin();
+        charMale = findGameObjectInChild("BaseCharacterM", origin.transform).gameObject;
+        charFemale = findGameObjectInChild("BaseCharacterF", origin.transform).gameObject;
     }
 
     public Transform findGameObjectInChild(string nodename, Transform origin)

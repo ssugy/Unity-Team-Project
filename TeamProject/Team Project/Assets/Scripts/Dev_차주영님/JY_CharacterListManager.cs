@@ -73,8 +73,8 @@ public class JY_CharacterListManager : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         
-        JY_AvatarLoad.s_instance.origin = GameObject.FindWithTag("Player");
-        if(JY_AvatarLoad.s_instance.origin != null)
+        JY_AvatarLoad.s_instance.origin = JY_PlayerReturn.instance.getPlayerOrigin();
+        if (JY_AvatarLoad.s_instance.origin != null)
         {
             JY_AvatarLoad.s_instance.charMale = JY_AvatarLoad.s_instance.findGameObjectInChild("BaseCharacterM", JY_AvatarLoad.s_instance.origin.transform).gameObject;
             JY_AvatarLoad.s_instance.charFemale = JY_AvatarLoad.s_instance.findGameObjectInChild("BaseCharacterF", JY_AvatarLoad.s_instance.origin.transform).gameObject;

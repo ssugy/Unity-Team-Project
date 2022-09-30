@@ -6270,8 +6270,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   origin: {fileID: 0}
-  charModel: {fileID: 0}
-  weaponDummy: {fileID: 0}
+  charMale: {fileID: 0}
+  charFemale: {fileID: 0}
+  charWeaponDummy: {fileID: 0}
+  charWeapon: {fileID: 0}
   setChara: {fileID: 0}
 --- !u!1 &1153702697
 GameObject:
@@ -8914,8 +8916,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1679897800}
+  - component: {fileID: 1679897801}
   m_Layer: 0
-  m_Name: Character
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8938,6 +8941,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 199.04, z: 0}
+--- !u!114 &1679897801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679897799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 597fe6b35ee19f749b23dc223e6f4c00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerOrigin: {fileID: 1679897799}
 --- !u!1 &1684744826
 GameObject:
   m_ObjectHideFlags: 0
