@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-
     public int maxHealth;
     public int curHealth;
     public int def;
@@ -15,6 +14,10 @@ public class Enemy : MonoBehaviour
     public bool isAttack;
     public Transform player;
     Vector3 originPos;
+    [Header("Ã¼·Â")]
+    [SerializeField] Transform hp;
+    [SerializeField] Camera cam;
+    //[SerializeField] Slider hp_slider;
 
     Rigidbody rigid;
     BoxCollider boxCollider;
@@ -28,10 +31,32 @@ public class Enemy : MonoBehaviour
         //mat = GetComponentInChildren<MeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
+        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+       // hp_slider.value = hp_slider.maxValue;
         
 
         Invoke("ChaseStart", 2);
         originPos = transform.position;
+    }
+    /*void OnCollisionEnter(Collision collsion)
+    {
+        if (collsion.gameObject.layer == LayerMask.NameToLayer("ball"))
+        {
+            hp_slider.value--;
+        }
+    }*/
+    void Update()
+    {
+        Quaternion q_hp = Quaternion.LookRotation(hp.position - cam.transform.position);
+
+        Vector3 hp_angle = Quaternion.RotateTowards(hp.rotation, q_hp, 200).eulerAngles;
+
+        hp.rotation = Quaternion.Euler(0, hp_angle.y, 0);
+
+       /* if(hp_slider.value<=0)
+        {
+            Destroy(gameObject); 
+        }*/
     }
     void ChaseStart()
     {
@@ -151,5 +176,6 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject, 4);
         }
 
+       
     }
 }
