@@ -319,7 +319,7 @@ public class Player : MonoBehaviour
         {
             _criDamage = 1f;
         }
-        int _damage = Mathf.CeilToInt(playerStat.atkPoint * _atkMag * _enemyDef * _criDamage 
+        int _damage = Mathf.CeilToInt(playerStat.atkPoint * _atkMag * (1 - _enemyDef) * _criDamage
             * Random.Range(0.95f, 1.05f));
         return _damage;
     }
@@ -328,12 +328,9 @@ public class Player : MonoBehaviour
         Debug.Log("공격");
         Enemy enemy = _enemy.GetComponent<Enemy>();
         if (enemy != null)
-        {       
-            // 아직 적 체력 기능이 구현되지 않아 일단은 빈 칸으로 두었습니다.
-            // 개인적으로 Enemy 스크립트를 수정하여 테스트해보았을 때,
-            // 적 체력이 정상적으로 감소하는 것을 확인하였습니다.
-            //enemy.enemyStat.curHP -= player.AttackDamage(Weapon.weapon.atkMag, enemy.enemyStat.defMag);
-            //Debug.Log(playerState.AttackDamage(atkMag, enemy.enemyStat.defMag));
+        {
+            int damage = AttackDamage(Weapon.weapon.atkMag, enemy.defMag);
+            enemy.IsAttacked(damage);            
         }
     }
     public void PowerStrikeDamage()

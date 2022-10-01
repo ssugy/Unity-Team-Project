@@ -2,61 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-    public int maxHealth;
-    public int curHealth;
-    public int def;
-    public Transform target;
-    public BoxCollider meleeArea;
+    public int maxHealth;           // 최대 체력.
+    public int curHealth;           // 현재 체력.
+    public float defMag;            // 방어율.
+    public Transform target;        // 타겟. (플레이어)
+    public BoxCollider meleeArea;   // 몬스터의 공격 히트박스.
     public bool isChase;
     public bool isAttack;
-    public Transform player;
+    
     Vector3 originPos;
-    [Header("체력")]
+    [Header("체력바")]
     [SerializeField] Transform hp;
     [SerializeField] Camera cam;
-    //[SerializeField] Slider hp_slider;
+    [SerializeField] Slider hp_slider;
 
     Rigidbody rigid;
-    BoxCollider boxCollider;
+    BoxCollider enemyHitbox;
     Material mat;
     NavMeshAgent nav;
     Animator anim;
     void Awake()
     {
+        target = Player.instance.transform;
         rigid = GetComponent<Rigidbody>();
-        boxCollider = GetComponent<BoxCollider>();
-        //mat = GetComponentInChildren<MeshRenderer>().material;
+        enemyHitbox = GetComponent<BoxCollider>();
+        mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
-        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
-       // hp_slider.value = hp_slider.maxValue;
+        //cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+        cam = Camera.main;
+        hp_slider.value = hp_slider.maxValue;
         
 
         Invoke("ChaseStart", 2);
         originPos = transform.position;
     }
-    /*void OnCollisionEnter(Collision collsion)
-    {
-        if (collsion.gameObject.layer == LayerMask.NameToLayer("ball"))
-        {
-            hp_slider.value--;
-        }
-    }*/
+    
     void Update()
     {
         Quaternion q_hp = Quaternion.LookRotation(hp.position - cam.transform.position);
 
         Vector3 hp_angle = Quaternion.RotateTowards(hp.rotation, q_hp, 200).eulerAngles;
 
-        hp.rotation = Quaternion.Euler(0, hp_angle.y, 0);
-
-       /* if(hp_slider.value<=0)
-        {
-            Destroy(gameObject); 
-        }*/
+        hp.rotation = Quaternion.Euler(0, hp_angle.y, 0);                     
     }
     void ChaseStart()
     {
@@ -117,18 +109,27 @@ public class Enemy : MonoBehaviour
         FreezeVelocity();
 
         float distance = (transform.position - target.position).magnitude;
-        if (distance <= 10f)
+        if (nav.enabled)
         {
-            nav.SetDestination(target.position);
-            nav.isStopped = !isChase;
-        }
-        else
-        {
-            nav.SetDestination(originPos);
-        }
+            if (distance <= 10f)
+            {
+                nav.SetDestination(target.position);
+                nav.isStopped = !isChase;
+            }
+            else
+            {
+                nav.SetDestination(originPos);
+            }
+        }        
     }
 
-
+    public void IsAttacked(int _damage)
+    {
+        curHealth -= _damage;
+        Vector3 reactVec = transform.position - Player.instance.transform.position; //죽을때 넉배
+        StartCoroutine(OnDamage(reactVec));
+        hp_slider.value = (float)curHealth / maxHealth;
+    }
 
 
     void OnTriggerEnter(Collider other)
@@ -164,6 +165,8 @@ public class Enemy : MonoBehaviour
         }
         else
         {
+            enemyHitbox.enabled = false;
+            nav.enabled = false;
             mat.color = Color.gray;
             gameObject.layer = 11;
             isChase = false;
