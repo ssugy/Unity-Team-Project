@@ -25,11 +25,13 @@ public class FloatingPlatform : MonoBehaviour
         if (other.CompareTag("Player") || other.CompareTag("Evasion") || other.CompareTag("Dead") || other.CompareTag("Attacked")) 
         {
             player = other.GetComponent<CharacterController>();
+            Player.instance.isGround = true;
         }
     }
     private void OnTriggerStay(Collider other)
     {
         player.Move((endPos - transform.localPosition).normalized * Time.deltaTime * moveSpeed);
+        Player.instance.isGround = true;
     }
     private void OnTriggerExit(Collider other)
     {

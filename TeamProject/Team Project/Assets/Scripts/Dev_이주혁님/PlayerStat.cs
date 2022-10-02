@@ -44,8 +44,8 @@ public class PlayerStat
     public int curExp;    
     public int HP;
     public int curHP;
-    public int SP;
-    public int curSP;
+    public float SP;
+    public float curSP;
     public float criPro;
     public const float criMag = 1.5f;
     public int defPoint;

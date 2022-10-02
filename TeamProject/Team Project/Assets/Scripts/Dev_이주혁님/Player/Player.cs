@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UniRx;
 
 public class Player : MonoBehaviour
-{    
+{
     public static Player instance;
     public PlayerStat playerStat;
 
@@ -20,14 +20,14 @@ public class Player : MonoBehaviour
     [HideInInspector] public float moveSpeed;
     [HideInInspector] public float gravity;
     [HideInInspector] public Vector3 movement;    // 조이스틱 입력 이동 방향.
-    [HideInInspector] public bool enableMove;      // 이동 가능 여부를 표시.
-    [HideInInspector] public bool enableAtk;       // 공격 가능 여부 표시.
+    public bool enableMove;      // 이동 가능 여부를 표시.
+    public bool enableAtk;       // 공격 가능 여부 표시.
 
     public Transform rWeaponDummy;              // 오른손 무기 더미.
     private TrailRenderer rWeaponEffect;        // 오른손 무기 이펙트. (검기)
     public bool isGround;
 
-    
+
 
     private void Awake()
     {        
@@ -119,14 +119,16 @@ public class Player : MonoBehaviour
         transform.rotation *= Quaternion.Euler(tmp);
     }
     public void NormalAttack()
-    {   
-        
-        SetRotate();
-        playerAni.SetTrigger("isAttack");        
+    {
+        if (enableAtk)
+        {
+            SetRotate();
+            playerAni.SetTrigger("isAttack");
+        }              
     }
     public void PowerStrike()       // 스킬 1.
     {
-        if (enableAtk == true)
+        if (enableAtk)
         {
             SetRotate();
             playerAni.Play("Player Skill 1");
@@ -134,7 +136,7 @@ public class Player : MonoBehaviour
     }
     public void TurnAttack()        // 스킬 2.
     {
-        if (enableAtk == true)
+        if (enableAtk)
         {
             SetRotate();
             playerAni.Play("Player Skill 2");
@@ -143,7 +145,7 @@ public class Player : MonoBehaviour
     }
     public void JumpAttack()        // 스킬 3.
     {
-        if (enableAtk == true)
+        if (enableAtk)
         {
             SetRotate();
             playerAni.Play("Player Skill 3");
@@ -151,8 +153,8 @@ public class Player : MonoBehaviour
     }
     public void Warcry()            // 스킬 4.
     {
-        if (enableAtk == true)
-        {
+        if (enableAtk)
+        { 
             SetRotate();
             playerAni.Play("Player Skill 4");
         }
@@ -198,7 +200,8 @@ public class Player : MonoBehaviour
     }
     public void Die()
     {
-        playerAni.SetBool("isDead", true);
+        DisableAtk();
+        playerAni.SetTrigger("isDead");
         transform.tag = "Dead";
         Camera.main.GetComponent<MainCamController>().enabled = false;   // 플레이어가 사망하면 더 이상 카메라가 움직이지 않게 함.    
         Camera.main.GetComponent<WhenPlayerDie>().enabled = true;
@@ -285,7 +288,9 @@ public class Player : MonoBehaviour
     public void SetState()
     {
         playerStat.HP = playerStat.health * 50 + playerStat.strength * 10;
+        playerStat.curHP = playerStat.HP;
         playerStat.SP = playerStat.stamina * 10 + playerStat.strength * 2;
+        playerStat.curSP = playerStat.SP;
         playerStat.criPro = (20f + Sigma(2f, 1.03f, playerStat.dexterity)) / 100f;
         playerStat.defMag = 1 - Mathf.Pow(1.02f, -playerStat.defPoint);
         if (Weapon.weapon != null)
@@ -383,13 +388,54 @@ public class Player : MonoBehaviour
             }
         }
     }
+    /*
     public void ShieldOn()
     {
-        playerStat.defMag += 0.3f;
+        if (!isShield)
+        {            
+            playerStat.defMag += 0.3f;
+            isShield = true;
+        }
+        
     }
+
 
     public void ShieldOff()
     {
-        playerStat.defMag -= 0.3f;
+        if (isShield)
+        {
+            playerStat.defMag -= 0.3f;
+            isShield = false;
+        }
+    }
+    */
+
+    public void IsAttacked(int _damage)
+    {
+        playerStat.curHP -= _damage;        
+        if (playerStat.curHP <= 0)
+        {
+            Die();
+        }
+        playerAni.SetFloat("isAttacked", (float)_damage / playerStat.HP);
+        
+    }
+    public void DamageReset()
+    {
+        playerAni.SetFloat("isAttacked", 0f);
+    }
+    public void UseStamina(float _stamina)
+    {
+        playerStat.curSP -= _stamina;
+    }
+    public void Exhaisted()     // 스테미너를 전부 소진하면 행동을 할 수 없음.
+    {
+        playerAni.SetBool("isExhausted", true);        
+        DisableAtk();
+    }
+    public void Recovered()     // 스태미너가 모두 회복되면 Exhausted 상태에서 회복함.
+    {
+        playerAni.SetBool("isExhausted", false);
+        EnableAtk();
     }
 }

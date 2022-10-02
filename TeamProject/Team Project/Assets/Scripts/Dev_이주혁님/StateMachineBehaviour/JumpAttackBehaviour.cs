@@ -8,6 +8,7 @@ public class JumpAttackBehaviour : StateMachineBehaviour
     private Weapon weapon;
     public float atkMag;
     private float time; // 애니메이션 중 0.1초에서 0.8초 사이에만 이동할 수 있도록 하기 위해 시간을 저장할 변수.
+    public float usingStamina;
 
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -17,6 +18,7 @@ public class JumpAttackBehaviour : StateMachineBehaviour
         weapon = Weapon.weapon;
         weapon.atkMag = atkMag;
         time = 0f;
+        Player.instance.UseStamina(usingStamina);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

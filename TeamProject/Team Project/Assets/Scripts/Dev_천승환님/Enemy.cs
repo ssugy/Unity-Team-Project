@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
     public BoxCollider meleeArea;   // 몬스터의 공격 히트박스.
     public bool isChase;
     public bool isAttack;
+    public int atkPoint;            // 몬스터의 공격력.
+    public float atkMag;              // 몬스터의 공격 배율.
     
     Vector3 originPos;
     [Header("체력바")]
@@ -32,8 +34,7 @@ public class Enemy : MonoBehaviour
         enemyHitbox = GetComponent<BoxCollider>();
         mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
-        anim = GetComponentInChildren<Animator>();
-        //cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+        anim = GetComponentInChildren<Animator>();        
         cam = Camera.main;
         hp_slider.value = hp_slider.maxValue;
         
@@ -134,6 +135,10 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Player"))
+        {
+            Attack(other);
+        }
         /*if (other.tag == "Melee")               //근접공격 당했을떄
         {
             Weapon weapon = other.GetComponent<Weapon>();
@@ -180,5 +185,14 @@ public class Enemy : MonoBehaviour
         }
 
        
+    }
+    public void Attack(Collider _player)
+    {
+        Player player = _player.GetComponent<Player>();
+        if (player != null)
+        {
+            int damage = Mathf.CeilToInt(atkPoint * atkMag * (1 - player.playerStat.defMag) * Random.Range(0.95f, 1.05f));
+            player.IsAttacked(damage);
+        }
     }
 }

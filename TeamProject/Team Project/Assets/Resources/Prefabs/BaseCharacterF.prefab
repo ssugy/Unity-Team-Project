@@ -3013,8 +3013,8 @@ GameObject:
   - component: {fileID: 4701360694588880471}
   - component: {fileID: 4754428426783493899}
   - component: {fileID: 16554411}
-  - component: {fileID: 7222883438136761241}
   - component: {fileID: 16554410}
+  - component: {fileID: 7222883438136761241}
   m_Layer: 10
   m_Name: BaseCharacterF
   m_TagString: Player
@@ -3124,6 +3124,21 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.85, z: 0}
+--- !u!114 &16554410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4641566208725042821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2fa318dca69e774b96ba29a538dc313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  empty: {fileID: 0}
+  inventoryUI: {fileID: 0}
+  quickSlotSet: {fileID: 0}
 --- !u!114 &7222883438136761241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3137,10 +3152,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStat:
-    health: 0
-    stamina: 0
-    strength: 0
-    dexterity: 0
+    health: 5
+    stamina: 5
+    strength: 5
+    dexterity: 5
     characterClass: 0
     sex: 0
     level: 0
@@ -3171,21 +3186,6 @@ MonoBehaviour:
   enableAtk: 0
   rWeaponDummy: {fileID: 898127006}
   isGround: 0
---- !u!114 &16554410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4641566208725042821}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2fa318dca69e774b96ba29a538dc313, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  empty: {fileID: 0}
-  inventoryUI: {fileID: 0}
-  quickSlotSet: {fileID: 0}
 --- !u!1 &4641591315403358575
 GameObject:
   m_ObjectHideFlags: 0

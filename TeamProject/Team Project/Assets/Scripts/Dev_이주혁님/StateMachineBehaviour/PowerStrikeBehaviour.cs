@@ -6,6 +6,7 @@ public class PowerStrikeBehaviour : StateMachineBehaviour
 {
     private Weapon weapon;
     public float atkMag;
+    public float usingStamina;
 
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -13,6 +14,7 @@ public class PowerStrikeBehaviour : StateMachineBehaviour
     {
         weapon = Weapon.weapon;
         weapon.atkMag = atkMag;
+        Player.instance.UseStamina(usingStamina);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

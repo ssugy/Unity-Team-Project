@@ -12947,6 +12947,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6448476276777536645}
+  - component: {fileID: 415771557}
   m_Layer: 5
   m_Name: HP_Bar
   m_TagString: Untagged
@@ -12977,6 +12978,19 @@ RectTransform:
   m_AnchoredPosition: {x: 355, y: -175}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 1}
+--- !u!114 &415771557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6448476276777536644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf366ec983edd4f49a940615910ed0c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barFront: {fileID: 6448476278372324604}
 --- !u!1 &6448476276780504021
 GameObject:
   m_ObjectHideFlags: 0
@@ -15220,6 +15234,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6448476277535331327}
+  - component: {fileID: 375576529}
   m_Layer: 5
   m_Name: Stamina_Bar
   m_TagString: Untagged
@@ -15250,6 +15265,19 @@ RectTransform:
   m_AnchoredPosition: {x: 355, y: -210}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 1}
+--- !u!114 &375576529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6448476277535331326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b4b448ac4610dd4bab095aaee906c57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barFront: {fileID: 6448476276388058968}
 --- !u!1 &6448476277545822436
 GameObject:
   m_ObjectHideFlags: 0
@@ -16741,7 +16769,7 @@ MonoBehaviour:
   m_FillCenter: 1
   m_FillMethod: 0
   m_FillAmount: 1
-  m_FillClockwise: 1
+  m_FillClockwise: 0
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1

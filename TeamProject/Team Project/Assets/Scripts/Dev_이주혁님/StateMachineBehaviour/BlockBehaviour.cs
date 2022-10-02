@@ -5,6 +5,7 @@ using UnityEngine;
 public class BlockBehaviour : StateMachineBehaviour
 {
     public float curDef;
+    public float usingStamina;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -17,18 +18,24 @@ public class BlockBehaviour : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         Player.instance.playerStat.defMag = 0.9f;
+        Player.instance.UseStamina(usingStamina * Time.deltaTime);
+        if (Player.instance.playerStat.curSP <= 0)
+        {
+            animator.SetBool("isLArm", false);
+        }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Player.instance.playerStat.defMag = curDef;
+        Player.instance.playerStat.defMag = curDef;              
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
     override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         //Player.instance.playerStat.defMag = curDef;
+        //Player.instance.UseStamina(usingStamina * Time.deltaTime);
     }
 
     // OnStateIK is called right after Animator.OnAnimatorIK()
