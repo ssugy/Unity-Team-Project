@@ -55,16 +55,53 @@ public class JY_CharacterListManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
             selectNum = -1;
-        } 
+        }
         else
         {
             Destroy(gameObject);
         }
         //Json파일 로드
-        path = Application.dataPath + "/XML_JSON/" + "JY_Lobby_test.json";
+        //path = Application.dataPath + "/XML_JSON/" + "JY_Lobby_test.json";
+        path = Application.persistentDataPath + "/JY_Lobby_test.json";
+        FileInfo fileInfo = new FileInfo(path);
+        if (!fileInfo.Exists)
+        {
+            writeInitialJson();
+        }
         jsonData = File.ReadAllText(path);
         characterData = JsonUtility.FromJson<CharacterData>(jsonData);
     }
+
+    void writeInitialJson()
+    {
+        CharacterData initCharData = new CharacterData();
+        initCharData.infoDataList = new List<infoData>();
+
+        for(int i = 0; i < 4; i++)
+        {
+            infoData init = new infoData();
+            init.number = i;
+            init.isNull = true;
+            init.name = null;
+            init.level = 0;
+            init.job = null;
+            init.gender = null;
+            init.species = null;
+
+            int[] initArr = new int[4] { 0, 0, 0, 0 };
+            init.characterAvatar = initArr;
+            init.status = initArr;
+
+            initCharData.infoDataList.Add(init);
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+            string json = JsonUtility.ToJson(initCharData, true);
+            File.WriteAllText(Application.persistentDataPath + "/JY_Lobby_test.json", json);
+        }
+    }
+
 
     private void OnEnable()
     {
