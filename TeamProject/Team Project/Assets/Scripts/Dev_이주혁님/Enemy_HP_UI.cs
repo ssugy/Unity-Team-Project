@@ -47,6 +47,11 @@ public class Enemy_HP_UI : MonoBehaviour
     public static void ReturnObject(HP_Bar _bar)
     {                
         _bar.gameObject.SetActive(false);
+        if (instance.poolHP_Bar.Count >= 3)
+        {
+            Destroy(_bar.gameObject);
+            return;
+        }
         instance.poolHP_Bar.Enqueue(_bar);
     }
 }

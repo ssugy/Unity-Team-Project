@@ -15,43 +15,101 @@ public class Enemy : MonoBehaviour
     public float atkMag;              // 몬스터의 공격 배율.
     [Space(10f)]
     [Header("인식 범위 관련 프로퍼티")]
-    public float targetRadius; // 몬스터의 인식 범위.
-    public float targetRange;  // 몬스터의 인식 거리
-    private Transform target;        // 타겟. (플레이어)                    
-    private Vector3 originPos;      // 몬스터의 초기 위치.    
-    private Rigidbody rigid;
-    private BoxCollider hitbox;
+    public float targetRadius;  // 몬스터의 인식 범위.
+    public float targetRange;   // 몬스터의 인식 거리
+    public float attackDistance;// 몬스터가 공격을 하는 거리.
+    protected Transform target;        // 타겟. (플레이어)                    
+    protected Vector3 originPos;      // 몬스터의 초기 위치.    
+    protected Rigidbody rigid;
+    protected Collider hitbox;
     //private Material mat;
-    private NavMeshAgent nav;
-    private Animator anim;
-    private float atkTime;      // Unirx로 교체예정.
-    void Awake()
+    protected NavMeshAgent nav;
+    protected Animator anim;
+    protected float atkTime;      // 공격 쿨타임. Unirx로 교체예정.
+    private void Awake()
     {        
         rigid = GetComponent<Rigidbody>();
-        hitbox = GetComponent<BoxCollider>();
+        hitbox = GetComponent<Collider>();
         //mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
-        originPos = transform.position;
-                
-        atkTime = 0f;
-        
+        originPos = transform.position;                
+        atkTime = 0f;        
     }
-    private void Start()
+    protected void Start()
     {
         StartCoroutine(Targeting());      
-    }       
-
-    void FreezeEnemy ()
+    }
+    private void FixedUpdate()
+    {
+        atkTime += Time.fixedDeltaTime;
+        if (nav.enabled)
+        {
+            if (target != null)
+            {
+                nav.SetDestination(target.position);
+                float distance = (transform.position - target.position).magnitude;
+                if (distance <= attackDistance)
+                {
+                    FreezeEnemy();
+                    if (atkTime >= 2.5f)
+                    {
+                        anim.SetTrigger("isAttack");
+                        atkTime = 0f;
+                    }
+                }
+                else if (distance >= 15f)
+                {
+                    target = null;
+                    StartCoroutine(Targeting());
+                }
+            }
+            else
+            {
+                nav.SetDestination(originPos);
+                UnfreezeEnemy();
+            }
+        }
+        if (nav.velocity != Vector3.zero)
+        {
+            anim.SetBool("isWalk", true);
+        }
+        else
+        {
+            anim.SetBool("isWalk", false);
+        }
+    }
+    protected void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Attack(other);
+            Debug.Log("공격");
+        }
+    }
+    protected void FreezeEnemy ()
     {
         nav.isStopped = true;    
-    }    
-    void UnfreezeEnemy()
+    }           // 몬스터가 움직이지 못하게 함.
+    protected void UnfreezeEnemy()
     {
         nav.isStopped = false;
-    }
+    }          // 몬스터가 움직일 수 있게 함.
+    protected void WakeUp()
+    {
+        RaycastHit[] rayHits =
+            Physics.SphereCastAll(transform.position, 4f, transform.forward, 0f, LayerMask.GetMask("Enemy"));
+        if (rayHits.Length > 0)
+        {
+            for (int i = 0; i < rayHits.Length; ++i)
+            {
+                Enemy other = rayHits[i].transform.GetComponent<Enemy>();
+                other.target = this.target;
+            }
 
-    IEnumerator Targeting()
+        }
+    }                 // 주변에 있는 몬스터를 깨움.
+    protected IEnumerator Targeting()
     {
         yield return new WaitForSeconds(0.5f);       
         RaycastHit[] rayHits =
@@ -66,48 +124,8 @@ public class Enemy : MonoBehaviour
             yield break;
         }        
         StartCoroutine(Targeting());
-    }
-    
-    void FixedUpdate()
-    {        
-        atkTime += Time.fixedDeltaTime;
-        if (nav.enabled)
-        {
-            if (target != null)
-            {
-                nav.SetDestination(target.position);
-                float distance = (transform.position - target.position).magnitude;
-                if (distance <= 1.7f)
-                {
-                    FreezeEnemy();
-                    if (atkTime >= 2.5f)
-                    {
-                        anim.SetTrigger("isAttack");
-                        atkTime = 0f;
-                    }                                      
-                }
-                else if (distance >= 15f)
-                {
-                    target = null;                    
-                    StartCoroutine(Targeting());
-                }                
-            }            
-            else
-            {
-                nav.SetDestination(originPos);
-                UnfreezeEnemy();
-            }
-        }        
-        if (nav.velocity != Vector3.zero)
-        {
-            anim.SetBool("isWalk", true);
-        }
-        else
-        {
-            anim.SetBool("isWalk", false);
-        }
-    }
-    public void Attack(Collider _player)
+    }       // 설정된 전방 범위에 플레이어가 있으면 타겟으로 설정함.    
+    public virtual void Attack(Collider _player)
     {
         Player player = _player.GetComponent<Player>();
         if (player != null)
@@ -116,30 +134,17 @@ public class Enemy : MonoBehaviour
             player.IsAttacked(damage);
         }
     }
-    public void IsAttacked(int _damage)
+    public virtual void IsAttacked(int _damage)
     {
         curHealth -= _damage;
         Vector3 reactVec = transform.position - Player.instance.transform.position; // 넉백 거리.
         StartCoroutine(OnDamage(reactVec));        
-    }
-
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            Attack(other);
-        }        
-    }
-
-    IEnumerator OnDamage(Vector3 reactVec)
-    {
-        //mat.color = Color.red;
+    }   
+    protected IEnumerator OnDamage(Vector3 reactVec)
+    {        
         yield return new WaitForSeconds(0.1f);
-
         if(curHealth > 0)
-        {
-            //mat.color = Color.white;
+        {            
             anim.SetTrigger("isAttacked");
             reactVec = reactVec.normalized;
             reactVec += Vector3.up;
@@ -148,17 +153,14 @@ public class Enemy : MonoBehaviour
         else
         {
             hitbox.enabled = false;
-            nav.enabled = false;
-            //mat.color = Color.gray;                     
+            nav.enabled = false;                                
             nav.enabled = false;
             anim.SetTrigger("isDead");
             reactVec = reactVec.normalized;
             reactVec += Vector3.up;
             rigid.AddForce(reactVec * 5, ForceMode.Impulse);
             Destroy(gameObject, 4);
-        }
-
-       
+        }       
     }
     
 }

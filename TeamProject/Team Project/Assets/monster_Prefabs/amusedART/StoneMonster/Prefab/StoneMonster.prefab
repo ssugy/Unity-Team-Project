@@ -264,7 +264,7 @@ Transform:
   - {fileID: 4836351918659748}
   m_Father: {fileID: 4788319935855200}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: -174.33627}
+  m_LocalEulerAnglesHint: {x: -0, y: -90, z: -174.33627}
 --- !u!1 &1713781036754730
 GameObject:
   m_ObjectHideFlags: 0
@@ -365,8 +365,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d2a47c69af48f146aa614613ab53026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
-  curHealth: 200
+  maxHealth: 100
+  curHealth: 100
   defMag: 0.2
   atkPoint: 30
   atkMag: 1.05
