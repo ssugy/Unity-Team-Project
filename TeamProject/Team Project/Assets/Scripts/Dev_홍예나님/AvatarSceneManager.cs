@@ -15,6 +15,7 @@ public class AvatarSceneManager : MonoBehaviour
     private enum MoreOptions { FACE, HAIR, TORSO, LEGS, LAST}
     public enum Gender { MALE, FEMALE, NEUTRAL}
     const float WEIGHT_SCALE = 100.0f;
+    const int MIN_NAME_LENGTH = 2;
     private Steps currentStep = Steps.SELECT_JOB;
     private MoreOptions currentOption = MoreOptions.FACE;
     private int currentOptionPanel = 0;
@@ -178,7 +179,12 @@ public class AvatarSceneManager : MonoBehaviour
             currentStep++;
             ShowCanvas();
         }
-
+        else if (currentStep == Steps.SELECT_NAME && CharacterNameInput.text.Length < MIN_NAME_LENGTH)
+        {
+            //예나
+            //이름의 최소 글자수 체크
+            return;
+        }
         else
         {
             //주영
