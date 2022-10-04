@@ -5,7 +5,8 @@ using UnityEngine;
 public class JY_NpcQuest : MonoBehaviour
 {
     public GameObject questMark;
-    public GameObject questMark2;
+    public GameObject questMark_Gray;
+    public GameObject questMark_Complete;
     public Transform targetCam;
     public Transform Player;
     Transform playerTr;
@@ -27,7 +28,7 @@ public class JY_NpcQuest : MonoBehaviour
     void Update()
     {
         QuestNpcChecker(gameObject.name);
-        markBillborad();
+        //markBillborad();
         DialogBtnActivate();
     }
     public void QuestNpcChecker(string npcName)
@@ -44,12 +45,21 @@ public class JY_NpcQuest : MonoBehaviour
                         JY_QuestManager.s_instance.QuestDataList[i][6] == "FALSE")
                 {
                     questMark.SetActive(false);
-                    questMark2.SetActive(true);
+                    questMark_Gray.SetActive(false);
+                    questMark_Complete.SetActive(true);
+                }
+                else if (JY_QuestManager.s_instance.QuestDataList[i][5] == "TRUE" &&
+                        JY_QuestManager.s_instance.QuestDataList[i][6] == "FALSE")
+                {
+                    questMark.SetActive(false);
+                    questMark_Gray.SetActive(true);
+                    questMark_Complete.SetActive(false);
                 }
                 else
                 {
                     questMark.SetActive(false);
-                    questMark2.SetActive(false);
+                    questMark_Gray.SetActive(false);
+                    questMark_Complete.SetActive(false);
                 }
             }
         }
@@ -58,7 +68,8 @@ public class JY_NpcQuest : MonoBehaviour
     public void markBillborad()
     {
         questMark.transform.LookAt(targetCam);
-        questMark2.transform.LookAt(targetCam);
+        questMark_Gray.transform.LookAt(targetCam);
+        questMark_Complete.transform.LookAt(targetCam);
     }
 
     public void DialogBtnActivate()
