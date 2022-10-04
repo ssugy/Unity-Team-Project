@@ -8,7 +8,6 @@ public class Player : MonoBehaviour
 {
     public static Player instance;
     public PlayerStat playerStat;
-
     public Transform camAxis;                     // 메인 카메라 축.      
     [Header("플레이어의 컴포넌트")]
     public Animator playerAni;                    // 플레이어의 애니메이션.
@@ -16,18 +15,17 @@ public class Player : MonoBehaviour
     public CharacterController controller;        // 플레이어의 캐릭터 컨트롤러.
     
     [Header("이동 관련 변수")]
-    [HideInInspector] public float rotateSpeed;
-    [HideInInspector] public float moveSpeed;
+    public float rotateSpeed;
+    public float moveSpeed;
     [HideInInspector] public float gravity;
     [HideInInspector] public Vector3 movement;    // 조이스틱 입력 이동 방향.
-    public bool enableMove;      // 이동 가능 여부를 표시.
-    public bool enableAtk;       // 공격 가능 여부 표시.
+    [HideInInspector] public bool enableMove;      // 이동 가능 여부를 표시.
+    [HideInInspector] public bool enableAtk;       // 공격 가능 여부 표시.
 
     public Transform rWeaponDummy;              // 오른손 무기 더미.
     private TrailRenderer rWeaponEffect;        // 오른손 무기 이펙트. (검기)
-    public bool isGround;
-
-
+    [HideInInspector] public bool isGround;
+    private HP_Bar hpbar;
 
     private void Awake()
     {        
@@ -335,13 +333,15 @@ public class Player : MonoBehaviour
         if (enemy != null)
         {
             int damage = AttackDamage(Weapon.weapon.atkMag, enemy.defMag);
-            enemy.IsAttacked(damage);            
+            enemy.IsAttacked(damage);
+            hpbar = Enemy_HP_UI.GetObject();
+            hpbar.Recognize(enemy);
         }
     }
     public void PowerStrikeDamage()
     {
         int layerMask = 1 << 11;
-        Vector3 halfHitbox = new Vector3(0.3f, 3f, 0.2f);
+        Vector3 halfHitbox = new Vector3(0.4f, 3f, 0.4f);
         Collider[] enemys = Physics.OverlapBox(transform.position + transform.forward, halfHitbox, transform.rotation, layerMask);
         if (enemys != null)
         {
@@ -354,7 +354,7 @@ public class Player : MonoBehaviour
     public void TurnAttackDamage()
     {
         int layerMask = 1 << 11;
-        Vector3 halfHitbox = new Vector3(0.6f, 3f, 0.3f);
+        Vector3 halfHitbox = new Vector3(0.6f, 3f, 0.4f);
         Collider[] enemys = Physics.OverlapBox(transform.position + transform.forward, halfHitbox, transform.rotation, layerMask);
         if (enemys != null)
         {
@@ -438,4 +438,6 @@ public class Player : MonoBehaviour
         playerAni.SetBool("isExhausted", false);
         EnableAtk();
     }
+
+    
 }

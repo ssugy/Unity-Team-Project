@@ -13,6 +13,10 @@ public class BattleUI : MonoBehaviour
     public Button skill_2;
     public Button skill_3;
     public Button skill_4;
+    public Image cool_1;
+    public Image cool_2;
+    public Image cool_3;
+    public Image cool_4;
     public Button evasion;
     public EventTrigger lArm;           // lArm 기능은 버튼이 아닌 이벤트트리거를 사용함.
     private EventTrigger.Entry lArm_PointerDown;
@@ -24,9 +28,13 @@ public class BattleUI : MonoBehaviour
         player = Player.instance;
         normalAtk.onClick.AddListener(player.NormalAttack);
         skill_1.onClick.AddListener(player.PowerStrike);
+        skill_1.onClick.AddListener(() => StartCoroutine(Cooldown(4f, skill_1, cool_1)));
         skill_2.onClick.AddListener(player.TurnAttack);
+        skill_2.onClick.AddListener(() => StartCoroutine(Cooldown(4f, skill_2, cool_2)));
         skill_3.onClick.AddListener(player.JumpAttack);
+        skill_3.onClick.AddListener(() => StartCoroutine(Cooldown(8f, skill_3, cool_3)));
         skill_4.onClick.AddListener(player.Warcry);
+        skill_4.onClick.AddListener(() => StartCoroutine(Cooldown(10f, skill_4, cool_4)));
         evasion.onClick.AddListener(player.Roll);
         // 이하는 이벤트트리거에 동적으로 pointer up/down 이벤트에 함수를 할당하는 방법. (매개변수 필요)
         lArm_PointerDown = new EventTrigger.Entry();
@@ -51,11 +59,23 @@ public class BattleUI : MonoBehaviour
     {
         Image frame = lArm.transform.GetComponent<Image>();
         frame.sprite = upFrame;
-    }
-
-    // Update is called once per frame
-    void Update()
+    }   
+    IEnumerator Cooldown(float _cooltime, Button _button, Image _image)
     {
-        
+        _button.interactable = false;
+        _image.fillAmount = 1f;
+        StartCoroutine(Cooldown_Sprite(_cooltime, _image));
+        yield return new WaitForSeconds(_cooltime);
+        _button.interactable = true;
+    }
+    IEnumerator Cooldown_Sprite(float _cooltime, Image _image)
+    {        
+        _image.fillAmount -= 0.1f/_cooltime;
+        yield return new WaitForSeconds(0.1f);
+        if (_image.fillAmount > 0.025f)
+        {
+            StartCoroutine(Cooldown_Sprite(_cooltime, _image));
+        }
+
     }
 }

@@ -25,13 +25,11 @@ public class SPFillAmount : MonoBehaviour
         }
         if (stat.curSP <= 0)
         {
-            Player.instance.Exhaisted();
-            recoverSpeed = 6f;
+            Player.instance.Exhaisted();            
         }
-        else if (stat.curSP >= stat.SP * 0.8)
+        else if (stat.curSP >= stat.SP * 0.2)
         {
-            Player.instance.Recovered();
-            recoverSpeed = 10f;
+            Player.instance.Recovered();            
         }
         
     }

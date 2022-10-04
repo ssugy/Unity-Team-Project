@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 417464}
   - component: {fileID: 3381380}
   - component: {fileID: 2391334}
+  - component: {fileID: 3646521619939012002}
   m_Layer: 0
   m_Name: column_4
   m_TagString: Untagged
@@ -83,6 +84,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3646521619939012002
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103972}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.6039739, y: 2.449369, z: 0.59517497}
+  m_Center: {x: -0.0044201906, y: 1.2237175, z: -0.000010445713}
 --- !u!1 &125568
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,6 +191,7 @@ GameObject:
   - component: {fileID: 413938}
   - component: {fileID: 3373232}
   - component: {fileID: 2366934}
+  - component: {fileID: 2371225267545650186}
   m_Layer: 0
   m_Name: metalFence__entrance
   m_TagString: Untagged
@@ -249,6 +264,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2371225267545650186
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148164}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.29309097, y: 2.1890628, z: 1.4970009}
+  m_Center: {x: 0.028268315, y: 1.2131795, z: -0.6868694}
 --- !u!1 &161670
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,7 +369,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 439678}
-  - component: {fileID: 6529070}
   m_Layer: 0
   m_Name: metalfence_entrence1_b
   m_TagString: Untagged
@@ -368,16 +395,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6529070
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 166850}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
