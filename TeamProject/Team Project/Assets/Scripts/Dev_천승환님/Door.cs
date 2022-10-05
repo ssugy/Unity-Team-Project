@@ -39,17 +39,22 @@ public class Door : MonoBehaviour //접근 제한자, 클래스명 : 상속
      */
     private void OnTriggerEnter(Collider other)               // 트리거 충돌을 이용해서 어떤 문을 열지 확인
     {
-        doorButton.gameObject.SetActive(true);                // doorButton gameObject 활성화 
-        DoorButton.door = doorPivot;                          // 트리거충돌로 들어갈 door에 DoorButton을 활성하
+        if (other.CompareTag("Player"))
+        {
+            doorButton.gameObject.SetActive(true);                // doorButton gameObject 활성화 
+            DoorButton.door = doorPivot;
+        }        
     }
     /* OnTriggerExit : 트리거를 떠나는 모든것을 파괴시킨다.
      * 
      */
     private void OnTriggerExit(Collider other)
     {
+        if (other.CompareTag("Player"))
+        {
+            doorButton.gameObject.SetActive(false);               //도어버튼 게임오브젝트 비활성화
 
-        doorButton.gameObject.SetActive(false);               //도어버튼 게임오브젝트 비활성화
-
-        DoorButton.door = null;                             //없어도 되는코드 위에 도어버튼과 짝을 맞추기위해 넣었고 혹시모를 에러를 방지하기위해 넣음
-    }
+            DoorButton.door = null;                             //없어도 되는코드 위에 도어버튼과 짝을 맞추기위해 넣었고 혹시모를 에러를 방지하기위해 넣음
+        }
+    }        
 }

@@ -341,7 +341,7 @@ public class Player : MonoBehaviour
     public void PowerStrikeDamage()
     {
         int layerMask = 1 << 11;
-        Vector3 halfHitbox = new Vector3(0.4f, 3f, 0.4f);
+        Vector3 halfHitbox = new Vector3(0.6f, 2f, 1f);
         Collider[] enemys = Physics.OverlapBox(transform.position + transform.forward, halfHitbox, transform.rotation, layerMask);
         if (enemys != null)
         {
@@ -354,7 +354,7 @@ public class Player : MonoBehaviour
     public void TurnAttackDamage()
     {
         int layerMask = 1 << 11;
-        Vector3 halfHitbox = new Vector3(0.6f, 3f, 0.4f);
+        Vector3 halfHitbox = new Vector3(1f, 2f, 1f);
         Collider[] enemys = Physics.OverlapBox(transform.position + transform.forward, halfHitbox, transform.rotation, layerMask);
         if (enemys != null)
         {
@@ -367,7 +367,7 @@ public class Player : MonoBehaviour
     public void JumpAttackDamage()
     {
         int layerMask = 1 << 11;        
-        Collider[] enemys = Physics.OverlapSphere(transform.position, 2f, layerMask);
+        Collider[] enemys = Physics.OverlapSphere(transform.position, 3f, layerMask);
         if (enemys != null)
         {
             foreach (Collider col in enemys)
@@ -379,7 +379,7 @@ public class Player : MonoBehaviour
     public void WarcryDamage()
     {
         int layerMask = 1 << 11;
-        Collider[] enemys = Physics.OverlapSphere(transform.position, 1.5f, layerMask);
+        Collider[] enemys = Physics.OverlapSphere(transform.position, 2f, layerMask);
         if (enemys != null)
         {
             foreach (Collider col in enemys)
