@@ -40,7 +40,7 @@ public class Dragon : Enemy
                         atkTime = 0f;
                     }
                 }
-                else if (distance >= 15f)
+                else if (distance >= 20f)
                 {
                     target = null;
                     StartCoroutine(Targeting());

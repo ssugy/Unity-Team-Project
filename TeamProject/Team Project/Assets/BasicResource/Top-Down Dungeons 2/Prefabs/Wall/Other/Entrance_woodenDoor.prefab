@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 400004}
   - component: {fileID: 3300002}
   - component: {fileID: 2300002}
-  - component: {fileID: 7533734395567866341}
+  - component: {fileID: 1837327058851554830}
   - component: {fileID: 6975201852423742753}
   - component: {fileID: 4653678568706435650}
   m_Layer: 0
@@ -240,8 +240,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7533734395567866341
-BoxCollider:
+--- !u!135 &1837327058851554830
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -251,8 +251,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3, y: 1.842253, z: 3}
-  m_Center: {x: 0.47903013, y: 0.9144335, z: 0.008215001}
+  m_Radius: 1.1
+  m_Center: {x: 0.47903013, y: 0.3, z: 0.008215001}
 --- !u!65 &6975201852423742753
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -280,6 +280,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doorButton: {fileID: 0}
   isClose: 0
+  isLocked: 0
 --- !u!1 &100006
 GameObject:
   m_ObjectHideFlags: 0

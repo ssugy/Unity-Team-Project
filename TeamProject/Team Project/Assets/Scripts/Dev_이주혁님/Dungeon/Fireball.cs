@@ -8,7 +8,7 @@ public class Fireball : MonoBehaviour
 
     private void Update()
     {
-        transform.Translate(Vector3.forward * Time.deltaTime * 8f);
+        transform.Translate(Vector3.forward * Time.deltaTime * 12f);
     }
     private void OnEnable()
     {
@@ -21,7 +21,7 @@ public class Fireball : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Terrain")|| other.CompareTag("Wall"))
+        if(other.CompareTag("Terrain")|| other.CompareTag("Building"))
         {
             Destroy(gameObject);
         }
