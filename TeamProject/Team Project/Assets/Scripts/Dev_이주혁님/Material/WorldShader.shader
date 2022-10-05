@@ -51,7 +51,7 @@ Shader "Custom/WorldShader"
         {
             // Albedo comes from a texture tinted by color
             fixed4 c1 = tex2D (_MainTex, IN.uv_MainTex) * _Color;
-            fixed4 c2 = tex2D (_MainTex2, IN.uv_MainTex2) * _Color;
+            fixed4 c2 = tex2D (_MainTex2, IN.uv_MainTex2);
             fixed3 n1 = UnpackNormal(tex2D (_BumpTex, IN.uv_BumpTex));
             fixed3 n2 = UnpackNormal(tex2D (_BumpTex2, IN.uv_BumpTex2));
             o.Albedo = lerp(c1.rgb, c2.rgb, IN.color.r);
