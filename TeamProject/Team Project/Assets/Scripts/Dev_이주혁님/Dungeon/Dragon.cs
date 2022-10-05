@@ -45,7 +45,7 @@ public class Dragon : Enemy
                     target = null;
                     StartCoroutine(Targeting());
                 }
-                else if (distance > 7f && atkTime >= 2.5f) 
+                else if (distance > 5f && atkTime >= 2.5f) 
                 {
                     anim.SetTrigger("isSkill");
                     atkTime = 0f;
@@ -94,9 +94,8 @@ public class Dragon : Enemy
         else
         {
             hitbox.enabled = false;
-            nav.enabled = false;                         
-            nav.enabled = false;
             anim.SetTrigger("isDead");
+            nav.enabled = false;                        
             reactVec = reactVec.normalized;
             reactVec += Vector3.up;
             rigid.AddForce(reactVec * 5, ForceMode.Impulse);

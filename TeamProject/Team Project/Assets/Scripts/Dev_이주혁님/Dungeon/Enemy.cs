@@ -153,14 +153,21 @@ public class Enemy : MonoBehaviour
         else
         {
             hitbox.enabled = false;
-            nav.enabled = false;                                
-            nav.enabled = false;
             anim.SetTrigger("isDead");
+            nav.enabled = false;
             reactVec = reactVec.normalized;
             reactVec += Vector3.up;
             rigid.AddForce(reactVec * 5, ForceMode.Impulse);
             Destroy(gameObject, 4);
         }       
+    }
+
+    protected void LookTarget()
+    {
+        if (target != null)
+        {            
+            transform.LookAt(target);
+        }              
     }
     
 }

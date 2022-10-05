@@ -439,5 +439,14 @@ public class Player : MonoBehaviour
         EnableAtk();
     }
 
-    
+    void LookTarget()
+    {
+        int layerMask = 1 << 11;
+        Collider[] enemys = Physics.OverlapSphere(transform.position, 2.5f, layerMask);
+        if (enemys.Length > 0) 
+        {
+            Transform target = enemys[0].transform;
+            transform.LookAt(target);
+        }
+    }
 }
