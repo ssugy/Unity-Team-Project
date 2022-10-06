@@ -123,7 +123,8 @@ public class Enemy : MonoBehaviour
                                   LayerMask.GetMask("Player"));
         if(rayHits.Length > 0)
         {
-            target = rayHits[0].transform;            
+            target = rayHits[0].transform;
+            atkTime = 1.5f;
             yield break;
         }        
         StartCoroutine(Targeting());
@@ -157,7 +158,7 @@ public class Enemy : MonoBehaviour
         {
             hitbox.enabled = false;
             anim.SetTrigger("isDead");
-            nav.enabled = false;
+            FreezeEnemy();
             reactVec = reactVec.normalized;
             reactVec += Vector3.up;
             rigid.AddForce(reactVec * 5, ForceMode.Impulse);
