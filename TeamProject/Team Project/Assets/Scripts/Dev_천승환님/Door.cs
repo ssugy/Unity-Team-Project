@@ -65,7 +65,8 @@ public class Door : MonoBehaviour //접근 제한자, 클래스명 : 상속
     }
     IEnumerator DoorOpen()
     {
-        isClose = false;               
+        isClose = false;
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.DOOR_01, false, 1f);
         for (int i = 0; i < 90; ++i)
         {
             doorPivot.rotation = Quaternion.RotateTowards(doorPivot.rotation, openRotation, 1f);
@@ -74,7 +75,8 @@ public class Door : MonoBehaviour //접근 제한자, 클래스명 : 상속
     }
     IEnumerator DoorClose()
     {
-        isClose = true;              
+        isClose = true;
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.DOOR_01, false, 1f) ;
         for (int i = 0; i < 90; ++i)
         {
             doorPivot.rotation = Quaternion.RotateTowards(doorPivot.rotation, closeRotation, 1f);
