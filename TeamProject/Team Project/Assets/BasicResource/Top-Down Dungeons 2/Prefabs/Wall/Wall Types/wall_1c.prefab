@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 483164}
   - component: {fileID: 3340506}
   - component: {fileID: 2322164}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: wall_bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 485598}
   - component: {fileID: 3333408}
   - component: {fileID: 2331256}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: wall_bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,9 +176,9 @@ GameObject:
   m_Component:
   - component: {fileID: 406910}
   - component: {fileID: 6589220}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: wall_1c
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -214,7 +214,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.3, y: 2, z: 2.4}
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0.92, z: 0}
 --- !u!1 &180886
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,7 +226,7 @@ GameObject:
   - component: {fileID: 435174}
   - component: {fileID: 3336798}
   - component: {fileID: 2391242}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: wall_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -309,7 +309,7 @@ GameObject:
   - component: {fileID: 469938}
   - component: {fileID: 3324572}
   - component: {fileID: 2342840}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: wall_top_default
   m_TagString: Untagged
   m_Icon: {fileID: 0}

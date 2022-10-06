@@ -90,7 +90,13 @@ public class Player : MonoBehaviour
         controller.Move(transform.forward * moveSpeed * movement.magnitude *
             Time.deltaTime + new Vector3(0, gravity * Time.deltaTime, 0));
     }
-
+    private void Update()
+    {
+        if (playerStat.curExp >= playerStat.Exp)
+        {
+            LevelUp();
+        }
+    }
     void FixedUpdate()
     {
         Move();
@@ -307,7 +313,6 @@ public class Player : MonoBehaviour
         for (int i = 0; i <= c - 1; i++)
         {
             tmp += a * Mathf.Pow(b, (float)-i);
-
         }
         return tmp;
     }
@@ -449,5 +454,17 @@ public class Player : MonoBehaviour
             Transform target = enemys[0].transform;
             transform.LookAt(target);
         }
+    }
+    void LevelUp()
+    {
+        ++playerStat.level;
+        playerStat.statPoint += 3;
+        playerStat.curExp -= playerStat.Exp;
+        playerStat.Exp = 100;
+    }
+    // 이미 발동된 isAttack 트리거를 취소함. 선입력에 의한 의도치 않은 공격이 나가는 것을 방지.
+    public void ResetAttackTrigger()   
+    {
+        playerAni.ResetTrigger("isAttack");
     }
 }

@@ -21,7 +21,7 @@ public class Fireball : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Terrain")|| other.CompareTag("Building"))
+        if (other.CompareTag("Terrain") || other.CompareTag("Wall"))
         {
             Destroy(gameObject);
         }

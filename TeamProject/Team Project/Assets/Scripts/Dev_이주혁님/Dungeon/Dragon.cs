@@ -99,6 +99,7 @@ public class Dragon : Enemy
             reactVec = reactVec.normalized;
             reactVec += Vector3.up;
             rigid.AddForce(reactVec * 5, ForceMode.Impulse);
+            DropExp();
             Destroy(gameObject, 4);
         }
     }

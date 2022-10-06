@@ -2861,7 +2861,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4927973787200604
 Transform:
   m_ObjectHideFlags: 0
@@ -2996,12 +2996,12 @@ MonoBehaviour:
     stamina: 5
     strength: 5
     dexterity: 5
-    characterClass: 0
-    sex: 0
-    level: 0
+    characterClass: 1
+    sex: 1
+    level: 1
     customized: 
     equiped: 
-    Exp: 0
+    Exp: 10
     curExp: 0
     HP: 0
     curHP: 0
@@ -3025,6 +3025,7 @@ MonoBehaviour:
   enableMove: 0
   enableAtk: 0
   rWeaponDummy: {fileID: 436675578}
+  isGround: 0
 --- !u!1 &1672909316657688
 GameObject:
   m_ObjectHideFlags: 0

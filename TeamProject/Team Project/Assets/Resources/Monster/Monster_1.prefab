@@ -365,11 +365,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d2a47c69af48f146aa614613ab53026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
-  curHealth: 200
+  maxHealth: 80
+  curHealth: 80
   defMag: 0.2
   atkPoint: 30
   atkMag: 1.05
+  dropExp: 5
+  dropGold: 10
   targetRadius: 2
   targetRange: 5
   attackDistance: 1.7

@@ -13,6 +13,9 @@ public class Enemy : MonoBehaviour
     public float defMag;              // 방어율.
     public int atkPoint;              // 몬스터의 공격력.
     public float atkMag;              // 몬스터의 공격 배율.
+    public int dropExp;               // 몬스터가 드랍하는 경험치.
+    public int dropGold;              // 몬스터가 드랍하는 골드.
+    //public ItemData[] dropItem;       // 몬스터가 드랍하는 아이템.
     [Space(10f)]
     [Header("인식 범위 관련 프로퍼티")]
     public float targetRadius;  // 몬스터의 인식 범위.
@@ -158,6 +161,7 @@ public class Enemy : MonoBehaviour
             reactVec = reactVec.normalized;
             reactVec += Vector3.up;
             rigid.AddForce(reactVec * 5, ForceMode.Impulse);
+            DropExp();
             Destroy(gameObject, 4);
         }       
     }
@@ -169,5 +173,15 @@ public class Enemy : MonoBehaviour
             transform.LookAt(target);
         }              
     }
-    
+    protected void DropExp()
+    {
+        if (target != null)
+        {
+            Player player = target.GetComponent<Player>();
+            if (player != null)
+            {
+                player.playerStat.curExp += dropExp;
+            }
+        }
+    }
 }
