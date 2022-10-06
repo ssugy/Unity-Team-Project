@@ -24,8 +24,8 @@ public class MainCamController : MonoBehaviour
 
     void Rotate()
     {
-        rotateX += dragOn.xAngle * 5;                
-        rotateY += dragOn.yAngle * -1;           // 드래그 방향과 카메라 회전 방향을 맞추기 위해 -1을 곱함.
+        rotateX += dragOn.xAngle * 6f;                
+        rotateY += dragOn.yAngle * -1.1f;           // 드래그 방향과 카메라 회전 방향을 맞추기 위해 -1을 곱함.
         dragOn.xAngle = 0;
         dragOn.yAngle = 0;        
         if (rotateY > 1.3f) rotateY = 1.3f;          // 카메라가 너무 많이 회전하는 것을 방지하는 코드.

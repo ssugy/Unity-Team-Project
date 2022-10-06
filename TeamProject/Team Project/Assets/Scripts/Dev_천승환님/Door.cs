@@ -15,12 +15,11 @@ public class Door : MonoBehaviour //접근 제한자, 클래스명 : 상속
      * 모듈: 다중 파일을 다루는 일부 닷넷 바이너리
     */
     Transform doorPivot;         //doorPivot 트랜스폼
-    public DoorButton doorButton;
+    DoorButton doorButton;
+    [HideInInspector] public Quaternion closeRotation;
+    [HideInInspector] public Quaternion openRotation;
+    [HideInInspector] public bool isClose;
 
-    /* bool: 부울값 참과 거짓을 나타내는 구조체 형식
-     * isClose : 필드 클래스 또는 구조체에 직접선언되는 모든 형식의 변수
-     */
-    public bool isClose;         //isClose 라는이름의 bool변수
     public bool isLocked;
 
 
@@ -28,10 +27,12 @@ public class Door : MonoBehaviour //접근 제한자, 클래스명 : 상속
      * Start() : MonoBehaviour에 상속받는 스크립트 생성시에 존재하는 Start 메소드 
      */
     void Start()
-    {
+    {        
         doorPivot = transform.parent;                        //doorPivot = 부모오브젝트
         doorButton = DoorButton.instance;                    //도어버튼을 인스턴스로 접근 어떤 스크립트에서라도 접근할수있도록 만듬
-        isClose = true;        
+        isClose = true;
+        closeRotation = doorPivot.rotation;
+        openRotation = closeRotation * Quaternion.Euler(0, 90f, 0);
     }    
     /*private: 클래스의 내부에서만 접근가능 , 액세스중에서도 가장낮은 수준의 액서스 접근한정자를 사용하지않으면 기본값으로 private로 접근 수준이설정된다.
      * void : 반환형식
@@ -42,19 +43,42 @@ public class Door : MonoBehaviour //접근 제한자, 클래스명 : 상속
         if (other.CompareTag("Player"))
         {
             doorButton.gameObject.SetActive(true);                // doorButton gameObject 활성화 
-            DoorButton.door = doorPivot;
+            DoorButton.door = this;
         }        
     }
-    /* OnTriggerExit : 트리거를 떠나는 모든것을 파괴시킨다.
-     * 
-     */
+    
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             doorButton.gameObject.SetActive(false);               //도어버튼 게임오브젝트 비활성화
-
-            DoorButton.door = null;                             //없어도 되는코드 위에 도어버튼과 짝을 맞추기위해 넣었고 혹시모를 에러를 방지하기위해 넣음
+            DoorButton.door = null; 
         }
-    }        
+    }
+    public void Open()
+    {
+        StartCoroutine(DoorOpen());
+    }
+    public void Close()
+    {
+        StartCoroutine(DoorClose());
+    }
+    IEnumerator DoorOpen()
+    {
+        isClose = false;               
+        for (int i = 0; i < 90; ++i)
+        {
+            doorPivot.rotation = Quaternion.RotateTowards(doorPivot.rotation, openRotation, 1f);
+            yield return null;
+        }
+    }
+    IEnumerator DoorClose()
+    {
+        isClose = true;              
+        for (int i = 0; i < 90; ++i)
+        {
+            doorPivot.rotation = Quaternion.RotateTowards(doorPivot.rotation, closeRotation, 1f);
+            yield return null;
+        }
+    }
 }

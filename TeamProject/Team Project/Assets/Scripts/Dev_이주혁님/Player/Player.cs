@@ -461,6 +461,7 @@ public class Player : MonoBehaviour
         playerStat.statPoint += 3;
         playerStat.curExp -= playerStat.Exp;
         playerStat.Exp = 100;
+        playerStat.curHP = playerStat.HP;
     }
     // 이미 발동된 isAttack 트리거를 취소함. 선입력에 의한 의도치 않은 공격이 나가는 것을 방지.
     public void ResetAttackTrigger()   
