@@ -13,6 +13,7 @@ public class JY_Portal : MonoBehaviour
     public Text enterText;
     public Transform enterButton;
 
+    string dungeonName;
     // Start is called before the first frame update
     void Awake()
     {
@@ -23,10 +24,16 @@ public class JY_Portal : MonoBehaviour
     {
     }
 
-    public void selectDungeon()
+    public void selectDungeon(int dungeonNum)
     {
-        enterText.gameObject.SetActive(true);
+        targetSceneNum = dungeonNum;
+        Vector3 tmp = selectArrow.transform.localPosition;
+        tmp.x = (dungeonNum == 5) ? 268.7277f : -54f;
+        selectArrow.localPosition = tmp;
         selectArrow.gameObject.SetActive(true);
+        dungeonName = (dungeonNum == 5) ? "화염 던전" : "지하 던전";
+        enterText.text = dungeonName + "에 입장하시겠습니까?";
+        enterText.gameObject.SetActive(true);
         enterButton.gameObject.SetActive(true);
     }
 
