@@ -163,6 +163,7 @@ public class Enemy : MonoBehaviour
             reactVec += Vector3.up;
             rigid.AddForce(reactVec * 5, ForceMode.Impulse);
             DropExp();
+            questProgress();
             Destroy(gameObject, 4);
         }       
     }
@@ -184,5 +185,10 @@ public class Enemy : MonoBehaviour
                 player.playerStat.curExp += dropExp;
             }
         }
+    }
+    void questProgress()
+    {
+        if (JY_QuestManager.s_instance != null && this.gameObject.name == JY_QuestManager.s_instance.QuestData[0][3])
+            JY_QuestManager.s_instance.QuestProgress(0);
     }
 }
