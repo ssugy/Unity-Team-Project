@@ -30,6 +30,13 @@ public class infoData
     /// index 3 : 민첩
     /// </summary>
     public int[] status;
+    /// <summary>
+    /// value 0 : npc 번호
+    /// value 1 : 현재 진행도
+    /// value 2 : 수령 여부
+    /// value 3 : 완료 여부
+    /// </summary>
+    public int[] questProgress;
 }
 //데이터 변경 저장을 위한 class
 
@@ -91,6 +98,7 @@ public class JY_CharacterListManager : MonoBehaviour
             int[] initArr = new int[4] { 0, 0, 0, 0 };
             init.characterAvatar = initArr;
             init.status = initArr;
+            init.questProgress = initArr;
 
             initCharData.infoDataList.Add(init);
         }

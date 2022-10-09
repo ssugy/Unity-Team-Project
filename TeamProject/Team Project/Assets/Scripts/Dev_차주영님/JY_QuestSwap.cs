@@ -11,23 +11,29 @@ public class JY_QuestSwap : MonoBehaviour
     public Text Quest_check;
 
     public int QuestNum;
+    int selectNum;
 
+    public void Start()
+    {
+        selectNum = JY_CharacterListManager.s_instance.selectNum;
+    }
     void QuestRenew(int QuestNum)
     {
-        if(JY_QuestManager.s_instance.QuestDataList[QuestNum][5] == "TRUE" && JY_QuestManager.s_instance.QuestDataList[QuestNum][6] == "FALSE")
+        if(JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[2] == 1 &&
+           JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[3] == 0)
         {
-            Quest_Title.text = JY_QuestManager.s_instance.QuestDataList[QuestNum][0];
-            Quest_Main.text = JY_QuestManager.s_instance.QuestDataList[QuestNum][1];
+            Quest_Title.text = JY_QuestManager.s_instance.QuestData[0][0];
+            Quest_Main.text = JY_QuestManager.s_instance.QuestData[0][1];
 
             string checkText;
-            int now = int.Parse(JY_QuestManager.s_instance.QuestDataList[QuestNum][3]);
-            int goal = int.Parse(JY_QuestManager.s_instance.QuestDataList[QuestNum][4]);
+            int now = JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[1];
+            int goal = int.Parse(JY_QuestManager.s_instance.QuestData[0][4]);
 
             if (now < goal)
             {
-                checkText = JY_QuestManager.s_instance.QuestDataList[QuestNum][2] + " "
-                          + JY_QuestManager.s_instance.QuestDataList[QuestNum][3] + "/"
-                          + JY_QuestManager.s_instance.QuestDataList[QuestNum][4];
+                checkText = JY_QuestManager.s_instance.QuestData[0][3]+" "
+                          + now.ToString()+ "/"
+                          + JY_QuestManager.s_instance.QuestData[0][4];
             }
             else
             {
@@ -47,5 +53,6 @@ public class JY_QuestSwap : MonoBehaviour
     void Update()
     {
         QuestRenew(QuestNum);
+        JY_QuestManager.s_instance.questJournalTitleRenew();
     }
 }

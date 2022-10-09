@@ -10,7 +10,7 @@ public class JY_QuestManager : MonoBehaviour
     public static JY_QuestManager instance;
     public static JY_QuestManager s_instance { get { return instance; } }
     
-    public List<string[]> QuestDataList;
+    public Dictionary<int, Dictionary<int, string>> QuestData;
     public GameObject dialogButton;
     public GameObject Quest_1_Bar;
     public GameObject Quest_1_Panel;
@@ -19,102 +19,57 @@ public class JY_QuestManager : MonoBehaviour
     public Text journalButton2;
     public Text journalButton3;
     public Text journalButton4;
-    string path;
+    
+    int selectNum;
     // Start is called before the first frame update
     void Awake()
     {
-        if (instance == null)
+        if(instance == null)
             instance = this;
-        path = Application.dataPath + "/XML_JSON/" + "quest_data.csv";
-        QuestDataList = new List<string[]>();
-        QuestDataLoad();
 
-        for(int i=0; i < QuestDataList.Count; i++)
-        {
-            if (QuestDataList[i][5] == "TRUE" && QuestDataList[i][6] == "FALSE")
-                Quest_1_Bar.SetActive(true);
-        }
-    }
+        QuestData = new Dictionary<int, Dictionary<int, string>>();
+        JY_QuestData dataCompo = GetComponent<JY_QuestData>();
+        dataCompo.questDataLoad(QuestData);
 
-    //퀘스트 데이터파일 로드
-    //안드로이드 빌드시 경로 변경해야함, 추후수정
-    void QuestDataLoad()
-    {
-        using (StreamReader sr = new StreamReader(path))
-        {
-            string line = string.Empty;
-            while ((line = sr.ReadLine()) != null)
-            {
-                string[] datas = line.Split(',');
-                QuestDataList.Add(datas);
-            }
-            sr.Close();
-        }
+        if (JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[2] == 1 &&
+            JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[3] == 0)
+            Quest_1_Bar.SetActive(true);
     }
-    void QuestDataSave()
-    {
-        using (StreamWriter sr = new StreamWriter(path))
-        {
-            string line = string.Empty;
-            for (int i = 0; i < QuestDataList.Count; i++)
-            {
-                line = string.Empty;
-                line += QuestDataList[i][0];
-                line += ",";
-                line += QuestDataList[i][1];
-                line += ",";
-                line += QuestDataList[i][2];
-                line += ",";
-                line += QuestDataList[i][3];
-                line += ",";
-                line += QuestDataList[i][4];
-                line += ",";
-                line += QuestDataList[i][5];
-                line += ",";
-                line += QuestDataList[i][6];
-                line += ",";
-                line += QuestDataList[i][7];
-                sr.WriteLine(line);
-            }
-            sr.Close();
-        }
-    }
-
 
     public void questJournalTitleRenew()
     {
-        if(JY_QuestManager.s_instance.QuestDataList[1][5] == "TRUE" && JY_QuestManager.s_instance.QuestDataList[1][6] == "FALSE")
-            journalButton1.text = QuestDataList[1][0];
+        if(JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[2] == 1 &&
+           JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[3] == 0)
+            journalButton1.text = QuestData[0][0];
         else
             journalButton1.text = "-";
     }
     public void QuestProgress(int QuestNum)
     {
-        int now = int.Parse(QuestDataList[QuestNum][3]);
-        now++;
-        QuestDataList[QuestNum][3] = now.ToString();
+        JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[1]++;
     }
 
     public void QuestChecker(int QuestNum) {
-        if (QuestDataList[QuestNum][6] == "TRUE")
+        if (JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[3] == 1)
             return;
         //퀘스트 수령
-        if (QuestDataList[QuestNum][5] == "FALSE")
+        if (JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[2]== 0)
         {
-            QuestDataList[QuestNum][5] = "TRUE";
+            JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[2] = 1;
             Debug.Log("퀘스트 수령");
             Quest_1_Bar.SetActive(true);
-            QuestDataSave();
+            JY_CharacterListManager.s_instance.saveListData();
         }
 
         //퀘스트 완료
-        else if (QuestDataList[QuestNum][5]=="TRUE" && int.Parse(QuestDataList[QuestNum][3]) >= int.Parse(QuestDataList[QuestNum][4]))
+        else if (JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[2] == 1 
+            && JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[1] >= int.Parse(QuestData[0][4]))
         {
-            QuestDataList[QuestNum][6] = "TRUE";
+            JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[3] = 1;
             Debug.Log("퀘스트 완료");
             Quest_1_Bar.SetActive(false);
             Quest_1_Panel.SetActive(false);
-            QuestDataSave();
+            JY_CharacterListManager.s_instance.saveListData();
         }
     }
 
