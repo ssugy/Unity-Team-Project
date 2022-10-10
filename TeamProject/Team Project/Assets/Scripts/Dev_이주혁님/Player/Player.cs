@@ -342,6 +342,18 @@ public class Player : MonoBehaviour
             hpbar = Enemy_HP_UI.GetObject();
             hpbar.Recognize(enemy);
         }
+        // ¿¹³ª
+        else
+        {
+            BossControl boss = _enemy.GetComponent<BossControl>();
+            if (boss != null)
+            {
+                int damage = AttackDamage(Weapon.weapon.atkMag, BossManager.instance.defMag);
+                BossManager.instance.IsAttacked(damage);
+                hpbar = Enemy_HP_UI.GetObject();
+                hpbar.RecognizeBoss(boss);
+            }
+        }
     }
     public void PowerStrikeDamage()
     {
