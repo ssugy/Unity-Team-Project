@@ -153,6 +153,10 @@ public class JY_CharacterListManager : MonoBehaviour
                 characterData.infoDataList[i].job =null;
                 characterData.infoDataList[i].gender =null;
                 characterData.infoDataList[i].species =null;
+                int[] initArr = new int[4] { 0, 0, 0, 0 };
+                characterData.infoDataList[i].characterAvatar = initArr;
+                characterData.infoDataList[i].status = initArr;
+                characterData.infoDataList[i].questProgress = initArr;
             }
         }
         saveListData();

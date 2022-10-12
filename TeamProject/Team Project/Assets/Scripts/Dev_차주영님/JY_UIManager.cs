@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class JY_UIManager : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class JY_UIManager : MonoBehaviour
     public Transform profileGroup;
     public Transform profileMenuGroup;
     public Transform questMenuGroup;
+    public GameObject alarmUI;
+    public Text alarmText;
 
     bool profileSwitch;
     bool profileMenuSwitch;
@@ -63,6 +66,30 @@ public class JY_UIManager : MonoBehaviour
             questMenuGroup.gameObject.SetActive(false);
             questMenuSwitch = false;
         }
+    }
+
+    public void levelupUI()
+    {
+        alarmUI.SetActive(true);
+        alarmText.text = "레벨업!";
+        Invoke("closeAlarm", 2f);
+    }
+    public void questAcceptUI()
+    {
+        alarmUI.SetActive(true);
+        alarmText.text = "퀘스트를 수령했습니다.";
+        Invoke("closeAlarm", 2f);
+    }
+    public void questFinishUI()
+    {
+        alarmUI.SetActive(true);
+        alarmText.text = "퀘스트를 완료했습니다.";
+        Invoke("closeAlarm", 2f);
+    }
+
+    void closeAlarm()
+    {
+        alarmUI.SetActive(false);
     }
     // 게임 나가기
     public void ExitApplication()
