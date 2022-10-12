@@ -6,6 +6,9 @@ using UnityEngine.EventSystems; // 이벤트 트리거를 사용하기 위해 using한 네임스�
 
 public class BattleUI : MonoBehaviour
 {
+    public static BattleUI instance;
+    public GameObject deathUI;
+
     // 전투 UI에 버튼들을 동적으로 할당하는 스크립트.
     Player player;  // 버튼에 할당할 플레이어 기능 함수 집합.
     public Button normalAtk;
@@ -13,6 +16,7 @@ public class BattleUI : MonoBehaviour
     public Button skill_2;
     public Button skill_3;
     public Button skill_4;
+    public Button revive;
     public Image cool_1;
     public Image cool_2;
     public Image cool_3;
@@ -25,6 +29,7 @@ public class BattleUI : MonoBehaviour
     public Sprite downFrame;        
     void Start()
     {
+        instance = this;
         player = Player.instance;
         normalAtk.onClick.AddListener(player.NormalAttack);
         skill_1.onClick.AddListener(player.PowerStrike);
@@ -47,7 +52,8 @@ public class BattleUI : MonoBehaviour
         lArm_PointerUp.callback.AddListener((data) => { LArmUp_Frame((PointerEventData)data); });
         lArm.triggers.Add(lArm_PointerDown);
         lArm.triggers.Add(lArm_PointerUp);
-
+        // 게임 매니저를 이용하여 부활하면 마을로 돌아가도록 함.
+        revive.onClick.AddListener(() => GameManager.s_instance.LoadScene(4));
     }
 
     void LArmDown_Frame(PointerEventData data)

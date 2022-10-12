@@ -204,11 +204,13 @@ public class Player : MonoBehaviour
     }
     public void Die()
     {
+        playerStat.curHP = 0;
         DisableAtk();
         playerAni.SetTrigger("isDead");
         transform.tag = "Dead";
         Camera.main.GetComponent<MainCamController>().enabled = false;   // 플레이어가 사망하면 더 이상 카메라가 움직이지 않게 함.    
         Camera.main.GetComponent<WhenPlayerDie>().enabled = true;
+        BattleUI.instance.deathUI.SetActive(true);
     }
     private void OnTriggerEnter(Collider other)
     {
