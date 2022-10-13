@@ -33,10 +33,7 @@ public class JY_QuestManager : MonoBehaviour
         QuestData = new Dictionary<int, Dictionary<int, string>>();
         JY_QuestData dataCompo = GetComponent<JY_QuestData>();
         dataCompo.questDataLoad(QuestData);
-        dialogScript = dialogCam.GetComponent<JY_NPCDialog>();
         selectNum = JY_CharacterListManager.s_instance.selectNum;
-        Debug.Log(JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[2]);
-        Debug.Log(JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[3]);
         if (JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[2] == 1 &&
             JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[3] == 0)
         {
@@ -58,7 +55,7 @@ public class JY_QuestManager : MonoBehaviour
     }
 
     public void QuestChecker(int QuestNum) {
-
+        dialogScript = dialogCam.GetComponent<JY_NPCDialog>();
         switch (QuestNum)
         {
             //¼ö·É
