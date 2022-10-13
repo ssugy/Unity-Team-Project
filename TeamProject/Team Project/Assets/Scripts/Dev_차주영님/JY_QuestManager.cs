@@ -23,6 +23,7 @@ public class JY_QuestManager : MonoBehaviour
     public Text journalButton4;
     
     int selectNum;
+    JY_UIManager uiManager;
     JY_NPCDialog dialogScript;
     // Start is called before the first frame update
     void Awake()
@@ -39,6 +40,8 @@ public class JY_QuestManager : MonoBehaviour
         {
             Quest_1_Bar.SetActive(true);
         }
+
+        uiManager= GetComponentInParent<JY_UIManager>();
     }
 
     public void questJournalTitleRenew()
@@ -64,7 +67,7 @@ public class JY_QuestManager : MonoBehaviour
                 Debug.Log("퀘스트 수령");
                 Quest_1_Bar.SetActive(true);
                 JY_CharacterListManager.s_instance.saveListData();
-                //uiManager.questAcceptUI();
+                uiManager.questAcceptUI();
                 break;
             //완료
             case 1:
@@ -73,7 +76,7 @@ public class JY_QuestManager : MonoBehaviour
                 Quest_1_Bar.SetActive(false);
                 Quest_1_Panel.SetActive(false);
                 JY_CharacterListManager.s_instance.saveListData();
-                //uiManager.questFinishUI();
+                uiManager.questFinishUI();
                 break;
             default:
                 break;
@@ -101,5 +104,4 @@ public class JY_QuestManager : MonoBehaviour
             JY_CharacterListManager.s_instance.saveListData();
         }*/
     }
-
 }

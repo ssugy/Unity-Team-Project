@@ -44,7 +44,10 @@ public class JY_Portal : MonoBehaviour
         enterText.gameObject.SetActive(false);
         portalUI.gameObject.SetActive(false);
     }
-
+    public void quitMenu2()
+    {
+        portalUI.gameObject.SetActive(false);
+    }
     public void loadScene()
     {
         GameManager.s_instance.LoadScene(targetSceneNum);
@@ -52,6 +55,7 @@ public class JY_Portal : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
         portalUI.gameObject.SetActive(true);
     }
 }

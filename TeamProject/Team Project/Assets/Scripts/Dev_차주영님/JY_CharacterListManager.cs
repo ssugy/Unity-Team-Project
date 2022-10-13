@@ -134,6 +134,8 @@ public class JY_CharacterListManager : MonoBehaviour
     //마지막은 무조건 초기화
     public void deleteCharacter(int listNum)
     {
+        int[] initArr = new int[4] { 0, 0, 0, 0 };
+
         for (int i = listNum; i<4;i++)
         {
             if (i != 3)
@@ -144,6 +146,10 @@ public class JY_CharacterListManager : MonoBehaviour
                 characterData.infoDataList[i].job = characterData.infoDataList[i + 1].job;
                 characterData.infoDataList[i].gender = characterData.infoDataList[i + 1].gender;
                 characterData.infoDataList[i].species = characterData.infoDataList[i + 1].species;
+
+                characterData.infoDataList[i].characterAvatar = characterData.infoDataList[i + 1].characterAvatar;
+                characterData.infoDataList[i].status = characterData.infoDataList[i + 1].status;
+                characterData.infoDataList[i].questProgress = characterData.infoDataList[i + 1].questProgress;
             }
             else
             {
@@ -153,7 +159,7 @@ public class JY_CharacterListManager : MonoBehaviour
                 characterData.infoDataList[i].job =null;
                 characterData.infoDataList[i].gender =null;
                 characterData.infoDataList[i].species =null;
-                int[] initArr = new int[4] { 0, 0, 0, 0 };
+
                 characterData.infoDataList[i].characterAvatar = initArr;
                 characterData.infoDataList[i].status = initArr;
                 characterData.infoDataList[i].questProgress = initArr;
