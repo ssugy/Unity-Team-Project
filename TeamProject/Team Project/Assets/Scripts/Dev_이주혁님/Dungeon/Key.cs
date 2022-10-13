@@ -14,7 +14,7 @@ public class Key : MonoBehaviour
             PickUpKey();
         }        
     }
-    void PickUpKey()
+    public void PickUpKey()
     {
         message.SetActive(true);
         door.isLocked = false;
