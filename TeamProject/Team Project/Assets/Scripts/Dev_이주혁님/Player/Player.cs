@@ -360,7 +360,7 @@ public class Player : MonoBehaviour
     public void PowerStrikeDamage()
     {
         int layerMask = 1 << 11;
-        Vector3 halfHitbox = new Vector3(0.6f, 2f, 1f);
+        Vector3 halfHitbox = new Vector3(1.2f, 2f, 1f);
         Collider[] enemys = Physics.OverlapBox(transform.position + transform.forward, halfHitbox, transform.rotation, layerMask);
         if (enemys != null)
         {
