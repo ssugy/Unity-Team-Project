@@ -8,11 +8,14 @@ public class SPFillAmount : MonoBehaviour
     public Image barFront;
     PlayerStat stat;
     float recoverSpeed;
+    bool isExhausted;
+
     // Start is called before the first frame update
     void Start()
     {
         stat = Player.instance.playerStat;
         recoverSpeed = 10f;
+        isExhausted = false;
     }
 
     // Update is called once per frame
@@ -25,11 +28,13 @@ public class SPFillAmount : MonoBehaviour
         }
         if (stat.curSP <= 0)
         {
-            Player.instance.Exhaisted();            
+            Player.instance.Exhaisted();
+            isExhausted = true;
         }
-        else if (stat.curSP >= stat.SP * 0.2)
+        else if (isExhausted && stat.curSP >= stat.SP * 0.2)
         {
-            Player.instance.Recovered();            
+            Player.instance.Recovered();
+            isExhausted = false;
         }
         
     }

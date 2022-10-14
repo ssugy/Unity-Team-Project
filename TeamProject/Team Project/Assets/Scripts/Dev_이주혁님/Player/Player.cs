@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public float gravity;
     [HideInInspector] public Vector3 movement;    // 조이스틱 입력 이동 방향.
     [HideInInspector] public bool enableMove;      // 이동 가능 여부를 표시.
-    [HideInInspector] public bool enableAtk;       // 공격 가능 여부 표시.
+    public bool enableAtk;       // 공격 가능 여부 표시.
 
     public Transform rWeaponDummy;              // 오른손 무기 더미.
     private TrailRenderer rWeaponEffect;        // 오른손 무기 이펙트. (검기)
@@ -154,6 +154,7 @@ public class Player : MonoBehaviour
         {
             SetRotate();
             playerAni.Play("Player Skill 1");
+            StartCoroutine(BattleUI.instance.Cooldown(4f, BattleUI.instance.skill_1, BattleUI.instance.cool_1));
         }
     }
     public void TurnAttack()        // 스킬 2.
@@ -162,6 +163,7 @@ public class Player : MonoBehaviour
         {
             SetRotate();
             playerAni.Play("Player Skill 2");
+            StartCoroutine(BattleUI.instance.Cooldown(4f, BattleUI.instance.skill_2, BattleUI.instance.cool_2));
         }
               
     }
@@ -171,6 +173,7 @@ public class Player : MonoBehaviour
         {
             SetRotate();
             playerAni.Play("Player Skill 3");
+            StartCoroutine(BattleUI.instance.Cooldown(8f, BattleUI.instance.skill_3, BattleUI.instance.cool_3));
         }
     }
     public void Warcry()            // 스킬 4.
@@ -179,6 +182,7 @@ public class Player : MonoBehaviour
         { 
             SetRotate();
             playerAni.Play("Player Skill 4");
+            StartCoroutine(BattleUI.instance.Cooldown(10f, BattleUI.instance.skill_4, BattleUI.instance.cool_4));
         }
     }
 
