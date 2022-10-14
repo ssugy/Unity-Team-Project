@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UniRx;
 
 public class Player : MonoBehaviour
-{
+{    
     public static Player instance;
     public PlayerStat playerStat;
     public Transform camAxis;                     // 메인 카메라 축.      
@@ -26,10 +26,26 @@ public class Player : MonoBehaviour
     private TrailRenderer rWeaponEffect;        // 오른손 무기 이펙트. (검기)
     [HideInInspector] public bool isGround;
     private HP_Bar hpbar;
+    private Dictionary<int, int> EXP_TABLE;
+
 
     private void Awake()
     {        
-        instance = this;        
+        instance = this;
+        EXP_TABLE = new Dictionary<int, int>();
+        TextAsset expTable = Resources.Load<TextAsset>("EXP_TABLE");
+        string[] tmpTxt = expTable.text.Split("\n");        
+        tmpTxt = tmpTxt[1].Split(",");
+        for (int i =1; i < tmpTxt.Length; i++)
+        {
+            
+            EXP_TABLE.Add(i, int.Parse(tmpTxt[i]));
+            if (EXP_TABLE.TryGetValue(i,out int value))
+            {
+                Debug.Log(value);
+            }
+            
+        }
     }
 
     private void Start()
@@ -474,7 +490,10 @@ public class Player : MonoBehaviour
         ++playerStat.level;
         playerStat.statPoint += 3;
         playerStat.curExp -= playerStat.Exp;
-        playerStat.Exp = 100;
+        if(EXP_TABLE.TryGetValue(playerStat.level,out int _exp))
+        {
+            playerStat.Exp = _exp;
+        }        
         playerStat.curHP = playerStat.HP;
     }
     // 이미 발동된 isAttack 트리거를 취소함. 선입력에 의한 의도치 않은 공격이 나가는 것을 방지.
