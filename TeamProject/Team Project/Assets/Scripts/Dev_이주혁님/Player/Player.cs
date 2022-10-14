@@ -37,14 +37,8 @@ public class Player : MonoBehaviour
         string[] tmpTxt = expTable.text.Split("\n");        
         tmpTxt = tmpTxt[1].Split(",");
         for (int i =1; i < tmpTxt.Length; i++)
-        {
-            
-            EXP_TABLE.Add(i, int.Parse(tmpTxt[i]));
-            if (EXP_TABLE.TryGetValue(i,out int value))
-            {
-                Debug.Log(value);
-            }
-            
+        {            
+            EXP_TABLE.Add(i, int.Parse(tmpTxt[i]));                       
         }
     }
 
