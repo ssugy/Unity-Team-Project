@@ -8,11 +8,21 @@ public class JY_UIManager : MonoBehaviour
 
     public Transform profileGroup;
     public Transform profileMenuGroup;
+    public Transform StatusMenuGroup;
     public Transform questMenuGroup;
     public GameObject alarmUI;
+
     public Text alarmText;
+    public Text nameText;
+    public Text levelText;
+    public Text healthText;
+    public Text steminaText;
+    public Text strengthText;
+    public Text dexterityText;
+    public Text SPText;
 
     bool profileSwitch;
+    bool statusSwitch;
     bool profileMenuSwitch;
     bool questMenuSwitch;
 
@@ -21,6 +31,10 @@ public class JY_UIManager : MonoBehaviour
         profileSwitch = false;
         profileMenuSwitch = false;
         questMenuSwitch = false;
+
+        nameText.text = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].name;
+        StatusDataRenew();
+
     }
 
     //프로필 On/Off 함수
@@ -35,10 +49,29 @@ public class JY_UIManager : MonoBehaviour
         {
             profileGroup.gameObject.SetActive(false);
             profileMenuGroup.gameObject.SetActive(false);
+            StatusMenuGroup.gameObject.SetActive(false);
             profileSwitch = false;
+            statusSwitch = false;
             profileMenuSwitch = false;
         }
     }
+
+    //스텟 메뉴 On/Off함수
+    public void switchStatusMenu()
+    {
+        if (statusSwitch == false)
+        {
+            StatusMenuGroup.gameObject.SetActive(true);
+            statusSwitch = true;
+        }
+        else
+        {
+            StatusMenuGroup.gameObject.SetActive(false);
+            statusSwitch = false;
+        }
+    }
+
+
     //프로필 메뉴 On/Off 함수
     public void switchProfileMenu()
     {
@@ -71,7 +104,8 @@ public class JY_UIManager : MonoBehaviour
     public void levelupUI()
     {
         alarmUI.SetActive(true);
-        alarmText.text = "레벨업!";
+        alarmText.text = "레벨업! Lv."+JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level.ToString();
+        StatusDataRenew();
         Invoke("closeAlarm", 2f);
     }
     public void questAcceptUI()
@@ -99,7 +133,18 @@ public class JY_UIManager : MonoBehaviour
     // Lobby씬 (캐릭터 선택창)으로 이동
     public void loadLobbyScene()
     {
+        JY_CharacterListManager.s_instance.selectNum = -1;
         GameManager.s_instance.LoadScene(2);
     }
 
+    public void StatusDataRenew()
+    {
+        int level = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level;
+        levelText.text = "Lv." + level.ToString();
+        healthText.text = "체력:" + JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[0].ToString();
+        steminaText.text = "지구력:" + JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[1].ToString();
+        strengthText.text = "힘:" + JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[2].ToString();
+        dexterityText.text = "민첩:" + JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[3].ToString();
+        SPText.text = "스탯 포인트:"+JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].statusPoint.ToString();
+    }
 }

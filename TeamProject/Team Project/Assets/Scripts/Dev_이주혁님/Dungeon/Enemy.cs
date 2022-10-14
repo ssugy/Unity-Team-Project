@@ -183,6 +183,8 @@ public class Enemy : MonoBehaviour
             if (player != null)
             {
                 player.playerStat.curExp += dropExp;
+                JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp = player.playerStat.curExp;
+                JY_CharacterListManager.s_instance.saveListData();
             }
         }
     }

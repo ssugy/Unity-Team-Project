@@ -23,7 +23,7 @@ public class JY_QuestManager : MonoBehaviour
     public Text journalButton4;
     
     int selectNum;
-    JY_UIManager uiManager;
+    public JY_UIManager uiManager;
     JY_NPCDialog dialogScript;
     // Start is called before the first frame update
     void Awake()
@@ -54,7 +54,14 @@ public class JY_QuestManager : MonoBehaviour
     }
     public void QuestProgress(int QuestNum)
     {
-        JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[1]++;
+        switch (QuestNum)
+        {
+            case 0:
+                if (JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[2] == 1 &&
+                    JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[3] == 0)
+                    JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[1]++;
+                break;
+        }
     }
 
     public void QuestChecker(int QuestNum) {

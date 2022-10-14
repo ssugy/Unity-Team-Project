@@ -323,7 +323,6 @@ public class Player : MonoBehaviour
         {
             playerStat.atkPoint = 0;
         }
-        
     }
     public float Sigma(float a, float b, int c)
     {
@@ -490,11 +489,25 @@ public class Player : MonoBehaviour
         ++playerStat.level;
         playerStat.statPoint += 3;
         playerStat.curExp -= playerStat.Exp;
-        if(EXP_TABLE.TryGetValue(playerStat.level,out int _exp))
+        JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp = playerStat.curExp;
+        if (EXP_TABLE.TryGetValue(playerStat.level,out int _exp))
         {
             playerStat.Exp = _exp;
         }        
         playerStat.curHP = playerStat.HP;
+
+        JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level = playerStat.level;
+        SaveStatData();
+        JY_QuestManager.s_instance.uiManager.levelupUI();
+    }
+    void SaveStatData()
+    {
+        JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].statusPoint = playerStat.statPoint;
+        JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[0] = playerStat.health;
+        JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[1] = playerStat.stamina;
+        JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[2] = playerStat.strength;
+        JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[3] = playerStat.dexterity;
+        JY_CharacterListManager.s_instance.saveListData();
     }
     // 이미 발동된 isAttack 트리거를 취소함. 선입력에 의한 의도치 않은 공격이 나가는 것을 방지.
     public void ResetAttackTrigger()   

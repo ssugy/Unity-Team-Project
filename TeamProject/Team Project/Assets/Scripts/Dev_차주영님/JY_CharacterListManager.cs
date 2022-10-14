@@ -19,6 +19,7 @@ public class infoData
     public bool isNull;
     public string name;
     public int level;
+    public int exp;
     public string job;
     public string gender;
     public string species;
@@ -30,6 +31,7 @@ public class infoData
     /// index 3 : 민첩
     /// </summary>
     public int[] status;
+    public int statusPoint;
     /// <summary>
     /// value 0 : npc 번호
     /// value 1 : 현재 진행도
@@ -37,6 +39,7 @@ public class infoData
     /// value 3 : 완료 여부
     /// </summary>
     public int[] questProgress;
+    public int[] questProgress2;
 }
 //데이터 변경 저장을 위한 class
 
@@ -91,6 +94,7 @@ public class JY_CharacterListManager : MonoBehaviour
             init.isNull = true;
             init.name = null;
             init.level = 0;
+            init.exp = 0;
             init.job = null;
             init.gender = null;
             init.species = null;
@@ -98,7 +102,9 @@ public class JY_CharacterListManager : MonoBehaviour
             int[] initArr = new int[4] { 0, 0, 0, 0 };
             init.characterAvatar = initArr;
             init.status = initArr;
+            init.statusPoint = 0;
             init.questProgress = initArr;
+            init.questProgress2 = initArr;
 
             initCharData.infoDataList.Add(init);
         }
@@ -143,26 +149,32 @@ public class JY_CharacterListManager : MonoBehaviour
                 characterData.infoDataList[i].name = characterData.infoDataList[i + 1].name;
                 characterData.infoDataList[i].isNull = characterData.infoDataList[i + 1].isNull;
                 characterData.infoDataList[i].level = characterData.infoDataList[i + 1].level;
+                characterData.infoDataList[i].exp = characterData.infoDataList[i + 1].exp;
                 characterData.infoDataList[i].job = characterData.infoDataList[i + 1].job;
                 characterData.infoDataList[i].gender = characterData.infoDataList[i + 1].gender;
                 characterData.infoDataList[i].species = characterData.infoDataList[i + 1].species;
 
                 characterData.infoDataList[i].characterAvatar = characterData.infoDataList[i + 1].characterAvatar;
                 characterData.infoDataList[i].status = characterData.infoDataList[i + 1].status;
+                characterData.infoDataList[i].statusPoint = characterData.infoDataList[i + 1].statusPoint;
                 characterData.infoDataList[i].questProgress = characterData.infoDataList[i + 1].questProgress;
+                characterData.infoDataList[i].questProgress2 = characterData.infoDataList[i + 1].questProgress;
             }
             else
             {
                 characterData.infoDataList[i].name =null;
                 characterData.infoDataList[i].isNull =true;
                 characterData.infoDataList[i].level =0;
+                characterData.infoDataList[i].exp =0;
                 characterData.infoDataList[i].job =null;
                 characterData.infoDataList[i].gender =null;
                 characterData.infoDataList[i].species =null;
 
                 characterData.infoDataList[i].characterAvatar = initArr;
                 characterData.infoDataList[i].status = initArr;
+                characterData.infoDataList[i].statusPoint = 0;
                 characterData.infoDataList[i].questProgress = initArr;
+                characterData.infoDataList[i].questProgress2 = initArr;
             }
         }
         saveListData();
