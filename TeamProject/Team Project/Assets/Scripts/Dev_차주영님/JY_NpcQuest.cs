@@ -34,7 +34,6 @@ public class JY_NpcQuest : MonoBehaviour
         if(JY_CharacterListManager.s_instance != null)
         {
             QuestNpcChecker(npcNum);
-            //markBillborad();
             DialogBtnActivate();
         }
     }

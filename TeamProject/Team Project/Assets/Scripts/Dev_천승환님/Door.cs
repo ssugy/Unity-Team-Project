@@ -21,8 +21,6 @@ public class Door : MonoBehaviour //접근 제한자, 클래스명 : 상속
     [HideInInspector] public bool isClose;
 
     public bool isLocked;
-
-
     /*void(반환형식) : 로컬 함수의 반환 형식으로 사용되는 메서드가 값을 반환하지않도록 지정한다.
      * Start() : MonoBehaviour에 상속받는 스크립트 생성시에 존재하는 Start 메소드 
      */

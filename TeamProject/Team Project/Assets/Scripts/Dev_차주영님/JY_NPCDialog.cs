@@ -18,11 +18,8 @@ public class JY_NPCDialog : MonoBehaviour
     public GameObject exitButton;
     public GameObject npc;
 
-
-    private void Start()
-    {
-        EnterNpcDialog();
-    }
+    public GameObject dummy_1;
+    public GameObject dummy_2;
     public void EnterNpcDialog()
     {
         minimapCam.gameObject.SetActive(false);
@@ -73,5 +70,20 @@ public class JY_NPCDialog : MonoBehaviour
         DialogUI.SetActive(false);
         BattleUI.SetActive(true);
 
+    }
+
+    public void NPCCamPosition(int NPCNum)
+    {
+        switch (NPCNum)
+        {
+            case 0:
+                dialogCam.transform.position = dummy_1.transform.position;
+                dialogCam.transform.rotation = dummy_1.transform.rotation;
+                break;
+            case 1:
+                dialogCam.transform.position = dummy_2.transform.position;
+                dialogCam.transform.rotation = dummy_2.transform.rotation;
+                break;
+        }
     }
 }

@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
     }
 
     private void Start()
-    {        
+    {
         isGround = true;
         camAxis = Camera.main.transform.parent;
         playerAni = GetComponent<Animator>();
@@ -60,15 +60,22 @@ public class Player : MonoBehaviour
             rWeaponEffect = rWeaponDummy.GetChild(0).GetChild(2).GetComponent<TrailRenderer>();
         }
 
-
-        playerStat.level = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level;
-        if (EXP_TABLE.TryGetValue(playerStat.level, out int _exp))
+        if (JY_CharacterListManager.s_instance != null && JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level != 1)
         {
-            playerStat.Exp = _exp;
+            playerStat.level = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level;
+            if (EXP_TABLE.TryGetValue(playerStat.level, out int _exp))
+            {
+                playerStat.Exp = _exp;
+            }
+            playerStat.curExp = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp;
+            playerStat.statPoint = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].statusPoint;
+            playerStat.health = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[0];
+            playerStat.stamina = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[1];
+            playerStat.strength = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[2];
+            playerStat.dexterity = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[3];
         }
-        playerStat.curExp = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp;
         SetState();
-        controller.ObserveEveryValueChanged(_ => _.isGrounded).ThrottleFrame(30).Subscribe(_ => isGround = _);  
+        controller.ObserveEveryValueChanged(_ => _.isGrounded).ThrottleFrame(30).Subscribe(_ => isGround = _);
         // UniRx를 이용하여 isGrounded 프로퍼티가 0.3초 이상 유지되어야 상태가 전이되게끔 함. isGrounded가 정교하지 않기 때문.
     }
 
@@ -283,6 +290,8 @@ public class Player : MonoBehaviour
     {
         playerStat.statPoint = (playerStat.level - 1) * 3;
         playerStat.InitialStat(playerStat.characterClass);
+        SaveStatData();
+        JY_QuestManager.s_instance.uiManager.StatusDataRenew();
     }
     public void StatUp(Adjustable _stat)
     {
@@ -312,6 +321,8 @@ public class Player : MonoBehaviour
                     break;
             }
         }
+        SaveStatData();
+        JY_QuestManager.s_instance.uiManager.StatusDataRenew();
     }       // 스탯 투자
     public void SetState()
     {

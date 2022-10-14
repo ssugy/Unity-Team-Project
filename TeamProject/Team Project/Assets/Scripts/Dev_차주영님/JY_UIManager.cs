@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class JY_UIManager : MonoBehaviour
 {
-
     public Transform profileGroup;
     public Transform profileMenuGroup;
     public Transform StatusMenuGroup;
@@ -32,9 +31,11 @@ public class JY_UIManager : MonoBehaviour
         profileMenuSwitch = false;
         questMenuSwitch = false;
 
-        nameText.text = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].name;
-        StatusDataRenew();
-
+        if(JY_CharacterListManager.s_instance != null)
+        {
+            nameText.text = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].name;
+            StatusDataRenew();
+        }
     }
 
     //ÇÁ·ÎÇÊ On/Off ÇÔ¼ö
@@ -146,5 +147,30 @@ public class JY_UIManager : MonoBehaviour
         strengthText.text = "Èû:" + JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[2].ToString();
         dexterityText.text = "¹ÎÃ¸:" + JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[3].ToString();
         SPText.text = "½ºÅÈ Æ÷ÀÎÆ®:"+JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].statusPoint.ToString();
+    }
+
+    public void statusControl(int StatType)
+    {
+        switch (StatType)
+        {
+            case 0:
+                Player.instance.StatUp(Adjustable.health);
+                break;
+            case 1:
+                Player.instance.StatUp(Adjustable.stamina);
+                break;
+            case 2:
+                Player.instance.StatUp(Adjustable.strength);
+                break;
+            case 3:
+                Player.instance.StatUp(Adjustable.dexterity);
+                break;
+        }
+
+    }
+
+    public void InitializeStatus()
+    {
+        Player.instance.InitializeStat();
     }
 }

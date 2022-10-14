@@ -34,13 +34,15 @@ public class JY_QuestManager : MonoBehaviour
         QuestData = new Dictionary<int, Dictionary<int, string>>();
         JY_QuestData dataCompo = GetComponent<JY_QuestData>();
         dataCompo.questDataLoad(QuestData);
-        selectNum = JY_CharacterListManager.s_instance.selectNum;
-        if (JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[2] == 1 &&
-            JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[3] == 0)
+        if (JY_CharacterListManager.s_instance != null)
         {
-            Quest_1_Bar.SetActive(true);
+            selectNum = JY_CharacterListManager.s_instance.selectNum;
+            if (JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[2] == 1 &&
+                JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[3] == 0)
+            {
+                Quest_1_Bar.SetActive(true);
+            }
         }
-
         uiManager= GetComponentInParent<JY_UIManager>();
     }
 

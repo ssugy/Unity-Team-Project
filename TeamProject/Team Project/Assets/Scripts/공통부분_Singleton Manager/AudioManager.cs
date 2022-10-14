@@ -44,6 +44,8 @@ public class AudioManager : MonoBehaviour
         CLICK_01,
         CLICK_02,
         DOOR_01,
+        BossBGM_01,
+        BossBGM_02
     }
     public SOUND_NAME Name;
     public AudioClip[] clips;   // enum의 순서를 따라가야됨
