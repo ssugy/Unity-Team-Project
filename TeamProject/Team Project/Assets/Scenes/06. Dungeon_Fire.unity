@@ -332,6 +332,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1295775362, guid: db7565f2be8946c499d96ca21f82a480, type: 3}
+      propertyPath: curHealth
+      value: 250
+      objectReference: {fileID: 0}
     - target: {fileID: 251427240539823624, guid: db7565f2be8946c499d96ca21f82a480, type: 3}
       propertyPath: m_Name
       value: Monster_4 (1)
@@ -15986,6 +15990,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aabec7c3b3f8d8846ab8088494c6ebf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
   door: {fileID: 1615399061}
   message: {fileID: 2043015953}
 --- !u!1 &1468814703
