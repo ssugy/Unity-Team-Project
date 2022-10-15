@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -87,6 +88,59 @@ public class AudioManager : MonoBehaviour
         if (!isLoop)
         {
             StartCoroutine(EndAudio(goAudio));
+        }
+    }
+
+    
+    /// <summary>
+    /// 사운드 페이드 인/아웃 기능
+    /// </summary>
+    /// <param name="name">사운드 이름</param>
+    /// <param name="destVolume">목적지 볼륨(0~1사이) (0이면 자동 종료)</param>
+    /// <param name="endTime">볼륨이 모두 변경되는데 걸리는 시간(초)<param>
+    public void SoundFadeInOut(SOUND_NAME name, float destVolume, float endTime)
+    {
+        // 현재 켜져있는 오디오 소스 중에, 내가 원하는 이름의 오디오 소스를 찾았는지 확인
+        List<AudioSource> audioList = new List<AudioSource>();
+        Transform[] chilTrans = GetComponentsInChildren<Transform>();
+        foreach (Transform item in chilTrans)
+        {
+            Debug.Log($"{item.name} {name.ToString()} {item.name.Equals(name)} ");
+            if (item.name.Equals(name.ToString()))
+            {
+                audioList.Add(item.GetComponent<AudioSource>());
+            }
+        }
+
+        // 오디오 추가된게 없으면 그대로 리턴
+        if (audioList.Count == 0)
+            return;
+
+        for (int i = 0; i < audioList.Count; i++)
+        {
+            StartCoroutine(ChangeVolume(audioList[i], destVolume, endTime));
+        }
+    }
+
+    IEnumerator ChangeVolume(AudioSource audio, float destVol, float finishTime)
+    {
+        float diffVol = destVol - audio.volume;
+        while (true)
+        {
+            audio.volume += diffVol * Time.deltaTime / finishTime;
+
+            if (audio.volume >= destVol - 0.05f && audio.volume <= destVol + 0.05f)
+            {
+                // 목적지 사운드 볼륨이 0.05이하면, 그대로 종료하기
+                if (audio.volume <= 0.05f)
+                {
+                    audio.Stop();
+                    StartCoroutine(EndAudio(audio));
+                    break;
+                }
+                break;
+            }
+            yield return null;
         }
     }
 
