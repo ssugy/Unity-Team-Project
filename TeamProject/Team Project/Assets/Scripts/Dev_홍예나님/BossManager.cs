@@ -32,6 +32,7 @@ public class BossManager : MonoBehaviour
     private enum BossState {STATE_IDLE, STATE_GUN, STATE_SWORD, STATE_WALK, STATE_RUN, STATE_DEATH, STATE_SKILL1, STATE_SKILL2, STATE_SKILL3 }
     private string[] animNames = { "Idle", "shoots gun_2", "sword attack", "Walking", "Run", "Death" };
     private BossState currentState;
+    private BossAudioManager audioManager;
 
     static public BossManager GetInstance()
     {
@@ -50,7 +51,7 @@ public class BossManager : MonoBehaviour
         }
         else
         {
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
             instance = this;
         }
     }
@@ -70,6 +71,7 @@ public class BossManager : MonoBehaviour
         skillFlame.SetActive(false);
         skillGas.SetActive(false);
         skillEarth.SetActive(false);
+        audioManager = GetComponent<BossAudioManager>();
     }
 
     private void NormalAttack()
@@ -132,6 +134,7 @@ public class BossManager : MonoBehaviour
     IEnumerator Skill1()
     {
         yield return new WaitForSeconds(0.8f);
+        audioManager.PlaySound(0);
         skillFlame.SetActive(true);
         yield return new WaitForSeconds(1.5f);
         skillFlame.SetActive(false);
@@ -142,6 +145,7 @@ public class BossManager : MonoBehaviour
     IEnumerator Skill2()
     {
         yield return new WaitForSeconds(0.8f);
+        audioManager.PlaySound(1);
         skillGas.SetActive(true);
         yield return new WaitForSeconds(2.5f);
         skillGas.SetActive(false);
@@ -151,6 +155,7 @@ public class BossManager : MonoBehaviour
     IEnumerator Skill3()
     {
         yield return new WaitForSeconds(0.8f);
+        audioManager.PlaySound(2);
         skillEarth.SetActive(true);
         yield return new WaitForSeconds(3f);
         skillEarth.SetActive(false);

@@ -20,6 +20,10 @@ public class CharRotate : MonoBehaviour
     private Quaternion currentRot;
     private Vector3 currentPos;
     private float initialDist;
+    private void Start()
+    {
+        
+    }
 
     // Update is called once per frame
     void Update()
