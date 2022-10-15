@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("1¹ø Å¬¸¯");
             //AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.CLICK_01);
-            //AudioManager.s_instance.SoundFadeInOut(AudioManager.SOUND_NAME.BGM, 0, 3);
+            AudioManager.s_instance.SoundFadeInOut(AudioManager.SOUND_NAME.BossBGM_01, 0, 2);
         }
         #endregion
     }
