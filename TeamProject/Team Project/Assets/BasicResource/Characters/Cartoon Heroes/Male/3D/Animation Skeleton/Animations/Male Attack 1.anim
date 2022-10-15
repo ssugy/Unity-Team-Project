@@ -44100,14 +44100,14 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: FreezePlayer
+    functionName: DisableAtk
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0
-    functionName: DisableAtk
+    functionName: FreezePlayer
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -44155,7 +44155,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.73333335
+  - time: 0.56666666
     functionName: EnableAtk
     data: 
     objectReferenceParameter: {fileID: 0}
