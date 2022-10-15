@@ -3,6 +3,105 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UniRx;
+public enum CharacterClass
+{
+    NULL,
+    warrior,
+    thief,
+    explorer,
+    sorcerer,
+    enemy
+}
+public enum Sex
+{
+    NULL,
+    male,
+    female
+}
+public enum Adjustable
+{
+    health,
+    stamina,
+    strength,
+    dexterity
+}
+[System.Serializable]
+public class PlayerStat
+{
+    [Header("Adjustable")]
+    public int health;
+    public int stamina;
+    public int strength;
+    public int dexterity;
+
+    [Header("Statistic")]
+    public CharacterClass characterClass;
+    public Sex sex;
+    public int level;
+    public int[] customized;
+    public List<int> equiped;
+    public int Exp;    
+    private int curExp;
+    public int CUREXP           // 프로퍼티를 사용하여 현재 경험치가 증가했을 때만 LevelUp을 판정.
+    {
+        get { return curExp; }
+        set
+        {
+            curExp = value;
+            if (curExp >= Exp)
+            {
+                Player.instance.LevelUp();
+            }
+            
+        }
+    }
+    public int HP;
+    public int curHP;
+    public float SP;
+    public float curSP;
+    public float criPro;
+    public const float criMag = 1.5f;
+    public int defPoint;
+    public float defMag;
+    public int statPoint;
+    public int atkPoint;
+    public int gold;
+    public bool isDead;
+
+    public void InitialStat(CharacterClass _class)
+    {
+        switch (_class)
+        {
+            case CharacterClass.warrior:
+                health = 7;
+                stamina = 6;
+                strength = 10;
+                dexterity = 5;
+                break;
+            case CharacterClass.thief:
+                health = 5;
+                stamina = 8;
+                strength = 6;
+                dexterity = 9;
+                break;
+            case CharacterClass.explorer:
+                health = 7;
+                stamina = 7;
+                strength = 7;
+                dexterity = 7;
+                break;
+            case CharacterClass.sorcerer:
+                health = 5;
+                stamina = 9;
+                strength = 5;
+                dexterity = 9;
+                break;
+        }        
+    }
+    // 캐릭터 생성 시, 혹은 스탯 초기화 시 할당할 클래스별 초기스탯.
+}
+
+
 
 public class Player : MonoBehaviour
 {    
@@ -67,7 +166,7 @@ public class Player : MonoBehaviour
             {
                 playerStat.Exp = _exp;
             }
-            playerStat.curExp = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp;
+            playerStat.CUREXP = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp;
             playerStat.statPoint = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].statusPoint;
             playerStat.health = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[0];
             playerStat.stamina = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[1];
@@ -114,14 +213,7 @@ public class Player : MonoBehaviour
         }
         controller.Move(transform.forward * moveSpeed * movement.magnitude *
             Time.deltaTime + new Vector3(0, gravity * Time.deltaTime, 0));
-    }
-    private void Update()
-    {
-        if (playerStat.curExp >= playerStat.Exp)
-        {
-            LevelUp();
-        }
-    }
+    }    
     void FixedUpdate()
     {
         Move();
@@ -493,20 +585,20 @@ public class Player : MonoBehaviour
     void LookTarget()
     {
         int layerMask = 1 << 11;
-        Vector3 halfHitbox = new Vector3(2f, 2f, 0.7f);
-        Collider[] enemys = Physics.OverlapBox(transform.position + transform.forward * 2, halfHitbox, transform.rotation, layerMask);
+        Vector3 halfHitbox = new Vector3(2f, 2f, 1f);
+        Collider[] enemys = Physics.OverlapBox(transform.position + transform.forward, halfHitbox, transform.rotation, layerMask);
         if (enemys.Length > 0) 
         {
             Transform target = enemys[0].transform;
             transform.LookAt(target);
         }
     }
-    void LevelUp()
+    public void LevelUp()
     {
         ++playerStat.level;
         playerStat.statPoint += 3;
-        playerStat.curExp -= playerStat.Exp;
-        JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp = playerStat.curExp;
+        playerStat.CUREXP -= playerStat.Exp;
+        JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp = playerStat.CUREXP;
         if (EXP_TABLE.TryGetValue(playerStat.level,out int _exp))
         {
             playerStat.Exp = _exp;

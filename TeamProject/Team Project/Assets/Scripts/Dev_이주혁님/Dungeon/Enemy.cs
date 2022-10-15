@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
     public int atkPoint;              // 몬스터의 공격력.
     public float atkMag;              // 몬스터의 공격 배율.
     public int dropExp;               // 몬스터가 드랍하는 경험치.
-    public int dropGold;              // 몬스터가 드랍하는 골드.
+    public int dropGold;              // 몬스터가 드랍하는 골드.    
     //public ItemData[] dropItem;       // 몬스터가 드랍하는 아이템.
     [Space(10f)]
     [Header("인식 범위 관련 프로퍼티")]
@@ -182,8 +182,8 @@ public class Enemy : MonoBehaviour
             Player player = target.GetComponent<Player>();
             if (player != null)
             {
-                player.playerStat.curExp += dropExp;
-                JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp = player.playerStat.curExp;
+                player.playerStat.CUREXP += dropExp;
+                JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp = player.playerStat.CUREXP;
                 JY_CharacterListManager.s_instance.saveListData();
             }
         }
