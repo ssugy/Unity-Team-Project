@@ -66,7 +66,6 @@ public class JY_CutScenePlay : MonoBehaviour
     IEnumerator CutScene_2()
     {
         StartCoroutine(Fade(0, 1));
-        //StartCoroutine("AudioDestroy");
         yield return new WaitForSeconds(2f);
         BattleUI.SetActive(false);
         StartCoroutine(Fade(1, 0));

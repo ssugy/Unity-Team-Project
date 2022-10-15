@@ -23,7 +23,9 @@ public class JY_QuestManager : MonoBehaviour
     public Text journalButton4;
     
     int selectNum;
+    public int selectNpcNum;
     public JY_UIManager uiManager;
+    public Sprite NPCPortrait;
     JY_NPCDialog dialogScript;
     // Start is called before the first frame update
     void Awake()
@@ -37,13 +39,15 @@ public class JY_QuestManager : MonoBehaviour
         if (JY_CharacterListManager.s_instance != null)
         {
             selectNum = JY_CharacterListManager.s_instance.selectNum;
-            if (JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[2] == 1 &&
-                JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[3] == 0)
+            //진행 중인 퀘스트가 있을 경우 툴바 활성화 
+            if ( (JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[2] == 1 &&JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[3] == 0) || 
+                 (JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress2[2] == 1 &&JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress2[3] == 0) )
             {
                 Quest_1_Bar.SetActive(true);
             }
         }
         uiManager= GetComponentInParent<JY_UIManager>();
+        selectNpcNum = -1;
     }
 
     public void questJournalTitleRenew()
@@ -63,16 +67,25 @@ public class JY_QuestManager : MonoBehaviour
                     JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[3] == 0)
                     JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[1]++;
                 break;
+            
         }
     }
 
-    public void QuestChecker(int QuestNum) {
+    public void QuestChecker(int state) {
         dialogScript = dialogCam.GetComponent<JY_NPCDialog>();
-        switch (QuestNum)
+        switch (state)
         {
             //수령
             case 0:
-                JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[2] = 1;
+                if (selectNpcNum == 0)
+                {
+
+                    JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[2] = 1;
+                }
+                else
+                {
+                    JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[2] = 1;
+                }
                 Debug.Log("퀘스트 수령");
                 Quest_1_Bar.SetActive(true);
                 JY_CharacterListManager.s_instance.saveListData();
@@ -80,7 +93,17 @@ public class JY_QuestManager : MonoBehaviour
                 break;
             //완료
             case 1:
-                JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[3] = 1;
+                if (selectNpcNum == 0)
+                {
+
+                    JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[3] = 1;
+                    Player.instance.questExp(15);
+                }
+                else
+                {
+                    JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[3] = 1;
+                    Player.instance.questExp(30);
+                }
                 Debug.Log("퀘스트 완료");
                 Quest_1_Bar.SetActive(false);
                 Quest_1_Panel.SetActive(false);
@@ -92,25 +115,5 @@ public class JY_QuestManager : MonoBehaviour
         }
         dialogUI.SetActive(false);
         dialogScript.quitNpcDialog();
-        //퀘스트 수령
-        /*
-        if (JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[2]== 0)
-        {
-            JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[2] = 1;
-            Debug.Log("퀘스트 수령");
-            Quest_1_Bar.SetActive(true);
-            JY_CharacterListManager.s_instance.saveListData();
-        }
-
-        //퀘스트 완료
-        else if (JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[2] == 1 
-            && JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[1] >= int.Parse(QuestData[0][4]))
-        {
-            JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[3] = 1;
-            Debug.Log("퀘스트 완료");
-            Quest_1_Bar.SetActive(false);
-            Quest_1_Panel.SetActive(false);
-            JY_CharacterListManager.s_instance.saveListData();
-        }*/
     }
 }

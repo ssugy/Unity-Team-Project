@@ -623,4 +623,9 @@ public class Player : MonoBehaviour
     {
         playerAni.ResetTrigger("isAttack");
     }
+    public void questExp(int exp)
+    {
+        playerStat.CUREXP += exp;
+        JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp = playerStat.CUREXP;
+    }
 }

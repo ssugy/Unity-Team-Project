@@ -10,6 +10,7 @@ public class JY_UIManager : MonoBehaviour
     public Transform StatusMenuGroup;
     public Transform questMenuGroup;
     public GameObject alarmUI;
+    public GameObject LevelUPEffect;
 
     public Text alarmText;
     public Text nameText;
@@ -24,7 +25,7 @@ public class JY_UIManager : MonoBehaviour
     bool statusSwitch;
     bool profileMenuSwitch;
     bool questMenuSwitch;
-
+    GameObject effect;
     private void Awake()
     {
         profileSwitch = false;
@@ -106,7 +107,10 @@ public class JY_UIManager : MonoBehaviour
     {
         alarmUI.SetActive(true);
         alarmText.text = "·¹º§¾÷! Lv."+JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level.ToString();
+        effect = Instantiate<GameObject>(LevelUPEffect, Player.instance.transform);
+        effect.transform.localPosition = Vector3.forward;
         StatusDataRenew();
+        Invoke("stopLevelupEffect", 2.5f);
         Invoke("closeAlarm", 2f);
     }
     public void questAcceptUI()
@@ -169,8 +173,34 @@ public class JY_UIManager : MonoBehaviour
 
     }
 
+    public void statusControl_minus(int StatType)
+    {
+        switch (StatType)
+        {
+            case 0:
+                Player.instance.StatUp(Adjustable.health);
+                break;
+            case 1:
+                Player.instance.StatUp(Adjustable.stamina);
+                break;
+            case 2:
+                Player.instance.StatUp(Adjustable.strength);
+                break;
+            case 3:
+                Player.instance.StatUp(Adjustable.dexterity);
+                break;
+        }
+
+    }
+
+
     public void InitializeStatus()
     {
         Player.instance.InitializeStat();
+    }
+
+    void stopLevelupEffect()
+    {
+        Destroy(effect);
     }
 }

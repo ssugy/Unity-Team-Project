@@ -11,7 +11,10 @@ public class JY_NPCDialog : MonoBehaviour
     public GameObject BattleUI;
 
     public GameObject DialogUI;
+    public Image DialogPortrait;
+    public Text NPCNameText;
     public Text scriptText;
+    public GameObject nextButton;
     public GameObject acceptButton;
     public GameObject rejectionButton;
     public GameObject finishButton;
@@ -20,53 +23,145 @@ public class JY_NPCDialog : MonoBehaviour
 
     public GameObject dummy_1;
     public GameObject dummy_2;
+    int dialogPartNum;
     public void EnterNpcDialog()
     {
         minimapCam.gameObject.SetActive(false);
         mainCam.gameObject.SetActive(false);
         dialogCam.gameObject.SetActive(true);
+        NPCCamPosition(JY_QuestManager.s_instance.selectNpcNum);
         DialogUI.SetActive(true);
+        DialogPortrait.sprite = JY_QuestManager.s_instance.NPCPortrait;
         BattleUI.SetActive(false);
 
-        dialogScript();
+        dialogScript(JY_QuestManager.s_instance.selectNpcNum);
     }
 
-    public void dialogScript()
+    public void dialogScript(int selectNPCNum)
     {
-        if (JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[2] == 0)
+        dialogPartNum = 0;
+        NPCNameText.text = JY_QuestManager.s_instance.QuestData[selectNPCNum][2];
+        nextButton.SetActive(true);
+        switch (selectNPCNum)
         {
-            scriptText.text = "지하던전에 스켈레톤들이 진을 치고 있습니다. 깊은 곳으로 가기 위해서라도 토벌이 시급합니다. 도와주실 수 있으신가요?";
+            case 0:
+                //수령
+                if (JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[2] == 0)
+                {
+                    dialogPartNum = 5;
+                    scriptText.text = JY_QuestManager.s_instance.QuestData[selectNPCNum][dialogPartNum];
+                }
+                //완료
+                else if (JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[2] == 1
+                    && JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[1]
+                    >= int.Parse(JY_QuestManager.s_instance.QuestData[0][4])
+                    && JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[3] == 0)
+                {
+                    dialogPartNum = 8;
+                    scriptText.text = JY_QuestManager.s_instance.QuestData[selectNPCNum][dialogPartNum];
+                }
+                //진행중 대화
+                else if(JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[2] == 1
+                    && JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[3] == 0)
+                {
+                    dialogPartNum = 9;
+                    scriptText.text = JY_QuestManager.s_instance.QuestData[selectNPCNum][dialogPartNum];
+                    nextButton.SetActive(false);
+                    acceptButton.SetActive(false);
+                    rejectionButton.SetActive(false);
+                    finishButton.SetActive(false);
+                    exitButton.SetActive(true);
+                }
+                //미수령 및 완료 이후 대화
+                else
+                {
+                    dialogPartNum = 10;
+                    scriptText.text = JY_QuestManager.s_instance.QuestData[selectNPCNum][dialogPartNum];
+                    nextButton.SetActive(false);
+                    acceptButton.SetActive(false);
+                    rejectionButton.SetActive(false);
+                    finishButton.SetActive(false);
+                    exitButton.SetActive(true);
+                }
+                break;
+            case 1:
+                if (JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[3] == 1 &&
+                    JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[2] == 0)
+                {
+                    dialogPartNum = 5;
+                    scriptText.text = JY_QuestManager.s_instance.QuestData[selectNPCNum][dialogPartNum];
+                }
+                //완료
+                else if (JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[2] == 1
+                    && JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[1]
+                    >= int.Parse(JY_QuestManager.s_instance.QuestData[1][4])
+                    && JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[3] == 0)
+                {
+                    dialogPartNum = 8;
+                    scriptText.text = JY_QuestManager.s_instance.QuestData[selectNPCNum][dialogPartNum];
+                }
+                //진행중 대화
+                else if (JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[2] == 1
+                    && JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[3] == 0)
+                {
+                    dialogPartNum = 9;
+                    scriptText.text = JY_QuestManager.s_instance.QuestData[selectNPCNum][dialogPartNum];
+                    nextButton.SetActive(false);
+                    acceptButton.SetActive(false);
+                    rejectionButton.SetActive(false);
+                    finishButton.SetActive(false);
+                    exitButton.SetActive(true);
+                }
+                //미수령 및 완료 이후 대화
+                else
+                {
+                    dialogPartNum = 10;
+                    scriptText.text = JY_QuestManager.s_instance.QuestData[selectNPCNum][dialogPartNum];
+                    nextButton.SetActive(false);
+                    acceptButton.SetActive(false);
+                    rejectionButton.SetActive(false);
+                    finishButton.SetActive(false);
+                    exitButton.SetActive(true);
+                }
+                break;
+        }
+        
+    }
+    public void NextDialog()
+    {
+        int questNum = JY_QuestManager.s_instance.selectNpcNum;
+        dialogPartNum++;
+
+        if(dialogPartNum == 7)
+        {
+            nextButton.SetActive(false);
             acceptButton.SetActive(true);
             rejectionButton.SetActive(true);
             finishButton.SetActive(false);
             exitButton.SetActive(false);
         }
-
-        else if (JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[2] == 1
-            && JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[1] 
-            >= int.Parse( JY_QuestManager.s_instance.QuestData[0][4]))
+        else if(dialogPartNum == 9)
         {
-            scriptText.text = "도와주셔서 감사합니다!";
+            nextButton.SetActive(false);
             acceptButton.SetActive(false);
             rejectionButton.SetActive(false);
             finishButton.SetActive(true);
             exitButton.SetActive(false);
+            dialogPartNum = 7;
         }
-        else
-        {
-            scriptText.text = "토벌을 마치시면 다시 말을 걸어주세요.";
-            acceptButton.SetActive(false);
-            rejectionButton.SetActive(false);
-            finishButton.SetActive(false);
-            exitButton.SetActive(true);
-        }
-    }
 
+        scriptText.text = JY_QuestManager.s_instance.QuestData[questNum][dialogPartNum];
+    }
     public void quitNpcDialog()
     {
         minimapCam.gameObject.SetActive(true);
         mainCam.gameObject.SetActive(true);
         dialogCam.gameObject.SetActive(false);
+        nextButton.SetActive(false);
+        acceptButton.SetActive(false);
+        rejectionButton.SetActive(false);
+        finishButton.SetActive(false);
+        exitButton.SetActive(false);
         DialogUI.SetActive(false);
         BattleUI.SetActive(true);
 

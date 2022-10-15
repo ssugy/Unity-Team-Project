@@ -17,23 +17,29 @@ public class JY_QuestSwap : MonoBehaviour
     {
         selectNum = JY_CharacterListManager.s_instance.selectNum;
     }
-    void QuestRenew(int QuestNum)
+    void QuestRenew(int QuestNum_)
     {
-        if(JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[2] == 1 &&
-           JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[3] == 0)
+        QuestNum = (JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress2[2] == 0) ? 0 : 1;
+
+        if ( (JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[2] == 1 &&
+             JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[3] == 0) ||
+             JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[3] == 1 &&
+             JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress2[2] == 1 &&
+             JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress2[3] == 0
+          )
         {
-            Quest_Title.text = JY_QuestManager.s_instance.QuestData[0][0];
-            Quest_Main.text = JY_QuestManager.s_instance.QuestData[0][1];
+            Quest_Title.text = JY_QuestManager.s_instance.QuestData[QuestNum][0];
+            Quest_Main.text = JY_QuestManager.s_instance.QuestData[QuestNum][1];
 
             string checkText;
-            int now = JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[1];
-            int goal = int.Parse(JY_QuestManager.s_instance.QuestData[0][4]);
+            int now = (QuestNum == 0) ? JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[1] : JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress2[1];
+            int goal = int.Parse(JY_QuestManager.s_instance.QuestData[QuestNum][4]);
 
             if (now < goal)
             {
-                checkText = JY_QuestManager.s_instance.QuestData[0][3]+" "
+                checkText = JY_QuestManager.s_instance.QuestData[QuestNum][3]+" "
                           + now.ToString()+ "/"
-                          + JY_QuestManager.s_instance.QuestData[0][4];
+                          + JY_QuestManager.s_instance.QuestData[QuestNum][4];
             }
             else
             {

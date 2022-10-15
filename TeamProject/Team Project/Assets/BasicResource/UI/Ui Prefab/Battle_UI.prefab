@@ -5891,7 +5891,9 @@ MonoBehaviour:
   journalButton2: {fileID: 1153400836889992918}
   journalButton3: {fileID: 4065556647303788468}
   journalButton4: {fileID: 7078074600421740065}
+  selectNpcNum: 0
   uiManager: {fileID: 0}
+  NPCPortrait: {fileID: 0}
 --- !u!114 &6007285584356601882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9813,7 +9815,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -20518,6 +20520,7 @@ MonoBehaviour:
   StatusMenuGroup: {fileID: 7935563298726608389}
   questMenuGroup: {fileID: 6467694822720276710}
   alarmUI: {fileID: 3272974948208430476}
+  LevelUPEffect: {fileID: 8166768042605032452, guid: 249229ea8e1e2a9478a2083c1141829e, type: 3}
   alarmText: {fileID: 170217003080564334}
   nameText: {fileID: 2998064354131209800}
   levelText: {fileID: 8057410450862528883}
@@ -20572,7 +20575,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6448476277624913239
 RectTransform:
   m_ObjectHideFlags: 0
