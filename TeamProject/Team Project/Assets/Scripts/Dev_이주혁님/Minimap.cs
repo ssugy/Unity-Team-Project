@@ -16,6 +16,7 @@ public class Minimap : MonoBehaviour
     {
         Vector3 tmp = transform.position;
         tmp.x = camAxis.position.x;
+        tmp.y = camAxis.position.y + 50f;
         tmp.z = camAxis.position.z;
         transform.position = tmp;
         tmp = Vector3.zero;

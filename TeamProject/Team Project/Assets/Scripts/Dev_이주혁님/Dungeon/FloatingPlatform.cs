@@ -30,8 +30,12 @@ public class FloatingPlatform : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        player.Move((endPos - transform.localPosition).normalized * Time.deltaTime * moveSpeed);
-        Player.instance.isGround = true;
+        if (player != null)
+        {
+            player.Move((endPos - transform.localPosition).normalized * Time.deltaTime * moveSpeed);
+            Player.instance.isGround = true;
+        }
+        
     }
     private void OnTriggerExit(Collider other)
     {

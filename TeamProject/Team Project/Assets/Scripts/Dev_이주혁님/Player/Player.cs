@@ -493,7 +493,7 @@ public class Player : MonoBehaviour
     void LookTarget()
     {
         int layerMask = 1 << 11;
-        Vector3 halfHitbox = new Vector3(2f, 2f, 1f);
+        Vector3 halfHitbox = new Vector3(2f, 2f, 0.7f);
         Collider[] enemys = Physics.OverlapBox(transform.position + transform.forward * 2, halfHitbox, transform.rotation, layerMask);
         if (enemys.Length > 0) 
         {
