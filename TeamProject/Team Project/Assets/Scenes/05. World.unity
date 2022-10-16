@@ -489,17 +489,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!114 &116223901 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4734498118149929925, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
-  m_PrefabInstance: {fileID: 6448476278223814788}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &151016532
 GameObject:
   m_ObjectHideFlags: 0
@@ -2700,9 +2689,8 @@ MonoBehaviour:
     explanation: 
     image: {fileID: 0}
     effects: []
-    count: 0
   image: {fileID: 574350936}
-  num: 12
+  num: 2
 --- !u!65 &574350935
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2952,17 +2940,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2725361417784495357, guid: 7152eb3f7867b4e44a962505a5c89a7b, type: 3}
   m_PrefabInstance: {fileID: 568886817}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &671950861 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2848272484045981756, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
-  m_PrefabInstance: {fileID: 6448476278223814788}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &676549295
 GameObject:
   m_ObjectHideFlags: 0
@@ -3504,17 +3481,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
---- !u!114 &767700730 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5373987918978752899, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
-  m_PrefabInstance: {fileID: 6448476278223814788}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!43 &770450176
 Mesh:
   m_ObjectHideFlags: 0
@@ -4088,17 +4054,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!114 &834506584 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7886964845156516911, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
-  m_PrefabInstance: {fileID: 6448476278223814788}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &846421811
 GameObject:
   m_ObjectHideFlags: 0
@@ -4376,7 +4331,6 @@ MonoBehaviour:
       +60\n\uACF5\uACA9\uC18D\uB3C4 -10%"
     image: {fileID: 21300000, guid: a45d5249bd44cdf418399e39518c131f, type: 3}
     effects: []
-    count: 1
   - type: 1
     equipedState: 1
     name: "\uD751\uAE30\uC0AC\uC758 \uB3C4\uB07C"
@@ -4384,7 +4338,6 @@ MonoBehaviour:
       +80\n\uACF5\uACA9\uC18D\uB3C4 -10%"
     image: {fileID: 21300000, guid: a8ac3fd7035ee1b4b84695719732ced9, type: 3}
     effects: []
-    count: 1
   - type: 1
     equipedState: 1
     name: "\uB370\uBAAC\uC758 \uB300\uD615 \uB3C4\uB07C"
@@ -4394,7 +4347,6 @@ MonoBehaviour:
       -10%"
     image: {fileID: 21300000, guid: d6e19219f504a1b4b87f905b322d863e, type: 3}
     effects: []
-    count: 1
   - type: 1
     equipedState: 1
     name: "\uD669\uCCA0\uC11D \uB2E8\uAC80"
@@ -4403,7 +4355,6 @@ MonoBehaviour:
       +70\n\uACF5\uACA9\uC18D\uB3C4 +20%"
     image: {fileID: 21300000, guid: 52f0d96bbbb8918479245dd5f26794a3, type: 3}
     effects: []
-    count: 1
   - type: 1
     equipedState: 1
     name: "\uB2E8\uB3C4"
@@ -4412,7 +4363,6 @@ MonoBehaviour:
       +20%"
     image: {fileID: 21300000, guid: 945b2a32cd8658849ad6a45bf6cf8492, type: 3}
     effects: []
-    count: 1
   - type: 1
     equipedState: 1
     name: "\uC804\uD22C\uC6A9 \uD574\uBA38"
@@ -4422,7 +4372,6 @@ MonoBehaviour:
       -20%"
     image: {fileID: 21300000, guid: be0ef03cd6995ff409344cdde5e35eb9, type: 3}
     effects: []
-    count: 1
   - type: 1
     equipedState: 1
     name: "\uC6D4\uB3C4"
@@ -4430,7 +4379,6 @@ MonoBehaviour:
       +100\n\uACF5\uACA9\uC18D\uB3C4 -10%"
     image: {fileID: 21300000, guid: adf2e79b1e99cc440ac519c534dd6f34, type: 3}
     effects: []
-    count: 1
   - type: 1
     equipedState: 1
     name: "\uAC08\uB9DD\uC758 \uB0AB"
@@ -4439,7 +4387,6 @@ MonoBehaviour:
       \uC788\uB2E4.\n\n\uACF5\uACA9\uB825 +250\n\uACF5\uACA9\uC18D\uB3C4 -50%"
     image: {fileID: 21300000, guid: 54b49c8fb239b714b8ddc81e10e9fa7a, type: 3}
     effects: []
-    count: 1
   - type: 1
     equipedState: 1
     name: "\uB871\uC18C\uB4DC"
@@ -4448,7 +4395,6 @@ MonoBehaviour:
       +40"
     image: {fileID: 21300000, guid: 11e2354c300cf2a429eb26819640c6dd, type: 3}
     effects: []
-    count: 1
   - type: 1
     equipedState: 1
     name: "\uAE00\uB77C\uB514\uC6B0\uC2A4"
@@ -4457,7 +4403,6 @@ MonoBehaviour:
       +60"
     image: {fileID: 21300000, guid: d26ed61eee64af04c999c0a09de499c0, type: 3}
     effects: []
-    count: 1
   - type: 1
     equipedState: 1
     name: "\uACE1\uAC80"
@@ -4465,7 +4410,6 @@ MonoBehaviour:
       \uC0C1\uCC98\uAC00 \uAE4A\uAC8C \uB0A8\uB294\uB2E4.\n\n\uACF5\uACA9\uB825 +50"
     image: {fileID: 21300000, guid: 33c504f5d852ebe46971b632a4f2327d, type: 3}
     effects: []
-    count: 1
   - type: 1
     equipedState: 1
     name: "\uB2E8\uB450\uAC80"
@@ -4474,7 +4418,6 @@ MonoBehaviour:
       \uC608\uC0AC\uB86D\uC9C0 \uC54A\uB2E4.\n\n\uACF5\uACA9\uB825 +65"
     image: {fileID: 21300000, guid: 18d461ce548e64e4c94d67442d698380, type: 3}
     effects: []
-    count: 1
   - type: 1
     equipedState: 1
     name: "\uD751\uCCA0\uAC80"
@@ -4482,7 +4425,6 @@ MonoBehaviour:
       \uAC80.\n\n\uACF5\uACA9\uB825 +75"
     image: {fileID: 21300000, guid: 86bf8f60c557b534eaf7c0a8e5aa5c46, type: 3}
     effects: []
-    count: 1
   - type: 1
     equipedState: 1
     name: "\uC601\uC6C5\uC758 \uAC80"
@@ -4491,7 +4433,6 @@ MonoBehaviour:
       +100\n\uACF5\uACA9\uC18D\uB3C4 +10%"
     image: {fileID: 21300000, guid: 9f496152e00a9d84e98413a832544e10, type: 3}
     effects: []
-    count: 1
   - type: 1
     equipedState: 1
     name: "\uC6D0\uD615 \uBAA9\uC81C \uBC29\uD328"
@@ -4499,7 +4440,6 @@ MonoBehaviour:
       \uC4F8\uB9CC\uD558\uB2E4.\n\n\uBC29\uC5B4\uB825 +20"
     image: {fileID: 21300000, guid: 96e7e93db2ee4c64bb81bb91c6b59769, type: 3}
     effects: []
-    count: 1
   - type: 1
     equipedState: 1
     name: "\uB110\uBE64\uC9C0 \uBC29\uD328"
@@ -4508,7 +4448,6 @@ MonoBehaviour:
       \uBC29\uC5B4\uB294 \uAC00\uB2A5\uD558\uB2E4.\n\n\uBC29\uC5B4\uB825 +10"
     image: {fileID: 21300000, guid: 58419da139c0ab244bd4cb5d6b9ce845, type: 3}
     effects: []
-    count: 1
   - type: 2
     equipedState: 0
     name: "\uCCB4\uB825 \uBB3C\uC57D (\uC18C)"
@@ -4516,7 +4455,6 @@ MonoBehaviour:
     image: {fileID: 21300000, guid: 87f230a909b82d74f826052551f88a1b, type: 3}
     effects:
     - {fileID: 11400000, guid: 7780ae5d2c8590846890aa2c06ff7e29, type: 2}
-    count: 1
   - type: 2
     equipedState: 0
     name: "\uCCB4\uB825 \uBB3C\uC57D (\uB300)"
@@ -4524,7 +4462,6 @@ MonoBehaviour:
     image: {fileID: 21300000, guid: 78157eb0e2172d5408b70a91139af177, type: 3}
     effects:
     - {fileID: 11400000, guid: c737e7df0fcf3a84e8e536bc447f6337, type: 2}
-    count: 1
   - type: 3
     equipedState: 0
     name: "\uC2A4\uCF08\uB808\uD1A4\uC758 \uBA38\uB9AC\uBF08"
@@ -4533,7 +4470,6 @@ MonoBehaviour:
       \uC54A\uB294\uB2E4."
     image: {fileID: 21300000, guid: e33ea4ee424abf04098dc0012eb330c8, type: 3}
     effects: []
-    count: 1
   - type: 3
     equipedState: 0
     name: "\uC6A9\uC758 \uBA38\uB9AC\uBF08"
@@ -4541,7 +4477,6 @@ MonoBehaviour:
       \uC8FC\uC778\uC740 \uC8FD\uC5C8\uC9C0\uB9CC \uC5EC\uC804\uD788 \uC704\uD611\uC801\uC774\uB2E4."
     image: {fileID: 21300000, guid: b6a9d54b797e9b14eafc9983c6aa7754, type: 3}
     effects: []
-    count: 1
 --- !u!4 &904104431
 Transform:
   m_ObjectHideFlags: 0
@@ -5711,9 +5646,8 @@ MonoBehaviour:
     explanation: 
     image: {fileID: 0}
     effects: []
-    count: 0
   image: {fileID: 1025355774}
-  num: 7
+  num: 1
 --- !u!212 &1025355774
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6427,9 +6361,8 @@ MonoBehaviour:
     explanation: 
     image: {fileID: 0}
     effects: []
-    count: 0
   image: {fileID: 1168114084}
-  num: 19
+  num: 4
 --- !u!65 &1168114083
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6712,9 +6645,8 @@ MonoBehaviour:
     explanation: 
     image: {fileID: 0}
     effects: []
-    count: 0
   image: {fileID: 1254970990}
-  num: 18
+  num: 3
 --- !u!65 &1254970989
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10732,22 +10664,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 867635396503887375, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
-      propertyPath: icon
-      value: 
-      objectReference: {fileID: 116223901}
-    - target: {fileID: 867635396503887375, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
-      propertyPath: nameText
-      value: 
-      objectReference: {fileID: 834506584}
-    - target: {fileID: 867635396503887375, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
-      propertyPath: typeText
-      value: 
-      objectReference: {fileID: 671950861}
-    - target: {fileID: 867635396503887375, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
-      propertyPath: explanationText
-      value: 
-      objectReference: {fileID: 767700730}
     - target: {fileID: 1134213302272765424, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

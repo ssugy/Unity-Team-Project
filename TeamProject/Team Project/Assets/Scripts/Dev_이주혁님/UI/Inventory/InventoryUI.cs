@@ -28,46 +28,13 @@ public class InventoryUI : MonoBehaviour
 
         }
     }    
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         inventory = Inventory.instance;
         slots = slotHolder.GetComponentsInChildren<Slot>();        
         inventory.onChangeItem += RedrawSlotUI;
-        this.gameObject.SetActive(false);
-        
-
+        this.gameObject.SetActive(false);      
     }
-    /*
-    private void OnEnable()
-    {
-        SetInven();
-    }
-    private void SetInven()
-    {
-        
-        for (int i = 0; i < slots.Length; i++)
-        {
-            slots[i].item = inventory.items[i];
-            slots[i].icon.sprite = slots[i].item.image;
-            if (slots[i].item != null)
-            {
-                slots[i].isEmpty = false;
-                slots[i].icon.gameObject.SetActive(true);
-            }
-            else
-            {
-                slots[i].isEmpty = true;
-                slots[i].icon.gameObject.SetActive(false);
-            }
-        }
-    }
-    */
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }    
+    
 }

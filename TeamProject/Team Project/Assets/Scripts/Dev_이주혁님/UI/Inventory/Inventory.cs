@@ -44,6 +44,14 @@ public class Inventory : MonoBehaviour
         }
         return false;
     }
+    public void RemoveItem(Item _item)
+    {
+        items.Remove(_item);
+        if (onChangeItem != null)
+        {
+            onChangeItem();
+        }
+    }
     
 
     private void OnTriggerEnter(Collider other)

@@ -25,31 +25,34 @@ public class Item
     [TextArea(3,5)]
     public string explanation;
     public Sprite image;
-    public List<ItemEffect> effects;
-    public int count;
-    public virtual bool Use()
-    {
-        bool isUsed = false;
+    public List<ItemEffect> effects;    
+   
+    public void Use()
+    {        
         foreach(ItemEffect one in effects)
         {
-            isUsed = one.ExecuteRole();
-        }        
-        return isUsed;
-    }   
-}
-
-public class Equipment : Item
-{
-    public bool isEquiped = false;
-
-    public bool EquipItem()
-    {
-        if (!isEquiped)
+            one.ExecuteRole();
+        }             
+    }
+    public void Equip()
+    {        
+        switch (equipedState)
         {
-            isEquiped = true;
-            return true;
-        }
-        isEquiped = false;
-        return false;
+            case EquipState.EQUIPED:
+                equipedState = EquipState.UNEQUIPED;                
+                foreach (ItemEffect one in effects)
+                {
+                    one.ExecuteRole();
+                }
+                break;
+            case EquipState.UNEQUIPED:
+                equipedState = EquipState.UNEQUIPED;                
+                foreach (ItemEffect one in effects)
+                {
+                    one.ExecuteRole();
+                }
+                break;
+        }        
     }
 }
+

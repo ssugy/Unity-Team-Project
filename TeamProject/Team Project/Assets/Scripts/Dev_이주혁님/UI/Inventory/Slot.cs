@@ -9,6 +9,7 @@ public class Slot : MonoBehaviour
     public Item item;
     public bool isEmpty;
     public InfoPanel infoPanel;
+    public GameObject equiped;
 
     private void Awake()
     {        
@@ -19,6 +20,14 @@ public class Slot : MonoBehaviour
     public void UpdateSlotUI()
     {
         icon.sprite = item.image;
+        if (item.equipedState == EquipState.EQUIPED)
+        {
+            equiped.SetActive(true);
+        }
+        else
+        {
+            equiped.SetActive(false);
+        }
         icon.gameObject.SetActive(true);
     }
     public void RemoveSlot()
@@ -33,7 +42,7 @@ public class Slot : MonoBehaviour
     {
         if (!isEmpty)
         {
-            infoPanel.SetInformation(item);
+            infoPanel.SetInformation(item, this);
             infoPanel.gameObject.SetActive(true);            
         }
     }
