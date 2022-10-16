@@ -429,6 +429,7 @@ public class Player : MonoBehaviour
     {
         playerStat.statPoint = (playerStat.level - 1) * 3;
         playerStat.InitialStat(playerStat.characterClass);
+        SetState();
         SaveStatData();
         JY_QuestManager.s_instance.uiManager.StatusDataRenew();
     }

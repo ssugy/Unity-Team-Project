@@ -24,7 +24,7 @@ public class Weapon : MonoBehaviour
     private void Start()
     {
         player = Player.instance;
-        if (player != null)
+        if (player != null && player.playerAni != null)
         {
             player.SetState();
             player.playerAni.SetFloat("AtkSpeed", atkSpeed);
@@ -32,7 +32,7 @@ public class Weapon : MonoBehaviour
     }
     private void OnDisable()
     {
-        if (player != null)
+        if (player != null && player.playerAni != null)
         {
             player.SetState();
             player.playerAni.SetFloat("AtkSpeed", 1f);
