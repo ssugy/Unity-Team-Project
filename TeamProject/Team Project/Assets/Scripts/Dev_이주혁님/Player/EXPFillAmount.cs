@@ -16,6 +16,6 @@ public class EXPFillAmount : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        barFront.fillAmount = (float)stat.CUREXP / stat.Exp;
+        barFront.fillAmount = (float)stat.CurExp / stat.Exp;
     }
 }

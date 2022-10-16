@@ -42,7 +42,7 @@ public class PlayerStat
     public List<int> equiped;
     public int Exp;    
     private int curExp;
-    public int CUREXP           // 프로퍼티를 사용하여 현재 경험치가 증가했을 때만 LevelUp을 판정.
+    public int CurExp           // 프로퍼티를 사용하여 현재 경험치가 증가했을 때만 LevelUp을 판정.
     {
         get { return curExp; }
         set
@@ -56,16 +56,55 @@ public class PlayerStat
         }
     }
     public int HP;
-    public int curHP;
+    private int curHP;
+    public int CurHP
+    {
+        get { return curHP; }
+        set 
+        {
+            curHP = value;
+            if (curHP < 0)
+            {
+                curHP = 0;
+            }
+            else if (curHP > HP)
+            {
+                curHP = HP;
+            }
+        }
+    }
     public float SP;
-    public float curSP;
+    private float curSP;
+    public float CurSP
+    {
+        get { return curSP; }
+        set 
+        {
+            curSP = value;
+            if (curSP < 0)
+            {
+                curSP = 0;
+            }
+        }
+    }
     public float criPro;
     public const float criMag = 1.5f;
     public int defPoint;
     public float defMag;
     public int statPoint;
     public int atkPoint;
-    public int gold;
+    private int gold;
+    public int Gold
+    {
+        get { return gold; }
+        set {            
+            gold = value;
+            if (gold < 0)
+            {
+                gold = 0;
+            }
+            }
+    }
     public bool isDead;
 
     public void InitialStat(CharacterClass _class)
@@ -166,7 +205,7 @@ public class Player : MonoBehaviour
             {
                 playerStat.Exp = _exp;
             }
-            playerStat.CUREXP = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp;
+            playerStat.CurExp = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp;
             playerStat.statPoint = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].statusPoint;
             playerStat.health = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[0];
             playerStat.stamina = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[1];
@@ -325,7 +364,7 @@ public class Player : MonoBehaviour
     }
     public void Die()
     {
-        playerStat.curHP = 0;
+        playerStat.CurHP = 0;
         DisableAtk();
         playerAni.SetTrigger("isDead");
         transform.tag = "Dead";
@@ -419,9 +458,9 @@ public class Player : MonoBehaviour
     public void SetState()
     {
         playerStat.HP = playerStat.health * 50 + playerStat.strength * 10;
-        playerStat.curHP = playerStat.HP;
+        playerStat.CurHP = playerStat.HP;
         playerStat.SP = playerStat.stamina * 10 + playerStat.strength * 2;
-        playerStat.curSP = playerStat.SP;
+        playerStat.CurSP = playerStat.SP;
         playerStat.criPro = (20f + Sigma(2f, 1.03f, playerStat.dexterity)) / 100f;
         playerStat.defMag = 1 - Mathf.Pow(1.02f, -playerStat.defPoint);
         if (Weapon.weapon != null)
@@ -555,8 +594,8 @@ public class Player : MonoBehaviour
 
     public void IsAttacked(int _damage)
     {
-        playerStat.curHP -= _damage;        
-        if (playerStat.curHP <= 0)
+        playerStat.CurHP -= _damage;        
+        if (playerStat.CurHP <= 0)
         {
             Die();
         }
@@ -569,7 +608,7 @@ public class Player : MonoBehaviour
     }
     public void UseStamina(float _stamina)
     {
-        playerStat.curSP -= _stamina;
+        playerStat.CurSP -= _stamina;
     }
     public void Exhaisted()     // 스테미너를 전부 소진하면 행동을 할 수 없음.
     {
@@ -597,13 +636,13 @@ public class Player : MonoBehaviour
     {
         ++playerStat.level;
         playerStat.statPoint += 3;
-        playerStat.CUREXP -= playerStat.Exp;
-        JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp = playerStat.CUREXP;
+        playerStat.CurExp -= playerStat.Exp;
+        JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp = playerStat.CurExp;
         if (EXP_TABLE.TryGetValue(playerStat.level,out int _exp))
         {
             playerStat.Exp = _exp;
         }        
-        playerStat.curHP = playerStat.HP;
+        playerStat.CurHP = playerStat.HP;
 
         JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level = playerStat.level;
         SaveStatData();
@@ -625,7 +664,7 @@ public class Player : MonoBehaviour
     }
     public void questExp(int exp)
     {
-        playerStat.CUREXP += exp;
-        JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp = playerStat.CUREXP;
+        playerStat.CurExp += exp;
+        JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp = playerStat.CurExp;
     }
 }

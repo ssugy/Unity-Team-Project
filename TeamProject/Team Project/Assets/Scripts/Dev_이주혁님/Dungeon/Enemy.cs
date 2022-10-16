@@ -182,8 +182,8 @@ public class Enemy : MonoBehaviour
             Player player = target.GetComponent<Player>();
             if (player != null)
             {
-                player.playerStat.CUREXP += dropExp;
-                JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp = player.playerStat.CUREXP;
+                player.playerStat.CurExp += dropExp;
+                JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp = player.playerStat.CurExp;
                 JY_CharacterListManager.s_instance.saveListData();
             }
         }

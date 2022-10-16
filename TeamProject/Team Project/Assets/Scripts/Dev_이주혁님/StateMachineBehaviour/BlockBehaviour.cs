@@ -19,7 +19,7 @@ public class BlockBehaviour : StateMachineBehaviour
     {
         Player.instance.playerStat.defMag = 0.9f;
         Player.instance.UseStamina(usingStamina * Time.deltaTime);
-        if (Player.instance.playerStat.curSP <= 0)
+        if (Player.instance.playerStat.CurSP <= 0)
         {
             animator.SetBool("isLArm", false);
         }

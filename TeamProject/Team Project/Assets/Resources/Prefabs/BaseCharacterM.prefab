@@ -2853,8 +2853,8 @@ GameObject:
   - component: {fileID: 95844511793012932}
   - component: {fileID: 114380782822982968}
   - component: {fileID: 2139777303}
-  - component: {fileID: 1981564670060625492}
   - component: {fileID: 4476257686687804683}
+  - component: {fileID: 784678566230183479}
   m_Layer: 10
   m_Name: BaseCharacterM
   m_TagString: Player
@@ -2964,21 +2964,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.97, z: 0}
---- !u!114 &1981564670060625492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1668188202801692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2fa318dca69e774b96ba29a538dc313, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  empty: {fileID: 0}
-  inventoryUI: {fileID: 0}
-  quickSlotSet: {fileID: 0}
 --- !u!114 &4476257686687804683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3002,17 +2987,13 @@ MonoBehaviour:
     customized: 
     equiped: 
     Exp: 10
-    curExp: 0
     HP: 0
-    curHP: 0
     SP: 0
-    curSP: 0
     criPro: 0
     defPoint: 0
     defMag: 0
     statPoint: 0
     atkPoint: 100
-    gold: 0
     isDead: 0
   camAxis: {fileID: 0}
   playerAni: {fileID: 0}
@@ -3026,6 +3007,19 @@ MonoBehaviour:
   enableAtk: 0
   rWeaponDummy: {fileID: 436675578}
   isGround: 0
+--- !u!114 &784678566230183479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1668188202801692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11958a2088d7b2843b4e17e1a8609b9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items: []
 --- !u!1 &1672909316657688
 GameObject:
   m_ObjectHideFlags: 0

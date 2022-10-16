@@ -21,17 +21,17 @@ public class SPFillAmount : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        barFront.fillAmount = (float)stat.curSP / stat.SP;
-        if (stat.curSP < stat.SP)
+        barFront.fillAmount = (float)stat.CurSP / stat.SP;
+        if (stat.CurSP < stat.SP)
         {
-            stat.curSP += recoverSpeed * Time.deltaTime;
+            stat.CurSP += recoverSpeed * Time.deltaTime;
         }
-        if (stat.curSP <= 0)
+        if (stat.CurSP <= 0)
         {
             Player.instance.Exhaisted();
             isExhausted = true;
         }
-        else if (isExhausted && stat.curSP >= stat.SP * 0.2)
+        else if (isExhausted && stat.CurSP >= stat.SP * 0.2)
         {
             Player.instance.Recovered();
             isExhausted = false;

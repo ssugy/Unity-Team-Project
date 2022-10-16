@@ -18,7 +18,7 @@ public class Exp_Text : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        expText.text = (stat.CUREXP * 100 / stat.Exp).ToString() + "% " 
-            + "(" + stat.CUREXP.ToString() + " / " + stat.Exp.ToString() + ")";
+        expText.text = (stat.CurExp * 100 / stat.Exp).ToString() + "% " 
+            + "(" + stat.CurExp.ToString() + " / " + stat.Exp.ToString() + ")";
     }
 }

@@ -16,6 +16,6 @@ public class HPFillAmount : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        barFront.fillAmount = (float)stat.curHP / stat.HP;
+        barFront.fillAmount = (float)stat.CurHP / stat.HP;
     }
 }
