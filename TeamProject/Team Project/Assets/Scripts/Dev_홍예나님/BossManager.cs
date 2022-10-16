@@ -29,6 +29,7 @@ public class BossManager : MonoBehaviour
     private int countAttack;
     private float skillTimer;
     public TrailRenderer trailRenderer;
+    public GameObject portal;
     private enum BossState {STATE_IDLE, STATE_GUN, STATE_SWORD, STATE_WALK, STATE_RUN, STATE_DEATH, STATE_SKILL1, STATE_SKILL2, STATE_SKILL3 }
     private enum BossAttackState { STATE_NORMAL, STATE_70, STATE_30}
     private string[] animNames = { "Idle", "shoots gun_2", "sword attack", "Walking", "Run", "Death" };
@@ -278,6 +279,7 @@ public class BossManager : MonoBehaviour
         }
         else
         {
+            //º¸½º Á×À½
             //hitbox.enabled = false;
             control.OnClickAnim("Death");
             //FreezeEnemy();
@@ -286,6 +288,7 @@ public class BossManager : MonoBehaviour
             //rigid.AddForce(reactVec * 5, ForceMode.Impulse);
             //DropExp();
             Destroy(control.gameObject, 4);
+            portal.SetActive(true);
         }
     }
 }
