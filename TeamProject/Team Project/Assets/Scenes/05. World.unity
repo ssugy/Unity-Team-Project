@@ -2690,7 +2690,7 @@ MonoBehaviour:
     image: {fileID: 0}
     effects: []
   image: {fileID: 574350936}
-  num: 2
+  num: 4
 --- !u!65 &574350935
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2702,7 +2702,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 2, z: 2}
+  m_Size: {x: 5, y: 5, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!212 &574350936
 SpriteRenderer:
@@ -2765,7 +2765,7 @@ Transform:
   m_GameObject: {fileID: 574350933}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -86.40302, y: 0.661, z: -50.32}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -4327,26 +4327,33 @@ MonoBehaviour:
   - type: 1
     equipedState: 1
     name: "\uCCA0\uC81C \uB3C4\uB07C"
-    explanation: "\uD22C\uBC15\uD558\uAC8C \uC0DD\uAE34 \uCCA0\uC81C \uB3C4\uB07C\uC785\uB2C8\uB2E4.\n\n\uACF5\uACA9\uB825
+    explanation: "\uD22C\uBC15\uD558\uAC8C \uC0DD\uAE34 \uCCA0\uC81C \uB3C4\uB07C.\n\n\uACF5\uACA9\uB825
       +60\n\uACF5\uACA9\uC18D\uB3C4 -10%"
     image: {fileID: 21300000, guid: a45d5249bd44cdf418399e39518c131f, type: 3}
-    effects: []
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
   - type: 1
     equipedState: 1
     name: "\uD751\uAE30\uC0AC\uC758 \uB3C4\uB07C"
-    explanation: "\uD751\uCCA0\uB85C \uB9CC\uB4E4\uC5B4\uC9C4 \uC591\uB0A0 \uB3C4\uB07C\uC785\uB2C8\uB2E4.\n\n\uACF5\uACA9\uB825
-      +80\n\uACF5\uACA9\uC18D\uB3C4 -10%"
+    explanation: "\uD751\uCCA0\uB85C \uB9CC\uB4E4\uC5B4\uC9C4 \uC591\uB0A0 \uB3C4\uB07C.\n\uBB34\uAC81\uC9C0\uB9CC
+      \uC704\uB825\uC740 \uC0C1\uB2F9\uD558\uB2E4.\n\n\uACF5\uACA9\uB825 +80\n\uACF5\uACA9\uC18D\uB3C4
+      -10%"
     image: {fileID: 21300000, guid: a8ac3fd7035ee1b4b84695719732ced9, type: 3}
-    effects: []
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
   - type: 1
     equipedState: 1
     name: "\uB370\uBAAC\uC758 \uB300\uD615 \uB3C4\uB07C"
     explanation: "\uC54C \uC218 \uC5C6\uB294 \uBB38\uC790\uAC00 \uC0C8\uACA8\uC9C4
-      \uB3C4\uB07C\uC785\uB2C8\uB2E4.\n\uB370\uBAAC\uB4E4\uC774 \uC0AC\uC6A9\uD588\uB2E4\uACE0
-      \uC804\uD574\uC9D1\uB2C8\uB2E4.\n\n\uACF5\uACA9\uB825 +120\n\uACF5\uACA9\uC18D\uB3C4
+      \uB3C4\uB07C.\n\uACE0\uB300 \uB370\uBAAC\uB4E4\uC758 \uBB34\uAE30\uB77C\uACE0
+      \uC804\uD574\uC9C4\uB2E4.\n\n\uACF5\uACA9\uB825 +120\n\uACF5\uACA9\uC18D\uB3C4
       -10%"
     image: {fileID: 21300000, guid: d6e19219f504a1b4b87f905b322d863e, type: 3}
-    effects: []
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
   - type: 1
     equipedState: 1
     name: "\uD669\uCCA0\uC11D \uB2E8\uAC80"
@@ -4354,7 +4361,9 @@ MonoBehaviour:
       \uB2E8\uAC80.\n\uC0C1\uB2F9\uD788 \uBB34\uAC81\uB2E4.\n\n\uACF5\uACA9\uB825
       +70\n\uACF5\uACA9\uC18D\uB3C4 +20%"
     image: {fileID: 21300000, guid: 52f0d96bbbb8918479245dd5f26794a3, type: 3}
-    effects: []
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
   - type: 1
     equipedState: 1
     name: "\uB2E8\uB3C4"
@@ -4362,31 +4371,39 @@ MonoBehaviour:
       \uB0A0\uCE74\uB86D\uB2E4.\n\n\uACF5\uACA9\uB825 +40\n\uACF5\uACA9\uC18D\uB3C4
       +20%"
     image: {fileID: 21300000, guid: 945b2a32cd8658849ad6a45bf6cf8492, type: 3}
-    effects: []
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
   - type: 1
     equipedState: 1
     name: "\uC804\uD22C\uC6A9 \uD574\uBA38"
     explanation: "\uC804\uD22C\uC6A9\uC73C\uB85C \uB9CC\uB4E4\uC5B4\uC9C4 \uAC70\uB300\uD55C
       \uB9DD\uCE58.\n\uD669\uB3D9\uC73C\uB85C \uC7A5\uC2DD\uB418\uC5B4 \uB178\uB780
       \uBE5B\uC744 \uB764\uB2E4.\n\n\uACF5\uACA9\uB825 +120\n\uACF5\uACA9\uC18D\uB3C4
-      -20%"
+      -15%"
     image: {fileID: 21300000, guid: be0ef03cd6995ff409344cdde5e35eb9, type: 3}
-    effects: []
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
   - type: 1
     equipedState: 1
     name: "\uC6D4\uB3C4"
     explanation: "\uB0A0 \uB05D\uC774 \uD718\uC5B4\uC9C4 \uC6D4\uB3C4.\n\n\uACF5\uACA9\uB825
       +100\n\uACF5\uACA9\uC18D\uB3C4 -10%"
     image: {fileID: 21300000, guid: adf2e79b1e99cc440ac519c534dd6f34, type: 3}
-    effects: []
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
   - type: 1
     equipedState: 1
     name: "\uAC08\uB9DD\uC758 \uB0AB"
     explanation: "\uC804\uC2E0\uC774 \uBD89\uAC8C \uBB3C\uB4E0 \uBD88\uAE38\uD55C
       \uB0AB.\n\uD53C\uB97C \uAC08\uAD6C\uD558\uB4EF \uAC00\uB298\uAC8C \uB5A8\uB9AC\uACE0
-      \uC788\uB2E4.\n\n\uACF5\uACA9\uB825 +250\n\uACF5\uACA9\uC18D\uB3C4 -50%"
+      \uC788\uB2E4.\n\n\uACF5\uACA9\uB825 +200\n\uACF5\uACA9\uC18D\uB3C4 -20%"
     image: {fileID: 21300000, guid: 54b49c8fb239b714b8ddc81e10e9fa7a, type: 3}
-    effects: []
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
   - type: 1
     equipedState: 1
     name: "\uB871\uC18C\uB4DC"
@@ -4394,7 +4411,9 @@ MonoBehaviour:
       \uAE38\uC774\uC640 \uBB34\uAC8C\uB97C \uAC16\uCDC4\uB2E4.\n\n\uACF5\uACA9\uB825
       +40"
     image: {fileID: 21300000, guid: 11e2354c300cf2a429eb26819640c6dd, type: 3}
-    effects: []
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
   - type: 1
     equipedState: 1
     name: "\uAE00\uB77C\uB514\uC6B0\uC2A4"
@@ -4402,14 +4421,18 @@ MonoBehaviour:
       \uD3B8\uD558\uC9C0\uB9CC \uACF5\uACA9 \uBC94\uC704\uAC00 \uC9E7\uB2E4.\n\n\uACF5\uACA9\uB825
       +60"
     image: {fileID: 21300000, guid: d26ed61eee64af04c999c0a09de499c0, type: 3}
-    effects: []
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
   - type: 1
     equipedState: 1
     name: "\uACE1\uAC80"
     explanation: "\uC9E7\uACE0 \uD718\uC5B4\uC9C4 \uB0A0\uC744 \uAC00\uC9C4 \uAC80.\n\uBCA0\uC774\uBA74
       \uC0C1\uCC98\uAC00 \uAE4A\uAC8C \uB0A8\uB294\uB2E4.\n\n\uACF5\uACA9\uB825 +50"
     image: {fileID: 21300000, guid: 33c504f5d852ebe46971b632a4f2327d, type: 3}
-    effects: []
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
   - type: 1
     equipedState: 1
     name: "\uB2E8\uB450\uAC80"
@@ -4417,14 +4440,18 @@ MonoBehaviour:
       \uB300\uAC80.\n\uD22C\uBC15\uD55C \uC678\uD615\uC5D0\uB3C4 \uC704\uB825\uC740
       \uC608\uC0AC\uB86D\uC9C0 \uC54A\uB2E4.\n\n\uACF5\uACA9\uB825 +65"
     image: {fileID: 21300000, guid: 18d461ce548e64e4c94d67442d698380, type: 3}
-    effects: []
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
   - type: 1
     equipedState: 1
     name: "\uD751\uCCA0\uAC80"
     explanation: "\uD751\uBE5B \uCCA0\uB85C \uB9CC\uB4E4\uC5B4\uC9C4 \uAE38\uCB49\uD55C
       \uAC80.\n\n\uACF5\uACA9\uB825 +75"
     image: {fileID: 21300000, guid: 86bf8f60c557b534eaf7c0a8e5aa5c46, type: 3}
-    effects: []
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
   - type: 1
     equipedState: 1
     name: "\uC601\uC6C5\uC758 \uAC80"
@@ -4432,7 +4459,9 @@ MonoBehaviour:
       \uC54C \uC218 \uC5C6\uC9C0\uB9CC \uBAB9\uC2DC \uAC00\uBCCD\uB2E4.\n\n\uACF5\uACA9\uB825
       +100\n\uACF5\uACA9\uC18D\uB3C4 +10%"
     image: {fileID: 21300000, guid: 9f496152e00a9d84e98413a832544e10, type: 3}
-    effects: []
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
   - type: 1
     equipedState: 1
     name: "\uC6D0\uD615 \uBAA9\uC81C \uBC29\uD328"
@@ -4451,14 +4480,14 @@ MonoBehaviour:
   - type: 2
     equipedState: 0
     name: "\uCCB4\uB825 \uBB3C\uC57D (\uC18C)"
-    explanation: "\uC0AC\uC6A9 \uC2DC \uCCB4\uB825\uC744 200\uB9CC\uD07C \uD68C\uBCF5\uD569\uB2C8\uB2E4."
+    explanation: "\uC0AC\uC6A9 \uC2DC \uCCB4\uB825\uC744 200\uB9CC\uD07C \uD68C\uBCF5."
     image: {fileID: 21300000, guid: 87f230a909b82d74f826052551f88a1b, type: 3}
     effects:
     - {fileID: 11400000, guid: 7780ae5d2c8590846890aa2c06ff7e29, type: 2}
   - type: 2
     equipedState: 0
     name: "\uCCB4\uB825 \uBB3C\uC57D (\uB300)"
-    explanation: "\uC0AC\uC6A9 \uC2DC \uCCB4\uB825\uC744 400\uB9CC\uD07C \uD68C\uBCF5\uD569\uB2C8\uB2E4."
+    explanation: "\uC0AC\uC6A9 \uC2DC \uCCB4\uB825\uC744 400\uB9CC\uD07C \uD68C\uBCF5."
     image: {fileID: 21300000, guid: 78157eb0e2172d5408b70a91139af177, type: 3}
     effects:
     - {fileID: 11400000, guid: c737e7df0fcf3a84e8e536bc447f6337, type: 2}
@@ -4473,9 +4502,19 @@ MonoBehaviour:
   - type: 3
     equipedState: 0
     name: "\uC6A9\uC758 \uBA38\uB9AC\uBF08"
-    explanation: "\uC6A9\uC744 \uC4F0\uB7EC\uB728\uB9AC\uACE0 \uC5BB\uC740 \uC7AC\uB8CC.\n\uADF8
-      \uC8FC\uC778\uC740 \uC8FD\uC5C8\uC9C0\uB9CC \uC5EC\uC804\uD788 \uC704\uD611\uC801\uC774\uB2E4."
+    explanation: "\uBD88\uC744 \uBFDC\uB294 \uC6A9\uC744 \uC4F0\uB7EC\uB728\uB9AC\uACE0
+      \uC5BB\uC740 \uC7AC\uB8CC.\n\uADF8 \uC8FC\uC778\uC740 \uC8FD\uC5C8\uC9C0\uB9CC
+      \uC704\uC6A9\uC774 \uB290\uAEF4\uC9C4\uB2E4."
     image: {fileID: 21300000, guid: b6a9d54b797e9b14eafc9983c6aa7754, type: 3}
+    effects: []
+  - type: 3
+    equipedState: 0
+    name: "\uC0B4\uB77C\uB9CC\uB4DC\uB77C\uC758 \uBD88\uB369\uC774"
+    explanation: "\uC0B4\uB77C\uB9CC\uB4DC\uB77C\uB97C \uC4F0\uB7EC\uB728\uB9AC\uACE0
+      \uC5BB\uC740 \uC7AC\uB8CC.\n\uBD88\uAF43 \uC815\uB839\uC740 \uC61B \uB370\uBAAC\uC758
+      \uC218\uD558\uC600\uC73C\uB098,\n\uC9C0\uAE08\uC740 \uADF8 \uC8FC\uC778\uC744
+      \uC783\uC5B4\uBC84\uB838\uB2E4."
+    image: {fileID: 21300000, guid: 40803fc42a37f704884d7de3194985e0, type: 3}
     effects: []
 --- !u!4 &904104431
 Transform:
@@ -4485,7 +4524,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 904104429}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1666.6125, y: 663.2496, z: 2.3470278}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5610,7 +5649,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 2, z: 2}
+  m_Size: {x: 5, y: 5, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1025355772
 Transform:
@@ -5621,7 +5660,7 @@ Transform:
   m_GameObject: {fileID: 1025355768}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -86.40302, y: 0.661, z: -56.627}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -5647,7 +5686,7 @@ MonoBehaviour:
     image: {fileID: 0}
     effects: []
   image: {fileID: 1025355774}
-  num: 1
+  num: 3
 --- !u!212 &1025355774
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6362,7 +6401,7 @@ MonoBehaviour:
     image: {fileID: 0}
     effects: []
   image: {fileID: 1168114084}
-  num: 4
+  num: 7
 --- !u!65 &1168114083
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6374,7 +6413,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 2, z: 2}
+  m_Size: {x: 5, y: 5, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!212 &1168114084
 SpriteRenderer:
@@ -6437,7 +6476,7 @@ Transform:
   m_GameObject: {fileID: 1168114081}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -86.40302, y: 0.661, z: -58.14}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -6646,7 +6685,7 @@ MonoBehaviour:
     image: {fileID: 0}
     effects: []
   image: {fileID: 1254970990}
-  num: 3
+  num: 5
 --- !u!65 &1254970989
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6658,7 +6697,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 2, z: 2}
+  m_Size: {x: 5, y: 5, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!212 &1254970990
 SpriteRenderer:
@@ -6721,7 +6760,7 @@ Transform:
   m_GameObject: {fileID: 1254970987}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -86.40302, y: 0.661, z: -55.19}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

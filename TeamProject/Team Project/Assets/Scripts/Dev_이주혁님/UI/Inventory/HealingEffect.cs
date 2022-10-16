@@ -6,7 +6,7 @@ using UnityEngine;
 public class HealingEffect : ItemEffect
 {
     public int healingPoint;
-    public override void ExecuteRole()
+    public override void ExecuteRole(Item _item)
     {
         Debug.Log("체력 회복");
         Player.instance.playerStat.CurHP += healingPoint;        

@@ -31,28 +31,33 @@ public class Item
     {        
         foreach(ItemEffect one in effects)
         {
-            one.ExecuteRole();
+            one.ExecuteRole(this);
         }             
     }
     public void Equip()
-    {        
-        switch (equipedState)
+    {
+        this.equipedState = EquipState.EQUIPED;        
+        if(Player.instance.playerStat.equiped.TryGetValue(EquipPart.WEAPON, out Item _val))
         {
-            case EquipState.EQUIPED:
-                equipedState = EquipState.UNEQUIPED;                
-                foreach (ItemEffect one in effects)
-                {
-                    one.ExecuteRole();
-                }
-                break;
-            case EquipState.UNEQUIPED:
-                equipedState = EquipState.UNEQUIPED;                
-                foreach (ItemEffect one in effects)
-                {
-                    one.ExecuteRole();
-                }
-                break;
+            effects[1].ExecuteRole(_val);
         }        
+        effects[0].ExecuteRole(this);        
+    }
+    public void Unequip()
+    {
+        this.equipedState = EquipState.UNEQUIPED;
+        effects[1].ExecuteRole(this);
+    }
+    public Item Copy()          // 아이템 DB에서 아이템 클래스를 불러올 때 Shallow Copy를 막기 위해 만든 메소드.
+    {
+        Item copied = new Item();
+        copied.type = this.type;
+        copied.equipedState = this.equipedState;
+        copied.name = this.name;
+        copied.explanation = this.explanation;
+        copied.image = this.image;
+        copied.effects = this.effects;
+        return copied;
     }
 }
 

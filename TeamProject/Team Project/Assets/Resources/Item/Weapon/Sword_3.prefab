@@ -307,9 +307,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f43a394be63bcd543bd6e3237d8a2dd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  atkPoint: 0
+  atkPoint: 50
+  atkSpeed: 1
   atkMag: 0
-  playerState: {fileID: 0}
+  player: {fileID: 0}
 --- !u!54 &5839738098026569978
 Rigidbody:
   m_ObjectHideFlags: 0

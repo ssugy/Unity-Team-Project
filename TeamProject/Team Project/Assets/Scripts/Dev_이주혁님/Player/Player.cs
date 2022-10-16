@@ -25,6 +25,14 @@ public enum Adjustable
     strength,
     dexterity
 }
+public enum EquipPart
+{
+    WEAPON,
+    SHIELD,
+    HELMET,
+    CHEST,
+    LEG
+}
 [System.Serializable]
 public class PlayerStat
 {
@@ -39,7 +47,7 @@ public class PlayerStat
     public Sex sex;
     public int level;
     public int[] customized;
-    public List<int> equiped;
+    public Dictionary<EquipPart, Item> equiped = new Dictionary<EquipPart, Item>();
     public int Exp;    
     private int curExp;
     public int CurExp           // 프로퍼티를 사용하여 현재 경험치가 증가했을 때만 LevelUp을 판정.

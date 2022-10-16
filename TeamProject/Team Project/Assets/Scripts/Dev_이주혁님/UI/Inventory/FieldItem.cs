@@ -9,7 +9,7 @@ public class FieldItem : MonoBehaviour
     public int num;
     private void Start()
     {
-        item = ItemDatabase.instance.itemDB[num];
+        item = ItemDatabase.instance.itemDB[num].Copy();
         SetItem(item);
     }
 

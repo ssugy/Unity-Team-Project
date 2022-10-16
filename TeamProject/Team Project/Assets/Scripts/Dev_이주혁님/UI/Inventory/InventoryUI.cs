@@ -6,6 +6,13 @@ using UnityEngine.UI;
 public class InventoryUI : MonoBehaviour
 {
     Inventory inventory;
+    public static InventoryUI instance;
+
+    public Image weaponIcon;
+    public Image shieldIcon;
+    public Image helmetIcon;
+    public Image chestIcon;
+    public Image legIcon;
 
     public GameObject inventoryPanel;
     bool activeInventory = false;
@@ -32,6 +39,7 @@ public class InventoryUI : MonoBehaviour
     void Start()
     {
         inventory = Inventory.instance;
+        instance = this;
         slots = slotHolder.GetComponentsInChildren<Slot>();        
         inventory.onChangeItem += RedrawSlotUI;
         this.gameObject.SetActive(false);      
