@@ -30,9 +30,11 @@ public class BossManager : MonoBehaviour
     private float skillTimer;
     public TrailRenderer trailRenderer;
     private enum BossState {STATE_IDLE, STATE_GUN, STATE_SWORD, STATE_WALK, STATE_RUN, STATE_DEATH, STATE_SKILL1, STATE_SKILL2, STATE_SKILL3 }
+    private enum BossAttackState { STATE_NORMAL, STATE_70, STATE_30}
     private string[] animNames = { "Idle", "shoots gun_2", "sword attack", "Walking", "Run", "Death" };
     private BossState currentState;
     private BossAudioManager audioManager;
+    private int bossState;
 
     static public BossManager GetInstance()
     {
@@ -82,7 +84,8 @@ public class BossManager : MonoBehaviour
         {
             // 스킬 사용
             SetAttackCount();
-            switch (Random.Range(0, 3))
+            int skillMax = bossState + 1;
+            switch (Random.Range(0, skillMax))
             {
                 case 0:
                     SkillAttack1();
@@ -246,6 +249,18 @@ public class BossManager : MonoBehaviour
         if (curHealth > 0)
         {
             curHealth -= _damage;
+            if ((float)curHealth < maxHealth * 0.3f)
+            {
+                bossState = (int)BossAttackState.STATE_30;
+            }
+            else if ((float)curHealth < maxHealth * 0.7f)
+            {
+                bossState = (int)BossAttackState.STATE_70;
+            }
+            else
+            {
+                bossState = (int)BossAttackState.STATE_NORMAL;
+            }
             Vector3 reactVec = transform.position - Player.instance.transform.position; // 넉백 거리.
             StartCoroutine(OnDamage(reactVec));
         }
