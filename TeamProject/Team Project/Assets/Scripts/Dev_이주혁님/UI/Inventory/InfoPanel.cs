@@ -5,33 +5,54 @@ using UnityEngine.UI;
 
 public class InfoPanel : MonoBehaviour
 {
-    Item item;
+    private Item item;
     public Image icon;
     public Text nameText;
-    public Text type;
-    public Text explanation;
+    public Text typeText;
+    public Text explanationText;
+
+    public Button useButton;
+    public Text useButtonText;
+    public Button destroyButton;
+    public Text destroyButtonText;
+
 
     public void SetInformation(Item _item)
     {
         icon.sprite = _item.image;
         nameText.text = _item.name;
+        useButton.gameObject.SetActive(true);
         switch (_item.type)
         {
             case ItemType.EQUIPMENT:
-                type.text = "장비";
+                typeText.text = "장비";
+                if (_item.equipedState == EquipState.UNEQUIPED)
+                {
+                    useButtonText.text = "장착";
+                }
+                else if (_item.equipedState == EquipState.EQUIPED) 
+                {
+                    useButtonText.text = "해제";
+                }                
                 break;
             case ItemType.CONSUMABLE:
-                type.text = "소비";
+                typeText.text = "소비";
+                useButtonText.text = "사용";
                 break;
-            case ItemType.STUFF:
-                type.text = "재료";
+            case ItemType.INGREDIENTS:
+                typeText.text = "재료";
+                useButton.gameObject.SetActive(false);
                 break;
             default:
-                type.text = "<오류>";
+                typeText.text = "<오류>";
                 break;
         }                
-        explanation.text = _item.explanation;
+        explanationText.text = _item.explanation;
     }
 
+    public void UseItem()
+    {
+
+    }
    
 }

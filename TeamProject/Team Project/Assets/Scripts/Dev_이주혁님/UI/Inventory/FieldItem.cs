@@ -6,9 +6,10 @@ public class FieldItem : MonoBehaviour
 {
     public Item item;
     public SpriteRenderer image;
+    public int num;
     private void Start()
     {
-        item = ItemDatabase.instance.itemDB[2];
+        item = ItemDatabase.instance.itemDB[num];
         SetItem(item);
     }
 

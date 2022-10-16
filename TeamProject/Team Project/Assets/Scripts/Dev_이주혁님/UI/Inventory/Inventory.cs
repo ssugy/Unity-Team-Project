@@ -44,26 +44,13 @@ public class Inventory : MonoBehaviour
         }
         return false;
     }
-
-    /*
-    // Start is called before the first frame update
     
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            AddItem(ItemDatabase.instance.itemDB[12]);
-        }
-    }
-    */
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Item"))
         {
-            Debug.Log("충돌");
+            Debug.Log("아이템 습득");
             FieldItem fieldItem = other.GetComponent<FieldItem>();
             if (AddItem(fieldItem.GetItem()))
             {

@@ -15359,7 +15359,7 @@ GameObject:
   - component: {fileID: 4723970189557735617}
   - component: {fileID: 3330820057128247467}
   m_Layer: 5
-  m_Name: Equip Text
+  m_Name: Destroy Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15519,10 +15519,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c060e92ff8a953f469175fe157ba125b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 4734498118149929925}
-  nameText: {fileID: 7886964845156516911}
-  type: {fileID: 2848272484045981756}
-  explanation: {fileID: 5373987918978752899}
+  useButton: {fileID: 6746996964397830072}
+  useButtonText: {fileID: 639995099012341024}
+  destroyButton: {fileID: 970053432644365634}
+  destroyButtonText: {fileID: 3330820057128247467}
 --- !u!1 &5987660451876409324
 GameObject:
   m_ObjectHideFlags: 0

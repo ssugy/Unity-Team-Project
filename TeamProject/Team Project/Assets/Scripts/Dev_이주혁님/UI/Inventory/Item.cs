@@ -7,13 +7,20 @@ public enum ItemType
     NONE,
     EQUIPMENT,
     CONSUMABLE,
-    STUFF
+    INGREDIENTS
+}
+public enum EquipState
+{
+    NONE,
+    UNEQUIPED,
+    EQUIPED    
 }
 
 [System.Serializable]
 public class Item
 {
     public ItemType type;
+    public EquipState equipedState;
     public string name;
     [TextArea(3,5)]
     public string explanation;
@@ -45,16 +52,4 @@ public class Equipment : Item
         isEquiped = false;
         return false;
     }
-}
-public class WeaponItem : Equipment
-{
-    public int atkPoint;
-}
-public class ShieldItem : Equipment
-{
-    public int defPoint;
-}
-public class ArmorItem : Equipment
-{
-    public int defPoint;
 }
