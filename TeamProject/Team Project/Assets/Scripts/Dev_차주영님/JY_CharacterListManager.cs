@@ -140,8 +140,7 @@ public class JY_CharacterListManager : MonoBehaviour
     //마지막은 무조건 초기화
     public void deleteCharacter(int listNum)
     {
-        int[] initArr = new int[4] { 0, 0, 0, 0 };
-
+        Debug.Log("enter");
         for (int i = listNum; i<4;i++)
         {
             if (i != 3)
@@ -169,7 +168,7 @@ public class JY_CharacterListManager : MonoBehaviour
                 characterData.infoDataList[i].job =null;
                 characterData.infoDataList[i].gender =null;
                 characterData.infoDataList[i].species =null;
-
+                int[] initArr = new int[4] { 0, 0, 0, 0 };
                 characterData.infoDataList[i].characterAvatar = initArr;
                 characterData.infoDataList[i].status = initArr;
                 characterData.infoDataList[i].statusPoint = 0;

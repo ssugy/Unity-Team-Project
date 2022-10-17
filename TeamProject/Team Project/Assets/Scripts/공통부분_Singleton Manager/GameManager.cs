@@ -69,6 +69,12 @@ public class GameManager : MonoBehaviour
     public void LoadScene(int index)
     {
         currentScene = SceneName.Loading;   // 로딩이 시작되면 Loading씬으로 변경한 뒤, 끝나면 목적씬으로 변경
+        if (SceneManager.GetActiveScene().name == "06. Dungeon_Fire")
+        {
+            AudioManager.s_instance.SoundFadeInOut(AudioManager.SOUND_NAME.BossBGM_01, 0, 0.1f);
+            AudioManager.s_instance.SoundFadeInOut(AudioManager.SOUND_NAME.BossBGM_02, 0, 0.1f);
+            AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BGM, true, 0.5f);
+        }
         LoadingSceneController.LoadScene(index);    // 로딩씬을 이용한 로딩
     }
 
