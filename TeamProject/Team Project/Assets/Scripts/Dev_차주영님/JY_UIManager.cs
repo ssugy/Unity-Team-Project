@@ -26,6 +26,7 @@ public class JY_UIManager : MonoBehaviour
     bool profileMenuSwitch;
     bool questMenuSwitch;
     GameObject effect;
+    List<GameObject> effectList;
     private void Awake()
     {
         profileSwitch = false;
@@ -37,6 +38,7 @@ public class JY_UIManager : MonoBehaviour
             nameText.text = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].name;
             StatusDataRenew();
         }
+        effectList = new List<GameObject>();
     }
 
     //프로필 On/Off 함수
@@ -109,6 +111,7 @@ public class JY_UIManager : MonoBehaviour
         alarmText.text = "레벨업! Lv."+JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level.ToString();
         effect = Instantiate<GameObject>(LevelUPEffect, Player.instance.transform);
         effect.transform.localPosition = Vector3.forward;
+        effectList.Add(effect);
         StatusDataRenew();
         Invoke("stopLevelupEffect", 2.5f);
         Invoke("closeAlarm", 2f);
@@ -201,6 +204,9 @@ public class JY_UIManager : MonoBehaviour
 
     void stopLevelupEffect()
     {
-        Destroy(effect);
+        for(int i=0; i<effectList.Count; i++)
+        {
+            Destroy(effectList[i]);
+        }
     }
 }
