@@ -170,6 +170,7 @@ public class Player : MonoBehaviour
 
     public Transform rWeaponDummy;              // 오른손 무기 더미.
     private TrailRenderer rWeaponEffect;        // 오른손 무기 이펙트. (검기)
+    public Transform lWeaponDummy;              // 왼손 무기 더미.
     [HideInInspector] public bool isGround;
     private HP_Bar hpbar;
     private Dictionary<int, int> EXP_TABLE;

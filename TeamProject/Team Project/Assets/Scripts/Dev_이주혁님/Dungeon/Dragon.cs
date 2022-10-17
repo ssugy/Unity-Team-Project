@@ -94,8 +94,7 @@ public class Dragon : Enemy
         else
         {
             hitbox.enabled = false;
-            anim.SetTrigger("isDead");
-            FreezeEnemy();                     
+            anim.SetTrigger("isDead");                                
             reactVec = reactVec.normalized;
             reactVec += Vector3.up;
             rigid.AddForce(reactVec * 5, ForceMode.Impulse);
