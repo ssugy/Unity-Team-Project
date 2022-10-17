@@ -38,8 +38,6 @@ public class BossManager : MonoBehaviour
     private int bossState;
 
     bool secondCutScenePlay;
-    public JY_CutScenePlay CutSceneScript;
-
     static public BossManager GetInstance()
     {
         if (instance == null)
@@ -281,7 +279,7 @@ public class BossManager : MonoBehaviour
             // rigid.AddForce(reactVec * 5, ForceMode.Impulse);
             if(curHealth <= maxHealth*0.3f && secondCutScenePlay==false)
             {
-                CutSceneScript.PlayCutScene2();
+                JY_CutScenePlay.instance.PlayCutScene2();
                 secondCutScenePlay = true;
             }
         }
@@ -296,8 +294,8 @@ public class BossManager : MonoBehaviour
             //rigid.AddForce(reactVec * 5, ForceMode.Impulse);
             //DropExp();
             questProgress();
-            AudioManager.s_instance.SoundFadeInOut(AudioManager.SOUND_NAME.BossBGM_01, 0, 1);
-            AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BossBGM_02, true);
+
+            AudioManager.s_instance.SoundFadeInOut(AudioManager.SOUND_NAME.BossBGM_02, 0.5f,1f);
             Destroy(control.gameObject, 4);
             portal.SetActive(true);
         }

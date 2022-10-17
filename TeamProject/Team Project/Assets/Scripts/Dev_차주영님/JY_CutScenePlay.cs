@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class JY_CutScenePlay : MonoBehaviour
 {
+    public static JY_CutScenePlay instance;
     public GameObject CutScene1;
     public GameObject CutScene2;
     public GameObject BattleUI;
+    public GameObject boss;
     public Camera mainCam;
     public Camera cutSceneCam;
     public Canvas fadeUI;
@@ -19,6 +21,7 @@ public class JY_CutScenePlay : MonoBehaviour
     Vector3 CamPos;
     private void Awake()
     {
+        instance = this;
         firstPlay = true;
     }
     private void OnTriggerEnter(Collider other)
@@ -70,18 +73,20 @@ public class JY_CutScenePlay : MonoBehaviour
         Player.instance.enableMove = false;
         BattleUI.SetActive(false);
         AudioManager.s_instance.SoundFadeInOut(AudioManager.SOUND_NAME.BossBGM_01, 0, 1);
-        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BossBGM_02, true);
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BossBGM_02, true, 0.5f);
 
+        boss.SetActive(false);
         CutScene2.SetActive(true);
-        yield return new WaitForSeconds(16f);
+        yield return new WaitForSeconds(18f);
 
 
         Player.instance.enableMove = true;
         Player.instance.movement = Vector3.zero;
         CutScene2.SetActive(false);
+        BattleUI.SetActive(true);
+        boss.SetActive(true);
         cutSceneCam.gameObject.SetActive(false);
         mainCam.gameObject.SetActive(true);
-        BattleUI.SetActive(true);
     }
 
     IEnumerator Fade(float start, float end)

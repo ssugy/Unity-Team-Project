@@ -25,7 +25,7 @@ public class HP_Bar : MonoBehaviour
             hp.fillAmount = (float)enemy.curHealth / enemy.maxHealth;                        
         }       
         // ¿¹³ª
-        else if (boss != null)
+        else if (boss != null && (JY_CutScenePlay.instance!=null&&JY_CutScenePlay.instance.CutScene2.activeSelf != true))
         {
             Vector2 screenPos = Camera.main.WorldToScreenPoint(boss.transform.position + offset);
             transform.position = screenPos;
