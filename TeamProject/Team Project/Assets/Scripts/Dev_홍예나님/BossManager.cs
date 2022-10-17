@@ -295,7 +295,7 @@ public class BossManager : MonoBehaviour
             //DropExp();
             questProgress();
 
-            AudioManager.s_instance.SoundFadeInOut(AudioManager.SOUND_NAME.BossBGM_02, 0.5f,1f);
+            AudioManager.s_instance.SoundFadeInOut(AudioManager.SOUND_NAME.BossBGM_02, 0f,1f);
             Destroy(control.gameObject, 4);
             portal.SetActive(true);
         }
