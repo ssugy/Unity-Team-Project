@@ -26,7 +26,9 @@ public class BattleUI : MonoBehaviour
     private EventTrigger.Entry lArm_PointerDown;
     private EventTrigger.Entry lArm_PointerUp;
     public Sprite upFrame;
-    public Sprite downFrame;        
+    public Sprite downFrame;
+    [Header("팝업 메시지")]
+    public GameObject weaponEmpty;
     void Start()
     {
         instance = this;

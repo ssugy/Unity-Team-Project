@@ -288,6 +288,11 @@ public class Player : MonoBehaviour
     }
     public void NormalAttack()
     {
+        if (Weapon.weapon == null)
+        {
+            BattleUI.instance.weaponEmpty.SetActive(true);
+            return;
+        }
         if (enableAtk)
         {
             SetRotate();
@@ -296,6 +301,11 @@ public class Player : MonoBehaviour
     }
     public void PowerStrike()       // 스킬 1.
     {
+        if (Weapon.weapon == null)
+        {
+            BattleUI.instance.weaponEmpty.SetActive(true);
+            return;
+        }
         if (enableAtk)
         {
             SetRotate();
@@ -305,6 +315,11 @@ public class Player : MonoBehaviour
     }
     public void TurnAttack()        // 스킬 2.
     {
+        if (Weapon.weapon == null)
+        {
+            BattleUI.instance.weaponEmpty.SetActive(true);
+            return;
+        }
         if (enableAtk)
         {
             SetRotate();
@@ -315,6 +330,11 @@ public class Player : MonoBehaviour
     }
     public void JumpAttack()        // 스킬 3.
     {
+        if (Weapon.weapon == null)
+        {
+            BattleUI.instance.weaponEmpty.SetActive(true);
+            return;
+        }
         if (enableAtk)
         {
             SetRotate();
@@ -324,6 +344,11 @@ public class Player : MonoBehaviour
     }
     public void Warcry()            // 스킬 4.
     {
+        if (Weapon.weapon == null)
+        {
+            BattleUI.instance.weaponEmpty.SetActive(true);
+            return;
+        }
         if (enableAtk)
         { 
             SetRotate();

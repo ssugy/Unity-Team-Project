@@ -12,6 +12,6 @@ public class WeaponEquip : ItemEffect
         Player.instance.playerStat.equiped.Add(EquipPart.WEAPON, _item);
         Inventory.instance.onChangeItem();
         InventoryUI.instance.weaponIcon.sprite = _item.image;
-        InventoryUI.instance.weaponIcon.gameObject.SetActive(true);
+        InventoryUI.instance.weaponIcon.gameObject.SetActive(true);        
     }
 }

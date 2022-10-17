@@ -18,6 +18,6 @@ public class WeaponUnequip : ItemEffect
         }        
         Inventory.instance.onChangeItem();
         InventoryUI.instance.weaponIcon.sprite = null;
-        InventoryUI.instance.weaponIcon.gameObject.SetActive(false);
+        InventoryUI.instance.weaponIcon.gameObject.SetActive(false);        
     }    
 }
