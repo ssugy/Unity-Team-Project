@@ -279,7 +279,7 @@ public class BossManager : MonoBehaviour
             reactVec = reactVec.normalized;
             reactVec += Vector3.up;
             // rigid.AddForce(reactVec * 5, ForceMode.Impulse);
-            if(curHealth <= maxHealth*0.3f && !secondCutScenePlay)
+            if(curHealth <= maxHealth*0.3f && secondCutScenePlay==false)
             {
                 CutSceneScript.PlayCutScene2();
                 secondCutScenePlay = true;
