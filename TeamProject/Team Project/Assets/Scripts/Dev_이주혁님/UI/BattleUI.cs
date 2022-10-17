@@ -28,7 +28,7 @@ public class BattleUI : MonoBehaviour
     public Sprite upFrame;
     public Sprite downFrame;
     [Header("팝업 메시지")]
-    public GameObject weaponEmpty;
+    public Text equipEmpty;    
     void Start()
     {
         instance = this;

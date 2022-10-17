@@ -111,6 +111,7 @@ public class PlayerStat
             {
                 gold = 0;
             }
+            InventoryUI.instance.UpdateGold();
             }
     }
     public bool isDead;
@@ -222,6 +223,8 @@ public class Player : MonoBehaviour
             playerStat.dexterity = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[3];
         }
         SetState();
+        playerStat.CurHP = playerStat.HP;
+        playerStat.CurSP = playerStat.SP;
         controller.ObserveEveryValueChanged(_ => _.isGrounded).ThrottleFrame(30).Subscribe(_ => isGround = _);
         // UniRx를 이용하여 isGrounded 프로퍼티가 0.3초 이상 유지되어야 상태가 전이되게끔 함. isGrounded가 정교하지 않기 때문.
     }
@@ -291,7 +294,8 @@ public class Player : MonoBehaviour
     {
         if (Weapon.weapon == null)
         {
-            BattleUI.instance.weaponEmpty.SetActive(true);
+            BattleUI.instance.equipEmpty.text = "무기를 착용하지 않았습니다.";
+            BattleUI.instance.equipEmpty.gameObject.SetActive(true);
             return;
         }
         if (enableAtk)
@@ -304,7 +308,8 @@ public class Player : MonoBehaviour
     {
         if (Weapon.weapon == null)
         {
-            BattleUI.instance.weaponEmpty.SetActive(true);
+            BattleUI.instance.equipEmpty.text = "무기를 착용하지 않았습니다.";
+            BattleUI.instance.equipEmpty.gameObject.SetActive(true);
             return;
         }
         if (enableAtk)
@@ -318,7 +323,8 @@ public class Player : MonoBehaviour
     {
         if (Weapon.weapon == null)
         {
-            BattleUI.instance.weaponEmpty.SetActive(true);
+            BattleUI.instance.equipEmpty.text = "무기를 착용하지 않았습니다.";
+            BattleUI.instance.equipEmpty.gameObject.SetActive(true);
             return;
         }
         if (enableAtk)
@@ -333,7 +339,8 @@ public class Player : MonoBehaviour
     {
         if (Weapon.weapon == null)
         {
-            BattleUI.instance.weaponEmpty.SetActive(true);
+            BattleUI.instance.equipEmpty.text = "무기를 착용하지 않았습니다.";
+            BattleUI.instance.equipEmpty.gameObject.SetActive(true);
             return;
         }
         if (enableAtk)
@@ -347,7 +354,8 @@ public class Player : MonoBehaviour
     {
         if (Weapon.weapon == null)
         {
-            BattleUI.instance.weaponEmpty.SetActive(true);
+            BattleUI.instance.equipEmpty.text = "무기를 착용하지 않았습니다.";
+            BattleUI.instance.equipEmpty.gameObject.SetActive(true);
             return;
         }
         if (enableAtk)
@@ -376,10 +384,16 @@ public class Player : MonoBehaviour
 
     public void LArmDown(PointerEventData data)
     {
+        if (Shield.shield == null)
+        {
+            BattleUI.instance.equipEmpty.text = "방패를 착용하지 않았습니다.";
+            BattleUI.instance.equipEmpty.gameObject.SetActive(true);
+            return;
+        }
         playerAni.SetBool("isLArm", true);
     }
     public void LArmUp(PointerEventData data)
-    {
+    {        
         playerAni.SetBool("isLArm", false);
     }
     public void WeaponEffectOn()
@@ -492,10 +506,8 @@ public class Player : MonoBehaviour
     }       // 스탯 투자
     public void SetState()
     {
-        playerStat.HP = playerStat.health * 50 + playerStat.strength * 10;
-        playerStat.CurHP = playerStat.HP;
-        playerStat.SP = playerStat.stamina * 10 + playerStat.strength * 2;
-        playerStat.CurSP = playerStat.SP;
+        playerStat.HP = playerStat.health * 50 + playerStat.strength * 10;        
+        playerStat.SP = playerStat.stamina * 10 + playerStat.strength * 2;        
         playerStat.criPro = (20f + Sigma(2f, 1.03f, playerStat.dexterity)) / 100f;
         playerStat.defMag = 1 - Mathf.Pow(1.02f, -playerStat.defPoint);
         if (Weapon.weapon != null)
@@ -645,7 +657,7 @@ public class Player : MonoBehaviour
     {
         playerStat.CurSP -= _stamina;
     }
-    public void Exhaisted()     // 스테미너를 전부 소진하면 행동을 할 수 없음.
+    public void Exhausted()     // 스테미너를 전부 소진하면 행동을 할 수 없음.
     {
         playerAni.SetBool("isExhausted", true);        
         DisableAtk();

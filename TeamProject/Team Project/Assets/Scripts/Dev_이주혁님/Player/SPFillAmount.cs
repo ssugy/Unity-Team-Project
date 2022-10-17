@@ -30,7 +30,7 @@ public class SPFillAmount : MonoBehaviour
         }
         if (stat.CurSP <= 0)
         {
-            Player.instance.Exhaisted();
+            Player.instance.Exhausted();
             isExhausted = true;
         }
         else if (isExhausted && stat.CurSP >= stat.SP * 0.2)

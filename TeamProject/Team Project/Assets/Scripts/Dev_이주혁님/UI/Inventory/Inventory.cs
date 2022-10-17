@@ -7,9 +7,8 @@ public class Inventory : MonoBehaviour
     public static Inventory instance;
     public List<Item> items = new List<Item>();
     
-    public delegate void OnChangeItem();
+    public delegate void OnChangeItem();        // 아이템이 변경되면 인벤토리를 갱신하는 델리게이트.
     public OnChangeItem onChangeItem;
-
     private int slotCnt;
     public int SlotCnt
     {
@@ -18,9 +17,7 @@ public class Inventory : MonoBehaviour
         {
             slotCnt = value;            
         }
-    }
-    
-
+    }    
     private void Awake()
     {        
         instance = this;

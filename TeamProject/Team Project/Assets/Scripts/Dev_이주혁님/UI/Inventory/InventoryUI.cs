@@ -13,6 +13,7 @@ public class InventoryUI : MonoBehaviour
     public Image helmetIcon;
     public Image chestIcon;
     public Image legIcon;
+    public Text gold;
 
     public GameObject inventoryPanel;
     bool activeInventory = false;
@@ -32,17 +33,23 @@ public class InventoryUI : MonoBehaviour
             slots[i].item = inventory.items[i];
             slots[i].isEmpty = false;
             slots[i].UpdateSlotUI();
-
         }
-    }    
-    
+    } 
+    public void UpdateGold()
+    {
+        gold.text = string.Format("{0:#,0}", Player.instance.playerStat.Gold);
+    }
+
     void Start()
     {
         inventory = Inventory.instance;
         instance = this;
-        slots = slotHolder.GetComponentsInChildren<Slot>();        
+        slots = slotHolder.GetComponentsInChildren<Slot>();
         inventory.onChangeItem += RedrawSlotUI;
-        this.gameObject.SetActive(false);      
-    }
-    
+        this.gameObject.SetActive(false);
+        if (Player.instance != null)
+        {
+            UpdateGold();
+        }
+    }    
 }

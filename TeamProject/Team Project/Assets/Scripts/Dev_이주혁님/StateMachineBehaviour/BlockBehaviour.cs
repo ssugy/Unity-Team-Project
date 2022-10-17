@@ -10,14 +10,13 @@ public class BlockBehaviour : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        curDef = Player.instance.playerStat.defMag;
-        
+        curDef = Player.instance.playerStat.defMag;        
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Player.instance.playerStat.defMag = 0.9f;
+        Player.instance.playerStat.defMag = Shield.shield.defPro;
         Player.instance.UseStamina(usingStamina * Time.deltaTime);
         if (Player.instance.playerStat.CurSP <= 0)
         {
