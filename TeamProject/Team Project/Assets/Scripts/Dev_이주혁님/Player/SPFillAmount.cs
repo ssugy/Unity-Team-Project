@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class SPFillAmount : MonoBehaviour
 {
     public Image barFront;
+    public Text barText;
     PlayerStat stat;
     float recoverSpeed;
     bool isExhausted;
@@ -22,6 +23,7 @@ public class SPFillAmount : MonoBehaviour
     void Update()
     {
         barFront.fillAmount = (float)stat.CurSP / stat.SP;
+        barText.text = ((int)stat.CurSP).ToString() + " / " + ((int)stat.SP).ToString();
         if (stat.CurSP < stat.SP)
         {
             stat.CurSP += recoverSpeed * Time.deltaTime;

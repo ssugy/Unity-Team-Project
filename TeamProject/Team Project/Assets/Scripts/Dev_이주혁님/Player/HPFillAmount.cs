@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class HPFillAmount : MonoBehaviour
 {
     public Image barFront;
+    public Text barText;
     PlayerStat stat;
     // Start is called before the first frame update
     void Start()
@@ -17,5 +18,6 @@ public class HPFillAmount : MonoBehaviour
     void Update()
     {
         barFront.fillAmount = (float)stat.CurHP / stat.HP;
+        barText.text = stat.CurHP.ToString() + " / " + stat.HP.ToString();
     }
 }
