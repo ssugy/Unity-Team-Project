@@ -65,11 +65,23 @@ public class JY_CutScenePlay : MonoBehaviour
     //중간 컷신은 조정해야함.
     IEnumerator CutScene_2()
     {
-        StartCoroutine(Fade(0, 1));
-        yield return new WaitForSeconds(2f);
+        mainCam.gameObject.SetActive(false);
+        cutSceneCam.gameObject.SetActive(true);
+        Player.instance.enableMove = false;
         BattleUI.SetActive(false);
-        StartCoroutine(Fade(1, 0));
+        AudioManager.s_instance.SoundFadeInOut(AudioManager.SOUND_NAME.BossBGM_01, 0, 1);
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BossBGM_02, true);
+
         CutScene2.SetActive(true);
+        yield return new WaitForSeconds(16f);
+
+
+        Player.instance.enableMove = true;
+        Player.instance.movement = Vector3.zero;
+        CutScene2.SetActive(false);
+        cutSceneCam.gameObject.SetActive(false);
+        mainCam.gameObject.SetActive(true);
+        BattleUI.SetActive(true);
     }
 
     IEnumerator Fade(float start, float end)
@@ -94,4 +106,8 @@ public class JY_CutScenePlay : MonoBehaviour
             fadeUI.gameObject.SetActive(false);
     }
     
+    public void PlayCutScene2()
+    {
+        StartCoroutine("CutScene_2");
+    }
 }

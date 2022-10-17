@@ -37,6 +37,9 @@ public class BossManager : MonoBehaviour
     private BossAudioManager audioManager;
     private int bossState;
 
+    bool secondCutScenePlay;
+    public JY_CutScenePlay CutSceneScript;
+
     static public BossManager GetInstance()
     {
         if (instance == null)
@@ -276,6 +279,11 @@ public class BossManager : MonoBehaviour
             reactVec = reactVec.normalized;
             reactVec += Vector3.up;
             // rigid.AddForce(reactVec * 5, ForceMode.Impulse);
+            if(curHealth <= maxHealth*0.3f && !secondCutScenePlay)
+            {
+                CutSceneScript.PlayCutScene2();
+                secondCutScenePlay = true;
+            }
         }
         else
         {
@@ -287,8 +295,18 @@ public class BossManager : MonoBehaviour
             reactVec += Vector3.up;
             //rigid.AddForce(reactVec * 5, ForceMode.Impulse);
             //DropExp();
+            questProgress();
+            AudioManager.s_instance.SoundFadeInOut(AudioManager.SOUND_NAME.BossBGM_01, 0, 1);
+            AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BossBGM_02, true);
             Destroy(control.gameObject, 4);
             portal.SetActive(true);
         }
+    }
+    void questProgress()
+    {
+        if (JY_QuestManager.s_instance != null &&
+            JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[2]==1 &&
+            JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[3]==0 )
+            JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[1]++;
     }
 }
