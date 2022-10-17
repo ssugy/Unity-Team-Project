@@ -1,0 +1,239 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &646897396344286154
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 646897396344286152}
+  - component: {fileID: 646897396344286153}
+  m_Layer: 0
+  m_Name: ItemDB
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &646897396344286152
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 646897396344286154}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &646897396344286153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 646897396344286154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 845253751b0b88b47b6ce91629726448, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemDB:
+  - type: 1
+    equipedState: 1
+    name: "\uCCA0\uC81C \uB3C4\uB07C"
+    explanation: "\uD22C\uBC15\uD558\uAC8C \uC0DD\uAE34 \uCCA0\uC81C \uB3C4\uB07C.\n\n\uACF5\uACA9\uB825
+      +60\n\uACF5\uACA9\uC18D\uB3C4 -10%"
+    image: {fileID: 21300000, guid: a45d5249bd44cdf418399e39518c131f, type: 3}
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+  - type: 1
+    equipedState: 1
+    name: "\uD751\uAE30\uC0AC\uC758 \uB3C4\uB07C"
+    explanation: "\uD751\uCCA0\uB85C \uB9CC\uB4E4\uC5B4\uC9C4 \uC591\uB0A0 \uB3C4\uB07C.\n\uBB34\uAC81\uC9C0\uB9CC
+      \uC704\uB825\uC740 \uC0C1\uB2F9\uD558\uB2E4.\n\n\uACF5\uACA9\uB825 +80\n\uACF5\uACA9\uC18D\uB3C4
+      -10%"
+    image: {fileID: 21300000, guid: a8ac3fd7035ee1b4b84695719732ced9, type: 3}
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+  - type: 1
+    equipedState: 1
+    name: "\uB370\uBAAC\uC758 \uB300\uD615 \uB3C4\uB07C"
+    explanation: "\uC54C \uC218 \uC5C6\uB294 \uBB38\uC790\uAC00 \uC0C8\uACA8\uC9C4
+      \uB3C4\uB07C.\n\uACE0\uB300 \uB370\uBAAC\uB4E4\uC758 \uBB34\uAE30\uB77C\uACE0
+      \uC804\uD574\uC9C4\uB2E4.\n\n\uACF5\uACA9\uB825 +120\n\uACF5\uACA9\uC18D\uB3C4
+      -10%"
+    image: {fileID: 21300000, guid: d6e19219f504a1b4b87f905b322d863e, type: 3}
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+  - type: 1
+    equipedState: 1
+    name: "\uD669\uCCA0\uC11D \uB2E8\uAC80"
+    explanation: "\uAE08\uBE5B\uC744 \uB764 \uD669\uCCA0\uC11D\uC73C\uB85C \uB9CC\uB4E0
+      \uB2E8\uAC80.\n\uC0C1\uB2F9\uD788 \uBB34\uAC81\uB2E4.\n\n\uACF5\uACA9\uB825
+      +70\n\uACF5\uACA9\uC18D\uB3C4 +20%"
+    image: {fileID: 21300000, guid: 52f0d96bbbb8918479245dd5f26794a3, type: 3}
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+  - type: 1
+    equipedState: 1
+    name: "\uB2E8\uB3C4"
+    explanation: "\uB0A0\uC774 \uAE38\uAC8C \uBED7\uC740 \uCCA0\uC81C \uB2E8\uB3C4.\n\uC81C\uBC95
+      \uB0A0\uCE74\uB86D\uB2E4.\n\n\uACF5\uACA9\uB825 +40\n\uACF5\uACA9\uC18D\uB3C4
+      +20%"
+    image: {fileID: 21300000, guid: 945b2a32cd8658849ad6a45bf6cf8492, type: 3}
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+  - type: 1
+    equipedState: 1
+    name: "\uC804\uD22C\uC6A9 \uD574\uBA38"
+    explanation: "\uC804\uD22C\uC6A9\uC73C\uB85C \uB9CC\uB4E4\uC5B4\uC9C4 \uAC70\uB300\uD55C
+      \uB9DD\uCE58.\n\uD669\uB3D9\uC73C\uB85C \uC7A5\uC2DD\uB418\uC5B4 \uB178\uB780
+      \uBE5B\uC744 \uB764\uB2E4.\n\n\uACF5\uACA9\uB825 +120\n\uACF5\uACA9\uC18D\uB3C4
+      -15%"
+    image: {fileID: 21300000, guid: be0ef03cd6995ff409344cdde5e35eb9, type: 3}
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+  - type: 1
+    equipedState: 1
+    name: "\uC6D4\uB3C4"
+    explanation: "\uB0A0 \uB05D\uC774 \uD718\uC5B4\uC9C4 \uC6D4\uB3C4.\n\n\uACF5\uACA9\uB825
+      +100\n\uACF5\uACA9\uC18D\uB3C4 -10%"
+    image: {fileID: 21300000, guid: adf2e79b1e99cc440ac519c534dd6f34, type: 3}
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+  - type: 1
+    equipedState: 1
+    name: "\uAC08\uB9DD\uC758 \uB0AB"
+    explanation: "\uC804\uC2E0\uC774 \uBD89\uAC8C \uBB3C\uB4E0 \uBD88\uAE38\uD55C
+      \uB0AB.\n\uD53C\uB97C \uAC08\uAD6C\uD558\uB4EF \uAC00\uB298\uAC8C \uB5A8\uB9AC\uACE0
+      \uC788\uB2E4.\n\n\uACF5\uACA9\uB825 +200\n\uACF5\uACA9\uC18D\uB3C4 -20%"
+    image: {fileID: 21300000, guid: 54b49c8fb239b714b8ddc81e10e9fa7a, type: 3}
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+  - type: 1
+    equipedState: 1
+    name: "\uB871\uC18C\uB4DC"
+    explanation: "\uAC00\uC7A5 \uAE30\uBCF8\uC801\uC778 \uD615\uD0DC\uC758 \uAC80.\n\uC801\uB2F9\uD55C
+      \uAE38\uC774\uC640 \uBB34\uAC8C\uB97C \uAC16\uCDC4\uB2E4.\n\n\uACF5\uACA9\uB825
+      +40"
+    image: {fileID: 21300000, guid: 11e2354c300cf2a429eb26819640c6dd, type: 3}
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+  - type: 1
+    equipedState: 1
+    name: "\uAE00\uB77C\uB514\uC6B0\uC2A4"
+    explanation: "\uC9E7\uACE0 \uACE7\uC740 \uB0A0\uC744 \uAC00\uC9C4 \uAC80.\n\uC4F0\uAE30
+      \uD3B8\uD558\uC9C0\uB9CC \uACF5\uACA9 \uBC94\uC704\uAC00 \uC9E7\uB2E4.\n\n\uACF5\uACA9\uB825
+      +60"
+    image: {fileID: 21300000, guid: d26ed61eee64af04c999c0a09de499c0, type: 3}
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+  - type: 1
+    equipedState: 1
+    name: "\uACE1\uAC80"
+    explanation: "\uC9E7\uACE0 \uD718\uC5B4\uC9C4 \uB0A0\uC744 \uAC00\uC9C4 \uAC80.\n\uBCA0\uC774\uBA74
+      \uC0C1\uCC98\uAC00 \uAE4A\uAC8C \uB0A8\uB294\uB2E4.\n\n\uACF5\uACA9\uB825 +50"
+    image: {fileID: 21300000, guid: 33c504f5d852ebe46971b632a4f2327d, type: 3}
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+  - type: 1
+    equipedState: 1
+    name: "\uB2E8\uB450\uAC80"
+    explanation: "\uB113\uC801\uD558\uACE0 \uAC70\uB300\uD55C \uB0A0\uC744 \uAC00\uC9C4
+      \uB300\uAC80.\n\uD22C\uBC15\uD55C \uC678\uD615\uC5D0\uB3C4 \uC704\uB825\uC740
+      \uC608\uC0AC\uB86D\uC9C0 \uC54A\uB2E4.\n\n\uACF5\uACA9\uB825 +65"
+    image: {fileID: 21300000, guid: 18d461ce548e64e4c94d67442d698380, type: 3}
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+  - type: 1
+    equipedState: 1
+    name: "\uD751\uCCA0\uAC80"
+    explanation: "\uD751\uBE5B \uCCA0\uB85C \uB9CC\uB4E4\uC5B4\uC9C4 \uAE38\uCB49\uD55C
+      \uAC80.\n\n\uACF5\uACA9\uB825 +75"
+    image: {fileID: 21300000, guid: 86bf8f60c557b534eaf7c0a8e5aa5c46, type: 3}
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+  - type: 1
+    equipedState: 1
+    name: "\uC601\uC6C5\uC758 \uAC80"
+    explanation: "\uC61B \uC601\uC6C5\uC774 \uC0AC\uC6A9\uD558\uB358 \uB300\uAC80.\n\uC18C\uC7AC\uB97C
+      \uC54C \uC218 \uC5C6\uC9C0\uB9CC \uBAB9\uC2DC \uAC00\uBCCD\uB2E4.\n\n\uACF5\uACA9\uB825
+      +100\n\uACF5\uACA9\uC18D\uB3C4 +10%"
+    image: {fileID: 21300000, guid: 9f496152e00a9d84e98413a832544e10, type: 3}
+    effects:
+    - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
+    - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+  - type: 1
+    equipedState: 1
+    name: "\uC6D0\uD615 \uBAA9\uC81C \uBC29\uD328"
+    explanation: "\uB465\uAE00\uAC8C \uB9CC\uB4E0 \uBAA9\uC81C \uBC29\uD328.\n\uBCF4\uAE30\uBCF4\uB2E4
+      \uC4F8\uB9CC\uD558\uB2E4.\n\n\uBC29\uC5B4\uB825 +20"
+    image: {fileID: 21300000, guid: 96e7e93db2ee4c64bb81bb91c6b59769, type: 3}
+    effects: []
+  - type: 1
+    equipedState: 1
+    name: "\uB110\uBE64\uC9C0 \uBC29\uD328"
+    explanation: "\uB110\uBE64\uC9C0\uB97C \uC5BC\uAE30\uC124\uAE30 \uB367\uB300
+      \uB9CC\uB4E0 \uBC29\uD328.\n\uC870\uC7A1\uD558\uC9C0\uB9CC \uCD5C\uC18C\uD55C\uC758
+      \uBC29\uC5B4\uB294 \uAC00\uB2A5\uD558\uB2E4.\n\n\uBC29\uC5B4\uB825 +10"
+    image: {fileID: 21300000, guid: 58419da139c0ab244bd4cb5d6b9ce845, type: 3}
+    effects: []
+  - type: 2
+    equipedState: 0
+    name: "\uCCB4\uB825 \uBB3C\uC57D (\uC18C)"
+    explanation: "\uC0AC\uC6A9 \uC2DC \uCCB4\uB825\uC744 200\uB9CC\uD07C \uD68C\uBCF5."
+    image: {fileID: 21300000, guid: 87f230a909b82d74f826052551f88a1b, type: 3}
+    effects:
+    - {fileID: 11400000, guid: 7780ae5d2c8590846890aa2c06ff7e29, type: 2}
+  - type: 2
+    equipedState: 0
+    name: "\uCCB4\uB825 \uBB3C\uC57D (\uB300)"
+    explanation: "\uC0AC\uC6A9 \uC2DC \uCCB4\uB825\uC744 400\uB9CC\uD07C \uD68C\uBCF5."
+    image: {fileID: 21300000, guid: 78157eb0e2172d5408b70a91139af177, type: 3}
+    effects:
+    - {fileID: 11400000, guid: c737e7df0fcf3a84e8e536bc447f6337, type: 2}
+  - type: 3
+    equipedState: 0
+    name: "\uC2A4\uCF08\uB808\uD1A4\uC758 \uBA38\uB9AC\uBF08"
+    explanation: "\uC2A4\uCF08\uB808\uD1A4\uC744 \uC4F0\uB7EC\uB728\uB9AC\uACE0 \uC5BB\uC740
+      \uC7AC\uB8CC.\n\uB9C8\uB825\uC774 \uBE60\uC838\uB098\uAC00 \uB354\uB294 \uC6C0\uC9C1\uC774\uC9C0
+      \uC54A\uB294\uB2E4."
+    image: {fileID: 21300000, guid: e33ea4ee424abf04098dc0012eb330c8, type: 3}
+    effects: []
+  - type: 3
+    equipedState: 0
+    name: "\uC6A9\uC758 \uBA38\uB9AC\uBF08"
+    explanation: "\uBD88\uC744 \uBFDC\uB294 \uC6A9\uC744 \uC4F0\uB7EC\uB728\uB9AC\uACE0
+      \uC5BB\uC740 \uC7AC\uB8CC.\n\uC8FC\uC778\uC740 \uC8FD\uC5C8\uC9C0\uB9CC \uC5EC\uC804\uD788
+      \uC704\uC6A9\uC774 \uB290\uAEF4\uC9C4\uB2E4."
+    image: {fileID: 21300000, guid: b6a9d54b797e9b14eafc9983c6aa7754, type: 3}
+    effects: []
+  - type: 3
+    equipedState: 0
+    name: "\uC0B4\uB77C\uB9CC\uB4DC\uB77C\uC758 \uBD88\uB369\uC774"
+    explanation: "\uC0B4\uB77C\uB9CC\uB4DC\uB77C\uB97C \uC4F0\uB7EC\uB728\uB9AC\uACE0
+      \uC5BB\uC740 \uC7AC\uB8CC.\n\uBD88\uAF43 \uC815\uB839\uC740 \uC61B \uB370\uBAAC\uC758
+      \uC218\uD558\uC600\uC73C\uB098,\n\uC9C0\uAE08\uC740 \uADF8 \uC8FC\uC778\uC744
+      \uC783\uC5B4\uBC84\uB838\uB2E4."
+    image: {fileID: 21300000, guid: 40803fc42a37f704884d7de3194985e0, type: 3}
+    effects: []

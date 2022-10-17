@@ -7,15 +7,18 @@ using UniRx;
 
 public class Enemy : MonoBehaviour
 {
-    [Header("몬스터 스탯")]
+    [Header("몬스터 스탯 관련 프로퍼티")]
     public int maxHealth;             // 최대 체력.
     public int curHealth;             // 현재 체력.
     public float defMag;              // 방어율.
     public int atkPoint;              // 몬스터의 공격력.
     public float atkMag;              // 몬스터의 공격 배율.
+    [Header("몬스터 드랍 관련 프로퍼티")]
     public int dropExp;               // 몬스터가 드랍하는 경험치.
     public int dropGold;              // 몬스터가 드랍하는 골드.    
-    //public ItemData[] dropItem;       // 몬스터가 드랍하는 아이템.
+    // 두 리스트는 크기가 같아야 함.
+    public List<int> dropItem;       // 몬스터가 드랍하는 아이템 ID.
+    public List<float> dropPro;        // 몬스터가 드랍하는 아이템의 드랍 확률.
     [Space(10f)]
     [Header("인식 범위 관련 프로퍼티")]
     public float targetRadius;  // 몬스터의 인식 범위.
@@ -29,6 +32,7 @@ public class Enemy : MonoBehaviour
     protected NavMeshAgent nav;
     protected Animator anim;
     protected float atkTime;      // 공격 쿨타임. Unirx로 교체예정.
+    public GameObject fieldItem;
     private void Awake()
     {        
         rigid = GetComponent<Rigidbody>();
@@ -162,7 +166,8 @@ public class Enemy : MonoBehaviour
             reactVec = reactVec.normalized;
             reactVec += Vector3.up;
             rigid.AddForce(reactVec * 5, ForceMode.Impulse);
-            DropExp();
+            DropExpAndGold();
+            DropItem();
             questProgress();
             Destroy(gameObject, 4);
         }       
@@ -175,7 +180,9 @@ public class Enemy : MonoBehaviour
             transform.LookAt(target);
         }              
     }
-    protected void DropExp()
+
+    // 경험치와 골드를 드랍. 아이템은 플레이어의 스탯에 직접 반영되는 것이 아닌 필드에 드랍되므로 별도의 메소드를 사용.
+    protected void DropExpAndGold()
     {
         if (target != null)
         {
@@ -183,10 +190,24 @@ public class Enemy : MonoBehaviour
             if (player != null)
             {
                 player.playerStat.CurExp += dropExp;
+                player.playerStat.Gold += dropGold;
                 JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp = player.playerStat.CurExp;
                 JY_CharacterListManager.s_instance.saveListData();
             }
         }
+    }
+    protected void DropItem()
+    {
+        for (int i = 0; i < dropItem.Count; i++)
+        {
+            if (Random.Range(0f, 1f) <= dropPro[i])
+            {
+                FieldItem tmp = Instantiate<GameObject>(fieldItem, transform.position, Quaternion.identity).GetComponent<FieldItem>();
+                tmp.itemID = dropItem[i];
+            }
+            
+        }
+        
     }
     void questProgress()
     {

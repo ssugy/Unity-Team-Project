@@ -372,9 +372,14 @@ MonoBehaviour:
   atkMag: 1.05
   dropExp: 5
   dropGold: 10
+  dropItem: 1400000000000000
+  dropPro:
+  - 0.4
+  - 0.1
   targetRadius: 2
   targetRange: 5
   attackDistance: 1.7
+  fieldItem: {fileID: 5869032223344055893, guid: 828de48909114044983e5627a3bc0a0b, type: 3}
 --- !u!195 &213394765
 NavMeshAgent:
   m_ObjectHideFlags: 0

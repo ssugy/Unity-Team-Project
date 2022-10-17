@@ -31,6 +31,7 @@ public class Inventory : MonoBehaviour
         SlotCnt = 36;
     }
     
+    // 아이템을 인벤토리에 추가하는 코드. 인벤토리가 가득 찼다면 아이템 획득 불가.
     public bool AddItem(Item _item)
     {
         if (items.Count < SlotCnt)
@@ -53,13 +54,14 @@ public class Inventory : MonoBehaviour
         }
     }
     
-
+    // 필드에 있는 아이템을 줍는 코드.
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Item"))
         {
             Debug.Log("아이템 습득");
             FieldItem fieldItem = other.GetComponent<FieldItem>();
+            // 필드 아이템을 인벤토리에 넣음. 인벤토리가 가득 찼으면 얻을 수 없음.
             if (AddItem(fieldItem.GetItem()))
             {
                 fieldItem.DestroyItem();
