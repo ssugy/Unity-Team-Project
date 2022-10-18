@@ -80,6 +80,7 @@ public class JY_AvatarLoad : MonoBehaviour
 
     public void LoadModelData(int listNum)
     {
+        LobbyDummyClear(listNum);
         if (JY_CharacterListManager.s_instance.selectNum == -1)
         {
             charMale.SetActive(false);
@@ -129,5 +130,20 @@ public class JY_AvatarLoad : MonoBehaviour
         charWeapon.transform.localRotation = Quaternion.identity;
 
 
+    }
+
+    public void LobbyDummyClear(int listNum)
+    {
+        if (JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].gender == "M")
+        {
+            charWeaponDummy = findGameObjectInChild("Character R Weapon Slot", charMale.transform).gameObject;
+        }
+        else if (JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].gender == "F")
+        {
+            charWeaponDummy = findGameObjectInChild("Character R Weapon Slot", charFemale.transform).gameObject;
+        }
+
+        for(int i=0; i< charWeaponDummy.transform.childCount;i++)
+            Destroy(charWeaponDummy.transform.GetChild(i).gameObject);
     }
 }
