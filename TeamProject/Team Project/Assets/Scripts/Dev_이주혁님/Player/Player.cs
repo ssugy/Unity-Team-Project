@@ -458,11 +458,17 @@ public class Player : MonoBehaviour
 
     void HitboxOn()
     {
-        Weapon.weapoonHitbox.enabled = true;
+        if (Weapon.weaponHitbox != null)
+        {
+            Weapon.weaponHitbox.enabled = true;
+        }        
     }
     void HitboxOff()
     {
-        Weapon.weapoonHitbox.enabled = false;
+        if (Weapon.weaponHitbox != null)
+        {
+            Weapon.weaponHitbox.enabled = false;
+        }
     }
     void EnableAtk()
     {
