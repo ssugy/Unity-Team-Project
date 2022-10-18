@@ -46,6 +46,16 @@ public class AvatarSceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+#if UNITY_EDITOR
+
+#else
+        // 모바일 빌드에서만 zoomslider가 사라짐
+        GameObject slider = GameObject.Find("/CanvasCustomizing/ZoomSlider");
+        if (slider != null)
+        {
+            slider.SetActive(false);
+        }
+#endif
         ShowCanvas();
 
         // 1. Item group(4개) 별로 MapOptionNames Dictionary를 초기화 합니다. 

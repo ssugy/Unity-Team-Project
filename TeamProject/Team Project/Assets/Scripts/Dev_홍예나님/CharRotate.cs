@@ -1,7 +1,9 @@
+using CartoonHeroes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class CharRotate : MonoBehaviour
 {
@@ -20,9 +22,10 @@ public class CharRotate : MonoBehaviour
     private Quaternion currentRot;
     private Vector3 currentPos;
     private float initialDist;
+    // public Slider zoomSlider;
+
     private void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -118,10 +121,7 @@ public class CharRotate : MonoBehaviour
                 var second = Input.GetTouch(1);
                 float dist = Vector2.Distance(first.position, second.position);
                 float scale = dist / initialDist;
-                scale = Mathf.Clamp(scale, 0.5f, 2.0f) - 1.5f;
-                charPosition.z = scale;
-                //transform.localScale = new Vector3(scale, scale, scale);
-                transform.position = charPosition;
+                SetCharacterZoom(scale);
             }
         }
 #if UNITY_EDITOR
@@ -131,4 +131,18 @@ public class CharRotate : MonoBehaviour
         }
 #endif
     }
+    public void OnChangeSlideZoom(float val)
+    {
+        Debug.Log("zoomslide is: " + val);
+        SetCharacterZoom(val);
+    }
+    private void SetCharacterZoom(float scale)
+    {
+        scale = Mathf.Clamp(scale, 1.0f, 3.2f) - 1.5f;
+        charPosition.z = scale;
+        charPosition.x = scale * -0.15f - 0.575f;
+        //transform.localScale = new Vector3(scale, scale, scale);
+        transform.position = charPosition;
+    }
+
 }
