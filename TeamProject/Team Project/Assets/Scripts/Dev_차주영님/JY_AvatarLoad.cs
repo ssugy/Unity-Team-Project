@@ -80,7 +80,7 @@ public class JY_AvatarLoad : MonoBehaviour
 
     public void LoadModelData(int listNum)
     {
-        LobbyDummyClear(listNum);
+        //LobbyDummyClear(listNum);
         if (JY_CharacterListManager.s_instance.selectNum == -1)
         {
             charMale.SetActive(false);
