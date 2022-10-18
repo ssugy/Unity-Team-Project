@@ -41,8 +41,19 @@ public class infoData
     public int[] questProgress;
     public int[] questProgress2;
 }
-//데이터 변경 저장을 위한 class
-
+/// <summary>
+/// 캐릭터 별 inventory 데이터 저장 json
+/// </summary>
+[System.Serializable]
+public class InventoryCharSlot
+{
+    public List<InventoryJSonData> InventoryJDataList;
+}
+[System.Serializable]
+public class InventoryJSonData
+{
+    public List<Item> itemList;
+}
 public class JY_CharacterListManager : MonoBehaviour
 {
     public static JY_CharacterListManager instance;
@@ -50,9 +61,12 @@ public class JY_CharacterListManager : MonoBehaviour
 
     //Data 관리 클래스(리스트)
     public CharacterData characterData;
+    public InventoryCharSlot characterInventoryData;
     //파일 경로 및 json road에 쓰이는 string 변수
     string path;
+    string InventoryPath;
     string jsonData;
+    string jsonData_Inventory;
     //캐릭터선택번호
     public int selectNum;
     public Sprite selectPortrait;
@@ -71,22 +85,31 @@ public class JY_CharacterListManager : MonoBehaviour
             Destroy(gameObject);
         }
         //Json파일 로드
-        //path = Application.dataPath + "/XML_JSON/" + "JY_Lobby_test.json";
         path = Application.persistentDataPath + "/JY_Lobby_test.json";
+        InventoryPath = Application.persistentDataPath + "/JY_InventoryData.json";
         FileInfo fileInfo = new FileInfo(path);
         if (!fileInfo.Exists)
         {
             writeInitialJson();
         }
+        FileInfo fileInfo_I = new FileInfo(InventoryPath);
+        if (!fileInfo_I.Exists)
+        {
+            writeInitialInventoryJson();
+        }
         jsonData = File.ReadAllText(path);
         characterData = JsonUtility.FromJson<CharacterData>(jsonData);
+        jsonData_Inventory = File.ReadAllText(InventoryPath);
+        characterInventoryData = JsonUtility.FromJson<InventoryCharSlot>(jsonData_Inventory);
+
+        for(int i=0;i<4;i++)
+            Debug.Log(characterInventoryData.InventoryJDataList[i].itemList[0].name);
     }
 
     void writeInitialJson()
     {
         CharacterData initCharData = new CharacterData();
         initCharData.infoDataList = new List<infoData>();
-
         for(int i = 0; i < 4; i++)
         {
             infoData init = new infoData();
@@ -116,6 +139,30 @@ public class JY_CharacterListManager : MonoBehaviour
         }
     }
 
+    void writeInitialInventoryJson()
+    {
+        InventoryCharSlot initInventorySlot = new InventoryCharSlot();
+        initInventorySlot.InventoryJDataList= new List<InventoryJSonData>();
+
+        for (int i = 0; i < 4; i++)
+        {
+            Item initItem = new Item();
+            initItem.type = ItemType.EQUIPMENT;
+            initItem.equipedState = EquipState.EQUIPED;
+            initItem.name = "롱소드";
+
+            InventoryJSonData init = new InventoryJSonData();
+            init.itemList = new List<Item>();
+            init.itemList.Add(initItem);
+            initInventorySlot.InventoryJDataList.Add(init);
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+            string json = JsonUtility.ToJson(initInventorySlot, true);
+            File.WriteAllText(Application.persistentDataPath + "/JY_InventoryData.json", json);
+        }
+    }
 
     private void OnEnable()
     {
