@@ -71,10 +71,9 @@ public class PlayerStat
         set 
         {
             curHP = value;
-            if (curHP <= 0)
+            if (curHP < 0)
             {
-                curHP = 0;
-                Player.instance.Die();
+                curHP = 0;                
             }
             else if (curHP > HP)
             {
@@ -643,7 +642,11 @@ public class Player : MonoBehaviour
 
     public void IsAttacked(int _damage)
     {
-        playerStat.CurHP -= _damage;                
+        playerStat.CurHP -= _damage;
+        if (playerStat.CurHP == 0)
+        {
+            Die();
+        }
         playerAni.SetFloat("isAttacked", (float)_damage / playerStat.HP);
         
     }

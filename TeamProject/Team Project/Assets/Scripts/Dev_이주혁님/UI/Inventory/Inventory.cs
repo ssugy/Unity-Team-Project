@@ -22,16 +22,18 @@ public class Inventory : MonoBehaviour
     private void OnEnable()
     {
         instance = this;
+        
+        
     }
     private void OnDisable()
     {
         instance = null;
+        Debug.Log("인벤토리 비활성화");
     }
     void Start()
     {
         SlotCnt = 36;
-        items.Clear();
-        items = JY_CharacterListManager.s_instance.characterInventoryData.InventoryJDataList[JY_CharacterListManager.s_instance.selectNum].itemList;
+        
         // 씬이 시작되었을 때, 인벤토리의 아이템 설명/아이콘/이펙트를 불러옴.
         // 인벤토리를 로드할 때, 아이템의 이름과 타입, 착용 정보만을 불러오기 때문.    
         if (this.items.Count >= 1)

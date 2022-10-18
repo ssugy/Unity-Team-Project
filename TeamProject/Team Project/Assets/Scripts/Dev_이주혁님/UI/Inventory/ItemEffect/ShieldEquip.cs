@@ -11,8 +11,14 @@ public class ShieldEquip : ItemEffect
         GameObject shieldSrc = Resources.Load<GameObject>("Item/Weapon/" + _item.image.name);
         Instantiate<GameObject>(shieldSrc, player.lWeaponDummy);
         player.playerStat.equiped.Add(EquipPart.SHIELD, _item);
-        Inventory.instance.onChangeItem();
-        InventoryUI.instance.shieldIcon.sprite = _item.image;
-        InventoryUI.instance.shieldIcon.gameObject.SetActive(true);
+        if (Inventory.instance.onChangeItem != null)
+        {
+            Inventory.instance.onChangeItem();
+        }
+        if (InventoryUI.instance != null)
+        {
+            InventoryUI.instance.shieldIcon.sprite = _item.image;
+            InventoryUI.instance.shieldIcon.gameObject.SetActive(true);
+        }                       
     }
 }
