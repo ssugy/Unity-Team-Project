@@ -59,4 +59,8 @@ public class JY_Portal : MonoBehaviour
 
         portalUI.gameObject.SetActive(true);
     }
+    private void OnTriggerExit(Collider other)
+    {
+        portalUI.gameObject.SetActive(false);
+    }
 }
