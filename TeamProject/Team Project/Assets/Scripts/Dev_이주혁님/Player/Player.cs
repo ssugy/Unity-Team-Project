@@ -227,6 +227,10 @@ public class Player : MonoBehaviour
         SetState();
         playerStat.CurHP = playerStat.HP;
         playerStat.CurSP = playerStat.SP;
+        if (EXP_TABLE.TryGetValue(playerStat.level, out int _tmpExp))       // 테이블에서 필요 경험치를 불러옴.
+        {
+            playerStat.Exp = _tmpExp;
+        }
         controller.ObserveEveryValueChanged(_ => _.isGrounded).ThrottleFrame(30).Subscribe(_ => isGround = _);
         // UniRx를 이용하여 isGrounded 프로퍼티가 0.3초 이상 유지되어야 상태가 전이되게끔 함. isGrounded가 정교하지 않기 때문.
     }

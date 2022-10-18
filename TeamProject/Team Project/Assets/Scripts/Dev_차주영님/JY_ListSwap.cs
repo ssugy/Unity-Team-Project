@@ -109,7 +109,7 @@ public class JY_ListSwap : MonoBehaviour
     }
 
     public void selectCharacter()
-    {
+    {        
         //선택 취소 구현
         if (JY_CharacterListManager.s_instance.selectNum == listNum)
         {
@@ -119,9 +119,9 @@ public class JY_ListSwap : MonoBehaviour
             return;
         }
         JY_CharacterListManager.s_instance.selectNum = listNum;
-        JY_AvatarLoad.s_instance.origin.SetActive(true);
-        JY_AvatarLoad.s_instance.LoadModelData(listNum);
-        Inventory.instance.items.Clear();
+        JY_AvatarLoad.s_instance.origin.SetActive(true);        // inventory onenable
+        JY_AvatarLoad.s_instance.LoadModelData(listNum);        
+        //Inventory.instance.items.Clear();
         Inventory.instance.items = JY_CharacterListManager.s_instance.characterInventoryData.InventoryJDataList[JY_CharacterListManager.s_instance.selectNum].itemList;
         JY_CharacterListManager.s_instance.selectPortrait =  switchPortrait(JY_CharacterListManager.instance.characterData.infoDataList[listNum].gender,
                                               JY_CharacterListManager.instance.characterData.infoDataList[listNum].job);;
