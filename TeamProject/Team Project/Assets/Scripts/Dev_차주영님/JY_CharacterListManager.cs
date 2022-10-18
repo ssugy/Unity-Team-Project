@@ -101,9 +101,6 @@ public class JY_CharacterListManager : MonoBehaviour
         characterData = JsonUtility.FromJson<CharacterData>(jsonData);
         jsonData_Inventory = File.ReadAllText(InventoryPath);
         characterInventoryData = JsonUtility.FromJson<InventoryCharSlot>(jsonData_Inventory);
-
-        for(int i=0;i<4;i++)
-            Debug.Log(characterInventoryData.InventoryJDataList[i].itemList[0].name);
     }
 
     void writeInitialJson()
@@ -205,6 +202,8 @@ public class JY_CharacterListManager : MonoBehaviour
                 characterData.infoDataList[i].statusPoint = characterData.infoDataList[i + 1].statusPoint;
                 characterData.infoDataList[i].questProgress = characterData.infoDataList[i + 1].questProgress;
                 characterData.infoDataList[i].questProgress2 = characterData.infoDataList[i + 1].questProgress;
+
+                characterInventoryData.InventoryJDataList[i].itemList = characterInventoryData.InventoryJDataList[i + 1].itemList;
             }
             else
             {
@@ -221,9 +220,17 @@ public class JY_CharacterListManager : MonoBehaviour
                 characterData.infoDataList[i].statusPoint = 0;
                 characterData.infoDataList[i].questProgress = initArr;
                 characterData.infoDataList[i].questProgress2 = initArr;
+
+                characterInventoryData.InventoryJDataList[i].itemList.Clear();
+                Item initItem = new Item();
+                initItem.type = ItemType.EQUIPMENT;
+                initItem.equipedState = EquipState.EQUIPED;
+                initItem.name = "롱소드";
+                characterInventoryData.InventoryJDataList[i].itemList.Add(initItem);
             }
         }
         saveListData();
+        saveInventoryListData();
     }
     //캐릭터생성, 삭제 시 데이터 갱신사항 Json파일에 Save
     public void saveListData()
@@ -231,6 +238,14 @@ public class JY_CharacterListManager : MonoBehaviour
         for(int i=0; i<4; i++)
         {
             string json = JsonUtility.ToJson(characterData,true);
+            File.WriteAllText(path, json);
+        }
+    }
+    public void saveInventoryListData()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            string json = JsonUtility.ToJson(characterInventoryData, true);
             File.WriteAllText(path, json);
         }
     }

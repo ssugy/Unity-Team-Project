@@ -101,7 +101,7 @@ public class JY_AvatarLoad : MonoBehaviour
                 charFemale.SetActive(false);
                 setChara = charMale.GetComponent<SetCharacter>();
             }
-            equipWeapon(listNum);
+            //equipWeapon(listNum);
             for(int i=0; i<4; i++)
             {
                 subOptionLoad(i, JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].characterAvatar[i]);
