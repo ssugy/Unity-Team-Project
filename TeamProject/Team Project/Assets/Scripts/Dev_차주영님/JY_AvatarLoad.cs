@@ -70,7 +70,7 @@ public class JY_AvatarLoad : MonoBehaviour
         }
 
     }
-    public void subOptionLoad(int currentOption,int sub)
+    public void subOptionLoad(int currentOption, int sub)
     {
         DeleteSubOption(currentOption);
         {
@@ -97,13 +97,12 @@ public class JY_AvatarLoad : MonoBehaviour
                 setChara = charFemale.GetComponent<SetCharacter>();
             }
             else
-            {                
+            {
                 charFemale.SetActive(false);
                 charMale.SetActive(true);
                 setChara = charMale.GetComponent<SetCharacter>();
             }
-            //equipWeapon(listNum);
-            for(int i=0; i<4; i++)
+            for (int i = 0; i < 4; i++)
             {
                 subOptionLoad(i, JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].characterAvatar[i]);
             }
@@ -112,16 +111,16 @@ public class JY_AvatarLoad : MonoBehaviour
 
     public void equipWeapon(int listNum)
     {
-        if( JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].gender == "M")
+        if (JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].gender == "M")
         {
             charWeaponDummy = findGameObjectInChild("Character R Weapon Slot", charMale.transform).gameObject;
         }
-        else if(JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].gender == "F")
+        else if (JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].gender == "F")
         {
             charWeaponDummy = findGameObjectInChild("Character R Weapon Slot", charFemale.transform).gameObject;
         }
         GameObject weaponSc = Resources.Load<GameObject>("Item/Weapon/Sword_1");
-        if(charWeapon == null)
+        if (charWeapon == null)
         {
             charWeapon = GameObject.Instantiate<GameObject>(weaponSc);
         }
@@ -143,7 +142,7 @@ public class JY_AvatarLoad : MonoBehaviour
             charWeaponDummy = findGameObjectInChild("Character R Weapon Slot", charFemale.transform).gameObject;
         }
 
-        for(int i=0; i< charWeaponDummy.transform.childCount;i++)
+        for (int i = 0; i < charWeaponDummy.transform.childCount; i++)
             Destroy(charWeaponDummy.transform.GetChild(i).gameObject);
     }
 }

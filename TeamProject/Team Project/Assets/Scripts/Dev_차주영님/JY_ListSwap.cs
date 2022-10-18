@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class JY_ListSwap : MonoBehaviour
 {
@@ -21,7 +20,7 @@ public class JY_ListSwap : MonoBehaviour
     //캐릭터 선택시/데이터 로드시 변경 UI
     public Image frameBackground;
     public Image portraitImage;
-    
+
     //소스 이미지 
     Sprite sourceImg_R;
     Sprite sourceImg_B;
@@ -54,7 +53,7 @@ public class JY_ListSwap : MonoBehaviour
     //nullcheck = false일 때 Character info 활성화
     void panelSwitch(bool nullCheck)
     {
-          //캐릭터 생성 check
+        //캐릭터 생성 check
         check = JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].isNull;
 
         if (nullCheck)
@@ -83,7 +82,7 @@ public class JY_ListSwap : MonoBehaviour
         string leveltxt;
 
         nameTxt.text = JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].name;
-        if(JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].level < 10)
+        if (JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].level < 10)
         {
             leveltxt = "0" + JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].level.ToString();
         }
@@ -105,11 +104,11 @@ public class JY_ListSwap : MonoBehaviour
             JY_AvatarLoad.s_instance.origin.SetActive(false);
         JY_CharacterListManager.s_instance.deleteCharacter(listNum);
         JY_CharacterListManager.s_instance.selectNum = -1;
-        
+
     }
 
     public void selectCharacter()
-    {        
+    {
         //선택 취소 구현
         if (JY_CharacterListManager.s_instance.selectNum == listNum)
         {
@@ -120,11 +119,23 @@ public class JY_ListSwap : MonoBehaviour
         }
         JY_CharacterListManager.s_instance.selectNum = listNum;
         JY_AvatarLoad.s_instance.origin.SetActive(true);        // inventory onenable
-        JY_AvatarLoad.s_instance.LoadModelData(listNum);        
-        //Inventory.instance.items.Clear();
-        Inventory.instance.items = JY_CharacterListManager.s_instance.characterInventoryData.InventoryJDataList[JY_CharacterListManager.s_instance.selectNum].itemList;
-        JY_CharacterListManager.s_instance.selectPortrait =  switchPortrait(JY_CharacterListManager.instance.characterData.infoDataList[listNum].gender,
-                                              JY_CharacterListManager.instance.characterData.infoDataList[listNum].job);;
+        JY_AvatarLoad.s_instance.LoadModelData(listNum);
+        JY_CharacterListManager.s_instance.CopyInventoryDataToScript(Inventory.instance.items);
+        foreach (Item one in Inventory.instance.items)
+        {
+            if (one.equipedState.Equals(EquipState.EQUIPED))
+            {
+                JY_AvatarLoad.s_instance.LobbyDummyClear(JY_CharacterListManager.s_instance.selectNum);
+                try { 
+                    one.effects[0].ExecuteRole(one); 
+                }
+                catch (System.ArgumentException e) 
+                {
+                }
+            }
+        }
+        JY_CharacterListManager.s_instance.selectPortrait = switchPortrait(JY_CharacterListManager.instance.characterData.infoDataList[listNum].gender,
+                                              JY_CharacterListManager.instance.characterData.infoDataList[listNum].job); ;
     }
 
     Sprite switchPortrait(string gender, string job)
@@ -144,4 +155,5 @@ public class JY_ListSwap : MonoBehaviour
         }
         return null;
     }
+
 }

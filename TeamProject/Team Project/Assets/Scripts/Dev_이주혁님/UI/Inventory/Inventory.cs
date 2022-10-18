@@ -6,7 +6,7 @@ public class Inventory : MonoBehaviour
 {
     public static Inventory instance;
     public List<Item> items = new List<Item>();
-    
+
     public delegate void OnChangeItem();        // 아이템이 변경되면 인벤토리 UI를 갱신하는 델리게이트.
     public OnChangeItem onChangeItem;
     private int slotCnt;
@@ -15,26 +15,26 @@ public class Inventory : MonoBehaviour
         get => slotCnt;
         set
         {
-            slotCnt = value;            
+            slotCnt = value;
         }
-    }    
-    
+    }
+
     private void OnEnable()
     {
         instance = this;
-        
+
         if (JY_CharacterListManager.s_instance.selectNum >= 0)
         {
-            items = JY_CharacterListManager.s_instance.characterInventoryData.InventoryJDataList[JY_CharacterListManager.s_instance.selectNum].itemList;
-            
-        }        
+            JY_CharacterListManager.s_instance.CopyInventoryDataToScript(items);
+
+        }
     }
     private void OnDisable()
-    {        
-        
+    {
+
         instance = null;
-        items = null;
-        
+        items.Clear();
+
     }
     void Start()
     {
@@ -51,7 +51,13 @@ public class Inventory : MonoBehaviour
             {
                 if (one.equipedState.Equals(EquipState.EQUIPED))
                 {
-                    one.effects[0].ExecuteRole(one);
+                    try 
+                    {
+                        one.effects[0].ExecuteRole(one);
+                    }
+                    catch (System.ArgumentException e)
+                    {
+                    }
                 }
             }
         }
@@ -60,7 +66,7 @@ public class Inventory : MonoBehaviour
             onChangeItem();
         }
     }
-    
+
     // 아이템을 인벤토리에 추가하는 코드. 인벤토리가 가득 찼다면 아이템 획득 불가.
     public bool AddItem(Item _item)
     {
@@ -70,7 +76,7 @@ public class Inventory : MonoBehaviour
             if (onChangeItem != null)
             {
                 onChangeItem();
-            }            
+            }
             return true;
         }
         return false;
@@ -83,7 +89,7 @@ public class Inventory : MonoBehaviour
             onChangeItem();
         }
     }
-    
+
     // 필드에 있는 아이템을 줍는 코드.
     private void OnTriggerEnter(Collider other)
     {
@@ -97,6 +103,6 @@ public class Inventory : MonoBehaviour
                 fieldItem.DestroyItem();
             }
         }
-        
+
     }
 }
