@@ -14,10 +14,8 @@ public class Door : MonoBehaviour //접근 제한자, 클래스명 : 상속
      * 컴포넌트 : 프로그래밍에 있어 재사용이 가능한 각각의 독립된 모듈
      * 모듈: 다중 파일을 다루는 일부 닷넷 바이너리
     */
-    Transform doorPivot;         //doorPivot 트랜스폼
-    DoorButton doorButton;
-    [HideInInspector] public Quaternion closeRotation;
-    [HideInInspector] public Quaternion openRotation;
+    Animator doorPivotAni;         //doorPivot 트랜스폼
+    DoorButton doorButton;    
     [HideInInspector] public bool isClose;
 
     public bool isLocked;
@@ -26,11 +24,9 @@ public class Door : MonoBehaviour //접근 제한자, 클래스명 : 상속
      */
     void Start()
     {        
-        doorPivot = transform.parent;                        //doorPivot = 부모오브젝트
+        doorPivotAni = GetComponentInParent<Animator>();                        //doorPivot = 부모오브젝트
         doorButton = DoorButton.instance;                    //도어버튼을 인스턴스로 접근 어떤 스크립트에서라도 접근할수있도록 만듬
-        isClose = true;
-        closeRotation = doorPivot.rotation;
-        openRotation = closeRotation * Quaternion.Euler(0, 90f, 0);
+        isClose = true;        
     }    
     /*private: 클래스의 내부에서만 접근가능 , 액세스중에서도 가장낮은 수준의 액서스 접근한정자를 사용하지않으면 기본값으로 private로 접근 수준이설정된다.
      * void : 반환형식
@@ -55,30 +51,20 @@ public class Door : MonoBehaviour //접근 제한자, 클래스명 : 상속
     }
     public void Open()
     {
-        StartCoroutine(DoorOpen());
+        if (isClose)
+        {
+            isClose = false;
+            doorPivotAni.SetTrigger("Interact");
+            AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.DOOR_01, false, 1f);
+        }        
     }
     public void Close()
     {
-        StartCoroutine(DoorClose());
-    }
-    IEnumerator DoorOpen()
-    {
-        isClose = false;
-        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.DOOR_01, false, 1f);
-        for (int i = 0; i < 90; ++i)
+        if (!isClose)
         {
-            doorPivot.rotation = Quaternion.RotateTowards(doorPivot.rotation, openRotation, 1f);
-            yield return null;
+            isClose = true;
+            doorPivotAni.SetTrigger("Interact");
+            AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.DOOR_01, false, 1f);
         }
-    }
-    IEnumerator DoorClose()
-    {
-        isClose = true;
-        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.DOOR_01, false, 1f) ;
-        for (int i = 0; i < 90; ++i)
-        {
-            doorPivot.rotation = Quaternion.RotateTowards(doorPivot.rotation, closeRotation, 1f);
-            yield return null;
-        }
-    }
+    }        
 }

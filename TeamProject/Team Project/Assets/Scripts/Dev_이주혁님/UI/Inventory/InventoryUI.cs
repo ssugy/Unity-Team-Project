@@ -14,10 +14,7 @@ public class InventoryUI : MonoBehaviour
     public Image chestIcon;
     public Image legIcon;
     public Text gold;
-
-    public GameObject inventoryPanel;
-    bool activeInventory = false;
-    
+    public GameObject inventoryPanel;        
     public Slot[] slots;
     public Transform slotHolder;
     

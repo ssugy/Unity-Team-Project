@@ -15,7 +15,7 @@ public class SPFillAmount : MonoBehaviour
     void Start()
     {
         stat = Player.instance.playerStat;
-        recoverSpeed = 10f;
+        recoverSpeed = 15f;
         isExhausted = false;
     }
 
@@ -24,11 +24,11 @@ public class SPFillAmount : MonoBehaviour
     {
         barFront.fillAmount = (float)stat.CurSP / stat.SP;
         barText.text = ((int)stat.CurSP).ToString() + " / " + ((int)stat.SP).ToString();
-        if (stat.CurSP < stat.SP)
+        if (Player.instance.enableRecoverSP && stat.CurSP < stat.SP)
         {
             stat.CurSP += recoverSpeed * Time.deltaTime;
         }
-        if (stat.CurSP <= 0)
+        if (stat.CurSP <= 0.1f)
         {
             Player.instance.Exhausted();
             isExhausted = true;

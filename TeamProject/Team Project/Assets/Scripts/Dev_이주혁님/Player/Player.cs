@@ -167,7 +167,8 @@ public class Player : MonoBehaviour
     [HideInInspector] public float gravity;
     [HideInInspector] public Vector3 movement;    // 조이스틱 입력 이동 방향.
     [HideInInspector] public bool enableMove;      // 이동 가능 여부를 표시.
-    public bool enableAtk;       // 공격 가능 여부 표시.
+    [HideInInspector] public bool enableAtk;       // 공격 가능 여부 표시.
+    [HideInInspector] public bool enableRecoverSP; // 스태미너 회복 가능 여부 표시.
 
     public Transform rWeaponDummy;              // 오른손 무기 더미.
     private TrailRenderer rWeaponEffect;        // 오른손 무기 이펙트. (검기)
@@ -199,6 +200,7 @@ public class Player : MonoBehaviour
         controller = GetComponent<CharacterController>();
         enableMove = true;
         enableAtk = true;
+        enableRecoverSP = true;
         movement = Vector3.zero;
         rotateSpeed = 5f;
         moveSpeed = 8f;
@@ -445,6 +447,15 @@ public class Player : MonoBehaviour
     {
         enableMove = true;
     }   // 플레이어가 이동할 수 있게 함.
+    void StopRecoverSP()
+    {
+        enableRecoverSP = false;
+    }
+    void StartRecoverSP()
+    {
+        enableRecoverSP = true;
+    }
+
     void HitboxOn()
     {
         Weapon.weapoonHitbox.enabled = true;
@@ -506,8 +517,8 @@ public class Player : MonoBehaviour
     }       // 스탯 투자
     public void SetState()
     {
-        playerStat.HP = playerStat.health * 50 + playerStat.strength * 10;        
-        playerStat.SP = playerStat.stamina * 10 + playerStat.strength * 2;        
+        playerStat.HP = 210 + playerStat.health * 20 + playerStat.strength * 5;   // 1레벨 스탯 기준 400  
+        playerStat.SP = 46 + playerStat.stamina * 4 + playerStat.strength * 1;    // 1레벨 스탯 기준 80
         playerStat.criPro = (20f + Sigma(2f, 1.03f, playerStat.dexterity)) / 100f;
         playerStat.defMag = 1 - Mathf.Pow(1.02f, -playerStat.defPoint);
         if (Weapon.weapon != null)
