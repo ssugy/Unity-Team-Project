@@ -26,6 +26,7 @@ public class InfoPanel : MonoBehaviour
         destroyButton.onClick.RemoveAllListeners();     // 파괴 버튼에 할당된 메소드를 초기화.
         icon.sprite = _item.image;                      // 선택된 아이템의 이미지로 아이콘을 교체.
         nameText.text = _item.name;                     // 선택된 아이템의 이름으로 텍스트를 교체.
+        explanationText.text = _item.explanation;       // 선택된 아이템의 설명으로 텍스트를 교체.
         useButton.gameObject.SetActive(true);           // 사용 버튼을 활성화함. (재료 아이템은 사용이 비활성화.)
         destroyButton.gameObject.SetActive(true);       // 파괴 버튼을 활성화함. (장착된 장비 아이템은 파괴가 비활성화.)
         switch (_item.type)                             // 아이템 타입에 따라 다른 기능을 수행.
@@ -57,8 +58,7 @@ public class InfoPanel : MonoBehaviour
             default:
                 typeText.text = "<오류>";
                 break;
-        }                
-        explanationText.text = _item.explanation;
+        }                        
         destroyButton.onClick.AddListener(() => Inventory.instance.RemoveItem(_item));
     }   
 }

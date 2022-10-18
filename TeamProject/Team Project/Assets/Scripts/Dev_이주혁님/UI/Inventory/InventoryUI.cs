@@ -27,7 +27,7 @@ public class InventoryUI : MonoBehaviour
         }
         for (int i = 0; i < inventory.items.Count; i++)
         {
-            slots[i].item = inventory.items[i];
+            slots[i].item = inventory.items[i];            
             slots[i].isEmpty = false;
             slots[i].UpdateSlotUI();
         }
@@ -43,10 +43,18 @@ public class InventoryUI : MonoBehaviour
         instance = this;
         slots = slotHolder.GetComponentsInChildren<Slot>();
         inventory.onChangeItem += RedrawSlotUI;
-        this.gameObject.SetActive(false);
         if (Player.instance != null)
         {
             UpdateGold();
         }
+        // 씬이 시작되었을 때, 인벤토리의 아이템 설명/아이콘/이펙트를 불러옴.
+        if (inventory.items.Count >= 1)
+        {
+            for (int i = 0; i < inventory.items.Count; i++)
+            {
+                inventory.items[i].ShallowCopy();
+            }
+        }        
+        this.gameObject.SetActive(false);        
     }    
 }

@@ -19,13 +19,13 @@ public enum EquipState
 [System.Serializable]
 public class Item
 {
-    public ItemType type;
-    public EquipState equipedState;
-    public string name;
-    [TextArea(3,5)]
-    public string explanation;
-    public Sprite image;
-    public List<ItemEffect> effects;    
+    public ItemType type = ItemType.NONE;
+    public EquipState equipedState = EquipState.NONE;
+    public string name = "null";
+    [TextArea(3, 5)]
+    public string explanation = "null";
+    public Sprite image = null;
+    public List<ItemEffect> effects = null;
    
     public void Use()
     {        
@@ -58,6 +58,23 @@ public class Item
         copied.image = this.image;
         copied.effects = this.effects;
         return copied;
+    }
+
+    // 아이템의 이름 정보만 갖고 있을 때, 이름으로부터 아이템의 설명, 이미지, 이펙트를 불러옴.
+    public void ShallowCopy()
+    {
+        Item tmp = new Item();
+        for (int i=0;i< ItemDatabase.instance.itemDB.Count; i++)
+        {
+            if(this.name== ItemDatabase.instance.itemDB[i].name)
+            {
+                tmp = ItemDatabase.instance.itemDB[i];
+                break;
+            }
+        }
+        this.explanation = tmp.explanation;
+        this.image = tmp.image;
+        this.effects = tmp.effects;
     }
 }
 
