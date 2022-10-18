@@ -46,7 +46,9 @@ public class AudioManager : MonoBehaviour
         CLICK_02,
         DOOR_01,
         BossBGM_01,
-        BossBGM_02
+        BossBGM_02,
+        Key,
+        Portal
     }
     public SOUND_NAME Name;
     public AudioClip[] clips;   // enum의 순서를 따라가야됨
@@ -73,11 +75,15 @@ public class AudioManager : MonoBehaviour
         goAudio.clip = sources[name];
         goAudio.loop = isLoop;
         go.transform.SetParent(transform);
-        if (name.Equals(SOUND_NAME.BGM))
+        if (name.Equals(SOUND_NAME.BGM)|| name.Equals(SOUND_NAME.BossBGM_01)|| name.Equals(SOUND_NAME.BossBGM_02))
         {
             // 사운드 옵션때문에 배경음은 따로취급.
             goAudio.volume = volume * bgmVolumePivot;
             bgmAudioSource = goAudio;
+            if (isBGMMute)
+            {
+                goAudio.volume = 0f;
+            }
         }
         else
         {
@@ -168,6 +174,7 @@ public class AudioManager : MonoBehaviour
     private float effectVolumePivot;
     private float beforeEffectVolumePivot;
     private AudioSource bgmAudioSource;
+    public AudioSource NOWPLAY { get { return bgmAudioSource; } }
     private bool isBGMMute;
     private bool isEffectMute;
 

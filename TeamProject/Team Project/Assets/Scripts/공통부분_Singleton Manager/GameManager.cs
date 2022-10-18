@@ -73,7 +73,8 @@ public class GameManager : MonoBehaviour
         {
             AudioManager.s_instance.SoundFadeInOut(AudioManager.SOUND_NAME.BossBGM_01, 0, 0.1f);
             AudioManager.s_instance.SoundFadeInOut(AudioManager.SOUND_NAME.BossBGM_02, 0, 0.1f);
-            AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BGM, true, 0.5f);
+            if(!AudioManager.s_instance.NOWPLAY.name.Equals("BGM"))
+                AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BGM, true, 0.5f);
         }
         if(JY_CharacterListManager.s_instance != null && Inventory.instance != null && SceneManager.GetActiveScene().name != "03. Robby")
         {

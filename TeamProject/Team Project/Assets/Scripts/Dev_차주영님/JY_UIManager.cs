@@ -113,6 +113,7 @@ public class JY_UIManager : MonoBehaviour
         effect.transform.localPosition = Vector3.forward;
         effectList.Add(effect);
         StatusDataRenew();
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Key);
         Invoke("stopLevelupEffect", 2.5f);
         Invoke("closeAlarm", 2f);
     }
@@ -120,12 +121,14 @@ public class JY_UIManager : MonoBehaviour
     {
         alarmUI.SetActive(true);
         alarmText.text = "퀘스트를 수령했습니다.";
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Key);
         Invoke("closeAlarm", 2f);
     }
     public void questFinishUI()
     {
         alarmUI.SetActive(true);
         alarmText.text = "퀘스트를 완료했습니다.";
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Key);
         Invoke("closeAlarm", 2f);
     }
 

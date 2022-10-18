@@ -51,6 +51,7 @@ public class JY_Portal : MonoBehaviour
     }
     public void loadScene()
     {
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Portal);
         GameManager.s_instance.LoadScene(targetSceneNum);
     }
 
