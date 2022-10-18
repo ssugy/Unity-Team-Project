@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UniRx;
-
 
 public class Enemy : MonoBehaviour
 {
@@ -19,63 +17,61 @@ public class Enemy : MonoBehaviour
     // 두 리스트는 크기가 같아야 함.
     public List<int> dropItem;       // 몬스터가 드랍하는 아이템 ID.
     public List<float> dropPro;        // 몬스터가 드랍하는 아이템의 드랍 확률.
-    [Space(10f)]
+    public GameObject fieldItem;       // 몬스터가 드랍하는 아이템 프리팹.   
     [Header("인식 범위 관련 프로퍼티")]
     public float targetRadius;  // 몬스터의 인식 범위.
     public float targetRange;   // 몬스터의 인식 거리
     public float attackDistance;// 몬스터가 공격을 하는 거리.
+    [Header("쿨타임 관련")]
+    public float attackCool;    
+
     protected Transform target;        // 타겟. (플레이어)                    
     protected Vector3 originPos;      // 몬스터의 초기 위치.    
     protected Rigidbody rigid;
-    protected Collider hitbox;
-    //private Material mat;
+    protected Collider hitbox;    
     protected NavMeshAgent nav;
     protected Animator anim;
     protected float atkTime;      // 공격 쿨타임. Unirx로 교체예정.
-    public GameObject fieldItem;
+    
     private void Awake()
     {        
         rigid = GetComponent<Rigidbody>();
-        hitbox = GetComponent<Collider>();
-        //mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
+        hitbox = GetComponent<Collider>();        
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
         originPos = transform.position;                
         atkTime = 0f;        
     }
     protected void Start()
-    {
+    {        
         StartCoroutine(Targeting());      
     }
     private void FixedUpdate()
     {
-        atkTime += Time.fixedDeltaTime;
-        if (nav.enabled)
+        atkTime += Time.fixedDeltaTime;        
+        if (target != null)
         {
-            if (target != null)
+            nav.SetDestination(target.position);
+            float distance = (transform.position - target.position).magnitude;
+            if (distance <= attackDistance)
             {
-                nav.SetDestination(target.position);
-                float distance = (transform.position - target.position).magnitude;
-                if (distance <= attackDistance)
+                FreezeEnemy();
+                if (atkTime >= attackCool)
                 {
-                    FreezeEnemy();
-                    if (atkTime >= 2.5f)
-                    {
-                        anim.SetTrigger("isAttack");
-                        atkTime = 0f;
-                    }
-                }
-                else if (distance >= 20f)
-                {
-                    target = null;
-                    StartCoroutine(Targeting());
+                    anim.SetTrigger("isAttack");
+                    atkTime = 0f;
                 }
             }
-            else
+            else if (distance >= 20f)
             {
-                nav.SetDestination(originPos);
-                UnfreezeEnemy();
+                target = null;
+                StartCoroutine(Targeting());
             }
+        }
+        else
+        {
+            nav.SetDestination(originPos);
+            UnfreezeEnemy();
         }
         if (nav.velocity != Vector3.zero)
         {
@@ -93,29 +89,8 @@ public class Enemy : MonoBehaviour
             Attack(other);
             Debug.Log("공격");
         }
-    }
-    protected void FreezeEnemy ()
-    {
-        nav.isStopped = true;    
-    }           // 몬스터가 움직이지 못하게 함.
-    protected void UnfreezeEnemy()
-    {
-        nav.isStopped = false;
-    }          // 몬스터가 움직일 수 있게 함.
-    protected void WakeUp()
-    {
-        RaycastHit[] rayHits =
-            Physics.SphereCastAll(transform.position, 4f, transform.forward, 0f, LayerMask.GetMask("Enemy"));
-        if (rayHits.Length > 0)
-        {
-            for (int i = 0; i < rayHits.Length; ++i)
-            {
-                Enemy other = rayHits[i].transform.GetComponent<Enemy>();
-                other.target = this.target;
-            }
-
-        }
-    }                 // 주변에 있는 몬스터를 깨움.
+    }  
+   
     protected IEnumerator Targeting()
     {
         yield return new WaitForSeconds(0.5f);       
@@ -171,15 +146,7 @@ public class Enemy : MonoBehaviour
             questProgress();
             Destroy(gameObject, 4);
         }       
-    }
-
-    protected void LookTarget()
-    {
-        if (target != null)
-        {            
-            transform.LookAt(target);
-        }              
-    }
+    }    
 
     // 경험치와 골드를 드랍. 아이템은 플레이어의 스탯에 직접 반영되는 것이 아닌 필드에 드랍되므로 별도의 메소드를 사용.
     protected void DropExpAndGold()
@@ -209,9 +176,41 @@ public class Enemy : MonoBehaviour
         }
         
     }
-    void questProgress()
+    protected void questProgress()
     {
         if (JY_QuestManager.s_instance != null && this.gameObject.name == JY_QuestManager.s_instance.QuestData[0][3])
             JY_QuestManager.s_instance.QuestProgress(0);
     }
+
+
+    // 애니메이션 이벤트 함수들.
+    protected void FreezeEnemy()
+    {
+        nav.isStopped = true;
+    }            // 몬스터가 움직이지 못하게 함. nav.isStopped
+    protected void UnfreezeEnemy()
+    {
+        nav.isStopped = false;
+    }          // 몬스터가 움직일 수 있게 함.
+    protected void LookTarget()
+    {
+        if (target != null)
+        {
+            transform.LookAt(target);
+        }
+    }             // 몬스터가 타겟을 바라봄.    
+    protected void WakeUp()
+    {
+        RaycastHit[] rayHits =
+            Physics.SphereCastAll(transform.position, 4f, transform.forward, 0f, LayerMask.GetMask("Enemy"));
+        if (rayHits.Length > 0)
+        {
+            for (int i = 0; i < rayHits.Length; ++i)
+            {
+                Enemy other = rayHits[i].transform.GetComponent<Enemy>();
+                other.target = this.target;
+            }
+
+        }
+    }                 // 주변에 있는 몬스터를 깨움.    
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Fireball : MonoBehaviour
 {
+    // 파이어볼은 방어율을 무시하고 고정적인 100 데미지를 입힌다.
     public int damage;
 
     private void Update()

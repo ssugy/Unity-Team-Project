@@ -1852,10 +1852,13 @@ MonoBehaviour:
   - 0.7
   - 0.7
   - 0.7
+  fieldItem: {fileID: 5869032223344055893, guid: 828de48909114044983e5627a3bc0a0b, type: 3}
   targetRadius: 3
   targetRange: 3
   attackDistance: 1.8
-  fieldItem: {fileID: 5869032223344055893, guid: 828de48909114044983e5627a3bc0a0b, type: 3}
+  attackCool: 4
+  skillCool: 6
+  skillDistance: 6
   shooter: {fileID: 5635370030993390824}
 --- !u!195 &7393200756165185175
 NavMeshAgent:

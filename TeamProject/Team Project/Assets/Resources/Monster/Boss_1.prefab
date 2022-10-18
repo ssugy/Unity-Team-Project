@@ -5441,6 +5441,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75326d1f443386b4d8ad3b389535fcb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 1000
+  curHealth: 1000
+  defMag: 0.5
+  atkPoint: 80
+  atkMag: 1.1
+  dropExp: 100
+  dropGold: 2000
+  dropItem: 15000000
+  dropPro:
+  - 1
+  fieldItem: {fileID: 5869032223344055893, guid: 828de48909114044983e5627a3bc0a0b, type: 3}
+  targetRadius: 0
+  targetRange: 0
+  attackDistance: 2
+  attackCool: 5
+  skillCool: 10
+  skillDistance: 0
 --- !u!195 &2069785687982303518
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5451,7 +5468,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2.2
+  m_Speed: 4
   m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120

@@ -29,10 +29,7 @@ public class Inventory : MonoBehaviour
         SlotCnt = 36;
         items.Clear();
         items = JY_CharacterListManager.s_instance.characterInventoryData.InventoryJDataList[JY_CharacterListManager.s_instance.selectNum].itemList;
-        foreach (Item one in items)
-        {
-            AddItem(one);
-        }
+        
     }
     
     // 아이템을 인벤토리에 추가하는 코드. 인벤토리가 가득 찼다면 아이템 획득 불가.

@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class Dragon : Enemy
-{
-    [Space(10f)]
-    [Header("원거리 공격 관련")]
+{    
+    public float skillCool;    
+    [Header("스킬 공격 관련")]
+    public float skillDistance;
     public Transform shooter;       // 화염구를 발사할 위치.
     private GameObject fireballPrefab;    
     
@@ -34,7 +35,7 @@ public class Dragon : Enemy
                 if (distance <= attackDistance)
                 {
                     FreezeEnemy();
-                    if (atkTime >= 2.5f)
+                    if (atkTime >= attackCool)
                     {
                         anim.SetTrigger("isAttack");
                         atkTime = 0f;
@@ -45,7 +46,7 @@ public class Dragon : Enemy
                     target = null;
                     StartCoroutine(Targeting());
                 }
-                else if (distance > 5f && atkTime >= 2.5f) 
+                else if (distance > skillDistance && atkTime >= skillCool) 
                 {
                     anim.SetTrigger("isSkill");
                     atkTime = 0f;

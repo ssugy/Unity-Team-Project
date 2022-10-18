@@ -71,9 +71,10 @@ public class PlayerStat
         set 
         {
             curHP = value;
-            if (curHP < 0)
+            if (curHP <= 0)
             {
                 curHP = 0;
+                Player.instance.Die();
             }
             else if (curHP > HP)
             {
@@ -424,6 +425,7 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        // 화염, 심연 등 닿으면 죽는 오브젝트와 닿으면 사망함.        
         if (other.CompareTag("Die"))
         {
             Die();
@@ -520,7 +522,8 @@ public class Player : MonoBehaviour
         }
         SaveStatData();
         JY_QuestManager.s_instance.uiManager.StatusDataRenew();
-    }       // 스탯 투자
+    }       
+    // Adjustable 스탯으로부터 기타 스탯을 연산함.
     public void SetState()
     {
         playerStat.HP = 210 + playerStat.health * 20 + playerStat.strength * 5;   // 1레벨 스탯 기준 400  
@@ -536,6 +539,7 @@ public class Player : MonoBehaviour
             playerStat.atkPoint = 0;
         }
     }
+    // 특별히 사용하기 위해 만든 시그마 연산용 함수. 일반적인 시그마 연산에는 사용하지 말 것.
     public float Sigma(float a, float b, int c)
     {
         float tmp = 0;
@@ -571,6 +575,7 @@ public class Player : MonoBehaviour
             hpbar = Enemy_HP_UI.GetObject();
             hpbar.Recognize(enemy);
         }
+        /*
         // 예나
         else
         {
@@ -583,6 +588,7 @@ public class Player : MonoBehaviour
                 hpbar.RecognizeBoss(boss);
             }
         }
+        */
     }
     public void PowerStrikeDamage()
     {
@@ -633,36 +639,11 @@ public class Player : MonoBehaviour
                 Attack(col);
             }
         }
-    }
-    /*
-    public void ShieldOn()
-    {
-        if (!isShield)
-        {            
-            playerStat.defMag += 0.3f;
-            isShield = true;
-        }
-        
-    }
-
-
-    public void ShieldOff()
-    {
-        if (isShield)
-        {
-            playerStat.defMag -= 0.3f;
-            isShield = false;
-        }
-    }
-    */
+    }    
 
     public void IsAttacked(int _damage)
     {
-        playerStat.CurHP -= _damage;        
-        if (playerStat.CurHP <= 0)
-        {
-            Die();
-        }
+        playerStat.CurHP -= _damage;                
         playerAni.SetFloat("isAttacked", (float)_damage / playerStat.HP);
         
     }

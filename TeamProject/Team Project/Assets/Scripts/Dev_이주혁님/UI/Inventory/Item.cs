@@ -66,7 +66,7 @@ public class Item
         Item tmp = new Item();
         for (int i=0;i< ItemDatabase.instance.itemDB.Count; i++)
         {
-            if(this.name== ItemDatabase.instance.itemDB[i].name)
+            if(this.name.Equals(ItemDatabase.instance.itemDB[i].name))
             {
                 tmp = ItemDatabase.instance.itemDB[i];
                 break;
