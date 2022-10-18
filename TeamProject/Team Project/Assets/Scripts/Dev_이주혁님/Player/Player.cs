@@ -178,7 +178,7 @@ public class Player : MonoBehaviour
     private HP_Bar hpbar;
     private Dictionary<int, int> EXP_TABLE;
 
-
+    
     private void Awake()
     {        
         instance = this;

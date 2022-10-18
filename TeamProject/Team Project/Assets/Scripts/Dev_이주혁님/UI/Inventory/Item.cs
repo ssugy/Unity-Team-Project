@@ -63,7 +63,7 @@ public class Item
     // 아이템의 이름 정보만 갖고 있을 때, 이름으로부터 아이템의 설명, 이미지, 이펙트를 불러옴.
     public void ShallowCopy()
     {
-        Item tmp = new Item();
+        Item tmp = new Item();        
         for (int i=0;i< ItemDatabase.instance.itemDB.Count; i++)
         {
             if(this.name.Equals(ItemDatabase.instance.itemDB[i].name))

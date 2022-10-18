@@ -96,9 +96,9 @@ public class JY_AvatarLoad : MonoBehaviour
                 setChara = charFemale.GetComponent<SetCharacter>();
             }
             else
-            {
-                charMale.SetActive(true);
+            {                
                 charFemale.SetActive(false);
+                charMale.SetActive(true);
                 setChara = charMale.GetComponent<SetCharacter>();
             }
             //equipWeapon(listNum);

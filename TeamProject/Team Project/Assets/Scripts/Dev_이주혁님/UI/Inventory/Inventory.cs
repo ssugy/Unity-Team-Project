@@ -18,18 +18,40 @@ public class Inventory : MonoBehaviour
             slotCnt = value;            
         }
     }    
-    private void Awake()
-    {        
+    
+    private void OnEnable()
+    {
         instance = this;
-        //items = new List<Item>(36);
-
+    }
+    private void OnDisable()
+    {
+        instance = null;
     }
     void Start()
     {
         SlotCnt = 36;
         items.Clear();
         items = JY_CharacterListManager.s_instance.characterInventoryData.InventoryJDataList[JY_CharacterListManager.s_instance.selectNum].itemList;
-        
+        // 씬이 시작되었을 때, 인벤토리의 아이템 설명/아이콘/이펙트를 불러옴.
+        // 인벤토리를 로드할 때, 아이템의 이름과 타입, 착용 정보만을 불러오기 때문.    
+        if (this.items.Count >= 1)
+        {
+            for (int i = 0; i < this.items.Count; i++)
+            {
+                this.items[i].ShallowCopy();                
+            }
+        }
+        if (onChangeItem != null)
+        {
+            onChangeItem();
+        }
+        foreach (Item one in items)
+        {
+            if (one.equipedState.Equals(EquipState.EQUIPED))
+            {
+                one.effects[0].ExecuteRole(one);
+            }
+        }
     }
     
     // 아이템을 인벤토리에 추가하는 코드. 인벤토리가 가득 찼다면 아이템 획득 불가.
