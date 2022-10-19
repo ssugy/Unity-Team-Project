@@ -25,8 +25,7 @@ public class BossManager : MonoBehaviour
     private enum BossState {STATE_IDLE, STATE_GUN, STATE_SWORD, STATE_WALK, STATE_RUN, STATE_DEATH, STATE_SKILL1, STATE_SKILL2, STATE_SKILL3 }
     private enum BossAttackState { STATE_NORMAL, STATE_70, STATE_30}
     private string[] animNames = { "Idle", "shoots gun_2", "sword attack", "Walking", "Run", "Death" };
-    private BossState currentState;
-    private BossAudioManager audioManager;
+    private BossState currentState;    
     private int bossState;
 
     public bool secondCutScenePlay;
@@ -66,98 +65,9 @@ public class BossManager : MonoBehaviour
         SetAttackCount();
         skillFlame.SetActive(false);
         skillGas.SetActive(false);
-        skillEarth.SetActive(false);
-        audioManager = GetComponent<BossAudioManager>();
+        skillEarth.SetActive(false);        
     }
 
-    private void NormalAttack()
-    {
-        // 가까이 근접했고, 공격중이 아니면 공격
-        countAttack--;
-        if (countAttack <= 0)
-        {
-            // 스킬 사용
-            SetAttackCount();
-            int skillMax = bossState + 1;
-            switch (Random.Range(0, skillMax))
-            {
-                case 0:
-                    SkillAttack1();
-                    break;
-                case 1:
-                    SkillAttack2();
-                    break;
-                default:
-                    SkillAttack3();
-                    break;
-            }
-            
-        }
-        else
-        {
-            // 일반 공격
-            control.OnClickAnim(animNames[(int)BossState.STATE_SWORD]);
-            currentState = BossState.STATE_SWORD;
-            isFollow = false;
-            isAttack = true;
-            trailRenderer.gameObject.SetActive(true);
-        }
-    }
-
-    private void SkillAttack1()
-    {
-        currentState = BossState.STATE_SKILL1;
-        control.OnClickAnim(animNames[(int)BossState.STATE_IDLE]);
-        skillTimer = 0f;
-        StartCoroutine(Skill1());
-    }
-
-    private void SkillAttack2()
-    {
-        currentState = BossState.STATE_SKILL2;
-        control.OnClickAnim(animNames[(int)BossState.STATE_IDLE]);
-        skillTimer = 0f;
-        StartCoroutine(Skill2());
-    }
-
-    private void SkillAttack3()
-    {
-        currentState = BossState.STATE_SKILL3;
-        control.OnClickAnim(animNames[(int)BossState.STATE_IDLE]);
-        skillTimer = 0f;
-        StartCoroutine(Skill3());
-    }
-
-    IEnumerator Skill1()
-    {
-        yield return new WaitForSeconds(0.8f);
-        audioManager.PlaySound(0);
-        skillFlame.SetActive(true);
-        yield return new WaitForSeconds(1.5f);
-        skillFlame.SetActive(false);
-        currentState = BossState.STATE_IDLE;
-
-    }
-
-    IEnumerator Skill2()
-    {
-        yield return new WaitForSeconds(0.8f);
-        audioManager.PlaySound(1);
-        skillGas.SetActive(true);
-        yield return new WaitForSeconds(2.5f);
-        skillGas.SetActive(false);
-        currentState = BossState.STATE_IDLE;
-    }
-
-    IEnumerator Skill3()
-    {
-        yield return new WaitForSeconds(0.8f);
-        audioManager.PlaySound(2);
-        skillEarth.SetActive(true);
-        yield return new WaitForSeconds(3f);
-        skillEarth.SetActive(false);
-        currentState = BossState.STATE_IDLE;
-    }
     /*
     void Update()
     {
@@ -236,11 +146,5 @@ public class BossManager : MonoBehaviour
             }            
         }
     }
-    */
-    
-    protected IEnumerator OnDamage(Vector3 reactVec)
-    {
-        yield return new WaitForSeconds(0.1f);
-        AudioManager.s_instance.SoundFadeInOut(AudioManager.SOUND_NAME.BossBGM_02, 0f, 1f);        
-    }    
+    */     
 }

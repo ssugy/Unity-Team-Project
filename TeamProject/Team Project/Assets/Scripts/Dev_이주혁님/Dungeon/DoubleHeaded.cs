@@ -13,6 +13,10 @@ public class DoubleHeaded : Enemy
     public GameObject flame;
     public GameObject poison;
     public GameObject earthquake;
+    private float skillTime;
+
+    // 보스 관련 효과음을 담당.
+    public BossAudioManager audioManager;
 
     private void Awake()
     {
@@ -22,6 +26,7 @@ public class DoubleHeaded : Enemy
         anim = GetComponentInChildren<Animator>();
         originPos = transform.position;
         atkTime = 0f;
+        skillTime = 0f;
     }
     // 보스는 타겟팅 기능을 사용하지 않음. 보스룸에 들어온 것을 감지하는 콜라이더로 target을 설정.
     // 보스룸에 플레이어가 들어오면 도망칠 수 없으므로 target이 null로 바뀌었을 때의 조건은 필요없음.
@@ -32,6 +37,7 @@ public class DoubleHeaded : Enemy
     private void FixedUpdate()
     {
         atkTime += Time.fixedDeltaTime;
+        skillTime += Time.fixedDeltaTime;
         if (target != null)
         {
             nav.SetDestination(target.position);
@@ -45,25 +51,25 @@ public class DoubleHeaded : Enemy
                     atkTime = 0f;
                 }
             }
-            else if (distance > skillMinimumDistance && distance<skillMaximumDistance && atkTime >= skillCool)
+            else if (distance > skillMinimumDistance && distance<skillMaximumDistance && skillTime >= skillCool)
             {
                 switch(Random.Range(0, 4))
                 {
                     case 0:
                         anim.SetTrigger("isFlame");
-                        atkTime = 0f;
+                        skillTime = 0f;
                         break;
                     case 1:
                         anim.SetTrigger("isFart");
-                        atkTime = 0f;
+                        skillTime = 0f;
                         break;
                     case 2:
                         anim.SetTrigger("isEarthquake");
-                        atkTime = 0f;
+                        skillTime = 0f;
                         break;
                     default:
                         anim.SetTrigger("isShoot");
-                        atkTime = 0f;
+                        skillTime = 0f;
                         break;
                 }                
             }
@@ -79,7 +85,7 @@ public class DoubleHeaded : Enemy
     }
     public override void IsAttacked(int _damage)
     {
-        curHealth -= _damage;            
+        curHealth -= _damage;       
         if (curHealth <= 0)
         {
             hitbox.enabled = false;
@@ -113,7 +119,8 @@ public class DoubleHeaded : Enemy
     void NormalAttack()
     {
         atkMag = 1.1f;
-        Collider[] player = Physics.OverlapSphere(transform.position+transform.forward, 3f, LayerMask.GetMask("Player"));
+        Collider[] player = Physics.OverlapSphere(transform.position + transform.forward * 1.2f,
+            1.5f, LayerMask.GetMask("Player"));
         if (player != null)
         {
             foreach (Collider col in player)
@@ -123,11 +130,10 @@ public class DoubleHeaded : Enemy
         }
     }
     void FlameThrower()
-    {
-        
+    {        
         atkMag = 0.8f;
         Collider[] player = Physics.OverlapCapsule(transform.position + transform.forward, 
-            transform.position + transform.forward * 7, 1.5f, LayerMask.GetMask("Player"));        
+            transform.position + transform.forward * 7, 0.3f, LayerMask.GetMask("Player"));        
         if (player != null)
         {
             foreach (Collider col in player)
@@ -139,7 +145,7 @@ public class DoubleHeaded : Enemy
     void PoisonGas()
     {
         atkMag = 1f;
-        Collider[] player = Physics.OverlapSphere(transform.position, 2f, LayerMask.GetMask("Player"));
+        Collider[] player = Physics.OverlapSphere(transform.position, 1f, LayerMask.GetMask("Player"));
         if (player != null)
         {
             foreach (Collider col in player)
@@ -152,7 +158,7 @@ public class DoubleHeaded : Enemy
     {
         atkMag = 2f;
         Collider[] player = Physics.OverlapCapsule(transform.position + transform.forward,
-            transform.position + transform.forward * 11, 1.2f, LayerMask.GetMask("Player"));
+            transform.position + transform.forward * 11, 0.2f, LayerMask.GetMask("Player"));
         if (player != null)
         {
             foreach (Collider col in player)
@@ -164,7 +170,8 @@ public class DoubleHeaded : Enemy
     void ShootGun()
     {
         atkMag = 2.2f;
-        Collider[] player = Physics.OverlapSphere(transform.position + transform.forward * 2, 3f, LayerMask.GetMask("Player"));
+        Collider[] player = Physics.OverlapSphere(transform.position + transform.forward * 2,
+            1.5f, LayerMask.GetMask("Player"));
         if (player != null)
         {
             foreach (Collider col in player)
@@ -196,5 +203,17 @@ public class DoubleHeaded : Enemy
     void EarthEffectOff()
     {
         earthquake.SetActive(false);
+    }
+    void Audio_1()
+    {
+        audioManager.PlaySound(0);
+    }
+    void Audio_2()
+    {
+        audioManager.PlaySound(1);
+    }
+    void Audio_3()
+    {
+        audioManager.PlaySound(2);
     }
 }
