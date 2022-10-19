@@ -11445,7 +11445,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &843630711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11458,19 +11458,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba134483887ab444a37790e24f3c5d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  curHealth: 100
-  defMag: 0.5
-  atkPoint: 80
-  atkMag: 1.1
-  dropExp: 100
-  dropGold: 200
   skillFlame: {fileID: 1446106288}
   skillGas: {fileID: 1206147702}
   skillEarth: {fileID: 679758797}
   boss: {fileID: 980464707}
   trailRenderer: {fileID: 2132441082}
   portal: {fileID: 794617595}
+  secondCutScenePlay: 0
 --- !u!4 &843630712
 Transform:
   m_ObjectHideFlags: 0
@@ -11692,6 +11686,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1899214189657953740, guid: 42fcb19224f7f554a884f1bdc916a66e, type: 3}
+      propertyPath: hpbar
+      value: 
+      objectReference: {fileID: 1541082954}
     - target: {fileID: 2069142019364065354, guid: 42fcb19224f7f554a884f1bdc916a66e, type: 3}
       propertyPath: m_RootOrder
       value: 33
@@ -11742,7 +11740,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2071064002752570694, guid: 42fcb19224f7f554a884f1bdc916a66e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 42fcb19224f7f554a884f1bdc916a66e, type: 3}
@@ -19047,6 +19045,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f672a31584a6a748912a49c1dce2f0c, type: 3}
+--- !u!114 &1541082954 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1065220733644228100, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
+  m_PrefabInstance: {fileID: 2043015950}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29bf52af1ad719448b9d728313282e32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1555961298
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20374,7 +20383,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1335500218136280, guid: e10e470cb8ac58346ab2adcf73cc6e93, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1335500218136280, guid: e10e470cb8ac58346ab2adcf73cc6e93, type: 3}
       propertyPath: m_TagString

@@ -32,7 +32,8 @@ public class Enemy : MonoBehaviour
     protected NavMeshAgent nav;
     protected Animator anim;
     protected float atkTime;      // 공격 쿨타임. Unirx로 교체예정.
-    
+    protected HP_Bar hpbar;         // HP 바.
+
     private void Awake()
     {        
         rigid = GetComponent<Rigidbody>();
@@ -52,7 +53,7 @@ public class Enemy : MonoBehaviour
         if (target != null)
         {
             nav.SetDestination(target.position);
-            float distance = (transform.position - target.position).magnitude;
+            float distance = Vector3.Distance(transform.position, target.position);
             if (distance <= attackDistance)
             {
                 FreezeEnemy();
@@ -86,8 +87,7 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Attack(other);
-            Debug.Log("공격");
+            Attack(other);            
         }
     }  
    
@@ -121,7 +121,9 @@ public class Enemy : MonoBehaviour
     {
         curHealth -= _damage;
         Vector3 reactVec = transform.position - Player.instance.transform.position; // 넉백 거리.
-        StartCoroutine(OnDamage(reactVec));        
+        StartCoroutine(OnDamage(reactVec));
+        hpbar = Enemy_HP_UI.GetObject();
+        hpbar.Recognize(this);
     }   
     protected IEnumerator OnDamage(Vector3 reactVec)
     {        
@@ -141,7 +143,8 @@ public class Enemy : MonoBehaviour
             reactVec = reactVec.normalized;
             reactVec += Vector3.up;
             rigid.AddForce(reactVec * 5, ForceMode.Impulse);
-            DropExpAndGold();
+            DropExp();
+            DropGold();
             DropItem();
             questProgress();
             Destroy(gameObject, 4);
@@ -149,19 +152,22 @@ public class Enemy : MonoBehaviour
     }    
 
     // 경험치와 골드를 드랍. 아이템은 플레이어의 스탯에 직접 반영되는 것이 아닌 필드에 드랍되므로 별도의 메소드를 사용.
-    protected void DropExpAndGold()
+    protected void DropExp()
     {
         if (target != null)
         {
             Player player = target.GetComponent<Player>();
             if (player != null)
             {
-                player.playerStat.CurExp += dropExp;
-                player.playerStat.Gold += dropGold;
+                player.playerStat.CurExp += dropExp;                
                 JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp = player.playerStat.CurExp;
-                JY_CharacterListManager.s_instance.saveListData();
+                JY_CharacterListManager.s_instance.saveListData();                
             }
         }
+    }
+    protected void DropGold()
+    {
+        // 골드를 드랍하는 메소드 제작.
     }
     protected void DropItem()
     {
@@ -176,7 +182,7 @@ public class Enemy : MonoBehaviour
         }
         
     }
-    protected void questProgress()
+    protected virtual void questProgress()
     {
         if (JY_QuestManager.s_instance != null && this.gameObject.name == JY_QuestManager.s_instance.QuestData[0][3])
             JY_QuestManager.s_instance.QuestProgress(0);

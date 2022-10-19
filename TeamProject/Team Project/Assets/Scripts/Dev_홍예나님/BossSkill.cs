@@ -20,7 +20,7 @@ public class BossSkill : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            BossManager.GetInstance().Attack(other);
+            
         }
     }
 }

@@ -7,12 +7,13 @@ public class Enemy_HP_UI : MonoBehaviour
     public static Enemy_HP_UI instance;
     private Queue<HP_Bar> poolHP_Bar = new Queue<HP_Bar>();
     public GameObject hp_Bar;
+    public int poolSize;    
 
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
-        Initialize(3);
+        Initialize(poolSize);
     }
 
     private HP_Bar CreateNewObject()

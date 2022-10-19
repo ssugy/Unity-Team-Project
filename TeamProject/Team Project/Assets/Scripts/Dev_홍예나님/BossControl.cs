@@ -13,26 +13,7 @@ public class BossControl : MonoBehaviour
     bool isPlayerNear = false;
 
     // Start is called before the first frame update
-    void Start()
-    {
-        anim = boss.GetComponent<Animator>();
-        if (player == null)
-        {
-            GameObject playerRoot = GameObject.Find("Player");
-            if (playerRoot != null)
-            {
-                if (playerRoot.transform.GetChild(0).gameObject.activeSelf)
-                {
-                    player = playerRoot.transform.GetChild(0).gameObject;
-                }
-                else
-                {
-                    player = playerRoot.transform.GetChild(1).gameObject;
-                }
-            }
-
-        }
-    }
+    
 
     // Update is called once per frame
     void Update()
@@ -53,7 +34,7 @@ public class BossControl : MonoBehaviour
             if(!isPlayerNear)
             {
                 isPlayerNear = true;
-                BossManager.GetInstance().SetNear(true);
+                //BossManager.GetInstance().SetNear(true);
             }
         }
         else
@@ -61,7 +42,7 @@ public class BossControl : MonoBehaviour
             if(isPlayerNear)
             {
                 isPlayerNear = false;
-                BossManager.GetInstance().SetNear(false);
+                //BossManager.GetInstance().SetNear(false);
             }
         }
     }

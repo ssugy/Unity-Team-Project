@@ -31,7 +31,7 @@ public class Dragon : Enemy
             if (target != null)
             {
                 nav.SetDestination(target.position);
-                float distance = (transform.position - target.position).magnitude;
+                float distance = Vector3.Distance(transform.position, target.position);
                 if (distance <= attackDistance)
                 {
                     FreezeEnemy();
@@ -73,6 +73,8 @@ public class Dragon : Enemy
         curHealth -= _damage;
         Vector3 reactVec = transform.position - Player.instance.transform.position; // ³Ë¹é °Å¸®.
         StartCoroutine(OnDamage(reactVec, _damage));
+        hpbar = Enemy_HP_UI.GetObject();
+        hpbar.Recognize(this);
     }
     protected IEnumerator OnDamage(Vector3 reactVec, int _damage)
     {        
@@ -99,7 +101,8 @@ public class Dragon : Enemy
             reactVec = reactVec.normalized;
             reactVec += Vector3.up;
             rigid.AddForce(reactVec * 5, ForceMode.Impulse);
-            DropExpAndGold();
+            DropExp();
+            DropGold();
             DropItem();
             Destroy(gameObject, 4);
         }

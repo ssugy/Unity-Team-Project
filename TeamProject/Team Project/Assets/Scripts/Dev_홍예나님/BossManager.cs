@@ -3,15 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BossManager : MonoBehaviour
-{
-    [Header("몬스터 스탯")]
-    public int maxHealth;             // 최대 체력.
-    public int curHealth;             // 현재 체력.
-    public float defMag;              // 방어율.
-    public int atkPoint;              // 몬스터의 공격력.
-    public float atkMag;              // 몬스터의 공격 배율.
-    public int dropExp;               // 몬스터가 드랍하는 경험치.
-    public int dropGold;              // 몬스터가 드랍하는 골드.
+{    
 
     [Header("스킬")]
     public GameObject skillFlame;     // skill1 화염방사
@@ -37,7 +29,7 @@ public class BossManager : MonoBehaviour
     private BossAudioManager audioManager;
     private int bossState;
 
-    bool secondCutScenePlay;
+    public bool secondCutScenePlay;
     static public BossManager GetInstance()
     {
         if (instance == null)
@@ -166,8 +158,7 @@ public class BossManager : MonoBehaviour
         skillEarth.SetActive(false);
         currentState = BossState.STATE_IDLE;
     }
-
-    // Update is called once per frame
+    /*
     void Update()
     {
         if (curHealth > 0)
@@ -188,11 +179,7 @@ public class BossManager : MonoBehaviour
                                 currentState = BossState.STATE_IDLE;
                             }
                             break;
-                    }
-
-                    
-
-                    
+                    }                                        
                 }
                 else if (control.GetAnim(animNames[(int)BossState.STATE_IDLE]))
                 {
@@ -227,25 +214,9 @@ public class BossManager : MonoBehaviour
             }
         }
         
-    }
-    protected void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            Attack(other);
-            Debug.Log("공격");
-        }
-    }
+    }    
 
-    public virtual void Attack(Collider _player)
-    {
-        Player player = _player.GetComponent<Player>();
-        if (player != null)
-        {
-            int damage = Mathf.CeilToInt(atkPoint * atkMag * (1 - player.playerStat.defMag) * Random.Range(0.95f, 1.05f));
-            player.IsAttacked(damage);
-        }
-    }
+    
     public virtual void IsAttacked(int _damage)
     {
         if (curHealth > 0)
@@ -262,49 +233,14 @@ public class BossManager : MonoBehaviour
             else
             {
                 bossState = (int)BossAttackState.STATE_NORMAL;
-            }
-            Vector3 reactVec = transform.position - Player.instance.transform.position; // 넉백 거리.
-            StartCoroutine(OnDamage(reactVec));
+            }            
         }
     }
+    */
     
     protected IEnumerator OnDamage(Vector3 reactVec)
     {
         yield return new WaitForSeconds(0.1f);
-        if (curHealth > 0)
-        {
-            //anim.SetTrigger("isAttacked");
-            reactVec = reactVec.normalized;
-            reactVec += Vector3.up;
-            // rigid.AddForce(reactVec * 5, ForceMode.Impulse);
-            if(curHealth <= maxHealth*0.3f && secondCutScenePlay==false)
-            {
-                JY_CutScenePlay.instance.PlayCutScene2();
-                secondCutScenePlay = true;
-            }
-        }
-        else
-        {
-            //보스 죽음
-            //hitbox.enabled = false;
-            control.OnClickAnim("Death");
-            //FreezeEnemy();
-            reactVec = reactVec.normalized;
-            reactVec += Vector3.up;
-            //rigid.AddForce(reactVec * 5, ForceMode.Impulse);
-            //DropExp();
-            questProgress();
-
-            AudioManager.s_instance.SoundFadeInOut(AudioManager.SOUND_NAME.BossBGM_02, 0f,1f);
-            Destroy(control.gameObject, 4);
-            portal.SetActive(true);
-        }
-    }
-    void questProgress()
-    {
-        if (JY_QuestManager.s_instance != null &&
-            JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[2]==1 &&
-            JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[3]==0 )
-            JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[1]++;
-    }
+        AudioManager.s_instance.SoundFadeInOut(AudioManager.SOUND_NAME.BossBGM_02, 0f, 1f);        
+    }    
 }
