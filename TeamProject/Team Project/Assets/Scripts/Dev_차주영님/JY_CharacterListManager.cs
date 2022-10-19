@@ -269,24 +269,29 @@ public class JY_CharacterListManager : MonoBehaviour
 
     public void CopyInventoryDataToScript(List<Item> target)
     {
+        
         if (target == null)
         {
+            Debug.Log("리스트 초기화");
             target = new List<Item>();
         }
         else
         {
             target.Clear();
         }
+        
 
         for (int i = 0; i < characterInventoryData.InventoryJDataList[selectNum].itemList.Count; i++)
         {
-            Item copied = new Item();
+            Item copied = new Item();            
             copied.type = characterInventoryData.InventoryJDataList[selectNum].itemList[i].type;
             copied.equipedState = characterInventoryData.InventoryJDataList[selectNum].itemList[i].equipedState;
             copied.name = characterInventoryData.InventoryJDataList[selectNum].itemList[i].name;
+            /*
             copied.explanation = characterInventoryData.InventoryJDataList[selectNum].itemList[i].explanation;
             copied.image = characterInventoryData.InventoryJDataList[selectNum].itemList[i].image;
             copied.effects = characterInventoryData.InventoryJDataList[selectNum].itemList[i].effects;
+            */
             target.Add(copied);
             for (int j = 0; j < target.Count; j++)
             {

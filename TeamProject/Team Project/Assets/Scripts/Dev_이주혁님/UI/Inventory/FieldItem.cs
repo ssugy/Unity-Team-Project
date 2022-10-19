@@ -15,6 +15,7 @@ public class FieldItem : MonoBehaviour
 
     private void Start()
     {
+        // 필드에 있는 아이템을 직접 가져오지 않고 현재 아이템과 같은 것을 복사하여 가져옴.
         item = ItemDatabase.instance.itemDB[itemID].Copy();
         image = GetComponentInChildren<SpriteRenderer>();
         SetItem(item);

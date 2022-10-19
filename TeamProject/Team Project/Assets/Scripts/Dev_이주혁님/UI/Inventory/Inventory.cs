@@ -21,8 +21,7 @@ public class Inventory : MonoBehaviour
 
     private void OnEnable()
     {
-        instance = this;
-
+        instance = this;        
         if (JY_CharacterListManager.s_instance.selectNum >= 0)
         {
             JY_CharacterListManager.s_instance.CopyInventoryDataToScript(items);
@@ -31,16 +30,15 @@ public class Inventory : MonoBehaviour
     }
     private void OnDisable()
     {
-
         instance = null;
-        items.Clear();
-
+        items.Clear();       
     }
     void Start()
     {
         SlotCnt = 36;
-        // 씬이 시작되었을 때, 인벤토리의 아이템 설명/아이콘/이펙트를 불러옴.
+        // 월드 씬과 던전 씬이 시작되었을 때, 인벤토리의 아이템 설명/아이콘/이펙트를 불러옴.
         // 인벤토리를 로드할 때, 아이템의 이름과 타입, 착용 정보만을 불러오기 때문.    
+        // 로비 씬에서는 캐릭터를 선택할 때 ListSwap 스크립트에서 로드하기 때문에 필요없음.
         if (items != null)
         {
             for (int i = 0; i < this.items.Count; i++)
@@ -68,6 +66,7 @@ public class Inventory : MonoBehaviour
     }
 
     // 아이템을 인벤토리에 추가하는 코드. 인벤토리가 가득 찼다면 아이템 획득 불가.
+    // 아이템을 추가하는 데에 성공했다면 true 반환 후 인벤토리 UI를 갱신함.
     public bool AddItem(Item _item)
     {
         if (items.Count < SlotCnt)
@@ -81,6 +80,7 @@ public class Inventory : MonoBehaviour
         }
         return false;
     }
+    // 아이템을 인벤토리에서 삭제하는 코드. 삭제한 후에 인벤토리 UI를 갱신함.
     public void RemoveItem(Item _item)
     {
         items.Remove(_item);
@@ -90,18 +90,23 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    // 필드에 있는 아이템을 줍는 코드.
+    // 필드에 있는 아이템과 골드를 줍는 코드.
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Item"))
-        {
-            Debug.Log("아이템 습득");
+        {            
             FieldItem fieldItem = other.GetComponent<FieldItem>();
             // 필드 아이템을 인벤토리에 넣음. 인벤토리가 가득 찼으면 얻을 수 없음.
             if (AddItem(fieldItem.GetItem()))
             {
                 fieldItem.DestroyItem();
             }
+        }
+        else if (other.CompareTag("Gold"))
+        {
+            //FieldGold fieldGold = other.GetComponent<FieldGold>();
+            //Player.instance.playerStat.Gold += fieldGold.ammount;
+            //Destroy(fieldGold.gameObject);
         }
 
     }

@@ -118,20 +118,16 @@ public class JY_ListSwap : MonoBehaviour
             return;
         }
         JY_CharacterListManager.s_instance.selectNum = listNum;
-        JY_AvatarLoad.s_instance.origin.SetActive(true);        // inventory onenable
-        JY_AvatarLoad.s_instance.LoadModelData(listNum);
+        JY_AvatarLoad.s_instance.origin.SetActive(true);        
+        JY_AvatarLoad.s_instance.LoadModelData(listNum);        // 선택한 성별 캐릭터 활성화. inventory onenable
+        // 선택한 캐릭터의 인벤토리를 카피해옴.
         JY_CharacterListManager.s_instance.CopyInventoryDataToScript(Inventory.instance.items);
+        JY_AvatarLoad.s_instance.LobbyDummyClear(JY_CharacterListManager.s_instance.selectNum);
         foreach (Item one in Inventory.instance.items)
         {
             if (one.equipedState.Equals(EquipState.EQUIPED))
             {
-                JY_AvatarLoad.s_instance.LobbyDummyClear(JY_CharacterListManager.s_instance.selectNum);
-                try { 
-                    one.effects[0].ExecuteRole(one); 
-                }
-                catch (System.ArgumentException e) 
-                {
-                }
+                one.effects[0].ExecuteRole(one);                
             }
         }
         JY_CharacterListManager.s_instance.selectPortrait = switchPortrait(JY_CharacterListManager.instance.characterData.infoDataList[listNum].gender,
