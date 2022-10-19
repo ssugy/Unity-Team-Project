@@ -4344,7 +4344,7 @@ PrefabInstance:
     - target: {fileID: 5866666021909216657, guid: 45f944a4396b0a54398eb1abe6743296, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 1d6615e592724564e836d1a9f0071e48, type: 2}
+      objectReference: {fileID: 9100000, guid: d54db79d75f36dc4ab2b8d28b27c12e0, type: 2}
     - target: {fileID: 6407665031634382284, guid: 45f944a4396b0a54398eb1abe6743296, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -5612,7 +5612,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3929205648327537884, guid: 44736bd0a8b35b1438aa1c3f8b96b977, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3929205648327537884, guid: 44736bd0a8b35b1438aa1c3f8b96b977, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5649,6 +5649,22 @@ PrefabInstance:
     - target: {fileID: 4453082654697664102, guid: 44736bd0a8b35b1438aa1c3f8b96b977, type: 3}
       propertyPath: m_Name
       value: test
+      objectReference: {fileID: 0}
+    - target: {fileID: 6946656656771559078, guid: 44736bd0a8b35b1438aa1c3f8b96b977, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: d54db79d75f36dc4ab2b8d28b27c12e0, type: 2}
+    - target: {fileID: 6946656656771559078, guid: 44736bd0a8b35b1438aa1c3f8b96b977, type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'PT_Medieval_Female_Armor_Hips'\n\tTransform
+        'PT_Medieval_Female_Armor_LeftHandRing2'\n\tTransform 'PT_Medieval_Female_Armor_RightHandRing2'\n\tTransform
+        'PT_Medieval_Female_Armor_RightHandIndex1'\n\tTransform 'PT_Medieval_Female_Armor_LeftFoot'\n\tTransform
+        'PT_Medieval_Female_Armor_LeftHandPinky2'\n\tTransform 'PT_Medieval_Female_Armor_RightHandPinky2'\n\tTransform
+        'PT_Medieval_Female_Armor_LeftHandPinky1'\n\tTransform 'PT_Medieval_Female_Armor_RightHandRing1'\n\tTransform
+        'PT_Medieval_Female_Armor_RightHandThumb2'\n\tand more ...\n\tFrom animation
+        clip 'mixamo.com'"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44736bd0a8b35b1438aa1c3f8b96b977, type: 3}
