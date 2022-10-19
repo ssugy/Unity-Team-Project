@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
     [Header("쿨타임 관련")]
     public float attackCool;    
 
-    protected Transform target;        // 타겟. (플레이어)                    
+    public Transform target;        // 타겟. (플레이어)                    
     protected Vector3 originPos;      // 몬스터의 초기 위치.    
     protected Rigidbody rigid;
     protected Collider hitbox;    

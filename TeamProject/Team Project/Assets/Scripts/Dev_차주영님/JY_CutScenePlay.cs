@@ -9,12 +9,13 @@ public class JY_CutScenePlay : MonoBehaviour
     public GameObject CutScene1;
     public GameObject CutScene2;
     public GameObject BattleUI;
-    public GameObject boss;
+    public Enemy boss;
     public Camera mainCam;
     public Camera cutSceneCam;
     public Canvas fadeUI;
     public Image fade;
     public float fadeTime;
+    public HP_Bar_Boss hpBarBoss;
 
     bool firstPlay;
     Vector3 CamAxisPos;
@@ -63,6 +64,10 @@ public class JY_CutScenePlay : MonoBehaviour
         yield return new WaitForSeconds(1f);
         StartCoroutine(Fade(1, 0));
         BattleUI.SetActive(true);
+
+        hpBarBoss.gameObject.SetActive(true);
+        hpBarBoss.Recognize(boss);
+        boss.target = Player.instance.transform;
     }
 
     //중간 컷신은 조정해야함.
@@ -75,7 +80,7 @@ public class JY_CutScenePlay : MonoBehaviour
         AudioManager.s_instance.SoundFadeInOut(AudioManager.SOUND_NAME.BossBGM_01, 0, 1);
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BossBGM_02, true, 0.5f);
 
-        boss.SetActive(false);
+        boss.gameObject.SetActive(false);
         CutScene2.SetActive(true);
         yield return new WaitForSeconds(18f);
 
@@ -84,7 +89,7 @@ public class JY_CutScenePlay : MonoBehaviour
         Player.instance.movement = Vector3.zero;
         CutScene2.SetActive(false);
         BattleUI.SetActive(true);
-        boss.SetActive(true);
+        boss.gameObject.SetActive(true);
         cutSceneCam.gameObject.SetActive(false);
         mainCam.gameObject.SetActive(true);
     }

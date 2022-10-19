@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class HP_Bar_Boss : MonoBehaviour
 {        
-    public Image hp;
-    public Enemy enemy;
+    public Image hp;    
+    public Text nameText;
+    private Enemy enemy;
 
     private void Awake()
     {
@@ -28,6 +29,6 @@ public class HP_Bar_Boss : MonoBehaviour
     public void Recognize(Enemy _enemy)
     {
         enemy = _enemy;
-        gameObject.SetActive(true);
+        nameText.text = enemy.gameObject.name;        
     }
 }

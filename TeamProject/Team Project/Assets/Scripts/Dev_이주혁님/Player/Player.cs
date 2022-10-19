@@ -421,6 +421,7 @@ public class Player : MonoBehaviour
         DisableAtk();
         playerAni.SetTrigger("isDead");
         transform.tag = "Dead";
+        gameObject.layer = 16;      // 죽으면 레이어 Dead로 변경.
         Camera.main.GetComponent<MainCamController>().enabled = false;   // 플레이어가 사망하면 더 이상 카메라가 움직이지 않게 함.    
         Camera.main.GetComponent<WhenPlayerDie>().enabled = true;
         BattleUI.instance.deathUI.SetActive(true);

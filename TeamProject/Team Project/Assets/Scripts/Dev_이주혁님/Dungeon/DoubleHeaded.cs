@@ -9,9 +9,10 @@ public class DoubleHeaded : Enemy
     [Header("스킬 공격 관련")]
     public float skillMinimumDistance;
     public float skillMaximumDistance;
-
     private BossManager bossManager;
-    public new HP_Bar_Boss hpbar;         // HP 바.
+    public GameObject flame;
+    public GameObject poison;
+    public GameObject earthquake;
 
     private void Awake()
     {
@@ -78,8 +79,7 @@ public class DoubleHeaded : Enemy
     }
     public override void IsAttacked(int _damage)
     {
-        curHealth -= _damage;        
-        hpbar.Recognize(this);
+        curHealth -= _damage;            
         if (curHealth <= 0)
         {
             hitbox.enabled = false;
@@ -107,5 +107,94 @@ public class DoubleHeaded : Enemy
             JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[2] == 1 &&
             JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[3] == 0)
             JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[1]++;
+    }
+
+    // 애니메이션 이벤트 함수.
+    void NormalAttack()
+    {
+        atkMag = 1.1f;
+        Collider[] player = Physics.OverlapSphere(transform.position+transform.forward, 3f, LayerMask.GetMask("Player"));
+        if (player != null)
+        {
+            foreach (Collider col in player)
+            {
+                Attack(col);
+            }
+        }
+    }
+    void FlameThrower()
+    {
+        
+        atkMag = 0.8f;
+        Collider[] player = Physics.OverlapCapsule(transform.position + transform.forward, 
+            transform.position + transform.forward * 7, 1.5f, LayerMask.GetMask("Player"));        
+        if (player != null)
+        {
+            foreach (Collider col in player)
+            {
+                Attack(col);
+            }
+        }
+    }
+    void PoisonGas()
+    {
+        atkMag = 1f;
+        Collider[] player = Physics.OverlapSphere(transform.position, 2f, LayerMask.GetMask("Player"));
+        if (player != null)
+        {
+            foreach (Collider col in player)
+            {
+                Attack(col);
+            }
+        }
+    }
+    void Earthquake()
+    {
+        atkMag = 2f;
+        Collider[] player = Physics.OverlapCapsule(transform.position + transform.forward,
+            transform.position + transform.forward * 11, 1.2f, LayerMask.GetMask("Player"));
+        if (player != null)
+        {
+            foreach (Collider col in player)
+            {
+                Attack(col);
+            }
+        }
+    }
+    void ShootGun()
+    {
+        atkMag = 2.2f;
+        Collider[] player = Physics.OverlapSphere(transform.position + transform.forward * 2, 3f, LayerMask.GetMask("Player"));
+        if (player != null)
+        {
+            foreach (Collider col in player)
+            {
+                Attack(col);
+            }
+        }
+    }
+    void FlameEffectOn()
+    {
+        flame.SetActive(true);
+    }
+    void PoisonEffectOn()
+    {
+        poison.SetActive(true);
+    }
+    void EarthEffectOn()
+    {
+        earthquake.SetActive(true);
+    }
+    void FlameEffectOff()
+    {
+        flame.SetActive(false);
+    }
+    void PoisonEffectOff()
+    {
+        poison.SetActive(false);
+    }
+    void EarthEffectOff()
+    {
+        earthquake.SetActive(false);
     }
 }
