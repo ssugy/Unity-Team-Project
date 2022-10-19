@@ -144,7 +144,6 @@ public class JY_UIManager : MonoBehaviour
     // Lobby씬 (캐릭터 선택창)으로 이동
     public void loadLobbyScene()
     {
-        JY_CharacterListManager.s_instance.selectNum = -1;
         GameManager.s_instance.LoadScene(2);
     }
 
