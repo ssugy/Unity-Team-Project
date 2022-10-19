@@ -48,7 +48,14 @@ public class AudioManager : MonoBehaviour
         BossBGM_01,
         BossBGM_02,
         Key,
-        Portal
+        Portal,
+        PLAYER_RUN,
+        PLAYER_SWING,
+        PLAYER_HIT,
+        PLAYER_ATTACK,
+        MONSTER_GROWL,
+        BOSS_WALK,
+        BOSS_SWING        
     }
     public SOUND_NAME Name;
     public AudioClip[] clips;   // enum의 순서를 따라가야됨

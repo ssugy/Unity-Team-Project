@@ -119,4 +119,8 @@ public class Dragon : Enemy
     {
         Instantiate(fireballPrefab, shooter.position, transform.rotation);
     }
+    void SoundGrowl()
+    {
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.MONSTER_GROWL);
+    }
 }

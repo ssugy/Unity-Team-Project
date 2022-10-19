@@ -18,6 +18,7 @@ public class Key : MonoBehaviour
     {
         message.SetActive(true);
         door.isLocked = false;
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Key);
         gameObject.SetActive(false);
     }
 }

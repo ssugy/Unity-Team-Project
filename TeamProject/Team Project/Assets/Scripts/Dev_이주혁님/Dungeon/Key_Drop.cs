@@ -20,7 +20,8 @@ public class Key_Drop : MonoBehaviour
     public void PickUpKey()
     {
         message.SetActive(true);
-        door.isLocked = false;              
+        door.isLocked = false;
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Key);
     }
     private void Update()
     {

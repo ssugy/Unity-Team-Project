@@ -216,4 +216,12 @@ public class DoubleHeaded : Enemy
     {
         audioManager.PlaySound(2);
     }
+    void SoundWalk()
+    {
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BOSS_WALK);
+    }
+    void SoundSwing()
+    {
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BOSS_WALK);
+    }
 }

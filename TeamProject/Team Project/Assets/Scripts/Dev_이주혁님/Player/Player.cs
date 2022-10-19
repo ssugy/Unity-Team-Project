@@ -572,6 +572,7 @@ public class Player : MonoBehaviour
         Enemy enemy = _enemy.GetComponent<Enemy>();
         if (enemy != null)
         {
+            SoundAttack();
             int damage = AttackDamage(Weapon.weapon.atkMag, enemy.defMag);
             enemy.IsAttacked(damage);            
         }        
@@ -701,5 +702,21 @@ public class Player : MonoBehaviour
     {
         playerStat.CurExp += exp;
         JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp = playerStat.CurExp;
+    }
+    void SoundRun()
+    {
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.PLAYER_RUN);
+    }
+    void SoundSwing()
+    {
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.PLAYER_SWING);
+    }
+    void SoundHit()
+    {
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.PLAYER_HIT);
+    }
+    void SoundAttack()
+    {
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.PLAYER_ATTACK);
     }
 }
