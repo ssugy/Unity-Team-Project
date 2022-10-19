@@ -1381,9 +1381,17 @@ MonoBehaviour:
   defMag: 0.7
   atkPoint: 100
   atkMag: 2.2
+  dropExp: 0
+  dropGold: 3000
+  dropItem: 
+  dropPro: []
+  fieldItem: {fileID: 0}
+  fieldGold: {fileID: 0}
   targetRadius: 0
   targetRange: 0
   attackDistance: 0
+  attackCool: 0
+  target: {fileID: 0}
 --- !u!195 &6268415881481159386
 NavMeshAgent:
   m_ObjectHideFlags: 0

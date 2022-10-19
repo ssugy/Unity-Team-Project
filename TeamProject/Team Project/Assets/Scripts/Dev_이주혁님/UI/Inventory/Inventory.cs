@@ -104,9 +104,9 @@ public class Inventory : MonoBehaviour
         }
         else if (other.CompareTag("Gold"))
         {
-            //FieldGold fieldGold = other.GetComponent<FieldGold>();
-            //Player.instance.playerStat.Gold += fieldGold.ammount;
-            //Destroy(fieldGold.gameObject);
+            FieldGold fieldGold = other.GetComponent<FieldGold>();
+            Player.instance.playerStat.Gold += fieldGold.ammount;
+            Destroy(fieldGold.gameObject);
         }
 
     }

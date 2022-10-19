@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
     public List<int> dropItem;       // 몬스터가 드랍하는 아이템 ID.
     public List<float> dropPro;        // 몬스터가 드랍하는 아이템의 드랍 확률.
     public GameObject fieldItem;       // 몬스터가 드랍하는 아이템 프리팹.   
+    public GameObject fieldGold;    // 금화 프리팹.
     [Header("인식 범위 관련 프로퍼티")]
     public float targetRadius;  // 몬스터의 인식 범위.
     public float targetRange;   // 몬스터의 인식 거리
@@ -34,6 +35,8 @@ public class Enemy : MonoBehaviour
     protected float atkTime;      // 공격 쿨타임. Unirx로 교체예정.
     protected HP_Bar hpbar;         // HP 바.
 
+    
+
     private void Awake()
     {        
         rigid = GetComponent<Rigidbody>();
@@ -45,7 +48,7 @@ public class Enemy : MonoBehaviour
     }
     protected void Start()
     {        
-        StartCoroutine(Targeting());      
+        StartCoroutine(Targeting());        
     }
     private void FixedUpdate()
     {
@@ -167,7 +170,8 @@ public class Enemy : MonoBehaviour
     }
     protected void DropGold()
     {
-        // 골드를 드랍하는 메소드 제작.
+        FieldGold tmp = Instantiate<GameObject>(fieldGold, transform.position, Quaternion.identity).GetComponent<FieldGold>();
+        tmp.ammount = Random.Range(dropGold, (int)(dropGold * 1.15f));
     }
     protected void DropItem()
     {
@@ -179,8 +183,7 @@ public class Enemy : MonoBehaviour
                 tmp.itemID = dropItem[i];
             }
             
-        }
-        
+        }        
     }
     protected virtual void questProgress()
     {
