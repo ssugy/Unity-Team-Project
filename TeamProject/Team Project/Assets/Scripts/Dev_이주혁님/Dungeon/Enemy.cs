@@ -27,7 +27,8 @@ public class Enemy : MonoBehaviour
     public float attackCool;    
 
     public Transform target;        // 타겟. (플레이어)                    
-    protected Vector3 originPos;      // 몬스터의 초기 위치.    
+    public Vector3 originPos;      // 몬스터의 초기 위치.    
+    public Quaternion originRotateion;
     protected Rigidbody rigid;
     protected Collider hitbox;    
     protected NavMeshAgent nav;
@@ -43,7 +44,8 @@ public class Enemy : MonoBehaviour
         hitbox = GetComponent<Collider>();        
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
-        originPos = transform.position;                
+        originPos = transform.position;
+        originRotateion = transform.rotation;
         atkTime = 0f;        
     }
     protected void Start()

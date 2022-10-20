@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class DoubleHeaded : Enemy
 {    
+    
+
     public float skillCool;
     [Header("스킬 공격 관련")]
     public float skillMinimumDistance;
@@ -25,6 +27,7 @@ public class DoubleHeaded : Enemy
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
         originPos = transform.position;
+        originRotateion = transform.rotation;
         atkTime = 0f;
         skillTime = 0f;
     }

@@ -81,6 +81,8 @@ public class JY_CutScenePlay : MonoBehaviour
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BossBGM_02, true, 0.5f);
 
         boss.gameObject.SetActive(false);
+        boss.transform.position = boss.originPos;
+        boss.transform.rotation = boss.originRotateion;
         CutScene2.SetActive(true);
         yield return new WaitForSeconds(18f);
 
