@@ -15,7 +15,7 @@ public class CharacterData
 [System.Serializable]
 public class infoData
 {
-    public int number;
+    public int number;  // 슬롯 넘버.
     public bool isNull;
     public string name;
     public int level;
@@ -25,18 +25,18 @@ public class infoData
     public string species;
     public int[] characterAvatar;
     /// <summary>
-    /// index 0 : 공격력
-    /// index 1 : 지구력
-    /// index 2 : 힘
-    /// index 3 : 민첩
+    /// 0 : Health
+    /// 1 : Stamina
+    /// 2 : Strength
+    /// 3 : Dextrerity
     /// </summary>
     public int[] status;
     public int statusPoint;
     /// <summary>
-    /// value 0 : npc 번호
-    /// value 1 : 현재 진행도
-    /// value 2 : 수령 여부
-    /// value 3 : 완료 여부
+    /// 0 : npc 번호
+    /// 1 : 현재 진행도
+    /// 2 : 수령 여부
+    /// 3 : 완료 여부
     /// </summary>
     public int[] questProgress;
     public int[] questProgress2;
@@ -56,17 +56,18 @@ public class InventoryJSonData
 }
 public class JY_CharacterListManager : MonoBehaviour
 {
-    public static JY_CharacterListManager instance;
+    private static JY_CharacterListManager instance;
     public static JY_CharacterListManager s_instance { get { return instance; } }
 
     //Data 관리 클래스(리스트)
     public CharacterData characterData;
     public InventoryCharSlot characterInventoryData;
-    //파일 경로 및 json road에 쓰이는 string 변수
-    string path;
-    string InventoryPath;
-    string jsonData;
-    string jsonData_Inventory;
+    //파일 경로 및 json load에 쓰이는 string 변수
+    private string path;
+    private string InventoryPath;
+    private string jsonData;
+    private string jsonData_Inventory;
+
     //캐릭터선택번호
     public int selectNum;
     public Sprite selectPortrait;
@@ -78,7 +79,7 @@ public class JY_CharacterListManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            selectNum = -1;
+            this.selectNum = -1;
         }
         else
         {
@@ -90,7 +91,7 @@ public class JY_CharacterListManager : MonoBehaviour
         FileInfo fileInfo = new FileInfo(path);
         if (!fileInfo.Exists)
         {
-            writeInitialJson();
+            WriteInitialJson();
         }
         FileInfo fileInfo_I = new FileInfo(InventoryPath);
         if (!fileInfo_I.Exists)
@@ -103,7 +104,7 @@ public class JY_CharacterListManager : MonoBehaviour
         characterInventoryData = JsonUtility.FromJson<InventoryCharSlot>(jsonData_Inventory);
     }
 
-    void writeInitialJson()
+    void WriteInitialJson()
     {
         CharacterData initCharData = new CharacterData();
         initCharData.infoDataList = new List<infoData>();

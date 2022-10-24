@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
     {
         Intro,
         Loading,
-        Robby,
+        Lobby,
         MakeCharacter,
         World,
         Dungeon,
@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
             if(!AudioManager.s_instance.NOWPLAY.name.Equals("BGM"))
                 AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BGM, true, 0.5f);
         }
-        if(JY_CharacterListManager.s_instance != null && Inventory.instance != null && SceneManager.GetActiveScene().name != "03. Robby")
+        if(JY_CharacterListManager.s_instance != null && Inventory.instance != null && SceneManager.GetActiveScene().name != "03. Lobby")
         {
             JY_CharacterListManager.s_instance.CopyInventoryData(Inventory.instance.items, JY_CharacterListManager.s_instance.characterInventoryData.InventoryJDataList[JY_CharacterListManager.s_instance.selectNum].itemList);
             JY_CharacterListManager.s_instance.saveInventoryListData();

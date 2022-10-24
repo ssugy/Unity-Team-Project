@@ -130,8 +130,8 @@ public class JY_ListSwap : MonoBehaviour
                 one.effects[0].ExecuteRole(one);                
             }
         }
-        JY_CharacterListManager.s_instance.selectPortrait = switchPortrait(JY_CharacterListManager.instance.characterData.infoDataList[listNum].gender,
-                                              JY_CharacterListManager.instance.characterData.infoDataList[listNum].job); ;
+        JY_CharacterListManager.s_instance.selectPortrait = switchPortrait(JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].gender,
+                                              JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].job); ;
     }
 
     Sprite switchPortrait(string gender, string job)

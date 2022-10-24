@@ -157,7 +157,7 @@ public class AvatarSceneManager : MonoBehaviour
 
     public void OnClickBackToLobby()
     {
-        LoadingSceneController.LoadScene((int)SceneName.Robby);
+        LoadingSceneController.LoadScene((int)SceneName.Lobby);
     }
 
     public void OnClickClosePopup()
