@@ -13,10 +13,7 @@ public class Inventory : MonoBehaviour
     public int SlotCnt
     {
         get => slotCnt;
-        set
-        {
-            slotCnt = value;
-        }
+        set => slotCnt = value;
     }
 
     private void OnEnable()
@@ -25,7 +22,6 @@ public class Inventory : MonoBehaviour
         if (JY_CharacterListManager.s_instance.selectNum >= 0)
         {
             JY_CharacterListManager.s_instance.CopyInventoryDataToScript(items);
-
         }
     }
     private void OnDisable()
@@ -48,21 +44,12 @@ public class Inventory : MonoBehaviour
             foreach (Item one in items)
             {
                 if (one.equipedState.Equals(EquipState.EQUIPED))
-                {
-                    try 
-                    {
-                        one.effects[0].ExecuteRole(one);
-                    }
-                    catch (System.ArgumentException e)
-                    {
-                    }
-                }
+                    one.effects[0].ExecuteRole(one);
             }
         }
+
         if (onChangeItem != null)
-        {
             onChangeItem();
-        }
     }
 
     // 아이템을 인벤토리에 추가하는 코드. 인벤토리가 가득 찼다면 아이템 획득 불가.
@@ -73,9 +60,7 @@ public class Inventory : MonoBehaviour
         {
             items.Add(_item);
             if (onChangeItem != null)
-            {
                 onChangeItem();
-            }
             return true;
         }
         return false;
@@ -85,9 +70,7 @@ public class Inventory : MonoBehaviour
     {
         items.Remove(_item);
         if (onChangeItem != null)
-        {
             onChangeItem();
-        }
     }
 
     // 필드에 있는 아이템과 골드를 줍는 코드.
@@ -98,9 +81,7 @@ public class Inventory : MonoBehaviour
             FieldItem fieldItem = other.GetComponent<FieldItem>();
             // 필드 아이템을 인벤토리에 넣음. 인벤토리가 가득 찼으면 얻을 수 없음.
             if (AddItem(fieldItem.GetItem()))
-            {
                 fieldItem.DestroyItem();
-            }
         }
         else if (other.CompareTag("Gold"))
         {
@@ -108,6 +89,5 @@ public class Inventory : MonoBehaviour
             Player.instance.playerStat.Gold += fieldGold.ammount;
             Destroy(fieldGold.gameObject);
         }
-
     }
 }
