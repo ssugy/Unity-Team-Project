@@ -86,8 +86,8 @@ public class JY_CharacterListManager : MonoBehaviour
             Destroy(gameObject);
         }
         //Json파일 로드
-        path = Application.persistentDataPath + "/JY_Lobby_test.json";
-        InventoryPath = Application.persistentDataPath + "/JY_InventoryData.json";
+        path = Application.persistentDataPath + "/InfoData.json";
+        InventoryPath = Application.persistentDataPath + "/InventoryData.json";
         FileInfo fileInfo = new FileInfo(path);
         if (!fileInfo.Exists)
         {
@@ -122,19 +122,15 @@ public class JY_CharacterListManager : MonoBehaviour
 
             int[] initArr = new int[4] { 0, 0, 0, 0 };
             init.characterAvatar = initArr;
-            init.status = initArr;
+            init.status = new int[4] { 7, 6, 10, 5 };
             init.statusPoint = 0;
             init.questProgress = initArr;
             init.questProgress2 = initArr;
 
             initCharData.infoDataList.Add(init);
         }
-
-        for (int i = 0; i < 4; i++)
-        {
-            string json = JsonUtility.ToJson(initCharData, true);
-            File.WriteAllText(Application.persistentDataPath + "/JY_Lobby_test.json", json);
-        }
+        string json = JsonUtility.ToJson(initCharData, true);
+        File.WriteAllText(path, json);        
     }
 
     void writeInitialInventoryJson()
@@ -154,12 +150,8 @@ public class JY_CharacterListManager : MonoBehaviour
             init.itemList.Add(initItem);
             initInventorySlot.InventoryJDataList.Add(init);
         }
-
-        for (int i = 0; i < 4; i++)
-        {
-            string json = JsonUtility.ToJson(initInventorySlot, true);
-            File.WriteAllText(Application.persistentDataPath + "/JY_InventoryData.json", json);
-        }
+        string json = JsonUtility.ToJson(initInventorySlot, true);
+        File.WriteAllText(InventoryPath, json);        
     }
 
     private void OnEnable()
@@ -236,19 +228,13 @@ public class JY_CharacterListManager : MonoBehaviour
     //캐릭터생성, 삭제 시 데이터 갱신사항 Json파일에 Save
     public void saveListData()
     {
-        for (int i = 0; i < 4; i++)
-        {
-            string json = JsonUtility.ToJson(characterData, true);
-            File.WriteAllText(path, json);
-        }
+        string json = JsonUtility.ToJson(characterData, true);
+        File.WriteAllText(path, json);
     }
     public void saveInventoryListData()
     {
-        for (int i = 0; i < 4; i++)
-        {
-            string json = JsonUtility.ToJson(characterInventoryData, true);
-            File.WriteAllText(InventoryPath, json);
-        }
+        string json = JsonUtility.ToJson(characterInventoryData, true);
+        File.WriteAllText(InventoryPath, json);
     }
 
     public void CopyInventoryData(List<Item> origin, List<Item> target)
