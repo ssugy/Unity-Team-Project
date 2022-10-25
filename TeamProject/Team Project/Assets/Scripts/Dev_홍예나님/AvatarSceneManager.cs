@@ -206,28 +206,28 @@ public class AvatarSceneManager : MonoBehaviour
                 //빈슬롯 찾은 후 작성 및 break
                 for (int i = 0; i < 4; i++)
                 {
-                    if (JY_CharacterListManager.s_instance.characterData.infoDataList[i].isNull == true)
+                    if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].isNull == true)
                     {
                         if (CharacterNameInput!=null)
                         {
                             //스테이터스 작성
-                            JY_CharacterListManager.s_instance.characterData.infoDataList[i].name = CharacterNameInput.text;
-                            JY_CharacterListManager.s_instance.characterData.infoDataList[i].isNull = false;
-                            JY_CharacterListManager.s_instance.characterData.infoDataList[i].level = 1;
-                            JY_CharacterListManager.s_instance.characterData.infoDataList[i].job = "전사";
-                            JY_CharacterListManager.s_instance.characterData.infoDataList[i].gender = (gender == 0 ? "M" : "F");
-                            JY_CharacterListManager.s_instance.characterData.infoDataList[i].species = "인간";
+                            JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].name = CharacterNameInput.text;
+                            JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].isNull = false;
+                            JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].level = 1;
+                            JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].job = "전사";
+                            JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].gender = (gender == 0 ? "M" : "F");
+                            JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].species = "인간";
                             //모델링 작성
-                            JY_CharacterListManager.s_instance.characterData.infoDataList[i].characterAvatar[0] = optionSubs[0];
-                            JY_CharacterListManager.s_instance.characterData.infoDataList[i].characterAvatar[1] = optionSubs[1];
-                            JY_CharacterListManager.s_instance.characterData.infoDataList[i].characterAvatar[2] = optionSubs[2];
-                            JY_CharacterListManager.s_instance.characterData.infoDataList[i].characterAvatar[3] = optionSubs[3];
+                            JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].characterAvatar[0] = optionSubs[0];
+                            JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].characterAvatar[1] = optionSubs[1];
+                            JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].characterAvatar[2] = optionSubs[2];
+                            JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].characterAvatar[3] = optionSubs[3];
                             break;
                         }
                     }
                 }
                 //데이터 세이브
-                JY_CharacterListManager.s_instance.saveListData();
+                JY_CharacterListManager.s_instance.SaveListData();
                 if (GameManager.s_instance != null)
                     GameManager.s_instance.LoadScene(2);
             }

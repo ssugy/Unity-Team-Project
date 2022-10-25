@@ -36,20 +36,20 @@ public class JY_NpcQuest : MonoBehaviour
         {
             case 0:
                 //퀘스트 미수령 상태일 경우
-                if (JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[2] == 0)
+                if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress[2] == 0)
                     questMark.SetActive(true);
                 //퀘스트 수령 상태이며 퀘스트 완료 가능 상태일 경우
-                else if (JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[2] == 1 &&
-                        JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[1] >= int.Parse(JY_QuestManager.s_instance.QuestData[0][4]) &&
-                        JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[3] == 0)
+                else if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress[2] == 1 &&
+                        JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress[1] >= int.Parse(JY_QuestManager.s_instance.QuestData[0][4]) &&
+                        JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress[3] == 0)
                 {
                     questMark.SetActive(false);
                     questMark_Gray.SetActive(false);
                     questMark_Complete.SetActive(true);
                 }
                 //퀘스트 수령상태이며 퀘스트 완료 불가 상태일 경우
-                else if (JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[2] == 1 &&
-                        JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[3] == 0)
+                else if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress[2] == 1 &&
+                        JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress[3] == 0)
                 {
                     questMark.SetActive(false);
                     questMark_Gray.SetActive(true);
@@ -65,20 +65,20 @@ public class JY_NpcQuest : MonoBehaviour
                 break;
             case 1:
                 //퀘스트 미수령 상태일 경우
-                if (JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress[3] == 1 && JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress2[2] == 0)
+                if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress[3] == 1 && JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress2[2] == 0)
                     questMark.SetActive(true);
                 //퀘스트 수령 상태이며 퀘스트 완료 가능 상태일 경우
-                else if (JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress2[2] == 1 &&
-                        JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress2[1] >= int.Parse(JY_QuestManager.s_instance.QuestData[1][4]) &&
-                        JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress2[3] == 0)
+                else if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress2[2] == 1 &&
+                        JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress2[1] >= int.Parse(JY_QuestManager.s_instance.QuestData[1][4]) &&
+                        JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress2[3] == 0)
                 {
                     questMark.SetActive(false);
                     questMark_Gray.SetActive(false);
                     questMark_Complete.SetActive(true);
                 }
                 //퀘스트 수령상태이며 퀘스트 완료 불가 상태일 경우
-                else if (JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress2[2] == 1 &&
-                        JY_CharacterListManager.s_instance.characterData.infoDataList[selectNum].questProgress2[3] == 0)
+                else if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress2[2] == 1 &&
+                        JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress2[3] == 0)
                 {
                     questMark.SetActive(false);
                     questMark_Gray.SetActive(true);

@@ -54,7 +54,7 @@ public class JY_ListSwap : MonoBehaviour
     void panelSwitch(bool nullCheck)
     {
         //캐릭터 생성 check
-        check = JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].isNull;
+        check = JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].isNull;
 
         if (nullCheck)
         {
@@ -81,28 +81,28 @@ public class JY_ListSwap : MonoBehaviour
     {
         string leveltxt;
 
-        nameTxt.text = JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].name;
-        if (JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].level < 10)
+        nameTxt.text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].name;
+        if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].level < 10)
         {
-            leveltxt = "0" + JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].level.ToString();
+            leveltxt = "0" + JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].level.ToString();
         }
         else
         {
-            leveltxt = JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].level.ToString();
+            leveltxt = JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].level.ToString();
         }
         levelTxt.text = leveltxt;
-        jobTxt.text = JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].job;
-        jobTxt.text = JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].job;
-        portraitImage.sprite = switchPortrait(JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].gender,
-                                              JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].job);
-        speciesTxt.text = JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].species;
+        jobTxt.text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].job;
+        jobTxt.text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].job;
+        portraitImage.sprite = switchPortrait(JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender,
+                                              JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].job);
+        speciesTxt.text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].species;
     }
 
     public void deleteButton()
     {
         if (listNum == JY_CharacterListManager.s_instance.selectNum)
             JY_AvatarLoad.s_instance.origin.SetActive(false);
-        JY_CharacterListManager.s_instance.deleteCharacter(listNum);
+        JY_CharacterListManager.s_instance.DeleteCharacter(listNum);
         JY_CharacterListManager.s_instance.selectNum = -1;
 
     }
@@ -130,14 +130,14 @@ public class JY_ListSwap : MonoBehaviour
                 one.effects[0].ExecuteRole(one);                
             }
         }
-        JY_CharacterListManager.s_instance.selectPortrait = switchPortrait(JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].gender,
-                                              JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].job); ;
+        JY_CharacterListManager.s_instance.selectPortrait = switchPortrait(JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender,
+                                              JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].job); ;
     }
 
     Sprite switchPortrait(string gender, string job)
     {
         Sprite source;
-        if (!JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].isNull)
+        if (!JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].isNull)
         {
             if (gender.Equals("M") && job.Equals("전사"))
                 source = warriorM;

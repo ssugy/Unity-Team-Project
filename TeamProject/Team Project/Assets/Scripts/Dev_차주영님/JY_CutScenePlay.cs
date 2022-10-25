@@ -27,14 +27,16 @@ public class JY_CutScenePlay : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(firstPlay == true)
+        if (other.CompareTag("Player"))
         {
-            Player.instance.enableMove = false;
-            Player.instance.movement = Vector3.zero;
-            StartCoroutine("CutScene_1");
-            firstPlay = false;
-        }
-
+            if (firstPlay == true)
+            {
+                Player.instance.enableMove = false;
+                Player.instance.movement = Vector3.zero;
+                StartCoroutine("CutScene_1");
+                firstPlay = false;
+            }
+        }       
     }
     IEnumerator CutScene_1()
     {

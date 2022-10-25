@@ -35,7 +35,7 @@ public class JY_UIManager : MonoBehaviour
 
         if(JY_CharacterListManager.s_instance != null)
         {
-            nameText.text = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].name;
+            nameText.text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].name;
             StatusDataRenew();
         }
         effectList = new List<GameObject>();
@@ -108,7 +108,7 @@ public class JY_UIManager : MonoBehaviour
     public void levelupUI()
     {
         alarmUI.SetActive(true);
-        alarmText.text = "·¹º§¾÷! Lv."+JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level.ToString();
+        alarmText.text = "·¹º§¾÷! Lv."+JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level.ToString();
         effect = Instantiate<GameObject>(LevelUPEffect, Player.instance.transform);
         effect.transform.localPosition = Vector3.forward;
         effectList.Add(effect);
@@ -149,13 +149,13 @@ public class JY_UIManager : MonoBehaviour
 
     public void StatusDataRenew()
     {
-        int level = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level;
+        int level = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level;
         levelText.text = "Lv." + level.ToString();
-        healthText.text = "Ã¼·Â:" + JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[0].ToString();
-        steminaText.text = "Áö±¸·Â:" + JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[1].ToString();
-        strengthText.text = "Èû:" + JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[2].ToString();
-        dexterityText.text = "¹ÎÃ¸:" + JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[3].ToString();
-        SPText.text = "½ºÅÈ Æ÷ÀÎÆ®:"+JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].statusPoint.ToString();
+        healthText.text = "Ã¼·Â:" + JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[0].ToString();
+        steminaText.text = "Áö±¸·Â:" + JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[1].ToString();
+        strengthText.text = "Èû:" + JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[2].ToString();
+        dexterityText.text = "¹ÎÃ¸:" + JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[3].ToString();
+        SPText.text = "½ºÅÈ Æ÷ÀÎÆ®:"+JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].statusPoint.ToString();
     }
 
     public void statusControl(int StatType)

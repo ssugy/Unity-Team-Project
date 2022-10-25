@@ -3305,7 +3305,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uAC8C\uC784 \uB098\uAC00\uAE30"
+  m_Text: "\uC774\uC804\uC73C\uB85C"
 --- !u!222 &665877764
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4779,12 +4779,12 @@ GameObject:
   - component: {fileID: 928977041}
   - component: {fileID: 928977040}
   m_Layer: 5
-  m_Name: Button_Close Game
+  m_Name: Button_To Intro
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &928977039
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4818,7 +4818,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d23547b26b6a3442a683779086b01a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetSceneNum: 4
+  targetSceneNum: 0
   alarm: {fileID: 1828567309}
 --- !u!114 &928977041
 MonoBehaviour:
@@ -10102,7 +10102,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1987012242
 RectTransform:
   m_ObjectHideFlags: 0

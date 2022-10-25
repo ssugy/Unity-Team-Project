@@ -31,8 +31,8 @@ public class JY_CharacterPlayData : MonoBehaviour
 
     void LoadCharacterData()
     {
-        nameText.text = JY_CharacterListManager.s_instance.characterData.infoDataList[index].name;
-        int level = JY_CharacterListManager.s_instance.characterData.infoDataList[index].level;
+        nameText.text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[index].name;
+        int level = JY_CharacterListManager.s_instance.jInfoData.infoDataList[index].level;
         levelText.text = "Lv."+level.ToString();
         nameText_P.text = nameText.text;
         levelText_P.text = "·¹º§:" + level.ToString();

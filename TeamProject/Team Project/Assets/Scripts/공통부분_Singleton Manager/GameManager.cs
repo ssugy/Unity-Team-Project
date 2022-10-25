@@ -78,8 +78,8 @@ public class GameManager : MonoBehaviour
         }
         if(JY_CharacterListManager.s_instance != null && Inventory.instance != null && SceneManager.GetActiveScene().name != "03. Lobby")
         {
-            JY_CharacterListManager.s_instance.CopyInventoryData(Inventory.instance.items, JY_CharacterListManager.s_instance.characterInventoryData.InventoryJDataList[JY_CharacterListManager.s_instance.selectNum].itemList);
-            JY_CharacterListManager.s_instance.saveInventoryListData();
+            JY_CharacterListManager.s_instance.CopyInventoryData(Inventory.instance.items, JY_CharacterListManager.s_instance.jInvenData.InvenDataList[JY_CharacterListManager.s_instance.selectNum].itemList);
+            JY_CharacterListManager.s_instance.SaveInventoryListData();
         }
         LoadingSceneController.LoadScene(index);    // 로딩씬을 이용한 로딩
     }

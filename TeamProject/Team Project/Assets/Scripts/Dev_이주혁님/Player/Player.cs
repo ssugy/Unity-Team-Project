@@ -209,19 +209,19 @@ public class Player : MonoBehaviour
             rWeaponEffect = rWeaponDummy.GetChild(0).GetChild(2).GetComponent<TrailRenderer>();
         }
 
-        if (JY_CharacterListManager.s_instance != null && JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level != 1)
+        if (JY_CharacterListManager.s_instance != null && JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level != 1)
         {
-            playerStat.level = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level;
+            playerStat.level = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level;
             if (EXP_TABLE.TryGetValue(playerStat.level, out int _exp))
             {
                 playerStat.Exp = _exp;
             }
-            playerStat.CurExp = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp;
-            playerStat.statPoint = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].statusPoint;
-            playerStat.health = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[0];
-            playerStat.stamina = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[1];
-            playerStat.strength = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[2];
-            playerStat.dexterity = JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[3];
+            playerStat.CurExp = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp;
+            playerStat.statPoint = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].statusPoint;
+            playerStat.health = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[0];
+            playerStat.stamina = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[1];
+            playerStat.strength = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[2];
+            playerStat.dexterity = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[3];
         }
         SetState();
         playerStat.CurHP = playerStat.HP;
@@ -673,25 +673,25 @@ public class Player : MonoBehaviour
         ++playerStat.level;
         playerStat.statPoint += 3;
         playerStat.CurExp -= playerStat.Exp;
-        JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp = playerStat.CurExp;
+        JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp = playerStat.CurExp;
         if (EXP_TABLE.TryGetValue(playerStat.level,out int _exp))
         {
             playerStat.Exp = _exp;
         }        
         playerStat.CurHP = playerStat.HP;
 
-        JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level = playerStat.level;
+        JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level = playerStat.level;
         SaveStatData();
         JY_QuestManager.s_instance.uiManager.levelupUI();
     }
     void SaveStatData()
     {
-        JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].statusPoint = playerStat.statPoint;
-        JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[0] = playerStat.health;
-        JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[1] = playerStat.stamina;
-        JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[2] = playerStat.strength;
-        JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[3] = playerStat.dexterity;
-        JY_CharacterListManager.s_instance.saveListData();
+        JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].statusPoint = playerStat.statPoint;
+        JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[0] = playerStat.health;
+        JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[1] = playerStat.stamina;
+        JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[2] = playerStat.strength;
+        JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[3] = playerStat.dexterity;
+        JY_CharacterListManager.s_instance.SaveListData();
     }
     // 이미 발동된 isAttack 트리거를 취소함. 선입력에 의한 의도치 않은 공격이 나가는 것을 방지.
     public void ResetAttackTrigger()   
@@ -701,7 +701,7 @@ public class Player : MonoBehaviour
     public void questExp(int exp)
     {
         playerStat.CurExp += exp;
-        JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp = playerStat.CurExp;
+        JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp = playerStat.CurExp;
     }
     void SoundRun()
     {

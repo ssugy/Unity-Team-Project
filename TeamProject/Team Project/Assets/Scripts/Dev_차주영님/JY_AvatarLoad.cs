@@ -93,7 +93,7 @@ public class JY_AvatarLoad : MonoBehaviour
         else
         {
             //gender °»½Å
-            if (JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].gender == "F")
+            if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender == "F")
             {
                 charMale.SetActive(false);
                 charFemale.SetActive(true);
@@ -107,18 +107,18 @@ public class JY_AvatarLoad : MonoBehaviour
             }
             for (int i = 0; i < 4; i++)
             {
-                subOptionLoad(i, JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].characterAvatar[i]);
+                subOptionLoad(i, JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].characterAvatar[i]);
             }
         }
     }
 
     public void equipWeapon(int listNum)
     {
-        if (JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].gender == "M")
+        if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender == "M")
         {
             charWeaponDummy = findGameObjectInChild("Character R Weapon Slot", charMale.transform).gameObject;            
         }
-        else if (JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].gender == "F")
+        else if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender == "F")
         {
             charWeaponDummy = findGameObjectInChild("Character R Weapon Slot", charFemale.transform).gameObject;            
         }
@@ -136,12 +136,12 @@ public class JY_AvatarLoad : MonoBehaviour
 
     public void LobbyDummyClear(int listNum)
     {
-        if (JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].gender == "M")
+        if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender == "M")
         {
             charWeaponDummy = findGameObjectInChild("Character R Weapon Slot", charMale.transform).gameObject;
             charShieldDummy = findGameObjectInChild("Character L Weapon Slot", charMale.transform).gameObject;
         }
-        else if (JY_CharacterListManager.s_instance.characterData.infoDataList[listNum].gender == "F")
+        else if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender == "F")
         {
             charWeaponDummy = findGameObjectInChild("Character R Weapon Slot", charFemale.transform).gameObject;
             charShieldDummy = findGameObjectInChild("Character L Weapon Slot", charFemale.transform).gameObject;

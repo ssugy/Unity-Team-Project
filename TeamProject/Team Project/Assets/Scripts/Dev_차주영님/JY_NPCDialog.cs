@@ -46,23 +46,23 @@ public class JY_NPCDialog : MonoBehaviour
         {
             case 0:
                 //수령
-                if (JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[2] == 0)
+                if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[2] == 0)
                 {
                     dialogPartNum = 5;
                     scriptText.text = JY_QuestManager.s_instance.QuestData[selectNPCNum][dialogPartNum];
                 }
                 //완료
-                else if (JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[2] == 1
-                    && JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[1]
+                else if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[2] == 1
+                    && JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[1]
                     >= int.Parse(JY_QuestManager.s_instance.QuestData[0][4])
-                    && JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[3] == 0)
+                    && JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[3] == 0)
                 {
                     dialogPartNum = 8;
                     scriptText.text = JY_QuestManager.s_instance.QuestData[selectNPCNum][dialogPartNum];
                 }
                 //진행중 대화
-                else if(JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[2] == 1
-                    && JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[3] == 0)
+                else if(JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[2] == 1
+                    && JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[3] == 0)
                 {
                     dialogPartNum = 9;
                     scriptText.text = JY_QuestManager.s_instance.QuestData[selectNPCNum][dialogPartNum];
@@ -85,24 +85,24 @@ public class JY_NPCDialog : MonoBehaviour
                 }
                 break;
             case 1:
-                if (JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[3] == 1 &&
-                    JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[2] == 0)
+                if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[3] == 1 &&
+                    JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[2] == 0)
                 {
                     dialogPartNum = 5;
                     scriptText.text = JY_QuestManager.s_instance.QuestData[selectNPCNum][dialogPartNum];
                 }
                 //완료
-                else if (JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[2] == 1
-                    && JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[1]
+                else if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[2] == 1
+                    && JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[1]
                     >= int.Parse(JY_QuestManager.s_instance.QuestData[1][4])
-                    && JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[3] == 0)
+                    && JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[3] == 0)
                 {
                     dialogPartNum = 8;
                     scriptText.text = JY_QuestManager.s_instance.QuestData[selectNPCNum][dialogPartNum];
                 }
                 //진행중 대화
-                else if (JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[2] == 1
-                    && JY_CharacterListManager.s_instance.characterData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[3] == 0)
+                else if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[2] == 1
+                    && JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[3] == 0)
                 {
                     dialogPartNum = 9;
                     scriptText.text = JY_QuestManager.s_instance.QuestData[selectNPCNum][dialogPartNum];

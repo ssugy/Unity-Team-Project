@@ -8,7 +8,7 @@ using System.IO;
 //사용하는 JsonData
 //characterData에서 List<infoData>로 관리함
 [System.Serializable]
-public class CharacterData
+public class JInfoData
 {
     public List<infoData> infoDataList;
 }
@@ -45,28 +45,33 @@ public class infoData
 /// 캐릭터 별 inventory 데이터 저장 json
 /// </summary>
 [System.Serializable]
-public class InventoryCharSlot
+public class JInvenData
 {
-    public List<InventoryJSonData> InventoryJDataList;
+    public List<InvenData> InvenDataList;
 }
 [System.Serializable]
-public class InventoryJSonData
+public class InvenData
 {
     public List<Item> itemList;
 }
+
 public class JY_CharacterListManager : MonoBehaviour
 {
+    #region 싱글톤 패턴
     private static JY_CharacterListManager instance;
     public static JY_CharacterListManager s_instance { get { return instance; } }
+    #endregion
 
     //Data 관리 클래스(리스트)
-    public CharacterData characterData;
-    public InventoryCharSlot characterInventoryData;
+    public JInfoData jInfoData;
+    public JInvenData jInvenData;
+
     //파일 경로 및 json load에 쓰이는 string 변수
-    private string path;
-    private string InventoryPath;
-    private string jsonData;
-    private string jsonData_Inventory;
+    private string infoPath;
+    private string InvenPath;
+
+    private string jsonData_Info;
+    private string jsonData_Inven;
 
     //캐릭터선택번호
     public int selectNum;
@@ -74,7 +79,7 @@ public class JY_CharacterListManager : MonoBehaviour
 
     private void Awake()
     {
-        //SingleTone 생성
+        #region 싱글톤 생성
         if (instance == null)
         {
             instance = this;
@@ -85,29 +90,34 @@ public class JY_CharacterListManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        #endregion
+
         //Json파일 로드
-        path = Application.persistentDataPath + "/InfoData.json";
-        InventoryPath = Application.persistentDataPath + "/InventoryData.json";
-        FileInfo fileInfo = new FileInfo(path);
+        infoPath = Application.persistentDataPath + "/InfoData.json";
+        InvenPath = Application.persistentDataPath + "/InvenData.json";
+
+        // 세이브 파일이 존재하지 않으면 세이브 파일을 생성.
+        FileInfo fileInfo = new FileInfo(infoPath);
         if (!fileInfo.Exists)
         {
             WriteInitialJson();
         }
-        FileInfo fileInfo_I = new FileInfo(InventoryPath);
+        FileInfo fileInfo_I = new FileInfo(InvenPath);
         if (!fileInfo_I.Exists)
         {
             writeInitialInventoryJson();
         }
-        jsonData = File.ReadAllText(path);
-        characterData = JsonUtility.FromJson<CharacterData>(jsonData);
-        jsonData_Inventory = File.ReadAllText(InventoryPath);
-        characterInventoryData = JsonUtility.FromJson<InventoryCharSlot>(jsonData_Inventory);
+
+        jsonData_Info = File.ReadAllText(infoPath);
+        jInfoData = JsonUtility.FromJson<JInfoData>(jsonData_Info);
+        jsonData_Inven = File.ReadAllText(InvenPath);
+        jInvenData = JsonUtility.FromJson<JInvenData>(jsonData_Inven);
     }
 
     void WriteInitialJson()
     {
-        CharacterData initCharData = new CharacterData();
-        initCharData.infoDataList = new List<infoData>();
+        JInfoData tmp = new JInfoData();
+        tmp.infoDataList = new List<infoData>();
         for (int i = 0; i < 4; i++)
         {
             infoData init = new infoData();
@@ -127,16 +137,16 @@ public class JY_CharacterListManager : MonoBehaviour
             init.questProgress = initArr;
             init.questProgress2 = initArr;
 
-            initCharData.infoDataList.Add(init);
+            tmp.infoDataList.Add(init);
         }
-        string json = JsonUtility.ToJson(initCharData, true);
-        File.WriteAllText(path, json);        
+        string json = JsonUtility.ToJson(tmp, true);
+        File.WriteAllText(infoPath, json);        
     }
 
     void writeInitialInventoryJson()
     {
-        InventoryCharSlot initInventorySlot = new InventoryCharSlot();
-        initInventorySlot.InventoryJDataList = new List<InventoryJSonData>();
+        JInvenData tmp = new JInvenData();
+        tmp.InvenDataList = new List<InvenData>();
 
         for (int i = 0; i < 4; i++)
         {
@@ -145,22 +155,33 @@ public class JY_CharacterListManager : MonoBehaviour
             initItem.equipedState = EquipState.EQUIPED;
             initItem.name = "롱소드";
 
-            InventoryJSonData init = new InventoryJSonData();
+            InvenData init = new InvenData();
             init.itemList = new List<Item>();
             init.itemList.Add(initItem);
-            initInventorySlot.InventoryJDataList.Add(init);
+            tmp.InvenDataList.Add(init);
         }
-        string json = JsonUtility.ToJson(initInventorySlot, true);
-        File.WriteAllText(InventoryPath, json);        
+        string json = JsonUtility.ToJson(tmp, true);
+        File.WriteAllText(InvenPath, json);        
     }
 
     private void OnEnable()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        // 이벤트 구독.
+        SceneManager.sceneLoaded += LoadAvatar;
     }
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    private void OnDisable()
     {
-
+        // 이벤트 구독 취소.
+        SceneManager.sceneLoaded -= LoadAvatar;
+    }
+    void LoadAvatar(Scene scene, LoadSceneMode mode)
+    {
+        // 인트로 씬으로 되돌아갈 때 해당 오브젝트를 파괴함.
+        if(scene.name.Equals("01. Intro"))
+        {            
+            instance = null;
+            Destroy(gameObject);
+        }
         JY_AvatarLoad.s_instance.origin = JY_PlayerReturn.instance.getPlayerOrigin();
         if (JY_AvatarLoad.s_instance.origin != null)
         {
@@ -168,73 +189,69 @@ public class JY_CharacterListManager : MonoBehaviour
             JY_AvatarLoad.s_instance.charFemale = JY_AvatarLoad.s_instance.findGameObjectInChild("BaseCharacterF", JY_AvatarLoad.s_instance.origin.transform).gameObject;
             JY_AvatarLoad.s_instance.LoadModelData(selectNum);
         }
-    }
-    void Update()
-    {
-    }
+    }    
 
     //삭제 시 list 정렬
     //마지막은 무조건 초기화
-    public void deleteCharacter(int listNum)
-    {
-        Debug.Log("enter");
+    public void DeleteCharacter(int listNum)
+    {        
         for (int i = listNum; i < 4; i++)
         {
             if (i != 3)
             {
-                characterData.infoDataList[i].name = characterData.infoDataList[i + 1].name;
-                characterData.infoDataList[i].isNull = characterData.infoDataList[i + 1].isNull;
-                characterData.infoDataList[i].level = characterData.infoDataList[i + 1].level;
-                characterData.infoDataList[i].exp = characterData.infoDataList[i + 1].exp;
-                characterData.infoDataList[i].job = characterData.infoDataList[i + 1].job;
-                characterData.infoDataList[i].gender = characterData.infoDataList[i + 1].gender;
-                characterData.infoDataList[i].species = characterData.infoDataList[i + 1].species;
+                jInfoData.infoDataList[i].name = jInfoData.infoDataList[i + 1].name;
+                jInfoData.infoDataList[i].isNull = jInfoData.infoDataList[i + 1].isNull;
+                jInfoData.infoDataList[i].level = jInfoData.infoDataList[i + 1].level;
+                jInfoData.infoDataList[i].exp = jInfoData.infoDataList[i + 1].exp;
+                jInfoData.infoDataList[i].job = jInfoData.infoDataList[i + 1].job;
+                jInfoData.infoDataList[i].gender = jInfoData.infoDataList[i + 1].gender;
+                jInfoData.infoDataList[i].species = jInfoData.infoDataList[i + 1].species;
 
-                characterData.infoDataList[i].characterAvatar = characterData.infoDataList[i + 1].characterAvatar;
-                characterData.infoDataList[i].status = characterData.infoDataList[i + 1].status;
-                characterData.infoDataList[i].statusPoint = characterData.infoDataList[i + 1].statusPoint;
-                characterData.infoDataList[i].questProgress = characterData.infoDataList[i + 1].questProgress;
-                characterData.infoDataList[i].questProgress2 = characterData.infoDataList[i + 1].questProgress;
+                jInfoData.infoDataList[i].characterAvatar = jInfoData.infoDataList[i + 1].characterAvatar;
+                jInfoData.infoDataList[i].status = jInfoData.infoDataList[i + 1].status;
+                jInfoData.infoDataList[i].statusPoint = jInfoData.infoDataList[i + 1].statusPoint;
+                jInfoData.infoDataList[i].questProgress = jInfoData.infoDataList[i + 1].questProgress;
+                jInfoData.infoDataList[i].questProgress2 = jInfoData.infoDataList[i + 1].questProgress;
 
-                characterInventoryData.InventoryJDataList[i].itemList = characterInventoryData.InventoryJDataList[i + 1].itemList;
+                jInvenData.InvenDataList[i].itemList = jInvenData.InvenDataList[i + 1].itemList;
             }
             else
             {
-                characterData.infoDataList[i].name = null;
-                characterData.infoDataList[i].isNull = true;
-                characterData.infoDataList[i].level = 0;
-                characterData.infoDataList[i].exp = 0;
-                characterData.infoDataList[i].job = null;
-                characterData.infoDataList[i].gender = null;
-                characterData.infoDataList[i].species = null;
+                jInfoData.infoDataList[i].name = null;
+                jInfoData.infoDataList[i].isNull = true;
+                jInfoData.infoDataList[i].level = 0;
+                jInfoData.infoDataList[i].exp = 0;
+                jInfoData.infoDataList[i].job = null;
+                jInfoData.infoDataList[i].gender = null;
+                jInfoData.infoDataList[i].species = null;
                 int[] initArr = new int[4] { 0, 0, 0, 0 };
-                characterData.infoDataList[i].characterAvatar = initArr;
-                characterData.infoDataList[i].status = initArr;
-                characterData.infoDataList[i].statusPoint = 0;
-                characterData.infoDataList[i].questProgress = initArr;
-                characterData.infoDataList[i].questProgress2 = initArr;
+                jInfoData.infoDataList[i].characterAvatar = initArr;
+                jInfoData.infoDataList[i].status = new int[4] { 7, 6, 10, 5 };
+                jInfoData.infoDataList[i].statusPoint = 0;
+                jInfoData.infoDataList[i].questProgress = initArr;
+                jInfoData.infoDataList[i].questProgress2 = initArr;
 
-                characterInventoryData.InventoryJDataList[i].itemList.Clear();
+                jInvenData.InvenDataList[i].itemList.Clear();
                 Item initItem = new Item();
                 initItem.type = ItemType.EQUIPMENT;
                 initItem.equipedState = EquipState.EQUIPED;
                 initItem.name = "롱소드";
-                characterInventoryData.InventoryJDataList[i].itemList.Add(initItem);
+                jInvenData.InvenDataList[i].itemList.Add(initItem);
             }
         }
-        saveListData();
-        saveInventoryListData();
+        SaveListData();
+        SaveInventoryListData();
     }
     //캐릭터생성, 삭제 시 데이터 갱신사항 Json파일에 Save
-    public void saveListData()
+    public void SaveListData()
     {
-        string json = JsonUtility.ToJson(characterData, true);
-        File.WriteAllText(path, json);
+        string json = JsonUtility.ToJson(jInfoData, true);
+        File.WriteAllText(infoPath, json);
     }
-    public void saveInventoryListData()
+    public void SaveInventoryListData()
     {
-        string json = JsonUtility.ToJson(characterInventoryData, true);
-        File.WriteAllText(InventoryPath, json);
+        string json = JsonUtility.ToJson(jInvenData, true);
+        File.WriteAllText(InvenPath, json);
     }
 
     public void CopyInventoryData(List<Item> origin, List<Item> target)
@@ -248,8 +265,7 @@ public class JY_CharacterListManager : MonoBehaviour
             copied.name = origin[i].name;
             copied.explanation = origin[i].explanation;
             copied.image = origin[i].image;
-            copied.effects = origin[i].effects;
-            Debug.Log("copy");
+            copied.effects = origin[i].effects;            
             target.Add(copied);
         }
     }
@@ -268,12 +284,12 @@ public class JY_CharacterListManager : MonoBehaviour
         }
         
 
-        for (int i = 0; i < characterInventoryData.InventoryJDataList[selectNum].itemList.Count; i++)
+        for (int i = 0; i < jInvenData.InvenDataList[selectNum].itemList.Count; i++)
         {
             Item copied = new Item();            
-            copied.type = characterInventoryData.InventoryJDataList[selectNum].itemList[i].type;
-            copied.equipedState = characterInventoryData.InventoryJDataList[selectNum].itemList[i].equipedState;
-            copied.name = characterInventoryData.InventoryJDataList[selectNum].itemList[i].name;
+            copied.type = jInvenData.InvenDataList[selectNum].itemList[i].type;
+            copied.equipedState = jInvenData.InvenDataList[selectNum].itemList[i].equipedState;
+            copied.name = jInvenData.InvenDataList[selectNum].itemList[i].name;
             /*
             copied.explanation = characterInventoryData.InventoryJDataList[selectNum].itemList[i].explanation;
             copied.image = characterInventoryData.InventoryJDataList[selectNum].itemList[i].image;
