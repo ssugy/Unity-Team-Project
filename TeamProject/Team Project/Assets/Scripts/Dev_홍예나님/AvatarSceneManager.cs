@@ -217,6 +217,11 @@ public class AvatarSceneManager : MonoBehaviour
                             tmp.level = 1;
                             tmp.job = "Àü»ç";
                             tmp.gender = (gender == 0 ? "M" : "F");
+                            Item tmp_Item = new();
+                            tmp_Item.type = ItemType.EQUIPMENT;
+                            tmp_Item.equipedState = EquipState.EQUIPED;
+                            tmp_Item.name = "·Õ¼Òµå";
+                            tmp.itemList.Add(tmp_Item);
                             JY_CharacterListManager.s_instance.jInfoData.infoDataList[i] = tmp;
 
                             //¸ðµ¨¸µ ÀÛ¼º
