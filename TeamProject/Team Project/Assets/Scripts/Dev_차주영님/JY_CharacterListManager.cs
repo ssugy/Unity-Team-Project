@@ -10,7 +10,7 @@ using System.IO;
 [System.Serializable]
 public class JInfoData
 {
-    public List<infoData> infoDataList;
+    public List<InfoData> infoDataList;
 }
 
 [System.Serializable]
@@ -21,9 +21,25 @@ public class JInvenData
 
 // 메소드를 사용하거나 상속할 것이 아니라면 구조체로 바꾸는 것이 좋을 듯.
 [System.Serializable]
-public class infoData
+public struct InfoData
 {
-    public int number;  // 슬롯 넘버.
+    public InfoData(int _num = 0, bool _isNull = true, string _name = null, int _level = 0, int _exp = 0, int _gold = 0, string _job = null, string _gender = null, int _statusPoint = 0)
+    {
+        num = _num;
+        isNull = _isNull;
+        name = _name;
+        level = _level;
+        exp = _exp;
+        gold = _gold;
+        job = _job;
+        gender = _gender;
+        statusPoint = _statusPoint;
+        characterAvatar = new int[4] { 0, 0, 0, 0 };
+        status = new int[4] { 0, 0, 0, 0 };
+        questProgress = new int[4] { 0, 0, 0, 0 };
+        questProgress2 = new int[4] { 0, 0, 0, 0 };
+    }
+    public int num;  // 슬롯 넘버.
     public bool isNull;
     public string name;
     public int level;
@@ -31,6 +47,8 @@ public class infoData
     public int gold;
     public string job;
     public string gender;
+    public int statusPoint;
+
     /// <summary>
     /// 0 : 머리카락
     /// 1 : 얼굴
@@ -44,9 +62,7 @@ public class infoData
     /// 2 : Strength
     /// 3 : Dextrerity
     /// </summary>
-    public int[] status;
-    public int statusPoint;
-
+    public int[] status;    
     // 퀘스트 로직을 아예 바꿀 필요가 있음.
     /// <summary>
     /// 0 : npc 번호
@@ -59,7 +75,7 @@ public class infoData
 }
 // 메소드를 사용하거나 상속할 것이 아니라면 구조체로 바꾸는 것이 좋을 듯.
 [System.Serializable]
-public class InvenData
+public struct InvenData
 {
     public List<Item> itemList;
 }
@@ -122,34 +138,16 @@ public class JY_CharacterListManager : MonoBehaviour
 
     void InitializeSave()
     {        
-        JInfoData tmp_1 = new JInfoData();
-        tmp_1.infoDataList = new List<infoData>();
-
-        
+        JInfoData tmp_1 = new ();
+        tmp_1.infoDataList = new List<InfoData>();        
         
         for (int i = 0; i < 4; i++)
         {
-            infoData init = new infoData();
-            init.number = i;
-            init.isNull = true;
-            init.name = null;
-            init.level = 0;
-            init.exp = 0;
-            init.gold = 0;
-            init.job = null;
-            init.gender = null;
-            int[] initArr = new int[4] { 0, 0, 0, 0 };
-            init.characterAvatar = initArr;
-            init.status = new int[4] { 7, 6, 10, 5 };
-            init.statusPoint = 0;
-            init.questProgress = initArr;
-            init.questProgress2 = initArr;
-            tmp_1.infoDataList.Add(init);
-            //tmp_1.infoDataList[i].number = i;
+            InfoData init = new (i);            
+            tmp_1.infoDataList.Add(init);            
         }
-
         
-        JInvenData tmp_2 = new JInvenData();
+        JInvenData tmp_2 = new ();
         tmp_2.InvenDataList = new List<InvenData>();
 
         InvenData init_IData = new InvenData();
@@ -208,38 +206,31 @@ public class JY_CharacterListManager : MonoBehaviour
         {
             if (i != 3)
             {
-                jInfoData.infoDataList[i].name = jInfoData.infoDataList[i + 1].name;
-                jInfoData.infoDataList[i].isNull = jInfoData.infoDataList[i + 1].isNull;
-                jInfoData.infoDataList[i].level = jInfoData.infoDataList[i + 1].level;
-                jInfoData.infoDataList[i].exp = jInfoData.infoDataList[i + 1].exp;
-                jInfoData.infoDataList[i].gold = jInfoData.infoDataList[i + 1].gold;
-                jInfoData.infoDataList[i].job = jInfoData.infoDataList[i + 1].job;
-                jInfoData.infoDataList[i].gender = jInfoData.infoDataList[i + 1].gender;                
+                InfoData tmp_1 = new (i);
+                tmp_1.name = jInfoData.infoDataList[i + 1].name;
+                tmp_1.isNull = jInfoData.infoDataList[i + 1].isNull;
+                tmp_1.level = jInfoData.infoDataList[i + 1].level;
+                tmp_1.exp = jInfoData.infoDataList[i + 1].exp;
+                tmp_1.gold = jInfoData.infoDataList[i + 1].gold;
+                tmp_1.job = jInfoData.infoDataList[i + 1].job;
+                tmp_1.gender = jInfoData.infoDataList[i + 1].gender;
 
-                jInfoData.infoDataList[i].characterAvatar = jInfoData.infoDataList[i + 1].characterAvatar;
-                jInfoData.infoDataList[i].status = jInfoData.infoDataList[i + 1].status;
-                jInfoData.infoDataList[i].statusPoint = jInfoData.infoDataList[i + 1].statusPoint;
-                jInfoData.infoDataList[i].questProgress = jInfoData.infoDataList[i + 1].questProgress;
-                jInfoData.infoDataList[i].questProgress2 = jInfoData.infoDataList[i + 1].questProgress;
+                tmp_1.characterAvatar = jInfoData.infoDataList[i + 1].characterAvatar;
+                tmp_1.status = jInfoData.infoDataList[i + 1].status;
+                tmp_1.statusPoint = jInfoData.infoDataList[i + 1].statusPoint;
+                tmp_1.questProgress = jInfoData.infoDataList[i + 1].questProgress;
+                tmp_1.questProgress2 = jInfoData.infoDataList[i + 1].questProgress;
+                jInfoData.infoDataList[i] = tmp_1;
 
-                jInvenData.InvenDataList[i].itemList = jInvenData.InvenDataList[i + 1].itemList;
+                InvenData tmp_2;
+                tmp_2.itemList = new List<Item>();
+                tmp_2.itemList = jInvenData.InvenDataList[i + 1].itemList;
+                jInvenData.InvenDataList[i] = tmp_2;
             }
             else
             {
-                jInfoData.infoDataList[i].name = null;
-                jInfoData.infoDataList[i].isNull = true;
-                jInfoData.infoDataList[i].level = 0;
-                jInfoData.infoDataList[i].exp = 0;
-                jInfoData.infoDataList[i].gold = 0;
-                jInfoData.infoDataList[i].job = null;
-                jInfoData.infoDataList[i].gender = null;
-                
-                int[] initArr = new int[4] { 0, 0, 0, 0 };
-                jInfoData.infoDataList[i].characterAvatar = initArr;
-                jInfoData.infoDataList[i].status = new int[4] { 7, 6, 10, 5 };
-                jInfoData.infoDataList[i].statusPoint = 0;
-                jInfoData.infoDataList[i].questProgress = initArr;
-                jInfoData.infoDataList[i].questProgress2 = initArr;
+                InfoData tmp_1 = new(i);
+                jInfoData.infoDataList[i] = tmp_1;
 
                 jInvenData.InvenDataList[i].itemList.Clear();
                 Item initItem = new Item();

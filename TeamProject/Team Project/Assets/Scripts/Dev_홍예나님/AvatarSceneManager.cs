@@ -211,12 +211,14 @@ public class AvatarSceneManager : MonoBehaviour
                         if (CharacterNameInput!=null)
                         {
                             //스테이터스 작성
-                            JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].name = CharacterNameInput.text;
-                            JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].isNull = false;
-                            JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].level = 1;
-                            JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].job = "전사";
-                            JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].gender = (gender == 0 ? "M" : "F");
-                            
+                            InfoData tmp = JY_CharacterListManager.s_instance.jInfoData.infoDataList[i];
+                            tmp.name = CharacterNameInput.text;
+                            tmp.isNull = false;
+                            tmp.level = 1;
+                            tmp.job = "전사";
+                            tmp.gender = (gender == 0 ? "M" : "F");
+                            JY_CharacterListManager.s_instance.jInfoData.infoDataList[i] = tmp;
+
                             //모델링 작성
                             JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].characterAvatar[0] = optionSubs[0];
                             JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].characterAvatar[1] = optionSubs[1];
