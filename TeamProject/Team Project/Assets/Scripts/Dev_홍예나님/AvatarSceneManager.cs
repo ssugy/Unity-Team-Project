@@ -216,7 +216,7 @@ public class AvatarSceneManager : MonoBehaviour
                             JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].level = 1;
                             JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].job = "전사";
                             JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].gender = (gender == 0 ? "M" : "F");
-                            JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].species = "인간";
+                            
                             //모델링 작성
                             JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].characterAvatar[0] = optionSubs[0];
                             JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].characterAvatar[1] = optionSubs[1];

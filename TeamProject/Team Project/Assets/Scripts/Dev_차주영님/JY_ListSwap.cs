@@ -94,8 +94,7 @@ public class JY_ListSwap : MonoBehaviour
         jobTxt.text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].job;
         jobTxt.text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].job;
         portraitImage.sprite = switchPortrait(JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender,
-                                              JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].job);
-        speciesTxt.text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].species;
+                                              JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].job);        
     }
 
     public void deleteButton()

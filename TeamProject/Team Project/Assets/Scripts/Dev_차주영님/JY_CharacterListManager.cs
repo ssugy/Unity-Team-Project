@@ -12,6 +12,14 @@ public class JInfoData
 {
     public List<infoData> infoDataList;
 }
+
+[System.Serializable]
+public class JInvenData
+{
+    public List<InvenData> InvenDataList;
+}
+
+// 메소드를 사용하거나 상속할 것이 아니라면 구조체로 바꾸는 것이 좋을 듯.
 [System.Serializable]
 public class infoData
 {
@@ -20,9 +28,15 @@ public class infoData
     public string name;
     public int level;
     public int exp;
+    public int gold;
     public string job;
     public string gender;
-    public string species;
+    /// <summary>
+    /// 0 : 머리카락
+    /// 1 : 얼굴
+    /// 2 : 상의
+    /// 3 : 하의
+    /// </summary>
     public int[] characterAvatar;
     /// <summary>
     /// 0 : Health
@@ -32,6 +46,8 @@ public class infoData
     /// </summary>
     public int[] status;
     public int statusPoint;
+
+    // 퀘스트 로직을 아예 바꿀 필요가 있음.
     /// <summary>
     /// 0 : npc 번호
     /// 1 : 현재 진행도
@@ -41,14 +57,7 @@ public class infoData
     public int[] questProgress;
     public int[] questProgress2;
 }
-/// <summary>
-/// 캐릭터 별 inventory 데이터 저장 json
-/// </summary>
-[System.Serializable]
-public class JInvenData
-{
-    public List<InvenData> InvenDataList;
-}
+// 메소드를 사용하거나 상속할 것이 아니라면 구조체로 바꾸는 것이 좋을 듯.
 [System.Serializable]
 public class InvenData
 {
@@ -57,26 +66,27 @@ public class InvenData
 
 public class JY_CharacterListManager : MonoBehaviour
 {
-    #region 싱글톤 패턴
+    #region 싱글톤 패턴. 외부에선 s_instance 사용.
     private static JY_CharacterListManager instance;
     public static JY_CharacterListManager s_instance { get { return instance; } }
-    #endregion
+    #endregion    
 
-    //Data 관리 클래스(리스트)
-    public JInfoData jInfoData;
-    public JInvenData jInvenData;
-
-    //파일 경로 및 json load에 쓰이는 string 변수
+    // Json 파일 경로.
     private string infoPath;
     private string InvenPath;
+
+    // Json에서 로드한 파일 데이터.
+    public JInfoData jInfoData;
+    public JInvenData jInvenData;
 
     private string jsonData_Info;
     private string jsonData_Inven;
 
-    //캐릭터선택번호
+    // 선택된 캐릭터의 번호
     public int selectNum;
     public Sprite selectPortrait;
 
+    // Awake에서 Json 파일을 로드함.
     private void Awake()
     {
         #region 싱글톤 생성
@@ -96,17 +106,13 @@ public class JY_CharacterListManager : MonoBehaviour
         infoPath = Application.persistentDataPath + "/InfoData.json";
         InvenPath = Application.persistentDataPath + "/InvenData.json";
 
-        // 세이브 파일이 존재하지 않으면 세이브 파일을 생성.
-        FileInfo fileInfo = new FileInfo(infoPath);
-        if (!fileInfo.Exists)
+        // Info, Inven 세이브 파일 중 하나라도 존재하지 않으면 세이브 파일을 생성.
+        FileInfo file_Info = new FileInfo(infoPath);
+        FileInfo file_Inven = new FileInfo(InvenPath);
+        if (!file_Info.Exists || !file_Inven.Exists)
         {
-            WriteInitialJson();
-        }
-        FileInfo fileInfo_I = new FileInfo(InvenPath);
-        if (!fileInfo_I.Exists)
-        {
-            writeInitialInventoryJson();
-        }
+            InitializeSave();            
+        }                
 
         jsonData_Info = File.ReadAllText(infoPath);
         jInfoData = JsonUtility.FromJson<JInfoData>(jsonData_Info);
@@ -114,10 +120,13 @@ public class JY_CharacterListManager : MonoBehaviour
         jInvenData = JsonUtility.FromJson<JInvenData>(jsonData_Inven);
     }
 
-    void WriteInitialJson()
-    {
-        JInfoData tmp = new JInfoData();
-        tmp.infoDataList = new List<infoData>();
+    void InitializeSave()
+    {        
+        JInfoData tmp_1 = new JInfoData();
+        tmp_1.infoDataList = new List<infoData>();
+
+        
+        
         for (int i = 0; i < 4; i++)
         {
             infoData init = new infoData();
@@ -126,42 +135,42 @@ public class JY_CharacterListManager : MonoBehaviour
             init.name = null;
             init.level = 0;
             init.exp = 0;
+            init.gold = 0;
             init.job = null;
             init.gender = null;
-            init.species = null;
-
             int[] initArr = new int[4] { 0, 0, 0, 0 };
             init.characterAvatar = initArr;
             init.status = new int[4] { 7, 6, 10, 5 };
             init.statusPoint = 0;
             init.questProgress = initArr;
             init.questProgress2 = initArr;
-
-            tmp.infoDataList.Add(init);
+            tmp_1.infoDataList.Add(init);
+            //tmp_1.infoDataList[i].number = i;
         }
-        string json = JsonUtility.ToJson(tmp, true);
-        File.WriteAllText(infoPath, json);        
-    }
 
-    void writeInitialInventoryJson()
-    {
-        JInvenData tmp = new JInvenData();
-        tmp.InvenDataList = new List<InvenData>();
+        
+        JInvenData tmp_2 = new JInvenData();
+        tmp_2.InvenDataList = new List<InvenData>();
+
+        InvenData init_IData = new InvenData();
+        init_IData.itemList = new List<Item>();
+        Item tmp_Item = new Item();
+        tmp_Item.type = ItemType.EQUIPMENT;
+        tmp_Item.equipedState = EquipState.EQUIPED;
+        tmp_Item.name = "롱소드";
+        init_IData.itemList.Add(tmp_Item);
 
         for (int i = 0; i < 4; i++)
-        {
-            Item initItem = new Item();
-            initItem.type = ItemType.EQUIPMENT;
-            initItem.equipedState = EquipState.EQUIPED;
-            initItem.name = "롱소드";
-
-            InvenData init = new InvenData();
-            init.itemList = new List<Item>();
-            init.itemList.Add(initItem);
-            tmp.InvenDataList.Add(init);
+        {            
+            tmp_2.InvenDataList.Add(init_IData);
         }
-        string json = JsonUtility.ToJson(tmp, true);
-        File.WriteAllText(InvenPath, json);        
+
+        // Info 세이브 작성.
+        string json_1 = JsonUtility.ToJson(tmp_1, true);
+        File.WriteAllText(infoPath, json_1);
+        // Inven 세이브 작성.
+        string json_2 = JsonUtility.ToJson(tmp_2, true);
+        File.WriteAllText(InvenPath, json_2);
     }
 
     private void OnEnable()
@@ -203,9 +212,9 @@ public class JY_CharacterListManager : MonoBehaviour
                 jInfoData.infoDataList[i].isNull = jInfoData.infoDataList[i + 1].isNull;
                 jInfoData.infoDataList[i].level = jInfoData.infoDataList[i + 1].level;
                 jInfoData.infoDataList[i].exp = jInfoData.infoDataList[i + 1].exp;
+                jInfoData.infoDataList[i].gold = jInfoData.infoDataList[i + 1].gold;
                 jInfoData.infoDataList[i].job = jInfoData.infoDataList[i + 1].job;
-                jInfoData.infoDataList[i].gender = jInfoData.infoDataList[i + 1].gender;
-                jInfoData.infoDataList[i].species = jInfoData.infoDataList[i + 1].species;
+                jInfoData.infoDataList[i].gender = jInfoData.infoDataList[i + 1].gender;                
 
                 jInfoData.infoDataList[i].characterAvatar = jInfoData.infoDataList[i + 1].characterAvatar;
                 jInfoData.infoDataList[i].status = jInfoData.infoDataList[i + 1].status;
@@ -221,9 +230,10 @@ public class JY_CharacterListManager : MonoBehaviour
                 jInfoData.infoDataList[i].isNull = true;
                 jInfoData.infoDataList[i].level = 0;
                 jInfoData.infoDataList[i].exp = 0;
+                jInfoData.infoDataList[i].gold = 0;
                 jInfoData.infoDataList[i].job = null;
                 jInfoData.infoDataList[i].gender = null;
-                jInfoData.infoDataList[i].species = null;
+                
                 int[] initArr = new int[4] { 0, 0, 0, 0 };
                 jInfoData.infoDataList[i].characterAvatar = initArr;
                 jInfoData.infoDataList[i].status = new int[4] { 7, 6, 10, 5 };
