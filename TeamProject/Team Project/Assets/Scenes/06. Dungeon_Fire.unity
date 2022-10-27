@@ -4357,6 +4357,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dungeonPanel: {fileID: 2043015956}
   dungeonExplanation: {fileID: 2043015955}
+  dungeonProgress: {fileID: 1178366961}
+  progressAmount: 0
   explanationList:
   - "\uC228\uACA8\uC9C4 \uC5F4\uC1E0\uB97C \uCC3E\uC544\n\uB2E4\uC74C \uAD6C\uC5ED\uC73C\uB85C
     \uD5A5\uD558\uC138\uC694."
@@ -13365,6 +13367,17 @@ MonoBehaviour:
   m_AmplitudeGain: 1
   m_FrequencyGain: 10
   mNoiseOffsets: {x: -749.97253, y: -40.680786, z: 382.13824}
+--- !u!114 &1178366961 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 179587236955430598, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
+  m_PrefabInstance: {fileID: 2043015950}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1182316078
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37690857, g: 0.27781683, b: 0.26629424, a: 1}
+  m_IndirectSpecularColor: {r: 0.37690774, g: 0.27781713, b: 0.26629606, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7495,6 +7495,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dungeonPanel: {fileID: 1069458828}
   dungeonExplanation: {fileID: 1069458827}
+  dungeonProgress: {fileID: 1069458829}
+  progressAmount: 0
   explanationList:
   - "\uC5B4\uB518\uAC00\uC5D0 \uC5F4\uC1E0\uAC00 \uC788\uC2B5\uB2C8\uB2E4.\n\uC5F4\uC1E0\uB97C
     \uCC3E\uC544 \uBB38\uC744 \uC5EC\uC138\uC694."
@@ -36796,6 +36798,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1714769040653087166, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
   m_PrefabInstance: {fileID: 1069458824}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1069458829 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 179587236955430598, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
+  m_PrefabInstance: {fileID: 1069458824}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1071890781
 PrefabInstance:
   m_ObjectHideFlags: 0
