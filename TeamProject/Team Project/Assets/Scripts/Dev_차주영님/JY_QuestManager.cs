@@ -87,8 +87,7 @@ public class JY_QuestManager : MonoBehaviour
                     JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[2] = 1;
                 }
                 Debug.Log("퀘스트 수령");
-                Quest_1_Bar.SetActive(true);
-                JY_CharacterListManager.s_instance.SaveListData();
+                Quest_1_Bar.SetActive(true);                
                 uiManager.questAcceptUI();
                 break;
             //완료
@@ -106,8 +105,7 @@ public class JY_QuestManager : MonoBehaviour
                 }
                 Debug.Log("퀘스트 완료");
                 Quest_1_Bar.SetActive(false);
-                Quest_1_Panel.SetActive(false);
-                JY_CharacterListManager.s_instance.SaveListData();
+                Quest_1_Panel.SetActive(false);                
                 uiManager.questFinishUI();
                 break;
             default:
