@@ -11,11 +11,13 @@ public class JInfoData
 {
     public List<InfoData> infoDataList;
 }
-
 [System.Serializable]
 public struct InfoData
 {
-    public InfoData(int _num=0, bool _isNull = true, string _name = null, int _level = 0, int _exp = 0, int _gold = 0, string _job = null, string _gender = null, int _statusPoint = 0)
+    // 생성자의 _num은 아무 의미없는 매개변수입니다.
+    // 본래 구조체의 생성자는 클래스와 달리 반드시 매개변수가 필요합니다. 그렇기에 본 구조체 역시 매개변수를 포함하였지만 기본값을 설정하여 실제로는 매개변수를 입력하지 않아도 생성자를 사용할 수 있습니다.
+    // 하지만 그럼에도 실제 struct 변수를 초기화할 때 어떤 매개변수도 입력하지 않으면 씬 '실행' 중에 에러가 발생합니다. 컴파일 과정에선 에러가 발생하지 않습니다.
+    public InfoData(int _num, bool _isNull = true, string _name = null, int _level = 0, int _exp = 0, int _gold = 0, string _job = null, string _gender = null, int _statusPoint = 0)
     {        
         isNull = _isNull;
         name = _name;
@@ -41,8 +43,8 @@ public struct InfoData
     public int statusPoint;
 
     /// <summary>
-    /// 0 : 머리카락
-    /// 1 : 얼굴
+    /// 0 : 얼굴
+    /// 1 : 헤어
     /// 2 : 상의
     /// 3 : 하의
     /// </summary>
@@ -118,17 +120,17 @@ public class JY_CharacterListManager : MonoBehaviour
 
     // 최초 세이브 파일 생성.
     void InitializeSave()
-    {        
-        JInfoData tmp = new ();
-        tmp.infoDataList = new ();
-        InfoData init = new(1);        
+    {
+        JInfoData tmp = new();
+        tmp.infoDataList = new();
+        InfoData init = new(0);        
 
         for (int i = 0; i < 4; i++)    
             tmp.infoDataList.Add(init);           
        
         // 세이브 작성.
-        string json_1 = JsonUtility.ToJson(tmp, true);
-        File.WriteAllText(infoPath, json_1);
+        string json = JsonUtility.ToJson(tmp, true);
+        File.WriteAllText(infoPath, json);
         
     }
 
@@ -143,14 +145,7 @@ public class JY_CharacterListManager : MonoBehaviour
         SceneManager.sceneLoaded -= LoadAvatar;
     }
     void LoadAvatar(Scene scene, LoadSceneMode mode)
-    {
-        // 인트로 씬으로 되돌아갈 때 해당 오브젝트를 파괴함.
-        if(scene.name.Equals("01. Intro"))
-        {            
-            instance = null;
-            Destroy(gameObject);
-            return;
-        }
+    {        
         JY_AvatarLoad.s_instance.origin = JY_PlayerReturn.instance.getPlayerOrigin();
         if (JY_AvatarLoad.s_instance.origin != null)
         {
@@ -160,40 +155,15 @@ public class JY_CharacterListManager : MonoBehaviour
         }
     }    
 
-    //삭제 시 list 정렬
-    //마지막은 무조건 초기화
+    // 캐릭터 삭제 코드 단순화.
     public void DeleteCharacter(int listNum)
-    {        
-        for (int i = listNum; i < 4; i++)
-        {
-            if (i != 3)
-            {
-                InfoData tmp = new (1);
-                tmp.name = jInfoData.infoDataList[i + 1].name;
-                tmp.isNull = jInfoData.infoDataList[i + 1].isNull;
-                tmp.level = jInfoData.infoDataList[i + 1].level;
-                tmp.exp = jInfoData.infoDataList[i + 1].exp;
-                tmp.gold = jInfoData.infoDataList[i + 1].gold;
-                tmp.job = jInfoData.infoDataList[i + 1].job;
-                tmp.gender = jInfoData.infoDataList[i + 1].gender;
-
-                tmp.characterAvatar = jInfoData.infoDataList[i + 1].characterAvatar;
-                tmp.status = jInfoData.infoDataList[i + 1].status;
-                tmp.statusPoint = jInfoData.infoDataList[i + 1].statusPoint;
-                tmp.questProgress = jInfoData.infoDataList[i + 1].questProgress;
-                tmp.questProgress2 = jInfoData.infoDataList[i + 1].questProgress;
-                tmp.itemList = jInfoData.infoDataList[i + 1].itemList;
-                jInfoData.infoDataList[i] = tmp;
-            }
-            else
-            {
-                InfoData tmp = new(1);                
-                jInfoData.infoDataList[i] = tmp;
-            }
-        }
+    {
+        jInfoData.infoDataList.RemoveAt(listNum);        
+        InfoData tmp = new(0);
+        jInfoData.infoDataList.Add(tmp);
         SaveListData();        
     }
-    //캐릭터생성, 삭제 시 데이터 갱신사항 Json파일에 Save
+    // 해당 매니저의 JInfoData를 파일에 옮겨 씀.
     public void SaveListData()
     {
         string json = JsonUtility.ToJson(jInfoData, true);
