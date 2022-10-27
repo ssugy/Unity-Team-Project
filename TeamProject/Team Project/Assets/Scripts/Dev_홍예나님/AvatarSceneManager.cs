@@ -43,7 +43,12 @@ public class AvatarSceneManager : MonoBehaviour
     private List<float> torsoOptions = new List<float>(); // torso용 옵션들
     private SkinnedMeshRenderer currentSkinnedMesh = null;
 
-    // Start is called before the first frame update
+    private void OnDisable()
+    {
+        Time.timeScale = 1f;
+    }
+
+
     void Start()
     {
 #if UNITY_EDITOR
@@ -232,6 +237,11 @@ public class AvatarSceneManager : MonoBehaviour
                             JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].characterAvatar[3] = optionSubs[3];
                             break;
                         }
+                    }
+                    // 같은 이름이 있으면 리턴.
+                    else if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].name.Equals(CharacterNameInput.text))
+                    {                        
+                        return;
                     }
                 }                
                 

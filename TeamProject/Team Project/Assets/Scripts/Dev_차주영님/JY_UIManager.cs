@@ -103,7 +103,7 @@ public class JY_UIManager : MonoBehaviour
     public void levelupUI()
     {
         alarmUI.SetActive(true);
-        alarmText.text = "레벨업! Lv."+JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level.ToString();
+        alarmText.text = "레벨업! Lv." + Player.instance.playerStat.level;
         effect = Instantiate<GameObject>(LevelUPEffect, Player.instance.transform);
         effect.transform.localPosition = Vector3.forward;
         effectList.Add(effect);

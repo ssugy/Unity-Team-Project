@@ -366,7 +366,6 @@ GameObject:
   - component: {fileID: 124855105}
   - component: {fileID: 124855104}
   - component: {fileID: 124855103}
-  - component: {fileID: 124855106}
   m_Layer: 5
   m_Name: Button_Enter World
   m_TagString: Untagged
@@ -438,19 +437,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 124855104}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 124855106}
-        m_TargetAssemblyTypeName: JY_LoadScene, Assembly-CSharp
-        m_MethodName: enterScene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 4
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &124855104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -489,20 +476,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 124855101}
   m_CullTransparentMesh: 1
---- !u!114 &124855106
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 124855101}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d23547b26b6a3442a683779086b01a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetSceneNum: 4
-  alarm: {fileID: 1828567309}
 --- !u!1 &207681198
 GameObject:
   m_ObjectHideFlags: 0
@@ -2919,9 +2892,8 @@ GameObject:
   - component: {fileID: 928977043}
   - component: {fileID: 928977042}
   - component: {fileID: 928977041}
-  - component: {fileID: 928977040}
   m_Layer: 5
-  m_Name: Button_Escape Game
+  m_Name: Button_Quit Game
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2947,20 +2919,6 @@ RectTransform:
   m_AnchoredPosition: {x: 1364, y: 587}
   m_SizeDelta: {x: 130, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &928977040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 928977038}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d23547b26b6a3442a683779086b01a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetSceneNum: 0
-  alarm: {fileID: 1828567309}
 --- !u!114 &928977041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3004,19 +2962,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 928977042}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 928977038}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &928977042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5965,8 +5911,9 @@ GameObject:
   - component: {fileID: 1828567310}
   - component: {fileID: 1828567312}
   - component: {fileID: 1828567311}
+  - component: {fileID: 1828567313}
   m_Layer: 5
-  m_Name: NoSelectAlarm
+  m_Name: PopUp_No Select
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6032,6 +5979,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1828567309}
   m_CullTransparentMesh: 1
+--- !u!114 &1828567313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828567309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bbd497890e6db947b06e90c4aa7d934, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 1
 --- !u!4 &1831036442 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4639521340397212751, guid: 9aaa4bab24cb4a64f87f401682c144f3, type: 3}
@@ -6151,6 +6111,7 @@ GameObject:
   - component: {fileID: 1927713494}
   - component: {fileID: 1927713493}
   - component: {fileID: 1927713492}
+  - component: {fileID: 1927713496}
   m_Layer: 5
   m_Name: Lobby UI
   m_TagString: Untagged
@@ -6244,6 +6205,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1927713496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927713491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 224e1b47283bac248a1fe342c8074e92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noSelect: {fileID: 1828567309}
+  enterWorld: {fileID: 124855103}
+  quitGame: {fileID: 928977041}
 --- !u!4 &1928839824 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: cae602f6ce981f242803ff07f4d119c9, type: 3}
