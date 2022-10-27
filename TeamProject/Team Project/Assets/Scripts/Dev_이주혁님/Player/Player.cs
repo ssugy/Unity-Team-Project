@@ -491,8 +491,8 @@ public class Player : MonoBehaviour
     {
         playerStat.statPoint = (playerStat.level - 1) * 3;
         playerStat.InitialStat(playerStat.characterClass);
-        SetState();        
-        // UI 매니저를 호출하기 위해 퀘스트 매니저를 경유하고 있는데 좋지 않아 보입니다.
+        SetState();
+        SaveStatData();
         JY_QuestManager.s_instance.uiManager.StatusDataRenew();
     }
     public void StatUp(Adjustable _stat)
@@ -522,7 +522,8 @@ public class Player : MonoBehaviour
                     SetState();
                     break;
             }
-        }        
+        }
+        SaveStatData();
         JY_QuestManager.s_instance.uiManager.StatusDataRenew();
     }       
     // Adjustable 스탯으로부터 기타 스탯을 연산함.
@@ -671,15 +672,30 @@ public class Player : MonoBehaviour
     {
         ++playerStat.level;
         playerStat.statPoint += 3;
-        playerStat.CurExp -= playerStat.Exp;              
+        playerStat.CurExp -= playerStat.Exp;
+        InfoData tmp = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum];
+        tmp.exp = playerStat.CurExp;        
         if (EXP_TABLE.TryGetValue(playerStat.level,out int _exp))
         {
             playerStat.Exp = _exp;
         }        
-        playerStat.CurHP = playerStat.HP;        
+        playerStat.CurHP = playerStat.HP;
+        tmp.level = playerStat.level;
+        JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum] = tmp;
+        SaveStatData();
         JY_QuestManager.s_instance.uiManager.levelupUI();
     }
-    
+    void SaveStatData()
+    {
+        InfoData tmp = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum];
+        tmp.statusPoint = playerStat.statPoint;
+        tmp.status[0] = playerStat.health;
+        tmp.status[1] = playerStat.stamina;
+        tmp.status[2] = playerStat.strength;
+        tmp.status[3] = playerStat.dexterity;
+        JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum] = tmp;
+        JY_CharacterListManager.s_instance.SaveListData();
+    }
     // 이미 발동된 isAttack 트리거를 취소함. 선입력에 의한 의도치 않은 공격이 나가는 것을 방지.
     public void ResetAttackTrigger()   
     {
@@ -687,7 +703,10 @@ public class Player : MonoBehaviour
     }
     public void questExp(int exp)
     {
-        playerStat.CurExp += exp;        
+        playerStat.CurExp += exp;
+        InfoData tmp = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum];
+        tmp.exp = playerStat.CurExp;
+        JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum] = tmp;
     }
     void SoundRun()
     {
@@ -704,27 +723,5 @@ public class Player : MonoBehaviour
     void SoundAttack()
     {
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.PLAYER_ATTACK);
-    }
-
-    // 플레이어 스크립트에서 인포, 인벤 데이터를 JInfoData로 옮기는 메소드가 필요.
-    public void SaveData()
-    {
-        InfoData tmp = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum];
-        tmp.level = playerStat.level;
-        tmp.exp = playerStat.CurExp;
-        tmp.gold = playerStat.Gold;
-        tmp.statusPoint = playerStat.statPoint;
-        tmp.status[(int)Adjustable.health] = playerStat.health;
-        tmp.status[(int)Adjustable.stamina] = playerStat.stamina;
-        tmp.status[(int)Adjustable.strength] = playerStat.strength;
-        tmp.status[(int)Adjustable.dexterity] = playerStat.dexterity;
-        JY_CharacterListManager.CopyInventoryData(Inventory.instance.items, tmp.itemList);
-        JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum] = tmp;
-    }
-    private void OnDisable()
-    {
-        Debug.Log("데이터 세이브");
-        SaveData();
-        instance = null;        
     }
 }

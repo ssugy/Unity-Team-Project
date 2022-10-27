@@ -232,8 +232,9 @@ public class AvatarSceneManager : MonoBehaviour
                             break;
                         }
                     }
-                }                
-                
+                }
+                //데이터 세이브
+                JY_CharacterListManager.s_instance.SaveListData();
                 if (GameManager.s_instance != null)
                     GameManager.s_instance.LoadScene(2);
             }

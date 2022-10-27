@@ -75,7 +75,12 @@ public class GameManager : MonoBehaviour
             AudioManager.s_instance.SoundFadeInOut(AudioManager.SOUND_NAME.BossBGM_02, 0, 0.1f);
             if(!AudioManager.s_instance.NOWPLAY.name.Equals("BGM"))
                 AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BGM, true, 0.5f);
-        }        
+        }
+        if(JY_CharacterListManager.s_instance != null && Inventory.instance != null && SceneManager.GetActiveScene().name != "03. Lobby")
+        {
+            JY_CharacterListManager.s_instance.CopyInventoryData(Inventory.instance.items, JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].itemList);
+            JY_CharacterListManager.s_instance.SaveListData();
+        }
         LoadingSceneController.LoadScene(index);    // 로딩씬을 이용한 로딩
     }
 
