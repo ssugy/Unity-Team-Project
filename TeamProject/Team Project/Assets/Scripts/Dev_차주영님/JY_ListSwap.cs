@@ -26,8 +26,7 @@ public class JY_ListSwap : MonoBehaviour
     Sprite warriorF;
     Sprite magicianM;
     Sprite magicianF;
-
-    public Inventory setInventory;
+    
     private void Awake()
     {
         //소스이미지 로드
