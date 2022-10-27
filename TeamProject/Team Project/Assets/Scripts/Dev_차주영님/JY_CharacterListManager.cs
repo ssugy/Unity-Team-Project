@@ -68,7 +68,6 @@ public struct InfoData
     public List<Item> itemList;
 }
 
-
 public class JY_CharacterListManager : MonoBehaviour
 {
     #region 싱글톤 패턴. 외부에선 s_instance 사용.
@@ -81,8 +80,7 @@ public class JY_CharacterListManager : MonoBehaviour
 
     // Json에서 로드한 파일 데이터.
     public JInfoData jInfoData;    
-
-    private string jsonData_Info;    
+    private string stringJson;    
 
     // 선택된 캐릭터의 번호
     public int selectNum;
@@ -111,15 +109,26 @@ public class JY_CharacterListManager : MonoBehaviour
         FileInfo file_Info = new (infoPath);
         
         if (!file_Info.Exists ) 
-            InitializeSave();
+            InitializeSaveFile();
 
         // 세이브 파일을 로드.
-        jsonData_Info = File.ReadAllText(infoPath);
-        jInfoData = JsonUtility.FromJson<JInfoData>(jsonData_Info);        
+        stringJson = File.ReadAllText(infoPath);
+        jInfoData = JsonUtility.FromJson<JInfoData>(stringJson);        
+    }    private void OnEnable()
+    {
+        // 씬이 로드될 때의 이벤트 구독.
+        SceneManager.sceneLoaded += LoadAvatar;
+        SceneManager.sceneLoaded += WriteSaveFile;
+    }
+    private void OnDisable()
+    {
+        // 이벤트 구독 취소.
+        SceneManager.sceneLoaded -= LoadAvatar;
+        SceneManager.sceneLoaded -= WriteSaveFile;
     }
 
     // 최초 세이브 파일 생성.
-    void InitializeSave()
+    void InitializeSaveFile()
     {
         JInfoData tmp = new();
         tmp.infoDataList = new();
@@ -130,20 +139,10 @@ public class JY_CharacterListManager : MonoBehaviour
        
         // 세이브 작성.
         string json = JsonUtility.ToJson(tmp, true);
-        File.WriteAllText(infoPath, json);
-        
+        File.WriteAllText(infoPath, json);        
     }
 
-    private void OnEnable()
-    {
-        // 씬이 로드될 때의 이벤트 구독.
-        SceneManager.sceneLoaded += LoadAvatar;
-    }
-    private void OnDisable()
-    {
-        // 이벤트 구독 취소.
-        SceneManager.sceneLoaded -= LoadAvatar;
-    }
+    
     void LoadAvatar(Scene scene, LoadSceneMode mode)
     {        
         JY_AvatarLoad.s_instance.origin = JY_PlayerReturn.instance.getPlayerOrigin();
@@ -153,36 +152,37 @@ public class JY_CharacterListManager : MonoBehaviour
             JY_AvatarLoad.s_instance.charFemale = JY_AvatarLoad.s_instance.findGameObjectInChild("BaseCharacterF", JY_AvatarLoad.s_instance.origin.transform).gameObject;
             JY_AvatarLoad.s_instance.LoadModelData(selectNum);
         }
-    }    
+    }
+    // 해당 매니저의 JInfoData를 파일에 옮겨 씀. 씬이 바뀔 때만 실행되어야 함.
+    public void WriteSaveFile(Scene scene, LoadSceneMode mode)
+    {        
+        string json = JsonUtility.ToJson(jInfoData, true);
+        File.WriteAllText(infoPath, json);
+    }
 
     // 캐릭터 삭제 코드 단순화.
     public void DeleteCharacter(int listNum)
     {
         jInfoData.infoDataList.RemoveAt(listNum);        
         InfoData tmp = new(0);
-        jInfoData.infoDataList.Add(tmp);
-        SaveListData();        
+        jInfoData.infoDataList.Add(tmp);             
     }
-    // 해당 매니저의 JInfoData를 파일에 옮겨 씀.
-    public void SaveListData()
-    {
-        string json = JsonUtility.ToJson(jInfoData, true);
-        File.WriteAllText(infoPath, json);
-    }    
 
-    public void CopyInventoryData(List<Item> origin, List<Item> target)
+
+    
+    
+    
+
+    public static void CopyInventoryData(List<Item> _source, List<Item> _destination)
     {
-        target.Clear();
-        for (int i = 0; i < origin.Count; i++)
+        _destination.Clear();
+        for (int i = 0; i < _source.Count; i++)
         {
             Item copied = new Item();
-            copied.type = origin[i].type;
-            copied.equipedState = origin[i].equipedState;
-            copied.name = origin[i].name;
-            copied.explanation = origin[i].explanation;
-            copied.image = origin[i].image;
-            copied.effects = origin[i].effects;            
-            target.Add(copied);
+            copied.type = _source[i].type;
+            copied.equipedState = _source[i].equipedState;
+            copied.name = _source[i].name;                      
+            _destination.Add(copied);
         }
     }
 
@@ -205,12 +205,7 @@ public class JY_CharacterListManager : MonoBehaviour
             Item copied = new Item();            
             copied.type = jInfoData.infoDataList[selectNum].itemList[i].type;
             copied.equipedState = jInfoData.infoDataList[selectNum].itemList[i].equipedState;
-            copied.name = jInfoData.infoDataList[selectNum].itemList[i].name;
-            /*
-            copied.explanation = characterInventoryData.InventoryJDataList[selectNum].itemList[i].explanation;
-            copied.image = characterInventoryData.InventoryJDataList[selectNum].itemList[i].image;
-            copied.effects = characterInventoryData.InventoryJDataList[selectNum].itemList[i].effects;
-            */
+            copied.name = jInfoData.infoDataList[selectNum].itemList[i].name;            
             target.Add(copied);
             for (int j = 0; j < target.Count; j++)
             {
