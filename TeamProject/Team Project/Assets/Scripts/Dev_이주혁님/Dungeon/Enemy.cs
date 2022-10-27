@@ -55,8 +55,7 @@ public class Enemy : MonoBehaviour
 
     void StopToWall()
     {
-        Debug.DrawRay(transform.position, transform.forward * 5, Color.green);
-        isBorder = Physics.Raycast(transform.position, transform.forward, 5, LayerMask.GetMask("Wall"));
+        isBorder = Physics.Raycast(transform.position, transform.forward, 0.7f, LayerMask.GetMask("Wall"));
     }
     private void FixedUpdate()
     {
@@ -64,13 +63,7 @@ public class Enemy : MonoBehaviour
         atkTime += Time.fixedDeltaTime;        
         if (target != null)
         {
-            StopToWall();
-            if (isBorder)
-            {
-                target = null;
-                StartCoroutine(Targeting());
-                isBorder = false;
-            }
+            
             nav.SetDestination(target.position);
             float distance = Vector3.Distance(transform.position, target.position);
             if (distance <= attackDistance)
@@ -86,6 +79,14 @@ public class Enemy : MonoBehaviour
             {
                 target = null;
                 StartCoroutine(Targeting());
+            }
+            StopToWall();
+            if (isBorder)
+            {
+                target = null;
+                StartCoroutine(Targeting());
+                isBorder = false;
+                
             }
         }
         else
