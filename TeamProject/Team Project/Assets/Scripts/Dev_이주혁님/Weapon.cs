@@ -19,7 +19,7 @@ public class Weapon : MonoBehaviour
         {
             player.playerAni.SetFloat("AtkSpeed", atkSpeed);
         }
-        Player.instance.SetState();
+        if (player != null) Player.instance.SetState();
     }    
     private void OnDisable()
     {
@@ -29,7 +29,7 @@ public class Weapon : MonoBehaviour
         {            
             player.playerAni.SetFloat("AtkSpeed", 1f);
         }
-        Player.instance.SetState();
+        if (player != null) Player.instance.SetState();
     }
     
     private void OnTriggerEnter(Collider other)

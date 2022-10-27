@@ -216,6 +216,7 @@ public class AvatarSceneManager : MonoBehaviour
                             tmp.isNull = false;
                             tmp.level = 1;
                             tmp.job = "ภüป็";
+                            tmp.status = new int[4] { 7, 6, 10, 5 };
                             tmp.gender = (gender == 0 ? "M" : "F");
                             Item tmp_Item = new();
                             tmp_Item.type = ItemType.EQUIPMENT;

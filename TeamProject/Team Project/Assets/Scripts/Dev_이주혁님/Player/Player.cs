@@ -209,7 +209,7 @@ public class Player : MonoBehaviour
             rWeaponEffect = rWeaponDummy.GetChild(0).GetChild(2).GetComponent<TrailRenderer>();
         }
 
-        if (JY_CharacterListManager.s_instance != null && JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level != 1)
+        if (JY_CharacterListManager.s_instance != null)
         {
             playerStat.level = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level;
             if (EXP_TABLE.TryGetValue(playerStat.level, out int _exp))
@@ -217,6 +217,7 @@ public class Player : MonoBehaviour
                 playerStat.Exp = _exp;
             }
             playerStat.CurExp = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp;
+            playerStat.Gold = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].gold;
             playerStat.statPoint = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].statusPoint;
             playerStat.health = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[0];
             playerStat.stamina = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[1];
