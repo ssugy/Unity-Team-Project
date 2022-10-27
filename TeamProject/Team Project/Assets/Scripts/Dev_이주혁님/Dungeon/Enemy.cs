@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour
     protected float atkTime;      // 공격 쿨타임. Unirx로 교체예정.
     protected HP_Bar hpbar;         // HP 바.
 
-    
+    bool isBorder;
 
     private void Awake()
     {        
@@ -52,11 +52,25 @@ public class Enemy : MonoBehaviour
     {        
         StartCoroutine(Targeting());        
     }
+
+    void StopToWall()
+    {
+        Debug.DrawRay(transform.position, transform.forward * 5, Color.green);
+        isBorder = Physics.Raycast(transform.position, transform.forward, 5, LayerMask.GetMask("Wall"));
+    }
     private void FixedUpdate()
     {
+        
         atkTime += Time.fixedDeltaTime;        
         if (target != null)
         {
+            StopToWall();
+            if (isBorder)
+            {
+                target = null;
+                StartCoroutine(Targeting());
+                isBorder = false;
+            }
             nav.SetDestination(target.position);
             float distance = Vector3.Distance(transform.position, target.position);
             if (distance <= attackDistance)
