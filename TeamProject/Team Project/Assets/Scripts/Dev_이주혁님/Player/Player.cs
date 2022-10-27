@@ -93,6 +93,10 @@ public class PlayerStat
             {
                 curSP = 0;
             }
+            else if (curSP > SP)
+            {
+                curSP = SP;
+            }
         }
     }
     public float criPro;
@@ -224,6 +228,7 @@ public class Player : MonoBehaviour
             playerStat.strength = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[2];
             playerStat.dexterity = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[3];
         }
+        JY_QuestManager.s_instance.uiManager.StatusDataRenew();
         SetState();
         playerStat.CurHP = playerStat.HP;
         playerStat.CurSP = playerStat.SP;
@@ -524,23 +529,22 @@ public class Player : MonoBehaviour
                     break;
             }
         }        
-        JY_QuestManager.s_instance.uiManager.StatusDataRenew();
+        JY_QuestManager.s_instance.uiManager.StatusDataRenew();        
     }       
     // Adjustable 스탯으로부터 기타 스탯을 연산함.
     public void SetState()
     {
-        playerStat.HP = 210 + playerStat.health * 20 + playerStat.strength * 5;   // 1레벨 스탯 기준 400  
+        playerStat.HP = 210 + playerStat.health * 20 + playerStat.strength * 5;   // 1레벨 스탯 기준 400
+        playerStat.CurHP = playerStat.CurHP;
         playerStat.SP = 46 + playerStat.stamina * 4 + playerStat.strength * 1;    // 1레벨 스탯 기준 80
+        playerStat.CurSP = playerStat.CurSP;
         playerStat.criPro = (20f + Sigma(2f, 1.03f, playerStat.dexterity)) / 100f;
         playerStat.defMag = 1 - Mathf.Pow(1.02f, -playerStat.defPoint);
         if (Weapon.weapon != null)
-        {
-            playerStat.atkPoint = Weapon.weapon.atkPoint + Mathf.CeilToInt(Sigma(2f, 1.02f, playerStat.strength) + Sigma(1f, 1.1f, playerStat.dexterity));
-        }
-        else
-        {
+            playerStat.atkPoint = Weapon.weapon.atkPoint + Mathf.CeilToInt(Sigma(2f, 1.02f, playerStat.strength) + Sigma(1f, 1.1f, playerStat.dexterity));       
+        else        
             playerStat.atkPoint = 0;
-        }
+        
     }
     // 특별히 사용하기 위해 만든 시그마 연산용 함수. 일반적인 시그마 연산에는 사용하지 말 것.
     public float Sigma(float a, float b, int c)

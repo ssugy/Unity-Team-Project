@@ -32,12 +32,7 @@ public class JY_UIManager : MonoBehaviour
         profileSwitch = false;
         profileMenuSwitch = false;
         questMenuSwitch = false;
-
-        if(JY_CharacterListManager.s_instance != null)
-        {
-            nameText.text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].name;
-            StatusDataRenew();
-        }
+        nameText.text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].name;        
         effectList = new List<GameObject>();
     }
 
@@ -148,14 +143,13 @@ public class JY_UIManager : MonoBehaviour
     }
 
     public void StatusDataRenew()
-    {
-        int level = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level;
-        levelText.text = "Lv." + level.ToString();
-        healthText.text = "Ã¼·Â:" + JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[0].ToString();
-        steminaText.text = "Áö±¸·Â:" + JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[1].ToString();
-        strengthText.text = "Èû:" + JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[2].ToString();
-        dexterityText.text = "¹ÎÃ¸:" + JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[3].ToString();
-        SPText.text = "½ºÅÈ Æ÷ÀÎÆ®:"+JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].statusPoint.ToString();
+    {    
+        levelText.text = "Lv." + Player.instance.playerStat.level.ToString();
+        healthText.text = "Ã¼·Â:" + Player.instance.playerStat.health.ToString();
+        steminaText.text = "Áö±¸·Â:" + Player.instance.playerStat.stamina.ToString();
+        strengthText.text = "Èû:" + Player.instance.playerStat.strength.ToString();
+        dexterityText.text = "¹ÎÃ¸:" + Player.instance.playerStat.dexterity.ToString();
+        SPText.text = "½ºÅÈ Æ÷ÀÎÆ®:"+ Player.instance.playerStat.statPoint.ToString(); 
     }
 
     public void statusControl(int StatType)

@@ -13,9 +13,7 @@ public class JY_ListSwap : MonoBehaviour
 
     //텍스트 변경
     public Text nameTxt;
-    public Text levelTxt;
-    public Text jobTxt;
-    public Text speciesTxt;
+    public Text infoTxt;       
 
     //캐릭터 선택시/데이터 로드시 변경 UI
     public Image frameBackground;
@@ -78,21 +76,9 @@ public class JY_ListSwap : MonoBehaviour
     }
     //Character Info의 Text 갱신
     void DataRenew()
-    {
-        string leveltxt;
-
+    {        
         nameTxt.text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].name;
-        if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].level < 10)
-        {
-            leveltxt = "0" + JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].level.ToString();
-        }
-        else
-        {
-            leveltxt = JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].level.ToString();
-        }
-        levelTxt.text = leveltxt;
-        jobTxt.text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].job;
-        jobTxt.text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].job;
+        infoTxt.text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].level + "레벨 " + JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].job;        
         portraitImage.sprite = switchPortrait(JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender,
                                               JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].job);        
     }

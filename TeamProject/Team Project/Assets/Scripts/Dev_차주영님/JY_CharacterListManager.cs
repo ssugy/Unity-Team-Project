@@ -114,7 +114,8 @@ public class JY_CharacterListManager : MonoBehaviour
         // 세이브 파일을 로드.
         stringJson = File.ReadAllText(infoPath);
         jInfoData = JsonUtility.FromJson<JInfoData>(stringJson);        
-    }    private void OnEnable()
+    }    
+    private void OnEnable()
     {
         // 씬이 로드될 때의 이벤트 구독.
         SceneManager.sceneLoaded += LoadAvatar;
@@ -153,6 +154,7 @@ public class JY_CharacterListManager : MonoBehaviour
             JY_AvatarLoad.s_instance.LoadModelData(selectNum);
         }
     }
+
     // 해당 매니저의 JInfoData를 파일에 옮겨 씀. 씬이 바뀔 때만 실행되어야 함.
     public void WriteSaveFile(Scene scene, LoadSceneMode mode)
     {        
@@ -168,11 +170,6 @@ public class JY_CharacterListManager : MonoBehaviour
         jInfoData.infoDataList.Add(tmp);             
     }
 
-
-    
-    
-    
-
     public static void CopyInventoryData(List<Item> _source, List<Item> _destination)
     {
         _destination.Clear();
@@ -187,32 +184,21 @@ public class JY_CharacterListManager : MonoBehaviour
     }
 
     public void CopyInventoryDataToScript(List<Item> target)
-    {
-        
-        if (target == null)
-        {
-            Debug.Log("리스트 초기화");
+    {        
+        if (target == null)                    
             target = new List<Item>();
-        }
         else
-        {
-            target.Clear();
-        }
-        
+            target.Clear();                
 
         for (int i = 0; i < jInfoData.infoDataList[selectNum].itemList.Count; i++)
         {
             Item copied = new Item();            
             copied.type = jInfoData.infoDataList[selectNum].itemList[i].type;
             copied.equipedState = jInfoData.infoDataList[selectNum].itemList[i].equipedState;
-            copied.name = jInfoData.infoDataList[selectNum].itemList[i].name;            
-            target.Add(copied);
-            for (int j = 0; j < target.Count; j++)
-            {
-                target[j].ShallowCopy();
-            }
-        }
+            copied.name = jInfoData.infoDataList[selectNum].itemList[i].name;
+            copied.ShallowCopy();
+            target.Add(copied);            
+        }        
     }
-
 }
 
