@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
     public SceneName currentScene;
     public void LoadScene(int index)
     {
+        InstanceManager.s_instance.ClearList();
         currentScene = SceneName.Loading;   // 로딩이 시작되면 Loading씬으로 변경한 뒤, 끝나면 목적씬으로 변경
         if (SceneManager.GetActiveScene().name == "06. Dungeon_Fire")
         {

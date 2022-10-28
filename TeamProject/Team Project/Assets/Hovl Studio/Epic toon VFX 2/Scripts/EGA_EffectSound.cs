@@ -14,11 +14,11 @@ public class EGA_EffectSound : MonoBehaviour
 
     private AudioSource soundComponent;
 
-    void Start ()
+    void Awake ()
     {
         soundComponent = GetComponent<AudioSource>();
         clip = soundComponent.clip;
-        if (RandomVolume == true)
+        /*if (RandomVolume == true)
         {
             soundComponent.volume = Random.Range(minVolume, maxVolume);
             RepeatSound();
@@ -26,10 +26,14 @@ public class EGA_EffectSound : MonoBehaviour
         if (Repeating == true)
         {
             InvokeRepeating("RepeatSound", StartTime, RepeatTime);
-        }
+        }*/
     }
 
-    void RepeatSound()
+    /*void RepeatSound()
+    {
+        soundComponent.PlayOneShot(clip);
+    }*/
+    private void OnEnable()
     {
         soundComponent.PlayOneShot(clip);
     }

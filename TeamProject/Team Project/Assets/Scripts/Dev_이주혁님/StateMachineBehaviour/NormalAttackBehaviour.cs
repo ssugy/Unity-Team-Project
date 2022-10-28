@@ -16,6 +16,7 @@ public class NormalAttackBehaviour : StateMachineBehaviour
         weapon = Weapon.weapon;        
         weapon.atkMag = atkMag;
         Player.instance.UseStamina(usingStamina);
+        Player.instance.WEOn();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

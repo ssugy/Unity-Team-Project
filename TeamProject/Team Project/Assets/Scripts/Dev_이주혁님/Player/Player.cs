@@ -312,7 +312,6 @@ public class Player : MonoBehaviour
         if (enableAtk)
         {
             SetRotate();
-            WEOn();
             playerAni.SetTrigger("isAttack");
         }              
     }
@@ -328,6 +327,7 @@ public class Player : MonoBehaviour
         {
             SetRotate();
             playerAni.Play("Player Skill 1");
+            InstanceManager.s_instance.PlaySkillEffect("Skill_1_Effect");
             StartCoroutine(BattleUI.instance.Cooldown(4f, BattleUI.instance.skill_1, BattleUI.instance.cool_1));
         }
     }
@@ -341,8 +341,10 @@ public class Player : MonoBehaviour
         }
         if (enableAtk)
         {
+            Debug.Log("³È");
             SetRotate();
             playerAni.Play("Player Skill 2");
+            InstanceManager.s_instance.PlaySkillEffect("Skill_2_Effect");
             StartCoroutine(BattleUI.instance.Cooldown(4f, BattleUI.instance.skill_2, BattleUI.instance.cool_2));
         }
               
@@ -652,6 +654,7 @@ public class Player : MonoBehaviour
         {
             Die();
         }
+        WEOff();
         playerAni.SetFloat("isAttacked", (float)_damage / playerStat.HP);
         
     }
