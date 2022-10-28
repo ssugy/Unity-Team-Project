@@ -154,7 +154,6 @@ public class PlayerStat
 }
 
 
-
 public class Player : MonoBehaviour
 {    
     public static Player instance;
@@ -176,11 +175,11 @@ public class Player : MonoBehaviour
 
     public Transform rWeaponDummy;              // 오른손 무기 더미.
     private TrailRenderer rWeaponEffect;        // 오른손 무기 이펙트. (검기)
+    public GameObject WeaponEffect;
     public Transform lWeaponDummy;              // 왼손 무기 더미.
     [HideInInspector] public bool isGround;    
     private Dictionary<int, int> EXP_TABLE;
 
-    
     private void Awake()
     {        
         instance = this;
@@ -212,7 +211,8 @@ public class Player : MonoBehaviour
         {
             rWeaponEffect = rWeaponDummy.GetChild(0).GetChild(2).GetComponent<TrailRenderer>();
         }
-
+        WeaponEffect.transform.SetParent(rWeaponDummy);
+        WeaponEffect.SetActive(false);
         if (JY_CharacterListManager.s_instance != null)
         {
             playerStat.level = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level;
@@ -312,6 +312,7 @@ public class Player : MonoBehaviour
         if (enableAtk)
         {
             SetRotate();
+            WEOn();
             playerAni.SetTrigger("isAttack");
         }              
     }
@@ -407,6 +408,18 @@ public class Player : MonoBehaviour
     {        
         playerAni.SetBool("isLArm", false);
     }
+    public void WEOn()
+    {
+        if (WeaponEffect != null)
+            WeaponEffect.SetActive(true);
+    }
+    public void WEOff()
+    {
+        if (WeaponEffect != null)
+            WeaponEffect.SetActive(false);
+    }
+
+    //사용하지않는 함수로 리팩토링시 제거
     public void WeaponEffectOn()
     {
         if (rWeaponEffect != null)
