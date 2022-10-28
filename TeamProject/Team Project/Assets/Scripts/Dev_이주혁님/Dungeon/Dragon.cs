@@ -32,6 +32,8 @@ public class Dragon : Enemy
             {
                 nav.SetDestination(target.position);
                 float distance = Vector3.Distance(transform.position, target.position);
+                Vector3 dir = target.transform.position - this.transform.position;
+                this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * 2);
                 if (distance <= attackDistance)
                 {
                     FreezeEnemy();
@@ -92,7 +94,7 @@ public class Dragon : Enemy
             }            
             reactVec = reactVec.normalized;
             reactVec += Vector3.up;
-            rigid.AddForce(reactVec * 5, ForceMode.Impulse);
+            rigid.AddForce(reactVec * 10, ForceMode.Impulse);
         }
         else
         {
@@ -100,7 +102,7 @@ public class Dragon : Enemy
             anim.SetTrigger("isDead");                                
             reactVec = reactVec.normalized;
             reactVec += Vector3.up;
-            rigid.AddForce(reactVec * 5, ForceMode.Impulse);
+            rigid.AddForce(reactVec * 10, ForceMode.Impulse);
             DropExp();
             DropGold();
             DropItem();
