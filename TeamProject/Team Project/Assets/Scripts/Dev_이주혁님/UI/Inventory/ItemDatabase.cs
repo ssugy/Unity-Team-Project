@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class ItemDatabase : MonoBehaviour
 {    
-    public static ItemDatabase instance;    
+    public static ItemDatabase instance;
+    public List<Item> itemDB;
     private void Awake()
     {
         instance = this;
-    }
-
-    public List<Item> itemDB;
-    private void Start()
-    {
-        
     }
 }

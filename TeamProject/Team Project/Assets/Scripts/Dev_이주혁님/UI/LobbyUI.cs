@@ -4,11 +4,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public struct CharSlot
-{
-
-}
-
 // 로비에서만 사용될 스크립트.
 // CharacterListManager에 SelectNum을 넘겨주는 역할.
 // 캐릭터를 표시하는 역할.

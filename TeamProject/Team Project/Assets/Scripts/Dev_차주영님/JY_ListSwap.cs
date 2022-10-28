@@ -97,8 +97,7 @@ public class JY_ListSwap : MonoBehaviour
         if (JY_CharacterListManager.s_instance.selectNum == listNum)
         {
             JY_AvatarLoad.s_instance.origin.SetActive(false);
-            JY_CharacterListManager.s_instance.selectNum = -1;
-            JY_CharacterListManager.s_instance.selectPortrait = null;
+            JY_CharacterListManager.s_instance.selectNum = -1;            
             return;
         }
         JY_CharacterListManager.s_instance.selectNum = listNum;
@@ -113,9 +112,7 @@ public class JY_ListSwap : MonoBehaviour
             {
                 one.effects[0].ExecuteRole(one);                
             }
-        }
-        JY_CharacterListManager.s_instance.selectPortrait = switchPortrait(JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender,
-                                              JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].job); ;
+        }        
     }
 
     Sprite switchPortrait(string gender, string job)

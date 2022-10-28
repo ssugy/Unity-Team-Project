@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.IO;
 
@@ -83,8 +82,7 @@ public class JY_CharacterListManager : MonoBehaviour
     private string stringJson;    
 
     // 선택된 캐릭터의 번호
-    public int selectNum;
-    public Sprite selectPortrait;
+    public int selectNum;    
 
     // Awake에서 Json 파일을 로드함.
     private void Awake()
@@ -142,7 +140,6 @@ public class JY_CharacterListManager : MonoBehaviour
         string json = JsonUtility.ToJson(tmp, true);
         File.WriteAllText(infoPath, json);        
     }
-
     
     void LoadAvatar(Scene scene, LoadSceneMode mode)
     {        
@@ -201,4 +198,3 @@ public class JY_CharacterListManager : MonoBehaviour
         }        
     }
 }
-
