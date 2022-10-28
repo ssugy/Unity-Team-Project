@@ -21,6 +21,7 @@ public class Dragon : Enemy
         originPos = transform.position;
         atkTime = 0f;
         fireballPrefab = Resources.Load<GameObject>("Monster\\Fireball");
+        isStop = false;
     }
     
     void FixedUpdate()
@@ -32,8 +33,11 @@ public class Dragon : Enemy
             {
                 nav.SetDestination(target.position);
                 float distance = Vector3.Distance(transform.position, target.position);
-                Vector3 dir = target.transform.position - this.transform.position;
-                this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * 2);
+                if (!isStop)
+                {
+                    Vector3 dir = target.transform.position - this.transform.position;
+                    this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * 5);
+                }
                 if (distance <= attackDistance)
                 {
                     FreezeEnemy();
@@ -41,6 +45,7 @@ public class Dragon : Enemy
                     {
                         anim.SetTrigger("isAttack");
                         atkTime = 0f;
+                        isStop = true;
                     }
                 }
                 else if (distance >= 20f)
@@ -52,6 +57,7 @@ public class Dragon : Enemy
                 {
                     anim.SetTrigger("isSkill");
                     atkTime = 0f;
+                    isStop = true;
                 }
             }
             else

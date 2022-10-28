@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour
     protected HP_Bar hpbar;         // HP 바.
 
     bool isBorder;
-
+    protected bool isStop;
     private void Awake()
     {        
         rigid = GetComponent<Rigidbody>();
@@ -46,7 +46,8 @@ public class Enemy : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         originPos = transform.position;
         originRotateion = transform.rotation;
-        atkTime = 0f;        
+        atkTime = 0f;
+        isStop = false;
     }
     protected void Start()
     {        
@@ -66,13 +67,22 @@ public class Enemy : MonoBehaviour
             
             nav.SetDestination(target.position);
             float distance = Vector3.Distance(transform.position, target.position);
+            if (!isStop)
+            {
+                Vector3 dir = target.transform.position - this.transform.position;
+                this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * 5);
+            }
+            
             if (distance <= attackDistance)
             {
+                
                 FreezeEnemy();
                 if (atkTime >= attackCool)
+                
                 {
                     anim.SetTrigger("isAttack");
                     atkTime = 0f;
+                    isStop = true;
                 }
             }
             else if (distance >= 20f)
@@ -237,5 +247,9 @@ public class Enemy : MonoBehaviour
 
         }
     }                 // 주변에 있는 몬스터를 깨움.    
-    
+    protected void DragunReturn()
+    {
+        isStop = false;
+    }
+
 }
