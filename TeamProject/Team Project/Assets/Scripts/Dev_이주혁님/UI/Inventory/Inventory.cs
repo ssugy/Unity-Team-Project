@@ -61,6 +61,7 @@ public class Inventory : MonoBehaviour
             items.Add(_item);
             if (onChangeItem != null)
                 onChangeItem();
+            AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Key);
             return true;
         }
         return false;
@@ -87,6 +88,7 @@ public class Inventory : MonoBehaviour
         {
             FieldGold fieldGold = other.GetComponent<FieldGold>();
             Player.instance.playerStat.Gold += fieldGold.ammount;
+            AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Key);
             Destroy(fieldGold.gameObject);
         }
     }

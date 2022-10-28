@@ -98,7 +98,6 @@ public class JY_NpcQuest : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("trigger");
         JY_QuestManager.s_instance.selectNpcNum = npcNum;
         JY_QuestManager.s_instance.NPCPortrait = NpcPortrait;
         JY_QuestManager.s_instance.dialogButton.SetActive(true);

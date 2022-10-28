@@ -6,7 +6,7 @@ public class InstanceManager : MonoBehaviour
 {
     static InstanceManager instance;
     public static InstanceManager s_instance { get => instance; }
-    public List<GameObject> SkillEffectList;
+    List<GameObject> SkillEffectList;
     List<GameObject> UIEffectList;
 
     public GameObject Skill_1_Effect;
