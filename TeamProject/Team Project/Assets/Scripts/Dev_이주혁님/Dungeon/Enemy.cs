@@ -101,7 +101,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            nav.SetDestination(originPos);
+            nav.SetDestination(originPos);            
             UnfreezeEnemy();
         }
         if (nav.velocity != Vector3.zero)
@@ -111,6 +111,14 @@ public class Enemy : MonoBehaviour
         else
         {
             anim.SetBool("isWalk", false);
+        }
+
+        if (!nav.pathPending && target == null) 
+        {            
+            if (nav.remainingDistance <= nav.stoppingDistance)
+            {                
+                this.transform.rotation = Quaternion.Lerp(this.transform.rotation, originRotateion, Time.deltaTime * 5);
+            }
         }
     }
     protected void OnTriggerEnter(Collider other)
