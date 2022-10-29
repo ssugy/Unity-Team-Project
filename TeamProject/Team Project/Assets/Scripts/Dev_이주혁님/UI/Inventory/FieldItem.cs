@@ -40,8 +40,4 @@ public class FieldItem : MonoBehaviour
     {
         Destroy(gameObject);
     }
-    private void Update()
-    {
-        transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
-    }
 }
