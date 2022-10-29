@@ -341,7 +341,6 @@ public class Player : MonoBehaviour
         }
         if (enableAtk)
         {
-            Debug.Log("³È");
             SetRotate();
             playerAni.Play("Player Skill 2");
             InstanceManager.s_instance.PlaySkillEffect("Skill_2_Effect");
