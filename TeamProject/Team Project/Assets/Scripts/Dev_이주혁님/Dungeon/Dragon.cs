@@ -73,14 +73,7 @@ public class Dragon : Enemy
         else
         {
             anim.SetBool("isWalk", false);
-        }
-        if (!nav.pathPending && target == null)
-        {
-            if (nav.remainingDistance <= nav.stoppingDistance)
-            {
-                this.transform.rotation = Quaternion.Lerp(this.transform.rotation, originRotateion, Time.deltaTime * 5);
-            }
-        }
+        }        
     }
 
     public override void IsAttacked(int _damage)

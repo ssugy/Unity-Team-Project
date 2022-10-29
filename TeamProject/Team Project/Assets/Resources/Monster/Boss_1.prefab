@@ -5192,7 +5192,7 @@ Transform:
   m_GameObject: {fileID: 2071064002752570694}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 48, y: 0, z: 119.4}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2065298669315456792}
@@ -5281,6 +5281,8 @@ MonoBehaviour:
   attackDistance: 2
   attackCool: 3.5
   target: {fileID: 0}
+  originPos: {x: 0, y: 0, z: 0}
+  originRotateion: {x: 0, y: 0, z: 0, w: 0}
   skillCool: 6
   skillMinimumDistance: 3
   skillMaximumDistance: 7
