@@ -11,6 +11,7 @@ public class JY_UIManager : MonoBehaviour
     public Transform StatusMenuGroup;
     public Transform questMenuGroup;
     public GameObject alarmUI;
+    public Image WhiteFade;
 
     public Text alarmText;
     public Text nameText;
@@ -101,8 +102,9 @@ public class JY_UIManager : MonoBehaviour
     public void levelupUI()
     {
         alarmUI.SetActive(true);
+        WhiteFadeIn();
         alarmText.text = "레벨업! Lv." + Player.instance.playerStat.level;
-        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Key);
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Key,false, 1f);
         InstanceManager.s_instance.PlayPlayerEffect("LevelUpEffect");
         Invoke("closeAlarm", 2f);
     }
@@ -110,14 +112,14 @@ public class JY_UIManager : MonoBehaviour
     {
         alarmUI.SetActive(true);
         alarmText.text = "퀘스트를 수령했습니다.";
-        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Quest);
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Quest, false, 1f);
         Invoke("closeAlarm", 2f);
     }
     public void questFinishUI()
     {
         alarmUI.SetActive(true);
         alarmText.text = "퀘스트를 완료했습니다.";
-        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Quest);
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Quest, false, 1f);
         Invoke("closeAlarm", 2f);
     }
 
@@ -146,6 +148,23 @@ public class JY_UIManager : MonoBehaviour
         SPText.text = "스탯 포인트:"+ Player.instance.playerStat.statPoint.ToString(); 
     }
 
+    void WhiteFadeIn()
+    {
+        WhiteFade.gameObject.SetActive(true);
+
+        float currentTime = 0f;
+        float percent = 0f;
+        while (percent < 1f)
+        {
+            Color color = WhiteFade.color;
+            color.a = 1f;
+            currentTime += Time.deltaTime;
+            percent = currentTime / 3f;
+            color.a = Mathf.Lerp(1f, 0f, percent);
+            WhiteFade.color = color;
+        }
+        WhiteFade.gameObject.SetActive(false);
+    }
     public void statusControl(int StatType)
     {
         switch (StatType)
