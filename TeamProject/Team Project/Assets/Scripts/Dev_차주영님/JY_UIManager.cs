@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class JY_UIManager : MonoBehaviour
 {
+    public static JY_UIManager instance;
     public Transform profileGroup;
     public Transform profileMenuGroup;
     public Transform StatusMenuGroup;
     public Transform questMenuGroup;
     public GameObject alarmUI;
-    public GameObject LevelUPEffect;
 
     public Text alarmText;
     public Text nameText;
@@ -25,15 +25,13 @@ public class JY_UIManager : MonoBehaviour
     bool statusSwitch;
     bool profileMenuSwitch;
     bool questMenuSwitch;
-    GameObject effect;
-    List<GameObject> effectList;
     private void Awake()
     {
+        instance = this;
         profileSwitch = false;
         profileMenuSwitch = false;
         questMenuSwitch = false;
         nameText.text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].name;        
-        effectList = new List<GameObject>();
     }
 
     //프로필 On/Off 함수
@@ -104,26 +102,22 @@ public class JY_UIManager : MonoBehaviour
     {
         alarmUI.SetActive(true);
         alarmText.text = "레벨업! Lv." + Player.instance.playerStat.level;
-        effect = Instantiate<GameObject>(LevelUPEffect, Player.instance.transform);
-        effect.transform.localPosition = Vector3.forward;
-        effectList.Add(effect);
-        StatusDataRenew();
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Key);
-        Invoke("stopLevelupEffect", 2.5f);
+        InstanceManager.s_instance.PlayPlayerEffect("LevelUpEffect");
         Invoke("closeAlarm", 2f);
     }
     public void questAcceptUI()
     {
         alarmUI.SetActive(true);
         alarmText.text = "퀘스트를 수령했습니다.";
-        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Key);
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Quest);
         Invoke("closeAlarm", 2f);
     }
     public void questFinishUI()
     {
         alarmUI.SetActive(true);
         alarmText.text = "퀘스트를 완료했습니다.";
-        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Key);
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Quest);
         Invoke("closeAlarm", 2f);
     }
 
@@ -196,13 +190,5 @@ public class JY_UIManager : MonoBehaviour
     public void InitializeStatus()
     {
         Player.instance.InitializeStat();
-    }
-
-    void stopLevelupEffect()
-    {
-        for(int i=0; i<effectList.Count; i++)
-        {
-            Destroy(effectList[i]);
-        }
     }
 }
