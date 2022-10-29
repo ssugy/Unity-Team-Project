@@ -166,9 +166,9 @@ GameObject:
   - component: {fileID: 3300002}
   - component: {fileID: 2300002}
   - component: {fileID: 1837327058851554830}
-  - component: {fileID: 6975201852423742753}
   - component: {fileID: 4653678568706435650}
-  - component: {fileID: 6526607163297313734}
+  - component: {fileID: 7552244291610828981}
+  - component: {fileID: 2849397347905142085}
   m_Layer: 17
   m_Name: door_1
   m_TagString: Untagged
@@ -254,19 +254,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1.1
   m_Center: {x: 0.47903013, y: 0.3, z: 0.008215001}
---- !u!65 &6975201852423742753
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100004}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.1374803, y: 1.842253, z: 0.23671207}
-  m_Center: {x: 0.47903013, y: 0.9144335, z: 0.008215001}
 --- !u!114 &4653678568706435650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,7 +268,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isClose: 0
   isLocked: 0
---- !u!208 &6526607163297313734
+--- !u!208 &7552244291610828981
 NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -291,12 +278,25 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.569, y: 0.92100006, z: 0.2}
+  m_Extents: {x: 0.569, y: 0.92100006, z: 0.25}
   m_MoveThreshold: 0.1
   m_Carve: 0
   m_CarveOnlyStationary: 1
   m_Center: {x: 0.47900003, y: 0.91400003, z: 0.008}
   m_TimeToStationary: 0.5
+--- !u!65 &2849397347905142085
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100004}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.1374803, y: 1.842253, z: 0.1}
+  m_Center: {x: 0.47903013, y: 0.9144335, z: 0.008215001}
 --- !u!1 &100006
 GameObject:
   m_ObjectHideFlags: 0

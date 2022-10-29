@@ -54,10 +54,7 @@ public class Enemy : MonoBehaviour
         StartCoroutine(Targeting());        
     }
 
-    void StopToWall()
-    {
-        isBorder = Physics.Raycast(transform.position, transform.forward, 0.7f, LayerMask.GetMask("Wall"));
-    }
+    
     private void FixedUpdate()
     {
         
@@ -89,15 +86,10 @@ public class Enemy : MonoBehaviour
             {
                 target = null;
                 StartCoroutine(Targeting());
+                curHealth = maxHealth;
             }
-            StopToWall();
-            if (isBorder)
-            {
-                target = null;
-                StartCoroutine(Targeting());
-                isBorder = false;
-                
-            }
+            
+            
         }
         else
         {
@@ -120,6 +112,7 @@ public class Enemy : MonoBehaviour
                 this.transform.rotation = Quaternion.Lerp(this.transform.rotation, originRotateion, Time.deltaTime * 5);
             }
         }
+        
     }
     protected void OnTriggerEnter(Collider other)
     {
