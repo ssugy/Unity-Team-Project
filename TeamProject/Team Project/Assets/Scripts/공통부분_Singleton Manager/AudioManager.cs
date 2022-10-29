@@ -120,7 +120,6 @@ public class AudioManager : MonoBehaviour
         Transform[] chilTrans = GetComponentsInChildren<Transform>();
         foreach (Transform item in chilTrans)
         {
-            Debug.Log($"{item.name} {name.ToString()} {item.name.Equals(name)} ");
             if (item.name.Equals(name.ToString()))
             {
                 audioList.Add(item.GetComponent<AudioSource>());
@@ -137,6 +136,12 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void StopAllBGM()
+    {
+        AudioSource[] audioList = GetComponentsInChildren<AudioSource>();
+        foreach(AudioSource one in audioList)
+            Destroy(one.gameObject);
+    }
     IEnumerator ChangeVolume(AudioSource audio, float destVol, float finishTime)
     {
         float diffVol = destVol - audio.volume;
