@@ -107,6 +107,7 @@ public class JY_UIManager : MonoBehaviour
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Key,false, 1f);
         InstanceManager.s_instance.PlayPlayerEffect("LevelUpEffect");
         Invoke("closeAlarm", 2f);
+        StatusDataRenew();
     }
     public void questAcceptUI()
     {

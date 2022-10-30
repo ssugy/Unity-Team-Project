@@ -83,8 +83,12 @@ public class GameManager : MonoBehaviour
         {
             AudioManager.s_instance.SoundFadeInOut(AudioManager.SOUND_NAME.BossBGM_01, 0, 0.1f);
             AudioManager.s_instance.SoundFadeInOut(AudioManager.SOUND_NAME.BossBGM_02, 0, 0.1f);
-            if (!AudioManager.s_instance.NOWPLAY.name.Equals("BGM_WORLD"))
-                AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BGM_WORLD, true, 0.5f);
+            if (AudioManager.s_instance.NOWPLAY != null)
+            {
+                if (!AudioManager.s_instance.NOWPLAY.name.Equals("BGM_WORLD"))
+                    AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BGM_WORLD, true, 0.5f);
+            }
+            
         }        
         LoadingSceneController.LoadScene(index);    // 로딩씬을 이용한 로딩
     }
