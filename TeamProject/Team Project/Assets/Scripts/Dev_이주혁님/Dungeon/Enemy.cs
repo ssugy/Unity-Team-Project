@@ -35,9 +35,13 @@ public class Enemy : MonoBehaviour
     protected Animator anim;
     protected float atkTime;      // 공격 쿨타임. Unirx로 교체예정.
     protected HP_Bar hpbar;         // HP 바.
-
+    protected float attackTime;    // 몬스터가 공격을 하는 시간
+    
     bool isBorder;
     protected bool isStop;
+    public float totalTime = 0f;
+
+
     private void Awake()
     {        
         rigid = GetComponent<Rigidbody>();
@@ -55,6 +59,23 @@ public class Enemy : MonoBehaviour
     }
 
     
+    void StopToWall()
+    {
+        RaycastHit[] hit;
+
+        hit = Physics.SphereCastAll(transform.position, 1f ,transform.forward, 1f, LayerMask.GetMask("Wall"));
+        if(hit.Length > 0 )
+        {
+            isBorder = true;
+        }
+        else
+        {
+            isBorder = false;
+        }
+        
+        
+    }
+
     private void FixedUpdate()
     {
         
@@ -72,7 +93,7 @@ public class Enemy : MonoBehaviour
             
             if (distance <= attackDistance)
             {
-                
+                totalTime = 0f;
                 FreezeEnemy();
                 if (atkTime >= attackCool)
                 
@@ -89,13 +110,30 @@ public class Enemy : MonoBehaviour
                 curHealth = maxHealth;
             }
             
-            
+            StopToWall();
+            if (isBorder)
+            {
+                totalTime += Time.fixedDeltaTime;
+            }
+            else
+            {
+                totalTime = 0f;
+            }
+            if (totalTime>=5f)
+            {
+                totalTime = 0f;
+                target = null;
+                Invoke("ReStartTarget", 2f);
+                curHealth = maxHealth;
+            }
+           
         }
         else
         {
             nav.SetDestination(originPos);            
             UnfreezeEnemy();
         }
+      
         if (nav.velocity != Vector3.zero)
         {
             anim.SetBool("isWalk", true);
@@ -112,8 +150,9 @@ public class Enemy : MonoBehaviour
                 this.transform.rotation = Quaternion.Lerp(this.transform.rotation, originRotateion, Time.deltaTime * 5);
             }
         }
-        
     }
+
+    
     protected void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -252,5 +291,8 @@ public class Enemy : MonoBehaviour
     {
         isStop = false;
     }
-
+    public void ReStartTarget()
+    {
+        StartCoroutine(Targeting());
+    }
 }
