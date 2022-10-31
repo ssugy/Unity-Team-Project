@@ -20,6 +20,7 @@ public class JY_NPCDialog : MonoBehaviour
     public GameObject finishButton;
     public GameObject exitButton;
     public GameObject npc;
+    public GameObject player;
 
     public GameObject dummy_1;
     public GameObject dummy_2;
@@ -29,6 +30,7 @@ public class JY_NPCDialog : MonoBehaviour
         minimapCam.gameObject.SetActive(false);
         mainCam.gameObject.SetActive(false);
         dialogCam.gameObject.SetActive(true);
+        player.gameObject.SetActive(false);
         NPCCamPosition(JY_QuestManager.s_instance.selectNpcNum);
         DialogUI.SetActive(true);
         DialogPortrait.sprite = JY_QuestManager.s_instance.NPCPortrait;
@@ -164,7 +166,7 @@ public class JY_NPCDialog : MonoBehaviour
         exitButton.SetActive(false);
         DialogUI.SetActive(false);
         BattleUI.SetActive(true);
-
+        player.gameObject.SetActive(true);
     }
 
     public void NPCCamPosition(int NPCNum)

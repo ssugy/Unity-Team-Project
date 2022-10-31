@@ -10,6 +10,7 @@ public class Slot : MonoBehaviour
     public bool isEmpty;
     public InfoPanel infoPanel;
     public GameObject equiped;
+    public int numItems;
 
     private void Awake()
     {        
