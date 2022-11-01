@@ -23,9 +23,9 @@ public class SPFillAmount : MonoBehaviour
     void Update()
     {
 
-        if (Player.instance.enableRecoverSP&& stat.CurSP < stat.SP)
+        if (Player.instance.enableRecoverSP && stat.CurSP < stat.SP)
         {
-            Debug.Log("회복플래그");
+            Debug.Log(Player.instance.enableRecoverSP);
             stat.CurSP += recoverSpeed * Time.deltaTime;
         }
         if (stat.CurSP <= 0.1f)

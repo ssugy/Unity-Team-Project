@@ -172,6 +172,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public bool enableMove;      // 이동 가능 여부를 표시.
     [HideInInspector] public bool enableAtk;       // 공격 가능 여부 표시.
     [HideInInspector] public bool enableRecoverSP; // 스태미너 회복 가능 여부 표시.
+    [HideInInspector] public bool isGaurd;         // 방패막기 사용 플래그
 
     public Transform rWeaponDummy;              // 오른손 무기 더미.
     private TrailRenderer rWeaponEffect;        // 오른손 무기 이펙트. (검기)
@@ -653,6 +654,8 @@ public class Player : MonoBehaviour
         {
             Die();
         }
+        if (playerAni.GetCurrentAnimatorStateInfo(0).IsName("Male LArm"))
+            playerStat.CurSP -= 10f;
         WEOff();
         playerAni.SetFloat("isAttacked", (float)_damage / playerStat.HP);
         
