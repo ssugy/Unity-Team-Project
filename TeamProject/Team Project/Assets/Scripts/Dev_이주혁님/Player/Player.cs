@@ -707,7 +707,9 @@ public class Player : MonoBehaviour
     }
     public void questExp(int exp)
     {
-        playerStat.CurExp += exp;        
+        playerStat.CurExp += exp;
+        SaveData();
+        JY_CharacterListManager.s_instance.Save();
     }
     void SoundRun()
     {

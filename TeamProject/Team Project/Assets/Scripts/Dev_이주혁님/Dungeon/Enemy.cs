@@ -88,7 +88,12 @@ public class Enemy : MonoBehaviour
             if (!isStop)
             {
                 Vector3 dir = target.transform.position - this.transform.position;
-                this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * 5);
+                this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime);
+                anim.SetBool("isWalk", true);
+            }
+            else
+            {
+                anim.SetBool("isWalk", false);
             }
             
             if (distance <= attackDistance)
@@ -203,20 +208,18 @@ public class Enemy : MonoBehaviour
             anim.SetTrigger("isAttacked");
             reactVec = reactVec.normalized;
             reactVec += Vector3.up;
-            rigid.AddForce(reactVec*5, ForceMode.Impulse);
+            StartCoroutine(KnockBack(reactVec));
+            
         }
         else
         {
             hitbox.enabled = false;
             anim.SetTrigger("isDead");
-            FreezeEnemy();
-            reactVec = reactVec.normalized;
-            reactVec += Vector3.up;
-            rigid.AddForce(reactVec * 5, ForceMode.Impulse);
+            FreezeEnemy();                   
+            questProgress();
             DropExp();
             DropGold();
             DropItem();
-            questProgress();
             Destroy(gameObject, 4);
         }       
     }    
@@ -229,7 +232,9 @@ public class Enemy : MonoBehaviour
             Player player = target.GetComponent<Player>();
             if (player != null)
             {
-                player.playerStat.CurExp += dropExp;                            
+                player.playerStat.CurExp += dropExp;
+                player.SaveData();
+                JY_CharacterListManager.s_instance.Save();
             }
         }
     }
@@ -294,5 +299,13 @@ public class Enemy : MonoBehaviour
     public void ReStartTarget()
     {
         StartCoroutine(Targeting());
+    }
+    public IEnumerator KnockBack(Vector3 _dir)
+    {
+        for (int i = 0; i < 20; i++)
+        {
+            nav.Move(_dir * 0.07f);
+            yield return null;
+        }
     }
 }

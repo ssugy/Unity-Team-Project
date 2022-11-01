@@ -158,6 +158,11 @@ public class JY_CharacterListManager : MonoBehaviour
         string json = JsonUtility.ToJson(jInfoData, true);
         File.WriteAllText(infoPath, json);
     }
+    public void Save()
+    {
+        string json = JsonUtility.ToJson(jInfoData, true);
+        File.WriteAllText(infoPath, json);
+    }
 
     // 캐릭터 삭제 코드 단순화.
     public void DeleteCharacter(int listNum)

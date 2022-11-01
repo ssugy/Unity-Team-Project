@@ -36,7 +36,12 @@ public class Dragon : Enemy
                 if (!isStop)
                 {
                     Vector3 dir = target.transform.position - this.transform.position;
-                    this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * 5);
+                    this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime);
+                    anim.SetBool("isWalk", true);
+                }
+                else
+                {
+                    anim.SetBool("isWalk", false);
                 }
                 if (distance <= attackDistance)
                 {
