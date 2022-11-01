@@ -27,10 +27,11 @@ public class JY_NPCDialog : MonoBehaviour
     int dialogPartNum;
     public void EnterNpcDialog()
     {
+        Debug.Log(dialogCam.cullingMask.ToString());
         minimapCam.gameObject.SetActive(false);
         mainCam.gameObject.SetActive(false);
         dialogCam.gameObject.SetActive(true);
-        player.gameObject.SetActive(false);
+        //dialogCam.cullingMask = 1 << 10; // dialogCam.cullingMask & ~(1 << 10);//dialogCam.cullingMask & ~(1 << LayerMask.NameToLayer("Player"));
         NPCCamPosition(JY_QuestManager.s_instance.selectNpcNum);
         DialogUI.SetActive(true);
         DialogPortrait.sprite = JY_QuestManager.s_instance.NPCPortrait;
@@ -166,7 +167,6 @@ public class JY_NPCDialog : MonoBehaviour
         exitButton.SetActive(false);
         DialogUI.SetActive(false);
         BattleUI.SetActive(true);
-        player.gameObject.SetActive(true);
     }
 
     public void NPCCamPosition(int NPCNum)
