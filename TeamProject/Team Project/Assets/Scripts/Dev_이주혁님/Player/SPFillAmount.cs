@@ -22,10 +22,10 @@ public class SPFillAmount : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        barFront.fillAmount = (float)stat.CurSP / stat.SP;
-        barText.text = ((int)stat.CurSP).ToString() + " / " + ((int)stat.SP).ToString();
-        if (Player.instance.enableRecoverSP && stat.CurSP < stat.SP)
+
+        if (Player.instance.enableRecoverSP&& stat.CurSP < stat.SP)
         {
+            Debug.Log("회복플래그");
             stat.CurSP += recoverSpeed * Time.deltaTime;
         }
         if (stat.CurSP <= 0.1f)
@@ -38,6 +38,8 @@ public class SPFillAmount : MonoBehaviour
             Player.instance.Recovered();
             isExhausted = false;
         }
-        
+        barFront.fillAmount = (float)stat.CurSP / stat.SP;
+        barText.text = ((int)stat.CurSP).ToString() + " / " + ((int)stat.SP).ToString();
+
     }
 }

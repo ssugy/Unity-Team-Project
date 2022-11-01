@@ -31,8 +31,8 @@ public class DragOn : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
             beginPos = touch[0].position;
         }
         draggingPos = touch[0].position;
-        xAngle = (draggingPos.x - beginPos.x) / Screen.width;
-        yAngle = (draggingPos.y - beginPos.y) / Screen.height;
+        xAngle = (draggingPos.x - beginPos.x) / Screen.width * 1.8f;
+        yAngle = (draggingPos.y - beginPos.y) / Screen.height *1.8f;
         beginPos = draggingPos;     
         // 화면에서 손을 떼지않고 드래그 방향을 바꾸게 되면 xAngle, yAngle의 부호가 바뀌어야 하지만 beginPos는 손을 뗴지 않는 한 갱신되지 않아 문제가 발생함.
         // beginPos를 항상 이전 위치로 갱신해줌으로써 이슈 해결. 단 y축 회전이 느려지는 문제가 있어 MainCamController에서 5를 곱해주어 해결함.
