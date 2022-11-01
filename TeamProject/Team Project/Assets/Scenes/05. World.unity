@@ -4323,7 +4323,7 @@ GameObject:
   m_Component:
   - component: {fileID: 961547126}
   - component: {fileID: 961547127}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -8147,7 +8147,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1698261940}
   - component: {fileID: 1698261941}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Weapon Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8909,6 +8909,10 @@ PrefabInstance:
       propertyPath: quickSlotSet
       value: 
       objectReference: {fileID: 676549295}
+    - target: {fileID: 1138711905909419826, guid: 9aaa4bab24cb4a64f87f401682c144f3, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4639521340397212751, guid: 9aaa4bab24cb4a64f87f401682c144f3, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -10317,6 +10321,10 @@ PrefabInstance:
       propertyPath: WeaponEffect
       value: 
       objectReference: {fileID: 1698261939}
+    - target: {fileID: 7862743414197422111, guid: 442aa99fb78667a42ad8ba807150bbb7, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 442aa99fb78667a42ad8ba807150bbb7, type: 3}
 --- !u!1001 &4631150791880149913
