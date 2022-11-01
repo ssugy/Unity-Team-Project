@@ -106,6 +106,10 @@ public class PlayerStat
     public int statPoint;
     public int atkPoint;
     private int gold;
+
+    public float HPRecoverCoolTime = 3f;
+    public int HpRecover;
+    public int SpRecover;
     public int Gold
     {
         get { return gold; }
@@ -129,24 +133,6 @@ public class PlayerStat
                 stamina = 6;
                 strength = 10;
                 dexterity = 5;
-                break;
-            case CharacterClass.thief:
-                health = 5;
-                stamina = 8;
-                strength = 6;
-                dexterity = 9;
-                break;
-            case CharacterClass.explorer:
-                health = 7;
-                stamina = 7;
-                strength = 7;
-                dexterity = 7;
-                break;
-            case CharacterClass.sorcerer:
-                health = 5;
-                stamina = 9;
-                strength = 5;
-                dexterity = 9;
                 break;
         }        
     }
@@ -172,7 +158,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public bool enableMove;      // 이동 가능 여부를 표시.
     [HideInInspector] public bool enableAtk;       // 공격 가능 여부 표시.
     [HideInInspector] public bool enableRecoverSP; // 스태미너 회복 가능 여부 표시.
-    [HideInInspector] public bool isGaurd;         // 방패막기 사용 플래그
+    [HideInInspector] public bool isGaurd; // 방패막기 스킬 플래그
 
     public Transform rWeaponDummy;              // 오른손 무기 더미.
     private TrailRenderer rWeaponEffect;        // 오른손 무기 이펙트. (검기)
@@ -203,6 +189,7 @@ public class Player : MonoBehaviour
         controller = GetComponent<CharacterController>();
         enableMove = true;
         enableAtk = true;
+        isGaurd = false;
         enableRecoverSP = true;
         movement = Vector3.zero;
         rotateSpeed = 5f;
@@ -547,12 +534,23 @@ public class Player : MonoBehaviour
         JY_QuestManager.s_instance.uiManager.StatusDataRenew();        
     }       
     // Adjustable 스탯으로부터 기타 스탯을 연산함.
+    /// <summary>
+    /// Health : 최대 체력 및 체력 회복속도에 영향을 미침 
+    /// Stemina: 최대 기력 및 기력 회복속도에 영향을 미침
+    /// Strength:공격력 상승 및 방어력 다소 상승
+    /// Dexterity:공격속도 상승 및 회피 확률 증가
+    /// </summary>
     public void SetState()
     {
+        //Health
         playerStat.HP = 210 + playerStat.health * 20 + playerStat.strength * 5;   // 1레벨 스탯 기준 400
+        playerStat.HpRecover = 10 + playerStat.health / 5;                          
         playerStat.CurHP = playerStat.CurHP;
+        //Stemina
         playerStat.SP = 46 + playerStat.stamina * 4 + playerStat.strength * 1;    // 1레벨 스탯 기준 80
+        playerStat.SpRecover = 10 + playerStat.stamina / 5;
         playerStat.CurSP = playerStat.CurSP;
+        //Strength and Dexterity
         playerStat.criPro = (20f + Sigma(2f, 1.03f, playerStat.dexterity)) / 100f;
         playerStat.defMag = 1 - Mathf.Pow(1.02f, -playerStat.defPoint);
         if (Weapon.weapon != null)
@@ -654,9 +652,10 @@ public class Player : MonoBehaviour
         {
             Die();
         }
-        if (playerAni.GetCurrentAnimatorStateInfo(0).IsName("Male LArm"))
-            playerStat.CurSP -= 10f;
         WEOff();
+
+        if (isGaurd)
+            playerStat.CurSP -= 10f;
         playerAni.SetFloat("isAttacked", (float)_damage / playerStat.HP);
         
     }
