@@ -1,46 +1,51 @@
 using CartoonHeroes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using static CartoonHeroes.SetCharacter;
+//using static CartoonHeroes.SetCharacter;
 using static GameManager;
-using Unity.VisualScripting;
+//using Unity.VisualScripting;
+
 
 public class AvatarSceneManager : MonoBehaviour
 {
-    private enum Steps{ SELECT_JOB, SELECT_BODY, SELECT_NAME, SAVE}
-    private enum MoreOptions { FACE, HAIR, TORSO, LEGS, LAST}
-    public enum Gender { MALE, FEMALE, NEUTRAL}
-    const float WEIGHT_SCALE = 100.0f;
+    private enum Steps { SELECT_JOB, SELECT_BODY, SELECT_NAME, SAVE }
+    private enum MoreOptions { FACE, HAIR, TORSO, LEGS, LAST }
+    public enum Gender { MALE, FEMALE, NEUTRAL }    
     const int MIN_NAME_LENGTH = 2;
+
+    // 초기 셀렉트 상태.
     private Steps currentStep = Steps.SELECT_JOB;
     private MoreOptions currentOption = MoreOptions.FACE;
     private int currentOptionPanel = 0;
 
-
+    public GameObject zoomSlider;
     public GameObject popup;
     public List<GameObject> canvases;
     public List<GameObject> options;
+    public List<Slider> sliders;
     public GameObject charMale;
     public GameObject charFemale;
+
     private Gender gender;
     private List<int> optionSubs;
     public InputField CharacterNameInput;
     private SetCharacter targetScript;
     private Dictionary<string, int> mapOptionNames;
 
-    private string[] strOptionNames = {"Heads", "Hairs", "Torsos", "Legs" };
+    private string[] strOptionNames = { "Heads", "Hairs", "Torsos", "Legs" };
     private int[] numBlendOptions = { 6, 2, 4, 1 };
 
     // 각 Item Group별로 Option(n개)값을 저장하기 위한 변수가 필요합니다
     private List<float> currentBlendOption;
-    private List<float> legOptions = new List<float>(); // Leg용 옵션들
-    private List<float> hairOptions = new List<float>(); // hair용 옵션들
-    private List<float> headOptions = new List<float>(); // head용 옵션들
-    private List<float> torsoOptions = new List<float>(); // torso용 옵션들
+    private List<float> faceOptions = new List<float>();     // head용 옵션들
+    private List<float> hairOptions = new List<float>();     // hair용 옵션들    
+    private List<float> torsoOptions = new List<float>();    // torso용 옵션들
+    private List<float> legOptions = new List<float>();      // Leg용 옵션들
     private SkinnedMeshRenderer currentSkinnedMesh = null;
 
     private void OnDisable()
@@ -55,17 +60,14 @@ public class AvatarSceneManager : MonoBehaviour
 
 #else
         // 모바일 빌드에서만 zoomslider가 사라짐
-        GameObject slider = GameObject.Find("/CanvasCustomizing/ZoomSlider");
-        if (slider != null)
-        {
-            slider.SetActive(false);
-        }
-#endif
+        
+        zoomSlider.SetActive(false);        
+#endif        
         ShowCanvas();
 
         // 1. Item group(4개) 별로 MapOptionNames Dictionary를 초기화 합니다. 
         optionSubs = new List<int>();
-        for(int i = 0; i < (int)MoreOptions.LAST; i++)
+        for (int i = 0; i < (int)MoreOptions.LAST; i++)
         {
             optionSubs.Add(0);
         }
@@ -77,7 +79,7 @@ public class AvatarSceneManager : MonoBehaviour
             switch ((MoreOptions)i)
             {
                 case MoreOptions.FACE:
-                    blendOption = headOptions;
+                    blendOption = faceOptions;
                     break;
                 case MoreOptions.HAIR:
                     blendOption = hairOptions;
@@ -100,13 +102,7 @@ public class AvatarSceneManager : MonoBehaviour
         ShowCharacter();
         //첫번째 버튼을 누른것으로 간주함
         ShowOption(0);
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     // key-value 검색을 위한 Dictionary의 초기화, 즉 option 목록을 만든다.
@@ -119,16 +115,12 @@ public class AvatarSceneManager : MonoBehaviour
         // 각 Itemgroup의 이름을 가져와서 Dictionary에 채워넣는다.
         // Key 는 이름이고, Value는 그 이름이 차지하고 있는 순서이다.
         // 즉, Legs가 가장 먼저 들어있다면 Legs의 순서는 0이 된다.
-        foreach (var itemGroup in targetScript.itemGroups)
-        {
-            mapOptionNames.Add(itemGroup.name, i);
-            i++;
-        }
+        Array.ForEach(targetScript.itemGroups, e => mapOptionNames.Add(e.name, i++));
     }
 
     private void ShowCharacter()
     {
-        if(gender == Gender.FEMALE)
+        if (gender == Gender.FEMALE)
         {
             charMale.SetActive(false);
             charFemale.SetActive(true);
@@ -143,61 +135,31 @@ public class AvatarSceneManager : MonoBehaviour
         SetMap();
     }
 
-    private void HideAllCanvases()
-    {
-        foreach (var canvas in canvases)
-        {
-            canvas.SetActive(false);
-        }
-    }
+    private void HideAllCanvases() => canvases.ForEach(e => e.SetActive(false));
 
     private void ShowCanvas()
     {
-        if(currentStep >= Steps.SELECT_JOB && currentStep <= Steps.SELECT_NAME)
-        {
-            HideAllCanvases();
+        HideAllCanvases();
+        if (currentStep >= Steps.SELECT_JOB && currentStep <= Steps.SELECT_NAME) 
             canvases[(int)currentStep].SetActive(true);
-        }
-    }
+    }       
 
-    public void OnClickBackToLobby()
-    {
-        LoadingSceneController.LoadScene((int)SceneName.Lobby);
-    }
+    public void OnClickBackToLobby() => GameManager.s_instance.LoadScene((int)SceneName.Lobby);
 
-    public void OnClickClosePopup()
-    {
-        popup.SetActive(false);
-    }
+    public void OnClickPopup() => popup.SetActive(popup.activeSelf ? false : true);        
 
-    public void OnClickOpenPopup()
-    {
-        popup.SetActive(true);
-    }
-
-    public void OnClickPauseAvatar()
-    {
-        if(Time.timeScale > 0)
-        {
-            Time.timeScale = 0;
-        }
-        else
-        {
-            Time.timeScale = 1.0f;
-        }
-    }
+    public void OnClickPause() => Time.timeScale = (Time.timeScale > 0f ? 0f : 1f);    
 
     public void OnClickNext()
     {
         if(currentStep < Steps.SELECT_NAME)
         {
-            currentStep++;
+            currentStep++;            
             ShowCanvas();
         }
         else if (currentStep == Steps.SELECT_NAME && CharacterNameInput.text.Length < MIN_NAME_LENGTH)
         {
-            //예나
-            //이름의 최소 글자수 체크
+            // 이름이 최소 글자수보다 작으면 return;
             return;
         }
         else
@@ -243,10 +205,10 @@ public class AvatarSceneManager : MonoBehaviour
                     {                        
                         return;
                     }
-                }                
-                
+                }
+
                 if (GameManager.s_instance != null)
-                    GameManager.s_instance.LoadScene(2);
+                    GameManager.s_instance.LoadScene((int)SceneName.Lobby);
             }
         }
     }
@@ -255,7 +217,7 @@ public class AvatarSceneManager : MonoBehaviour
     {
         if (currentStep > Steps.SELECT_JOB)
         {
-            currentStep--;
+            currentStep--;           
             ShowCanvas();
         }
     }
@@ -265,6 +227,7 @@ public class AvatarSceneManager : MonoBehaviour
         gender = Gender.FEMALE;
         ShowCharacter();
         ShowOption(0);
+        sliders.ForEach(e => { if (e.transform.parent.parent.parent.parent.gameObject.activeSelf) e.value -= 0.01f; });
     }
 
     public void OnClickMale()
@@ -272,13 +235,14 @@ public class AvatarSceneManager : MonoBehaviour
         gender = Gender.MALE;
         ShowCharacter();
         ShowOption(0);
+        sliders.ForEach(e => { if (e.transform.parent.parent.parent.parent.gameObject.activeSelf) e.value -= 0.01f; });
     }
 
     private void ShowOption(int option)
     {
         HideAllOption();
         // 1. strOptionNames 에는 Item Group의 Name이 들어있다.
-        //    우리가 원하는 Group의 이름 및 option버튼의 순서는 이미 알고있다. (Hairs = 0, Heads, Torsos, Legs = 3)
+        //    우리가 원하는 Group의 이름 및 option버튼의 순서는 이미 알고있다. (Face = 0, Hair, Torso, Leg = 3)
         //    이 이름은 strOptionNames에 순서대로 들어있다.
         // 2. mapOptionNames는 key-value 검색을 위한 Dictionary이다.
         //    mapOptionNames는 이미 SetMap으로 초기화 되어 있다.
@@ -292,7 +256,7 @@ public class AvatarSceneManager : MonoBehaviour
         switch ((MoreOptions)option)
         {
             case MoreOptions.FACE:
-                currentBlendOption = headOptions;
+                currentBlendOption = faceOptions;
                 break;
             case MoreOptions.HAIR:
                 currentBlendOption = hairOptions;
@@ -304,29 +268,19 @@ public class AvatarSceneManager : MonoBehaviour
                 currentBlendOption = legOptions;
                 break;
         }
-        currentSkinnedMesh = GetSkinnedMesh();
-        if (currentSkinnedMesh != null)
-        {
-            Debug.Log("Found");
-        }
-
+        currentSkinnedMesh = GetSkinnedMesh();        
     }
 
-    public void HideAllOption()
-    {
-        foreach (var option in options)
-        {
-            option.SetActive(false);
-        }
-    }
+    public void HideAllOption() => options.ForEach(e => e.SetActive(false));    
 
     public void OnClickOption(int option)
     {
         currentOptionPanel = option;
-        if (mapOptionNames.ContainsKey(strOptionNames[option]))
-        {
+        if (mapOptionNames.ContainsKey(strOptionNames[option]))        
             ShowOption(option);
-        }
+        // 얼굴 A에서 얼굴 B로 변경하는 등, 옵션을 변경할 때 슬라이더의 이벤트를 호출하기 위함.
+        // 값이 바뀌지 않으면 이벤트가 호출되지 않음.
+        sliders.ForEach(e => { if (e.transform.parent.parent.parent.parent.gameObject.activeSelf) e.value -= 0.01f; });
     }
 
     // head1나 hair2등의 subOption 선택버튼을 눌렀을때 기존에 존재하는 head 또는 hair를 삭제한다.
@@ -344,8 +298,7 @@ public class AvatarSceneManager : MonoBehaviour
                     {
                         DestroyImmediate(removedObjs[m]);
                     }
-                }
-                //if (GUILayout.Button("Add Item"))
+                }                
             }
         }
 
@@ -394,25 +347,16 @@ public class AvatarSceneManager : MonoBehaviour
         {
             optionSubs[i] = sub;
             GameObject addedObj = targetScript.AddItem(targetScript.itemGroups[i], optionSubs[i]);
-
-            /*
-             나중에 지우세요
-            if (addedObj.transform.childCount > 0)
-            {
-                GameObject child = addedObj.transform.GetChild(0).gameObject;
-                //legOptions = child.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight();
-            }
-            */
             currentSkinnedMesh = GetSkinnedMesh();
-            if (currentSkinnedMesh != null)
-            {
-                Debug.Log("Found");
-            }
         }
+        sliders.ForEach(e => { if (e.transform.parent.parent.parent.parent.gameObject.activeSelf) e.value -= 0.01f; });
     }
     private void OnChangeSlide(int index, float val)
     {
-        val *= WEIGHT_SCALE;
+        if (index >= currentBlendOption.Count)
+        {
+            return;
+        }
         currentBlendOption[index] = val;
         if (currentSkinnedMesh != null)
         {
@@ -422,39 +366,16 @@ public class AvatarSceneManager : MonoBehaviour
             }
         }
     }
-    public void OnChangeSlide1(float val)
-    {
-        Debug.Log("slide 1 is: " + val);
-        OnChangeSlide(0, val);
-    }
 
-    public void OnChangeSlide2(float val)
-    {
-        Debug.Log("slide 2 is: " + val);
-        OnChangeSlide(1, val);
-    }
+    public void OnChangeSlide1(float val) => OnChangeSlide(0, val);    
 
-    public void OnChangeSlide3(float val)
-    {
-        Debug.Log("slide 3 is: " + val);
-        OnChangeSlide(2, val);
-    }
+    public void OnChangeSlide2(float val) => OnChangeSlide(1, val);
 
-    public void OnChangeSlide4(float val)
-    {
-        Debug.Log("slide 4 is: " + val);
-        OnChangeSlide(3, val);
-    }
+    public void OnChangeSlide3(float val) => OnChangeSlide(2, val);
 
-    public void OnChangeSlide5(float val)
-    {
-        Debug.Log("slide 5 is: " + val);
-        OnChangeSlide(4, val);
-    }
+    public void OnChangeSlide4(float val) => OnChangeSlide(3, val);
 
-    public void OnChangeSlide6(float val)
-    {
-        Debug.Log("slide 6 is: " + val);
-        OnChangeSlide(5, val);
-    }
+    public void OnChangeSlide5(float val) => OnChangeSlide(4, val);
+
+    public void OnChangeSlide6(float val) => OnChangeSlide(5, val);    
 }

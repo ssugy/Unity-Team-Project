@@ -6,15 +6,17 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class CharRotate : MonoBehaviour
-{
-    private Touch touch;
+{    
+    readonly public float MAXDRAG_Y = 1.5f;
+    readonly public float rotateSpeed = 0.2f;
+    readonly public float moveSpeed = 1f;
+
+    //private Touch touch;
     private Vector2 touchPosition;
     private Quaternion rotationY;
     private Vector3 charPosition;
     //private float dragStartY;
-    private const float MAXDRAG_Y = 1.5f;
-    private float rotateSpeed = 0.2f;
-    private float moveSpeed = 1f;
+    
     private bool isPressed = false;
     private int id1;
     private int id2;
@@ -22,44 +24,28 @@ public class CharRotate : MonoBehaviour
     private Quaternion currentRot;
     private Vector3 currentPos;
     private float initialDist;
-    // public Slider zoomSlider;
 
-    private void Start()
-    {
-    }
-
-    // Update is called once per frame
     void Update()
-    {
+    {        
+        
+        // PC 기준.
 #if UNITY_EDITOR
-        // PC에선 마우스 클릭, 모바일에서는 touch와 같음
-       
         if (Input.GetMouseButtonDown(0))
         {
-            //UI를 터치하지 않았을 때만 작동
+            // 이벤트 시스템 오브젝트(UI)를 터치하지 않았을 때만 작동
             if (!EventSystem.current.IsPointerOverGameObject())
-            {
+            {                
                 isPressed = true;
                 touchPosition = Input.mousePosition;
                 currentRot = transform.rotation;
                 currentPos = transform.position;
             }   
         }
-        /* 
-        if (isPressed && Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonUp(0))
         {
-            //UI를 터치하지 않았을 때만 작동
-            if (!EventSystem.current.IsPointerOverGameObject())
-            {
-                isZoom = true;
-                touchPosition = Input.mousePosition;
-                currentRot = transform.rotation;
-                currentPos = transform.position;
-            }
+            isPressed = false;
         }
-        */
-
-
+        // 모바일 기준.
 #else
         if (Input.touchCount > 0)
         {
@@ -75,6 +61,7 @@ public class CharRotate : MonoBehaviour
             if (touch.phase == TouchPhase.Ended)
             {
                 isPressed = false;
+                isZoom = false;                
             }
 
             if (Input.touchCount > 1)
@@ -99,14 +86,11 @@ public class CharRotate : MonoBehaviour
             isPressed = false;
             isZoom = false;
         }
-#endif
-        //if(Input.touchCount > 0)
-        //    touch = Input.GetTouch(0);
-        //if (touch.phase == TouchPhase.Moved)
+#endif      // if 종료.
+
         if (isPressed)
-        {
-            //rotationY = Quaternion.Euler(0f, - touch.deltaPosition.x * rotateSpeed, 0f);
-            rotationY = Quaternion.Euler(0f, -(Input.mousePosition.x - touchPosition.x ) * rotateSpeed, 0f);
+        {            
+            rotationY = Quaternion.Euler(0f, -(Input.mousePosition.x - touchPosition.x) * rotateSpeed, 0f);
             charPosition = currentPos;
             charPosition.y += (Input.mousePosition.y - touchPosition.y) / Screen.height * moveSpeed;
             charPosition.y = Mathf.Clamp(charPosition.y, -MAXDRAG_Y, MAXDRAG_Y);
@@ -124,25 +108,18 @@ public class CharRotate : MonoBehaviour
                 SetCharacterZoom(scale);
             }
         }
-#if UNITY_EDITOR
-        if (Input.GetMouseButtonUp(0))
-        {
-            isPressed = false;
-        }
-#endif
+
     }
-    public void OnChangeSlideZoom(float val)
+
+    // 줌 기능은 플레이어 오브젝트를 이동함으로써 구현. (스케일 변경이 아님.)
+    public void SetCharacterZoom(float _scale)
     {
-        Debug.Log("zoomslide is: " + val);
-        SetCharacterZoom(val);
-    }
-    private void SetCharacterZoom(float scale)
-    {
-        scale = Mathf.Clamp(scale, 1.0f, 3.2f) - 1.5f;
-        charPosition.z = scale;
-        charPosition.x = scale * -0.15f - 0.575f;
-        //transform.localScale = new Vector3(scale, scale, scale);
-        transform.position = charPosition;
+        // 최소 최대 스케일을 지정.
+        _scale = Mathf.Clamp(_scale, 1.0f, 2.5f);
+        Vector3 tmp = transform.position;
+        tmp.z = _scale;
+        //charPosition.x = _scale * -0.15f - 0.575f;        
+        transform.position = tmp;
     }
 
 }
