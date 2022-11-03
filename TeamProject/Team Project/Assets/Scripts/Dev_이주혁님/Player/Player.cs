@@ -315,7 +315,6 @@ public class Player : MonoBehaviour
         {
             SetRotate();
             playerAni.Play("Player Skill 1");
-            InstanceManager.s_instance.PlaySkillEffect("Skill_1_Effect");
             StartCoroutine(BattleUI.instance.Cooldown(4f, BattleUI.instance.skill_1, BattleUI.instance.cool_1));
         }
     }
@@ -331,7 +330,6 @@ public class Player : MonoBehaviour
         {
             SetRotate();
             playerAni.Play("Player Skill 2");
-            InstanceManager.s_instance.PlaySkillEffect("Skill_2_Effect");
             StartCoroutine(BattleUI.instance.Cooldown(4f, BattleUI.instance.skill_2, BattleUI.instance.cool_2));
         }
               
@@ -647,6 +645,7 @@ public class Player : MonoBehaviour
 
     public void IsAttacked(int _damage)
     {
+        InstanceManager.s_instance.StopAllSkillEffect();
         playerStat.CurHP -= _damage;
         if (playerStat.CurHP == 0)
         {
@@ -657,6 +656,19 @@ public class Player : MonoBehaviour
         if (isGaurd)
             playerStat.CurSP -= 10f;
         playerAni.SetFloat("isAttacked", (float)_damage / playerStat.HP);
+        
+        /*float time = 0f;
+        while (time < 2f)
+        {
+            Debug.Log(time);
+            time += Time.deltaTime;
+            if (Attacked >= 2)
+            {
+                playerAni.SetFloat("isAttacked", Attacked);
+                break;
+            }
+        }
+        Attacked = 0;*/
         
     }
     public void DamageReset()

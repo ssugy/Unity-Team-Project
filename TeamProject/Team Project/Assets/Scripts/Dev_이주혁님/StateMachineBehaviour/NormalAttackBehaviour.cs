@@ -8,6 +8,7 @@ public class NormalAttackBehaviour : StateMachineBehaviour
     private Weapon weapon;    
     public float atkMag;
     public float usingStamina;
+    public string EffectName;
     
     
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -17,6 +18,7 @@ public class NormalAttackBehaviour : StateMachineBehaviour
         weapon.atkMag = atkMag;
         Player.instance.UseStamina(usingStamina);
         Player.instance.WEOn();
+        InstanceManager.s_instance.NormalAttackEffect(EffectName);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

@@ -170,6 +170,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   atkMag: 1.7
   usingStamina: 15
+  EffectName1: Skill_2_Effect
+  EffectName2: Skill_2_Effect2
+  EffectName3: Skill_2_Effect3
 --- !u!1101 &-6002822025307491385
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -378,6 +381,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   atkMag: 1.1
   usingStamina: 7
+  EffectName: Normal_Attack_Effect3
 --- !u!1101 &-2776732115112430258
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -417,6 +421,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   atkMag: 1.05
   usingStamina: 7
+  EffectName: Normal_Attack_Effect2
 --- !u!1101 &-2067682779249441367
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1234,10 +1239,10 @@ AnimatorStateMachine:
     m_Position: {x: 650, y: 220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102545652085291482}
-    m_Position: {x: 630, y: 400, z: 0}
+    m_Position: {x: 640, y: 370, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102220301679994620}
-    m_Position: {x: 630, y: 460, z: 0}
+    m_Position: {x: 640, y: 470, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102414701294786830}
     m_Position: {x: 880, y: 520, z: 0}
@@ -1428,6 +1433,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   atkMag: 2
   usingStamina: 10
+  EffectName1: Skill_1_Effect
+  EffectName2: Skill_1_Effect2
 --- !u!1101 &2944023340014239280
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1663,6 +1670,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   atkMag: 1.05
   usingStamina: 7
+  EffectName: Normal_Attack_Effect
 --- !u!1101 &7064296714317288467
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
