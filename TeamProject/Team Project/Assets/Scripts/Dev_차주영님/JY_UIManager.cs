@@ -40,14 +40,14 @@ public class JY_UIManager : MonoBehaviour
     {
         if(profileSwitch == false)
         {
-            profileGroup.gameObject.SetActive(true);
+            //profileGroup.gameObject.SetActive(true);
             profileSwitch = true;
         }
         else
         {
-            profileGroup.gameObject.SetActive(false);
-            profileMenuGroup.gameObject.SetActive(false);
-            StatusMenuGroup.gameObject.SetActive(false);
+            //profileGroup.gameObject.SetActive(false);
+            //profileMenuGroup.gameObject.SetActive(false);
+            //StatusMenuGroup.gameObject.SetActive(false);
             profileSwitch = false;
             statusSwitch = false;
             profileMenuSwitch = false;
