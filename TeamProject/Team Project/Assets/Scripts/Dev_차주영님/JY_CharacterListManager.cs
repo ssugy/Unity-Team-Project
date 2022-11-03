@@ -164,12 +164,13 @@ public class JY_CharacterListManager : MonoBehaviour
         File.WriteAllText(infoPath, json);
     }
 
-    // 캐릭터 삭제 코드 단순화.
+    // 캐릭터 삭제 코드 단순화. 캐릭터 삭제 후 세이브 파일 저장.
     public void DeleteCharacter(int listNum)
     {
         jInfoData.infoDataList.RemoveAt(listNum);        
         InfoData tmp = new(0);
-        jInfoData.infoDataList.Add(tmp);             
+        jInfoData.infoDataList.Add(tmp);
+        Save();
     }
 
     public static void CopyInventoryData(List<Item> _source, List<Item> _destination)

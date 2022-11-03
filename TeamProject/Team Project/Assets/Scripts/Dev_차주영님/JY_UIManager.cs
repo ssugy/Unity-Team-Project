@@ -103,8 +103,7 @@ public class JY_UIManager : MonoBehaviour
     {
         alarmUI.SetActive(true);
         WhiteFadeIn();
-        alarmText.text = "·¹º§¾÷! Lv." + Player.instance.playerStat.level;
-        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Key,false, 1f);
+        alarmText.text = "·¹º§¾÷! Lv." + Player.instance.playerStat.level;        
         InstanceManager.s_instance.PlayPlayerEffect("LevelUpEffect");
         Invoke("closeAlarm", 2f);
         StatusDataRenew();
@@ -142,10 +141,10 @@ public class JY_UIManager : MonoBehaviour
     public void StatusDataRenew()
     {    
         levelText.text = "Lv." + Player.instance.playerStat.level.ToString();
-        healthText.text = "Ã¼·Â:" + Player.instance.playerStat.health.ToString();
-        steminaText.text = "Áö±¸·Â:" + Player.instance.playerStat.stamina.ToString();
-        strengthText.text = "Èû:" + Player.instance.playerStat.strength.ToString();
-        dexterityText.text = "¹ÎÃ¸:" + Player.instance.playerStat.dexterity.ToString();
+        healthText.text = "Ã¼·Â: " + Player.instance.playerStat.health.ToString();
+        steminaText.text = "Áö±¸·Â: " + Player.instance.playerStat.stamina.ToString();
+        strengthText.text = "±Ù·Â: " + Player.instance.playerStat.strength.ToString();
+        dexterityText.text = "¹ÎÃ¸: " + Player.instance.playerStat.dexterity.ToString();
         SPText.text = "½ºÅÈ Æ÷ÀÎÆ®:"+ Player.instance.playerStat.statPoint.ToString(); 
     }
 

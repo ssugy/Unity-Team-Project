@@ -84,8 +84,8 @@ public class JY_ListSwap : MonoBehaviour
 
     public void deleteButton()
     {
-        if (listNum == JY_CharacterListManager.s_instance.selectNum)
-            JY_AvatarLoad.s_instance.origin.SetActive(false);
+        // 캐릭터를 삭제하면 플레이어를 비활성화.
+        JY_AvatarLoad.s_instance.origin.SetActive(false);
         JY_CharacterListManager.s_instance.DeleteCharacter(listNum);
         JY_CharacterListManager.s_instance.selectNum = -1;
 
