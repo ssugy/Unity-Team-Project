@@ -6,7 +6,7 @@ public class Inventory : MonoBehaviour
 {
     public static Inventory instance;
     public List<Item> items = new List<Item>();
-
+    private Dictionary<int, Item> itemMap = new Dictionary<int, Item>();
     public delegate void OnChangeItem();        // 아이템이 변경되면 인벤토리 UI를 갱신하는 델리게이트.
     public OnChangeItem onChangeItem;
     private int slotCnt;
@@ -51,13 +51,45 @@ public class Inventory : MonoBehaviour
         if (onChangeItem != null)
             onChangeItem();
     }
-
+    //디버그 전용 나중에 지우면 됨.
+#if UNITY_EDITOR
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            AddItem(ItemDatabase.instance.itemDB[20].Copy(), 20);
+        }
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            AddItem(ItemDatabase.instance.itemDB[16].Copy(), 16);
+        }
+    }
+#endif
     // 아이템을 인벤토리에 추가하는 코드. 인벤토리가 가득 찼다면 아이템 획득 불가.
     // 아이템을 추가하는 데에 성공했다면 true 반환 후 인벤토리 UI를 갱신함.
-    public bool AddItem(Item _item)
+    public bool AddItem(Item _item, int itemID = -1)
     {
+        if (itemID >= 0)
+        {
+            _item.SetID(itemID);
+        }
+        if (_item.type == ItemType.CONSUMABLE || _item.type == ItemType.INGREDIENTS)
+        {
+            //먼저 동일한 아이템이 있는지 찾아야 한다.
+            Item found;
+            if (itemMap.TryGetValue(_item.GetID(), out found))
+            //if (itemMap[_item.GetID()] != null)
+            {
+                found.itemCount++;
+                if (onChangeItem != null)
+                    onChangeItem();
+                return true;
+            }
+        }
         if (items.Count < SlotCnt)
         {
+            _item.itemCount = 1;
+            itemMap[_item.GetID()] = _item;
             items.Add(_item);
             if (onChangeItem != null)
                 onChangeItem();            
@@ -68,7 +100,19 @@ public class Inventory : MonoBehaviour
     // 아이템을 인벤토리에서 삭제하는 코드. 삭제한 후에 인벤토리 UI를 갱신함.
     public void RemoveItem(Item _item)
     {
-        items.Remove(_item);
+        if (_item.type == ItemType.CONSUMABLE || _item.type == ItemType.INGREDIENTS)
+        {
+            _item.itemCount--;
+            if (_item.itemCount <= 0)
+            {
+                items.Remove(_item);
+            }
+        }
+        else
+        {
+            items.Remove(_item);
+        }
+
         if (onChangeItem != null)
             onChangeItem();
     }

@@ -30,6 +30,8 @@ public class FieldItem : MonoBehaviour
         item.image = _item.image;
         item.type = _item.type;
         image.sprite = item.image;
+        //아이템 ID 추가
+        item.SetID(itemID);
     }
 
     public Item GetItem()

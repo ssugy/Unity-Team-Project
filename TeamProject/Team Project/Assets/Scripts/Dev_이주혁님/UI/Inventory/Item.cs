@@ -26,7 +26,19 @@ public class Item
     public string explanation = "null";
     public Sprite image = null;
     public List<ItemEffect> effects = null;
-   
+    private int itemID;
+    public int itemCount;
+    
+    public void SetID(int id)
+    {
+        itemID = id;
+    }
+
+    public int GetID()
+    {
+        return itemID;
+    }
+
     public void Use()
     {        
         foreach(ItemEffect one in effects)
