@@ -57,7 +57,8 @@ public class AudioManager : MonoBehaviour
         BOSS_WALK,
         BOSS_SWING,
         Quest,
-        BGM_WORLD
+        BGM_WORLD,
+        Get_Gold
     }
     public SOUND_NAME Name;
     public AudioClip[] clips;   // enum의 순서를 따라가야됨

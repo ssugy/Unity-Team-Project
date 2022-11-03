@@ -88,7 +88,7 @@ public class Inventory : MonoBehaviour
             FieldGold fieldGold = other.GetComponent<FieldGold>();
             Player.instance.playerStat.Gold += fieldGold.ammount;
             // °ñµå È¹µæ »ç¿îµå º¯°æ ÇÊ¿ä.
-            AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Key);
+            AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Get_Gold);
             Destroy(fieldGold.gameObject);
         }
     }
