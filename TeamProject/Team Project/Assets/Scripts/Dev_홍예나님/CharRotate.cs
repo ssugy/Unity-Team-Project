@@ -4,121 +4,53 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System;
 
 public class CharRotate : MonoBehaviour
-{    
-    readonly public float MAXDRAG_Y = 1.5f;
-    readonly public float rotateSpeed = 0.2f;
-    readonly public float moveSpeed = 1f;
+{
+    public DragOn dragOn;
+    private float rotateY;
+    private float moveY;
 
-    //private Touch touch;
-    private Vector2 touchPosition;
-    private Quaternion rotationY;
-    private Vector3 charPosition;
-    //private float dragStartY;
+    readonly public float MAXDRAG_Y = 0.6f;
+    readonly public float rotateSpeed = 20f;    
+
+    void Move()
+    {
+        rotateY += dragOn.xAngle * 12f;
+        moveY = Mathf.Clamp(moveY + dragOn.yAngle, -MAXDRAG_Y, MAXDRAG_Y);
+        dragOn.xAngle = 0;
+        dragOn.yAngle = 0;               
+
+        // 카메라 회전.
+        transform.rotation = Quaternion.Euler(new Vector3(0f, transform.rotation.y - rotateY, 0f) * rotateSpeed);
+
+        // 카메라 움직임.
+        Vector3 tmp = transform.position;        
+        tmp.y = moveY;
+        transform.position = tmp;
+    }
+    void Zoom()
+    {
+        float scale = (dragOn.currentDist - dragOn.initialDist) / 1000f;
+        Vector3 tmp = transform.position;
+        tmp.z = Mathf.Clamp(tmp.z + scale, 1.0f, 2.5f);
+        transform.position = tmp;
+    }
     
-    private bool isPressed = false;
-    private int id1;
-    private int id2;
-    private bool isZoom = false;
-    private Quaternion currentRot;
-    private Vector3 currentPos;
-    private float initialDist;
-
-    void Update()
-    {        
-        
-        // PC 기준.
-#if UNITY_EDITOR
-        if (Input.GetMouseButtonDown(0))
-        {
-            // 이벤트 시스템 오브젝트(UI)를 터치하지 않았을 때만 작동
-            if (!EventSystem.current.IsPointerOverGameObject())
-            {                
-                isPressed = true;
-                touchPosition = Input.mousePosition;
-                currentRot = transform.rotation;
-                currentPos = transform.position;
-            }   
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            isPressed = false;
-        }
-        // 모바일 기준.
-#else
-        if (Input.touchCount > 0)
-        {
-            var touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Began && !EventSystem.current.IsPointerOverGameObject(touch.fingerId))
-            {
-                isPressed = true;
-                id1 = touch.fingerId;
-                touchPosition = touch.position; //Input.mousePosition;
-                currentRot = transform.rotation;
-                currentPos = transform.position;
-            }
-            if (touch.phase == TouchPhase.Ended)
-            {
-                isPressed = false;
-                isZoom = false;                
-            }
-
-            if (Input.touchCount > 1)
-            {
-                touch = Input.GetTouch(1);
-                if (touch.phase == TouchPhase.Began && !EventSystem.current.IsPointerOverGameObject(touch.fingerId) && !isZoom)
-                {
-                    isZoom = true;
-                    id2 = touch.fingerId;
-                    var first = Input.GetTouch(0);
-                    var second = Input.GetTouch(1);
-                    initialDist = Vector2.Distance(first.position, second.position);
-                }
-            }
-            else
-            {
-                isZoom = false;
-            }
-        }
-        else
-        {
-            isPressed = false;
-            isZoom = false;
-        }
-#endif      // if 종료.
-
-        if (isPressed)
-        {            
-            rotationY = Quaternion.Euler(0f, -(Input.mousePosition.x - touchPosition.x) * rotateSpeed, 0f);
-            charPosition = currentPos;
-            charPosition.y += (Input.mousePosition.y - touchPosition.y) / Screen.height * moveSpeed;
-            charPosition.y = Mathf.Clamp(charPosition.y, -MAXDRAG_Y, MAXDRAG_Y);
-            transform.rotation = rotationY * currentRot;
-            transform.position = charPosition;
-        }
-        if (isZoom && initialDist > 0f)
-        {
-            if (Input.touchCount >= 2)
-            {
-                var first = Input.GetTouch(0);
-                var second = Input.GetTouch(1);
-                float dist = Vector2.Distance(first.position, second.position);
-                float scale = dist / initialDist;
-                SetCharacterZoom(scale);
-            }
-        }
-
+    private void Update()
+    {
+        if (dragOn.touch.Count == 1) Move();
+        else if (dragOn.touch.Count == 2) Zoom();
     }
 
-    // 줌 기능은 플레이어 오브젝트를 이동함으로써 구현. (스케일 변경이 아님.)
+    // PC에서의 줌 기능은 플레이어 오브젝트를 이동함으로써 구현. (스케일 변경이 아님.)
     public void SetCharacterZoom(float _scale)
     {
         // 최소 최대 스케일을 지정.
         _scale = Mathf.Clamp(_scale, 1.0f, 2.5f);
         Vector3 tmp = transform.position;
-        tmp.z = _scale;
-        //charPosition.x = _scale * -0.15f - 0.575f;        
+        tmp.z = _scale;            
         transform.position = tmp;
     }
 
