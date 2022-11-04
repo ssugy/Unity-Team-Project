@@ -106,6 +106,7 @@ public class Inventory : MonoBehaviour
             if (_item.itemCount <= 0)
             {
                 items.Remove(_item);
+                itemMap.Remove(_item.GetID());
             }
         }
         else
