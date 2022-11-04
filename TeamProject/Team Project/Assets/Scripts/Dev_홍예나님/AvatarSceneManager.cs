@@ -189,6 +189,7 @@ public class AvatarSceneManager : MonoBehaviour
                             tmp_Item.type = ItemType.EQUIPMENT;
                             tmp_Item.equipedState = EquipState.EQUIPED;
                             tmp_Item.name = "·Õ¼Òµå";
+                            tmp_Item.itemCount = 1;
                             tmp.itemList.Add(tmp_Item);
                             JY_CharacterListManager.s_instance.jInfoData.infoDataList[i] = tmp;
 

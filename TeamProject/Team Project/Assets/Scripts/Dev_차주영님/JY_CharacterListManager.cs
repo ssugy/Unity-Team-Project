@@ -173,17 +173,12 @@ public class JY_CharacterListManager : MonoBehaviour
         Save();
     }
 
+
+    // 인벤토리 데이터를 jinfo로 카피.
     public static void CopyInventoryData(List<Item> _source, List<Item> _destination)
     {
         _destination.Clear();
-        for (int i = 0; i < _source.Count; i++)
-        {
-            Item copied = new Item();
-            copied.type = _source[i].type;
-            copied.equipedState = _source[i].equipedState;
-            copied.name = _source[i].name;                      
-            _destination.Add(copied);
-        }
+        _source.ForEach(e => { _destination.Add(new(e.type, e.equipedState, e.name, e.itemCount)); });
     }
 
     public void CopyInventoryDataToScript(List<Item> target)
@@ -191,16 +186,13 @@ public class JY_CharacterListManager : MonoBehaviour
         if (target == null)                    
             target = new List<Item>();
         else
-            target.Clear();                
+            target.Clear();
 
-        for (int i = 0; i < jInfoData.infoDataList[selectNum].itemList.Count; i++)
+        jInfoData.infoDataList[selectNum].itemList.ForEach(e =>
         {
-            Item copied = new Item();            
-            copied.type = jInfoData.infoDataList[selectNum].itemList[i].type;
-            copied.equipedState = jInfoData.infoDataList[selectNum].itemList[i].equipedState;
-            copied.name = jInfoData.infoDataList[selectNum].itemList[i].name;
+            Item copied = new(e.type, e.equipedState, e.name, e.itemCount);
             copied.ShallowCopy();
-            target.Add(copied);            
-        }        
+            target.Add(copied);
+        });       
     }
 }

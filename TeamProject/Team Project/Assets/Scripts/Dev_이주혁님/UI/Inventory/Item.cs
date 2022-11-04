@@ -19,15 +19,23 @@ public enum EquipState
 [System.Serializable]
 public class Item
 {
+    public Item(ItemType _type = ItemType.NONE, EquipState _state = EquipState.NONE, string _name = null, int _count = 0)
+    {
+        type = _type;
+        equipedState = _state;
+        name = _name;
+        itemCount = _count;
+    }
+
     public ItemType type = ItemType.NONE;
     public EquipState equipedState = EquipState.NONE;
     public string name = "null";
+    public int itemCount;
     [TextArea(3, 5)]
     public string explanation = "null";
     public Sprite image = null;
     public List<ItemEffect> effects = null;
-    private int itemID;
-    public int itemCount;
+    private int itemID;    
     
     public void SetID(int id)
     {
