@@ -8,7 +8,8 @@ public class InstanceManager : MonoBehaviour
     public static InstanceManager s_instance { get => instance; }
     List<GameObject> SkillEffectList;
     List<GameObject> PlayerEffectList;
-
+    List<GameObject> BossSkillEffectList;
+    [Header("플레이어 이펙트")]
     public GameObject Normal_Attack_Effect;
     public GameObject Normal_Attack_Effect2;
     public GameObject Normal_Attack_Effect3;
@@ -18,11 +19,17 @@ public class InstanceManager : MonoBehaviour
     public GameObject Skill_2_Effect2;
     public GameObject Skill_2_Effect3;
     public GameObject LevelUpEffect;
+    [Header("보스 스킬 이펙트")]
+    public GameObject Boss_Skill_Effect;
+    public GameObject Boss_Skill_Effect3;
+    public GameObject Boss_Skill2_Effect;
+    public GameObject Boss_Skill3_Effect;
     private void Awake()
     {
         instance = this;
         SkillEffectList = new List<GameObject>();
         PlayerEffectList = new List<GameObject>();
+        BossSkillEffectList = new List<GameObject>();
     }
 
     GameObject FindEffect(string EffectName, List<GameObject> targetList)
@@ -50,6 +57,11 @@ public class InstanceManager : MonoBehaviour
         PlayerEffectCreate(EffectName);
         StartCoroutine(EffectOnDisable(EffectName, 2.5f, PlayerEffectList));
     }
+    public void PlayBossSkillEffect(string EffectName, float delay, Transform boss)
+    {
+        StartCoroutine(BossSkillEffectCreate(EffectName, delay, boss));
+        StartCoroutine(EffectOnDisable(EffectName,3.3f, BossSkillEffectList));
+    }
     void PlayerEffectCreate(string EffectName)
     {
         GameObject effect = FindEffect(EffectName,PlayerEffectList);
@@ -68,6 +80,7 @@ public class InstanceManager : MonoBehaviour
         }
 
     }
+
     IEnumerator SkillEffectCreate(string EffectName,float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -98,6 +111,29 @@ public class InstanceManager : MonoBehaviour
         }
     }
 
+    IEnumerator BossSkillEffectCreate(string EffectName, float delay, Transform boss)
+    {
+        yield return new WaitForSeconds(delay);
+        GameObject effect = FindEffect(EffectName, BossSkillEffectList);
+        if (effect != null)
+        {
+            effect.SetActive(true);
+        }
+        else
+        {
+            if (EffectName.Equals("Boss_Skill_Effect")|| EffectName.Equals("Boss_Skill_Effect2"))
+                effect = Instantiate<GameObject>(Boss_Skill_Effect,boss);
+            else if (EffectName.Equals("Boss_Skill_Effect3"))
+                effect = Instantiate<GameObject>(Boss_Skill_Effect3, boss);
+            else if (EffectName.Equals("Boss_Skill2_Effect"))
+                effect = Instantiate<GameObject>(Boss_Skill2_Effect, boss);
+            else if (EffectName.Equals("Boss_Skill3_Effect")|| EffectName.Equals("Boss_Skill3_Effect2")|| EffectName.Equals("Boss_Skill3_Effect3")|| EffectName.Equals("Boss_Skill3_Effect4"))
+                effect = Instantiate<GameObject>(Boss_Skill3_Effect, boss);
+            effect.transform.localPosition = new Vector3(0, 0,0);
+            effect.gameObject.name = EffectName;
+            BossSkillEffectList.Add(effect);
+        }
+    }
     IEnumerator NormalAttackEffectCreate(string EffectName)
     {
         yield return new WaitForSeconds(0.5f);
@@ -139,5 +175,6 @@ public class InstanceManager : MonoBehaviour
     {
         SkillEffectList.Clear();
         PlayerEffectList.Clear();
+        BossSkillEffectList.Clear();
     }
 }

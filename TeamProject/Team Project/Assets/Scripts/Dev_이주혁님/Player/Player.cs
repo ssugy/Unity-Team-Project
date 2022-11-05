@@ -299,7 +299,7 @@ public class Player : MonoBehaviour
         }
         if (enableAtk)
         {
-            SetRotate();
+            //SetRotate();
             playerAni.SetTrigger("isAttack");
         }              
     }

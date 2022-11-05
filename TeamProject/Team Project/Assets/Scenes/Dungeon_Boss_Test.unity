@@ -5317,6 +5317,7 @@ MonoBehaviour:
   defMag: 0
   atkPoint: 0
   atkMag: 0
+  offset: {x: 0, y: 0, z: 0}
   dropExp: 0
   dropGold: 0
   dropItem: 
@@ -5330,6 +5331,7 @@ MonoBehaviour:
   target: {fileID: 0}
   originPos: {x: 0, y: 0, z: 0}
   originRotateion: {x: 0, y: 0, z: 0, w: 0}
+  totalTime: 0
 --- !u!195 &213394765
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -52750,6 +52752,10 @@ PrefabInstance:
     - target: {fileID: 1134213302272765424, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1310901964371292853, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1482406538525424989, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
       propertyPath: m_AnchoredPosition.y

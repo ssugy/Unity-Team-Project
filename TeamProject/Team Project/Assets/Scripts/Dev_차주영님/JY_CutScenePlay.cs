@@ -31,10 +31,11 @@ public class JY_CutScenePlay : MonoBehaviour
         {
             if (firstPlay == true)
             {
-                Player.instance.enableMove = false;
+                JY_Boss_FireDungeon.s_instance.isAwake = true;
+                /*Player.instance.enableMove = false;
                 Player.instance.movement = Vector3.zero;
                 StartCoroutine("CutScene_1");
-                firstPlay = false;
+                firstPlay = false;*/
             }
         }       
     }

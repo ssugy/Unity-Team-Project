@@ -775,6 +775,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xAngle: 0
   yAngle: 0
+  beginPos: {x: 0, y: 0, z: 0}
+  draggingPos: {x: 0, y: 0, z: 0}
+  secondBeginPos: {x: 0, y: 0, z: 0}
+  secondDraggingPos: {x: 0, y: 0, z: 0}
+  initialDist: 0
+  currentDist: 0
 --- !u!1 &109675546455816494
 GameObject:
   m_ObjectHideFlags: 0
@@ -1869,7 +1875,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 1190}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &8912971141338106602
 MonoBehaviour:
@@ -4356,7 +4362,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6500692215652922903
 RectTransform:
   m_ObjectHideFlags: 0

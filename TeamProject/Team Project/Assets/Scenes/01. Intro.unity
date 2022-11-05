@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311938, g: 0.38074005, b: 0.35872707, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1748,9 +1748,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90b39bbae2953ec4286dabaf979d9b11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Skill_1_Effect: {fileID: 1716312745680982, guid: 6deee82ae1b278948ab7a84313ec60fa, type: 3}
-  Skill_2_Effect: {fileID: 1729166761864512, guid: b7720d9fd46dcc24ca97e7daf4cabf10, type: 3}
+  Normal_Attack_Effect: {fileID: 1789270911803724, guid: a14bb74b93db57546ba55237fe1f152c, type: 3}
+  Normal_Attack_Effect2: {fileID: 1789270911803724, guid: 710fafb343e06b54ea23701b66ee3b51, type: 3}
+  Normal_Attack_Effect3: {fileID: 1942681157837952, guid: b2070fed02193214aaa9d4dbe51748a1, type: 3}
+  Skill_1_Effect: {fileID: 1893723492503102, guid: b970436477c2aa64893132d40802a427, type: 3}
+  Skill_1_Effect2: {fileID: 1210069404974878, guid: fd969fc416411b8488549146e54316e9, type: 3}
+  Skill_2_Effect: {fileID: 1294101409476956, guid: 198094adc52841941a899a53be5f864c, type: 3}
+  Skill_2_Effect2: {fileID: 6810844234100877735, guid: 2aebf52f79e730740934d0afbdff28a6, type: 3}
+  Skill_2_Effect3: {fileID: 1789270911803724, guid: 84ee1fb645e4d71428f2fac64f3b3869, type: 3}
   LevelUpEffect: {fileID: 8166768042605032452, guid: 249229ea8e1e2a9478a2083c1141829e, type: 3}
+  Boss_Skill_Effect: {fileID: 1485466043327710, guid: 933ae6b175550704a801f119fd9588dd, type: 3}
+  Boss_Skill_Effect3: {fileID: 1716312745680982, guid: 9496f79f318903c4a97ec2263649e989, type: 3}
+  Boss_Skill2_Effect: {fileID: 1312838344612490, guid: 3434f651ac1d3534a9a356e7ad3ebe6b, type: 3}
+  Boss_Skill3_Effect: {fileID: 1893033738566276, guid: 8c8e34050a922f84fbc572368f896777, type: 3}
 --- !u!1 &456443822
 GameObject:
   m_ObjectHideFlags: 0
