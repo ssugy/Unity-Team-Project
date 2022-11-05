@@ -370,6 +370,7 @@ MonoBehaviour:
   defMag: 0.2
   atkPoint: 30
   atkMag: 1.05
+  offset: {x: 0, y: 1, z: 0}
   dropExp: 5
   dropGold: 200
   dropItem: 140000001000000000000000010000000200000003000000040000000500000015000000
@@ -392,6 +393,7 @@ MonoBehaviour:
   target: {fileID: 0}
   originPos: {x: 0, y: 0, z: 0}
   originRotateion: {x: 0, y: 0, z: 0, w: 0}
+  totalTime: 0
 --- !u!195 &213394765
 NavMeshAgent:
   m_ObjectHideFlags: 0

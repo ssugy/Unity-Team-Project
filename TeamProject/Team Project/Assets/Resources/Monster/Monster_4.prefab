@@ -1843,6 +1843,7 @@ MonoBehaviour:
   defMag: 0.5
   atkPoint: 50
   atkMag: 1.5
+  offset: {x: 0, y: 2, z: 0}
   dropExp: 50
   dropGold: 1000
   dropItem: 130000000c0000000d0000000e0000000f000000
@@ -1857,11 +1858,12 @@ MonoBehaviour:
   targetRadius: 3
   targetRange: 3
   attackDistance: 1.8
-  attackCool: 3
+  attackCool: 4
   target: {fileID: 0}
   originPos: {x: 0, y: 0, z: 0}
   originRotateion: {x: 0, y: 0, z: 0, w: 0}
-  skillCool: 5
+  totalTime: 0
+  skillCool: 6
   skillDistance: 6
   shooter: {fileID: 5635370030993390824}
 --- !u!195 &7393200756165185175

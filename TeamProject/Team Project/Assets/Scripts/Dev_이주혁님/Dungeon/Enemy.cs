@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     public float defMag;              // 방어율.
     public int atkPoint;              // 몬스터의 공격력.
     public float atkMag;              // 몬스터의 공격 배율.
+    public Vector3 offset;
     [Header("몬스터 드랍 관련 프로퍼티")]
     public int dropExp;               // 몬스터가 드랍하는 경험치.
     public int dropGold;              // 몬스터가 드랍하는 골드.    
@@ -199,6 +200,8 @@ public class Enemy : MonoBehaviour
         StartCoroutine(OnDamage(reactVec));
         hpbar = Enemy_HP_UI.GetObject();
         hpbar.Recognize(this);
+        EffectManager.Instance.PlayHitEffect(transform.position+offset  ,transform.rotation.eulerAngles,transform);
+
     }   
     protected IEnumerator OnDamage(Vector3 reactVec)
     {        
