@@ -28,7 +28,7 @@ public class JY_Boss_FireDungeon : Enemy
         originPos = transform.position;
         originRotateion = transform.rotation;
     }
-    private void Start()
+    private new void Start()
     {
         target = Player.instance.transform;
         isLook = true;

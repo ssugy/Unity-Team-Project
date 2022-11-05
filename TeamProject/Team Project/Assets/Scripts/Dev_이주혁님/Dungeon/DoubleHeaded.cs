@@ -11,7 +11,6 @@ public class DoubleHeaded : Enemy
     [Header("스킬 공격 관련")]
     public float skillMinimumDistance;
     public float skillMaximumDistance;
-    private BossManager bossManager;
     public GameObject flame;
     public GameObject poison;
     public GameObject earthquake;
@@ -35,7 +34,6 @@ public class DoubleHeaded : Enemy
     // 보스룸에 플레이어가 들어오면 도망칠 수 없으므로 target이 null로 바뀌었을 때의 조건은 필요없음.
     protected new void Start()
     {
-        bossManager = BossManager.instance;
     }
     private void FixedUpdate()
     {
@@ -98,17 +96,14 @@ public class DoubleHeaded : Enemy
             DropGold();
             DropItem();
             questProgress();
-            if (bossManager != null)
-            {
-                bossManager.portal.SetActive(true);
-            }
+
             Destroy(gameObject, 8);
         }
-        else if (curHealth <= maxHealth * 0.3f && bossManager.secondCutScenePlay == false)
+        /*else if (curHealth <= maxHealth * 0.3f && bossManager.secondCutScenePlay == false)
         {
             JY_CutScenePlay.instance.PlayCutScene2();
             bossManager.secondCutScenePlay = true;
-        }
+        }*/
     }
     protected override void questProgress()
     {
