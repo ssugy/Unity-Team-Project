@@ -79,7 +79,15 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
+        if (nav.velocity != Vector3.zero)
+        {
+            anim.SetBool("isWalk", true);
+        }
+        else
+        {
+            anim.SetBool("isWalk", false);
+        }
+
         atkTime += Time.fixedDeltaTime;        
         if (target != null)
         {
@@ -91,11 +99,7 @@ public class Enemy : MonoBehaviour
                 Vector3 dir = target.transform.position - this.transform.position;
                 this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime);
                 anim.SetBool("isWalk", true);
-            }
-            else
-            {
-                anim.SetBool("isWalk", false);
-            }
+            }            
             
             if (distance <= attackDistance)
             {
@@ -140,14 +144,7 @@ public class Enemy : MonoBehaviour
             UnfreezeEnemy();
         }
       
-        if (nav.velocity != Vector3.zero)
-        {
-            anim.SetBool("isWalk", true);
-        }
-        else
-        {
-            anim.SetBool("isWalk", false);
-        }
+        
 
         if (!nav.pathPending && target == null) 
         {            

@@ -26,6 +26,15 @@ public class Dragon : Enemy
     
     void FixedUpdate()
     {
+        if (nav.velocity != Vector3.zero)
+        {
+            anim.SetBool("isWalk", true);
+        }
+        else
+        {
+            anim.SetBool("isWalk", false);
+        }
+
         atkTime += Time.fixedDeltaTime;
         if (nav.enabled)
         {
@@ -39,10 +48,7 @@ public class Dragon : Enemy
                     this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime);
                     anim.SetBool("isWalk", true);
                 }
-                else
-                {
-                    anim.SetBool("isWalk", false);
-                }
+                
                 if (distance <= attackDistance)
                 {
                     FreezeEnemy();
@@ -71,14 +77,7 @@ public class Dragon : Enemy
                 UnfreezeEnemy();
             }
         }
-        if (nav.velocity != Vector3.zero)
-        {
-            anim.SetBool("isWalk", true);
-        }
-        else
-        {
-            anim.SetBool("isWalk", false);
-        }        
+               
     }
 
     public override void IsAttacked(int _damage)
