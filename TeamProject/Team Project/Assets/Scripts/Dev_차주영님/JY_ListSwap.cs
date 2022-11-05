@@ -37,18 +37,18 @@ public class JY_ListSwap : MonoBehaviour
         warriorF = Resources.Load<Sprite>("UI_Change/Portrait/7");
         magicianM = Resources.Load<Sprite>("UI_Change/Portrait/21");
         magicianF = Resources.Load<Sprite>("UI_Change/Portrait/6");
-
     }
 
+    
     void Update()
     {
-        panelSwitch(check);
+        PanelSwitch(check);
     }
 
     //캐릭터 생성 여부에 따른 Panel과 ButtonSwitch
     //nullcheck = true일 때 CreateButton 활성화
     //nullcheck = false일 때 Character info 활성화
-    void panelSwitch(bool nullCheck)
+    void PanelSwitch(bool nullCheck)
     {
         //캐릭터 생성 check
         check = JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].isNull;
@@ -77,58 +77,67 @@ public class JY_ListSwap : MonoBehaviour
     void DataRenew()
     {        
         nameTxt.text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].name;
-        infoTxt.text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].level + "레벨 " + JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].job;        
-        portraitImage.sprite = switchPortrait(JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender,
-                                              JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].job);        
+        infoTxt.text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].level + "레벨 ";        
+        switch (JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].job)
+        {
+            case EJob.WARRIOR:
+                infoTxt.text += "전사";
+                break;
+            case EJob.MAGICIAN:
+                infoTxt.text += "마법사";
+                break;
+            case EJob.NONE:
+                infoTxt.text += "무직";
+                break;
+            default:
+                break;
+        }        
+        portraitImage.sprite = SwitchPortrait(JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender,
+                                              JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].job);
     }
 
     public void deleteButton()
     {
         // 캐릭터를 삭제하면 플레이어를 비활성화.
-        JY_AvatarLoad.s_instance.origin.SetActive(false);
+        JY_AvatarLoad.s_instance.origin.gameObject.SetActive(false);
         JY_CharacterListManager.s_instance.DeleteCharacter(listNum);
-        JY_CharacterListManager.s_instance.selectNum = -1;
-
+        JY_CharacterListManager.s_instance.selectNum = -1;       
     }
 
-    public void selectCharacter()
+    public void SelectCharacter()
     {
         //선택 취소 구현
         if (JY_CharacterListManager.s_instance.selectNum == listNum)
         {
-            JY_AvatarLoad.s_instance.origin.SetActive(false);
+            JY_AvatarLoad.s_instance.origin.gameObject.SetActive(false);
             JY_CharacterListManager.s_instance.selectNum = -1;            
             return;
         }
         JY_CharacterListManager.s_instance.selectNum = listNum;
-        JY_AvatarLoad.s_instance.origin.SetActive(true);        
+        JY_AvatarLoad.s_instance.origin.gameObject.SetActive(true);        
         JY_AvatarLoad.s_instance.LoadModelData(listNum);        // 선택한 성별 캐릭터 활성화. inventory onenable
         // 선택한 캐릭터의 인벤토리를 카피해옴.
         JY_CharacterListManager.s_instance.CopyInventoryDataToScript(Inventory.instance.items);
         JY_AvatarLoad.s_instance.LobbyDummyClear(JY_CharacterListManager.s_instance.selectNum);
-        foreach (Item one in Inventory.instance.items)
+        Inventory.instance.items.ForEach(e =>
         {
-            if (one.equipedState.Equals(EquipState.EQUIPED))
-            {
-                one.effects[0].ExecuteRole(one);                
-            }
-        }        
+            if (e.equipedState.Equals(EquipState.EQUIPED))
+                e.effects[0].ExecuteRole(e);
+        });                
     }
 
-    Sprite switchPortrait(string gender, string job)
-    {
-        Sprite source;
+    Sprite SwitchPortrait(EGender gender, EJob job)
+    {        
         if (!JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].isNull)
         {
-            if (gender.Equals("M") && job.Equals("전사"))
-                source = warriorM;
-            else if (gender.Equals("M") && job.Equals("마법사"))
-                source = magicianM;
-            else if (gender.Equals("F") && job.Equals("전사"))
-                source = warriorF;
+            if (gender.Equals(EGender.MALE) && job.Equals(EJob.WARRIOR))
+                return warriorM;
+            else if (gender.Equals(EGender.MALE) && job.Equals(EJob.MAGICIAN))
+                return magicianM;
+            else if (gender.Equals(EGender.FEMALE) && job.Equals(EJob.WARRIOR))
+                return warriorF;
             else
-                source = magicianF;
-            return source;
+                return magicianF;            
         }
         return null;
     }

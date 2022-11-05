@@ -15,7 +15,7 @@ public class AvatarSceneManager : MonoBehaviour
 {
     private enum Steps { SELECT_JOB, SELECT_BODY, SELECT_NAME, SAVE }
     private enum MoreOptions { FACE, HAIR, TORSO, LEGS, LAST }
-    public enum Gender { MALE, FEMALE, NEUTRAL }    
+    
     const int MIN_NAME_LENGTH = 2;
 
     // 초기 셀렉트 상태.
@@ -23,15 +23,17 @@ public class AvatarSceneManager : MonoBehaviour
     private MoreOptions currentOption = MoreOptions.FACE;
     private int currentOptionPanel = 0;
 
+
     public GameObject zoomSlider;
-    public GameObject popup;
+    public GameObject popupToLobby;
+    public GameObject popupNameIssue;
     public List<GameObject> canvases;
     public List<GameObject> options;
     public List<Slider> sliders;
     public GameObject charMale;
     public GameObject charFemale;
 
-    private Gender gender;
+    private EGender gender;
     private List<int> optionSubs;
     public InputField CharacterNameInput;
     private SetCharacter targetScript;
@@ -98,7 +100,7 @@ public class AvatarSceneManager : MonoBehaviour
 
         }
 
-        gender = Gender.MALE;
+        gender = EGender.MALE;
         ShowCharacter();
         //첫번째 버튼을 누른것으로 간주함
         ShowOption(0);
@@ -120,7 +122,7 @@ public class AvatarSceneManager : MonoBehaviour
 
     private void ShowCharacter()
     {
-        if (gender == Gender.FEMALE)
+        if (gender == EGender.FEMALE)
         {
             charMale.SetActive(false);
             charFemale.SetActive(true);
@@ -146,7 +148,7 @@ public class AvatarSceneManager : MonoBehaviour
 
     public void OnClickBackToLobby() => GameManager.s_instance.LoadScene((int)SceneName.Lobby);
 
-    public void OnClickPopup() => popup.SetActive(popup.activeSelf ? false : true);        
+    public void OnClickPopup() => popupToLobby.SetActive(popupToLobby.activeSelf ? false : true);        
 
     public void OnClickPause() => Time.timeScale = (Time.timeScale > 0f ? 0f : 1f);    
 
@@ -157,17 +159,14 @@ public class AvatarSceneManager : MonoBehaviour
             currentStep++;            
             ShowCanvas();
         }
+        // 이름 글자수가 최소 글자보다 작으면 return.
         else if (currentStep == Steps.SELECT_NAME && CharacterNameInput.text.Length < MIN_NAME_LENGTH)
         {
-            // 이름이 최소 글자수보다 작으면 return;
+            popupNameIssue.SetActive(true);
             return;
         }
         else
-        {
-            //주영
-            //캐릭터 생성 버튼을 누른 경우 로비씬으로 데이터를 넘깁니다.
-            //로비씬을 경유하여 캐릭터메이킹씬을 시작했을 때에만 로비씬으로 데이터를 넘깁니다.
-            //상황에 따라 추후에 게임매니저와 병합하는 작업이 필요할 것 같습니다.
+        {            
             if (JY_CharacterListManager.s_instance != null)
             {
                 //빈슬롯 찾은 후 작성 및 break
@@ -182,15 +181,10 @@ public class AvatarSceneManager : MonoBehaviour
                             tmp.name = CharacterNameInput.text;
                             tmp.isNull = false;
                             tmp.level = 1;
-                            tmp.job = "전사";
+                            tmp.job = EJob.WARRIOR;
                             tmp.status = new int[4] { 7, 6, 10, 5 };
-                            tmp.gender = (gender == 0 ? "M" : "F");
-                            Item tmp_Item = new();
-                            tmp_Item.type = ItemType.EQUIPMENT;
-                            tmp_Item.equipedState = EquipState.EQUIPED;
-                            tmp_Item.name = "롱소드";
-                            tmp_Item.itemCount = 1;
-                            tmp.itemList.Add(tmp_Item);
+                            tmp.gender = gender;
+                            tmp.itemList.Add(new(ItemType.EQUIPMENT, EquipState.EQUIPED, "롱소드", 1));
                             JY_CharacterListManager.s_instance.jInfoData.infoDataList[i] = tmp;
 
                             //모델링 작성
@@ -203,7 +197,8 @@ public class AvatarSceneManager : MonoBehaviour
                     }
                     // 같은 이름이 있으면 리턴.
                     else if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].name.Equals(CharacterNameInput.text))
-                    {                        
+                    {
+                        popupNameIssue.SetActive(true);
                         return;
                     }
                 }
@@ -225,7 +220,7 @@ public class AvatarSceneManager : MonoBehaviour
 
     public void OnClickFemale()
     {
-        gender = Gender.FEMALE;
+        gender = EGender.FEMALE;
         ShowCharacter();
         ShowOption(0);
         sliders.ForEach(e => { if (e.transform.parent.parent.parent.parent.gameObject.activeSelf) e.value -= 0.01f; });
@@ -233,7 +228,7 @@ public class AvatarSceneManager : MonoBehaviour
 
     public void OnClickMale()
     {
-        gender = Gender.MALE;
+        gender = EGender.MALE;
         ShowCharacter();
         ShowOption(0);
         sliders.ForEach(e => { if (e.transform.parent.parent.parent.parent.gameObject.activeSelf) e.value -= 0.01f; });

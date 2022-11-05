@@ -5,16 +5,12 @@ using UnityEngine;
 public class JY_PlayerReturn : MonoBehaviour
 {
     public static JY_PlayerReturn instance;
-    public GameObject playerOrigin;
-    // Start is called before the first frame update
-    void Awake()
+    
+    void Awake() => instance ??= this;
+    private void OnDisable()
     {
-        if (instance == null)
-            instance = this;
+        instance = null;
     }
 
-    public GameObject getPlayerOrigin()
-    {
-        return playerOrigin;
-    }
+    public Transform GetPlayerOrigin() => transform;    
 }

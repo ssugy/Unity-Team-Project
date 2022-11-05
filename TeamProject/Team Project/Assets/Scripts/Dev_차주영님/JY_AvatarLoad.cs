@@ -6,52 +6,44 @@ using UnityEngine;
 
 public class JY_AvatarLoad : MonoBehaviour
 {
-    public static JY_AvatarLoad instance;
+    #region 싱글톤 패턴. 외부에선 s_instance 사용.
+    private static JY_AvatarLoad instance;
     public static JY_AvatarLoad s_instance { get { return instance; } }
-    public GameObject origin;
-
-    public GameObject charMale;
-    public GameObject charFemale;
+    #endregion    
+        
+    public Transform origin;               // Player
+    public GameObject charMale;             // 남자
+    public GameObject charFemale;           // 여자
     public GameObject charWeaponDummy;
     public GameObject charShieldDummy;
     public GameObject charWeapon;
     public GameObject charShield;
-
     public SetCharacter setChara;
-    // Start is called before the first frame update
+    
     void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
+        // 같은 오브젝트를 사용하는 캐릭터리스트매니저에서 싱글톤을 사용 중이므로 DontDestroyOnLoad를 할 필요 없음.
+        instance ??= this;
     }
 
     void Start()
     {
-        origin = JY_PlayerReturn.instance.getPlayerOrigin();
-        charMale = findGameObjectInChild("BaseCharacterM", origin.transform).gameObject;
-        charFemale = findGameObjectInChild("BaseCharacterF", origin.transform).gameObject;
+        origin = JY_PlayerReturn.instance.GetPlayerOrigin();
+        charMale = FindGameObjectInChild("BaseCharacterM", origin).gameObject;
+        charFemale = FindGameObjectInChild("BaseCharacterF", origin).gameObject;
     }
 
-    public Transform findGameObjectInChild(string nodename, Transform origin)
-    {
+    public Transform FindGameObjectInChild(string nodename, Transform origin)
+    {        
         if (origin.name == nodename)
             return origin;
         for (int i = 0; i < origin.childCount; i++)
         {
-            Transform childTr = findGameObjectInChild(nodename, origin.GetChild(i));
+            Transform childTr = FindGameObjectInChild(nodename, origin.GetChild(i));
             if (childTr != null)
                 return childTr;
         }
         return null;
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     void DeleteSubOption(int currentOption)
@@ -84,7 +76,7 @@ public class JY_AvatarLoad : MonoBehaviour
     {
         //LobbyDummyClear(listNum);
         if (JY_CharacterListManager.s_instance.selectNum == -1)
-        {
+        {            
             charMale.SetActive(false);
             charFemale.SetActive(false);
             charWeaponDummy = null;
@@ -93,7 +85,7 @@ public class JY_AvatarLoad : MonoBehaviour
         else
         {
             //gender 갱신
-            if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender == "F")
+            if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender.Equals(EGender.FEMALE))
             {
                 charMale.SetActive(false);
                 charFemale.SetActive(true);
@@ -114,19 +106,16 @@ public class JY_AvatarLoad : MonoBehaviour
 
     public void equipWeapon(int listNum)
     {
-        if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender == "M")
+        if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender.Equals(EGender.MALE))
         {
-            charWeaponDummy = findGameObjectInChild("Character R Weapon Slot", charMale.transform).gameObject;            
+            charWeaponDummy = FindGameObjectInChild("Character R Weapon Slot", charMale.transform).gameObject;            
         }
-        else if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender == "F")
+        else if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender.Equals(EGender.FEMALE))
         {
-            charWeaponDummy = findGameObjectInChild("Character R Weapon Slot", charFemale.transform).gameObject;            
+            charWeaponDummy = FindGameObjectInChild("Character R Weapon Slot", charFemale.transform).gameObject;            
         }
         GameObject weaponSc = Resources.Load<GameObject>("Item/Weapon/Sword_1");
-        if (charWeapon == null)
-        {
-            charWeapon = GameObject.Instantiate<GameObject>(weaponSc);
-        }
+        charWeapon ??= Instantiate<GameObject>(weaponSc);        
         charWeapon.transform.SetParent(charWeaponDummy.transform);
         charWeapon.transform.localPosition = Vector3.zero;
         charWeapon.transform.localRotation = Quaternion.identity;
@@ -134,17 +123,19 @@ public class JY_AvatarLoad : MonoBehaviour
 
     }
 
+
+    // 원래 들고 있는 무기와 방패를 삭제함.
     public void LobbyDummyClear(int listNum)
     {
-        if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender == "M")
+        if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender.Equals(EGender.MALE))
         {
-            charWeaponDummy = findGameObjectInChild("Character R Weapon Slot", charMale.transform).gameObject;
-            charShieldDummy = findGameObjectInChild("Character L Weapon Slot", charMale.transform).gameObject;
+            charWeaponDummy = FindGameObjectInChild("Character R Weapon Slot", charMale.transform).gameObject;
+            charShieldDummy = FindGameObjectInChild("Character L Weapon Slot", charMale.transform).gameObject;
         }
-        else if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender == "F")
+        else if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender.Equals(EGender.FEMALE))
         {
-            charWeaponDummy = findGameObjectInChild("Character R Weapon Slot", charFemale.transform).gameObject;
-            charShieldDummy = findGameObjectInChild("Character L Weapon Slot", charFemale.transform).gameObject;
+            charWeaponDummy = FindGameObjectInChild("Character R Weapon Slot", charFemale.transform).gameObject;
+            charShieldDummy = FindGameObjectInChild("Character L Weapon Slot", charFemale.transform).gameObject;
         }
 
         for (int i = 0; i < charWeaponDummy.transform.childCount; i++)

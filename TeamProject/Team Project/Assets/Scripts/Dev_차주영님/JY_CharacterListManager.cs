@@ -8,6 +8,8 @@ using System.IO;
 [System.Serializable]
 public class JInfoData
 {
+    public JInfoData() => infoDataList = new();    
+
     public List<InfoData> infoDataList;
 }
 [System.Serializable]
@@ -16,7 +18,7 @@ public struct InfoData
     // 생성자의 _num은 아무 의미없는 매개변수입니다.
     // 본래 구조체의 생성자는 클래스와 달리 반드시 매개변수가 필요합니다. 그렇기에 본 구조체 역시 매개변수를 포함하였지만 기본값을 설정하여 실제로는 매개변수를 입력하지 않아도 생성자를 사용할 수 있습니다.
     // 하지만 그럼에도 실제 struct 변수를 초기화할 때 어떤 매개변수도 입력하지 않으면 씬 '실행' 중에 에러가 발생합니다. 컴파일 과정에선 에러가 발생하지 않습니다.
-    public InfoData(int _num, bool _isNull = true, string _name = null, int _level = 0, int _exp = 0, int _gold = 0, string _job = null, string _gender = null, int _statusPoint = 0)
+    public InfoData(int _num, bool _isNull = true, string _name = null, int _level = 0, int _exp = 0, int _gold = 0, EJob _job = EJob.NONE, EGender _gender = EGender.NONE, int _statusPoint = 0)
     {        
         isNull = _isNull;
         name = _name;
@@ -37,8 +39,8 @@ public struct InfoData
     public int level;
     public int exp;
     public int gold;
-    public string job;
-    public string gender;
+    public EJob job;
+    public EGender gender;
     public int statusPoint;
 
     /// <summary>
@@ -65,6 +67,18 @@ public struct InfoData
     public int[] questProgress;
     public int[] questProgress2;
     public List<Item> itemList;
+}
+public enum EJob
+{
+    NONE,
+    WARRIOR,
+    MAGICIAN
+}
+public enum EGender 
+{ 
+    NONE,
+    MALE, 
+    FEMALE    
 }
 
 public class JY_CharacterListManager : MonoBehaviour
@@ -101,10 +115,11 @@ public class JY_CharacterListManager : MonoBehaviour
         #endregion
 
         // Json 파일 경로 생성.
-        infoPath = Application.persistentDataPath + "/InfoData.json";        
+        infoPath = Application.persistentDataPath + "/InfoData.json";
 
         // 세이브 파일이 존재하지 않으면 세이브 파일을 생성.
-        FileInfo file_Info = new (infoPath);
+        FileInfo file_Info = new(infoPath);
+
         
         if (!file_Info.Exists ) 
             InitializeSaveFile();
@@ -117,62 +132,49 @@ public class JY_CharacterListManager : MonoBehaviour
     {
         // 씬이 로드될 때의 이벤트 구독.
         SceneManager.sceneLoaded += LoadAvatar;
-        SceneManager.sceneLoaded += WriteSaveFile;
+        SceneManager.sceneLoaded += Save_OnSceneLoad;
     }
     private void OnDisable()
     {
         // 이벤트 구독 취소.
         SceneManager.sceneLoaded -= LoadAvatar;
-        SceneManager.sceneLoaded -= WriteSaveFile;
+        SceneManager.sceneLoaded -= Save_OnSceneLoad;
     }
 
     // 최초 세이브 파일 생성.
     void InitializeSaveFile()
     {
-        JInfoData tmp = new();
-        tmp.infoDataList = new();
-        InfoData init = new(0);        
-
+        JInfoData tmp = new();        
+        InfoData init = new(0);       
         for (int i = 0; i < 4; i++)    
-            tmp.infoDataList.Add(init);           
-       
-        // 세이브 작성.
-        string json = JsonUtility.ToJson(tmp, true);
-        File.WriteAllText(infoPath, json);        
+            tmp.infoDataList.Add(init);       
+        File.WriteAllText(infoPath, JsonUtility.ToJson(tmp, true));
     }
     
     void LoadAvatar(Scene scene, LoadSceneMode mode)
-    {        
-        JY_AvatarLoad.s_instance.origin = JY_PlayerReturn.instance.getPlayerOrigin();
+    {
+        JY_AvatarLoad.s_instance.origin = JY_PlayerReturn.instance?.GetPlayerOrigin();
         if (JY_AvatarLoad.s_instance.origin != null)
         {
-            JY_AvatarLoad.s_instance.charMale = JY_AvatarLoad.s_instance.findGameObjectInChild("BaseCharacterM", JY_AvatarLoad.s_instance.origin.transform).gameObject;
-            JY_AvatarLoad.s_instance.charFemale = JY_AvatarLoad.s_instance.findGameObjectInChild("BaseCharacterF", JY_AvatarLoad.s_instance.origin.transform).gameObject;
+            JY_AvatarLoad.s_instance.charMale = JY_AvatarLoad.s_instance.FindGameObjectInChild("BaseCharacterM", JY_AvatarLoad.s_instance.origin.transform).gameObject;
+            JY_AvatarLoad.s_instance.charFemale = JY_AvatarLoad.s_instance.FindGameObjectInChild("BaseCharacterF", JY_AvatarLoad.s_instance.origin.transform).gameObject;
             JY_AvatarLoad.s_instance.LoadModelData(selectNum);
         }
     }
 
-    // 해당 매니저의 JInfoData를 파일에 옮겨 씀. 씬이 바뀔 때만 실행되어야 함.
-    public void WriteSaveFile(Scene scene, LoadSceneMode mode)
-    {        
-        string json = JsonUtility.ToJson(jInfoData, true);
-        File.WriteAllText(infoPath, json);
-    }
-    public void Save()
-    {
-        string json = JsonUtility.ToJson(jInfoData, true);
-        File.WriteAllText(infoPath, json);
-    }
+    // 단순히 JinfoData를 파일에 옮겨 씀.
+    public void Save() => File.WriteAllText(infoPath, JsonUtility.ToJson(jInfoData, true));
 
-    // 캐릭터 삭제 코드 단순화. 캐릭터 삭제 후 세이브 파일 저장.
+    // 씬이 바뀔 때 실행되는 Save.
+    public void Save_OnSceneLoad(Scene scene, LoadSceneMode mode) => File.WriteAllText(infoPath, JsonUtility.ToJson(jInfoData, true));
+
+    // 캐릭터 삭제 코드 단순화. 캐릭터 삭제 후에는 세이브 파일 저장.
     public void DeleteCharacter(int listNum)
     {
-        jInfoData.infoDataList.RemoveAt(listNum);        
-        InfoData tmp = new(0);
-        jInfoData.infoDataList.Add(tmp);
+        jInfoData.infoDataList.RemoveAt(listNum);               
+        jInfoData.infoDataList.Add(new(0));
         Save();
     }
-
 
     // 인벤토리 데이터를 jinfo로 카피.
     public static void CopyInventoryData(List<Item> _source, List<Item> _destination)
@@ -181,13 +183,11 @@ public class JY_CharacterListManager : MonoBehaviour
         _source.ForEach(e => { _destination.Add(new(e.type, e.equipedState, e.name, e.itemCount)); });
     }
 
+    // 세이브 파일로부터 인벤토리를 카피함.
     public void CopyInventoryDataToScript(List<Item> target)
-    {        
-        if (target == null)                    
-            target = new List<Item>();
-        else
-            target.Clear();
-
+    {
+        // target이 null이면 new List를 만들어서 target에 대입. null이 아니면 Clear.
+        (target ??= new()).Clear();  
         jInfoData.infoDataList[selectNum].itemList.ForEach(e =>
         {
             Item copied = new(e.type, e.equipedState, e.name, e.itemCount);
