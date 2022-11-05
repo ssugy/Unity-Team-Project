@@ -304,7 +304,7 @@ public class Enemy : MonoBehaviour
     {
         for (int i = 0; i < 20; i++)
         {
-            nav.Move(_dir * 0.02f);
+            nav.Move(_dir * 0.09f);
             yield return null;
         }
     }
