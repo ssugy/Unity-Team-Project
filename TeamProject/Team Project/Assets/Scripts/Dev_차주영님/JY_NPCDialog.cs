@@ -24,6 +24,7 @@ public class JY_NPCDialog : MonoBehaviour
 
     public GameObject dummy_1;
     public GameObject dummy_2;
+    public List<Cinemachine.CinemachinePath> paths;
     int dialogPartNum;
 
     private void SetGameLayerRecursive(GameObject _go, int _layer)
@@ -46,6 +47,8 @@ public class JY_NPCDialog : MonoBehaviour
         minimapCam.gameObject.SetActive(false);
         mainCam.gameObject.SetActive(false);
         dialogCam.gameObject.SetActive(true);
+        dialogCam.GetComponent<Cinemachine.CinemachineDollyCart>().m_Position = 0;
+        dialogCam.GetComponent<Cinemachine.CinemachineDollyCart>().m_Path = paths[JY_QuestManager.s_instance.selectNpcNum];
         SetGameLayerRecursive(player, 10);
         dialogCam.cullingMask = dialogCam.cullingMask & ~(1 << LayerMask.NameToLayer("Player"));
         NPCCamPosition(JY_QuestManager.s_instance.selectNpcNum);

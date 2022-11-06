@@ -569,6 +569,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 151016532}
   m_CullTransparentMesh: 1
+--- !u!1 &155665058
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 155665060}
+  - component: {fileID: 155665059}
+  m_Layer: 0
+  m_Name: CameraPath_Men1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &155665059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155665058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d37e5385efd7064cb1d54c94960acae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Resolution: 20
+  m_Appearance:
+    pathColor: {r: 0, g: 1, b: 0, a: 1}
+    inactivePathColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    width: 0.2
+  m_Looped: 0
+  m_Waypoints:
+  - position: {x: 0.000012252525, y: 0.67869055, z: 3.510007}
+    tangent: {x: -0.15431911, y: -0.2585622, z: -0.4174924}
+    roll: 0
+  - position: {x: 0.000015049616, y: 0.109591365, z: 0.87001425}
+    tangent: {x: -0.011358372, y: 0, z: -0.5023916}
+    roll: 0
+--- !u!4 &155665060
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155665058}
+  m_LocalRotation: {x: 0, y: -0.8660251, z: 0, w: 0.5000005}
+  m_LocalPosition: {x: -82.51359, y: 1.4, z: -17.460354}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 19
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &192035082
 GameObject:
   m_ObjectHideFlags: 0
@@ -4240,7 +4297,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1277940811097104, guid: 23447ea53621e884e8fff38a0647be97, type: 3}
       propertyPath: m_Name
-      value: "NPC_\uD504\uB9AC\uC2A4\uD2B8"
+      value: NPC_Merchant
       objectReference: {fileID: 0}
     - target: {fileID: 4569300711265150, guid: 23447ea53621e884e8fff38a0647be97, type: 3}
       propertyPath: m_RootOrder
@@ -4344,7 +4401,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 597fe6b35ee19f749b23dc223e6f4c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerOrigin: {fileID: 961547124}
 --- !u!1001 &966473487
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8046,6 +8102,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1688504321}
   m_CullTransparentMesh: 1
+--- !u!1 &1693786402
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1693786404}
+  - component: {fileID: 1693786403}
+  m_Layer: 0
+  m_Name: CameraPath_Women1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1693786403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1693786402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d37e5385efd7064cb1d54c94960acae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Resolution: 20
+  m_Appearance:
+    pathColor: {r: 0, g: 1, b: 0, a: 1}
+    inactivePathColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    width: 0.2
+  m_Looped: 0
+  m_Waypoints:
+  - position: {x: 0.0000044949584, y: 0.4283694, z: 3.5699968}
+    tangent: {x: -0.1962965, y: -0.33026648, z: -0.1889019}
+    roll: 0
+  - position: {x: 0, y: 0, z: 0.87}
+    tangent: {x: -0.011358372, y: 0, z: -0.5023916}
+    roll: 0
+--- !u!4 &1693786404
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1693786402}
+  m_LocalRotation: {x: 0, y: 0.96005, z: 0, w: -0.27982888}
+  m_LocalPosition: {x: -82.958, y: 1.37, z: -34.927}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1698261939
 GameObject:
   m_ObjectHideFlags: 0
@@ -9301,6 +9414,7 @@ GameObject:
   - component: {fileID: 2051922326}
   - component: {fileID: 2051922325}
   - component: {fileID: 2051922324}
+  - component: {fileID: 2051922328}
   m_Layer: 0
   m_Name: Npc Camera
   m_TagString: MainCamera
@@ -9337,6 +9451,9 @@ MonoBehaviour:
   player: {fileID: 961547124}
   dummy_1: {fileID: 515894000}
   dummy_2: {fileID: 300533768}
+  paths:
+  - {fileID: 1693786403}
+  - {fileID: 155665059}
 --- !u!81 &2051922325
 AudioListener:
   m_ObjectHideFlags: 0
@@ -9403,6 +9520,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &2051922328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051922323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99a9c787e5d1bbf48a389834c4a9641c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Path: {fileID: 1693786403}
+  m_UpdateMethod: 0
+  m_PositionUnits: 1
+  m_Speed: 2
+  m_Position: 0
 --- !u!1 &2073790028
 GameObject:
   m_ObjectHideFlags: 0
