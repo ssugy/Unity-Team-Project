@@ -11,6 +11,7 @@ using UnityEngine.UI;
 public class LobbyUI : MonoBehaviour
 {
     public GameObject noSelect;
+    public GameObject connectServer;
     public Button enterWorld;
     public Button quitGame;
     public Button createChar_0;
@@ -30,8 +31,14 @@ public class LobbyUI : MonoBehaviour
 
     // 선택한 캐릭터가 없으면 팝업창을 출력. 선택한 캐릭터가 있으면 해당 캐릭터로 월드에 접속.
     public void EnterWorld()
-    {        
-        if (JY_CharacterListManager.s_instance.selectNum < 0) noSelect.SetActive(true);
-        else GameManager.s_instance.LoadScene(4);
+    {
+        if (JY_CharacterListManager.s_instance.selectNum < 0)
+        {
+            noSelect.SetActive(true);
+            return;
+        }
+        enterWorld.interactable = false;
+        connectServer.SetActive(true);
+        NetworkManager.s_instance.Connect();
     }               
 }

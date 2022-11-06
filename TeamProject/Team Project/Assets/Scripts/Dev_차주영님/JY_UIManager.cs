@@ -135,6 +135,7 @@ public class JY_UIManager : MonoBehaviour
     // Lobby씬 (캐릭터 선택창)으로 이동
     public void loadLobbyScene()
     {
+        NetworkManager.s_instance.Disconnect();
         GameManager.s_instance.LoadScene(2);
     }
 

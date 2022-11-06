@@ -49,10 +49,14 @@ public class JY_Portal : MonoBehaviour
     {
         portalUI.gameObject.SetActive(false);
     }
+
+    // 던전 씬 로드에만 사용. (포탈2 없앰)
     public void loadScene()
     {
-        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Portal);
-        GameManager.s_instance.LoadScene(targetSceneNum);
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Portal);     
+        // 매칭 UI를 활성화하고 매칭 시작.
+        BattleUI.instance.matchingUI.SetActive(true);
+        NetworkManager.s_instance.MatchMaking(targetSceneNum);        
     }
 
     private void OnTriggerEnter(Collider other)

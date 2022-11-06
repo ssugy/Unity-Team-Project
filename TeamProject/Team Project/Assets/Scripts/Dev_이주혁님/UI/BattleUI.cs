@@ -8,6 +8,7 @@ public class BattleUI : MonoBehaviour
 {
     public static BattleUI instance;
     public GameObject deathUI;
+    public GameObject matchingUI;    
 
     // 전투 UI에 버튼들을 동적으로 할당하는 스크립트.
     Player player;  // 버튼에 할당할 플레이어 기능 함수 집합.
@@ -17,6 +18,8 @@ public class BattleUI : MonoBehaviour
     public Button skill_3;
     public Button skill_4;
     public Button revive;
+    public Button cancelMatching;
+    public Button backToWorld;
     public Image cool_1;
     public Image cool_2;
     public Image cool_3;
@@ -55,7 +58,14 @@ public class BattleUI : MonoBehaviour
         lArm.triggers.Add(lArm_PointerDown);
         lArm.triggers.Add(lArm_PointerUp);
         // 게임 매니저를 이용하여 부활하면 마을로 돌아가도록 함.
+        revive.onClick.AddListener(() => NetworkManager.s_instance.LeaveRoom());
         revive.onClick.AddListener(() => GameManager.s_instance.LoadScene(4));
+        // 매칭 취소 버튼을 누르면 방에서 나옴.
+        cancelMatching.onClick.AddListener(() => NetworkManager.s_instance.LeaveRoom());
+        cancelMatching.onClick.AddListener(() => matchingUI.SetActive(false));
+        // 마을로 가는 포탈을 타면 방을 나옴.
+        backToWorld.onClick.AddListener(() => NetworkManager.s_instance.LeaveRoom());
+        backToWorld.onClick.AddListener(() => GameManager.s_instance.LoadScene(4));
     }
 
     void LArmDown_Frame(PointerEventData data)
