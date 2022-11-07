@@ -5,15 +5,7 @@ using UnityEngine.EventSystems;
 using UniRx;
 using CartoonHeroes;
 using static CartoonHeroes.SetCharacter;
-public enum CharacterClass
-{
-    NULL,
-    warrior,
-    thief,
-    explorer,
-    sorcerer,
-    enemy
-}
+
 public enum Sex
 {
     NULL,
@@ -45,8 +37,8 @@ public class PlayerStat
     public int dexterity;
 
     [Header("Statistic")]
-    public CharacterClass characterClass;
-    public Sex sex;
+    public EJob job;
+    public EGender gender;
     public int level;
     public int[] customized;
     public Dictionary<EquipPart, Item> equiped = new Dictionary<EquipPart, Item>();
@@ -126,11 +118,11 @@ public class PlayerStat
     }
     public bool isDead;
 
-    public void InitialStat(CharacterClass _class)
+    public void InitialStat(EJob _job)
     {
-        switch (_class)
+        switch (_job)
         {
-            case CharacterClass.warrior:
+            case EJob.WARRIOR:
                 health = 7;
                 stamina = 6;
                 strength = 10;
@@ -209,6 +201,9 @@ public class Player : MonoBehaviour
         WeaponEffect.SetActive(false);
         if (JY_CharacterListManager.s_instance != null)
         {
+            playerStat.job = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].job;
+            playerStat.gender = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].gender;
+            playerStat.customized = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].characterAvatar;
             playerStat.level = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level;
             if (EXP_TABLE.TryGetValue(playerStat.level, out int _exp))
             {
@@ -506,7 +501,7 @@ public class Player : MonoBehaviour
     public void InitializeStat()                  // 스탯 초기화
     {
         playerStat.statPoint = (playerStat.level - 1) * 3;
-        playerStat.InitialStat(playerStat.characterClass);
+        playerStat.InitialStat(playerStat.job);
         SetState();        
         // UI 매니저를 호출하기 위해 퀘스트 매니저를 경유하고 있는데 좋지 않아 보입니다.
         JY_QuestManager.s_instance.uiManager.StatusDataRenew();
@@ -760,6 +755,7 @@ public class Player : MonoBehaviour
         tmp.exp = playerStat.CurExp;
         tmp.gold = playerStat.Gold;
         tmp.statusPoint = playerStat.statPoint;
+        tmp.characterAvatar = playerStat.customized;
         tmp.status[(int)Adjustable.health] = playerStat.health;
         tmp.status[(int)Adjustable.stamina] = playerStat.stamina;
         tmp.status[(int)Adjustable.strength] = playerStat.strength;
@@ -779,7 +775,7 @@ public class Player : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            subOptionLoad(i, JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].characterAvatar[i]);
+            subOptionLoad(i, playerStat.customized[i]);
         }
     }
     public void subOptionLoad(int currentOption, int sub)

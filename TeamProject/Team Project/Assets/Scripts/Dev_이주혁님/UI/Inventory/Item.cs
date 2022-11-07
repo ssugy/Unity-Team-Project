@@ -56,11 +56,13 @@ public class Item
     }
     public void Equip()
     {
-        this.equipedState = EquipState.EQUIPED;        
-        if(Player.instance.playerStat.equiped.TryGetValue(EquipPart.WEAPON, out Item _val))
+        this.equipedState = EquipState.EQUIPED;
+        
+        if (Player.instance.playerStat.equiped.TryGetValue(EquipPart.WEAPON, out Item _val))
         {
             effects[1].ExecuteRole(_val);
-        }        
+        }
+        
         effects[0].ExecuteRole(this);        
     }
     public void Unequip()

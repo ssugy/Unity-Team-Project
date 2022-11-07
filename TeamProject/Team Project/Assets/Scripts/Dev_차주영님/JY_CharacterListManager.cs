@@ -44,10 +44,10 @@ public struct InfoData
     public int statusPoint;
 
     /// <summary>
-    /// 0 : 얼굴
-    /// 1 : 헤어
-    /// 2 : 상의
-    /// 3 : 하의
+    /// 0 : 하의
+    /// 1 : 상의
+    /// 2 : 얼굴
+    /// 3 : 헤어
     /// </summary>
     public int[] characterAvatar;
     /// <summary>

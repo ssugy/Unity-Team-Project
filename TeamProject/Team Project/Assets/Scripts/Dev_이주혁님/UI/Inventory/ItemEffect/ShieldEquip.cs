@@ -14,7 +14,7 @@ public class ShieldEquip : ItemEffect
         if (!player.playerStat.equiped.TryGetValue(EquipPart.SHIELD, out Item _tmp))
         {
             player.playerStat.equiped.Add(EquipPart.SHIELD, _item);
-        }
+        }        
         
         if (Inventory.instance.onChangeItem != null)
         {

@@ -10,12 +10,12 @@ public class WeaponEquip : ItemEffect
         Player player = Inventory.instance.transform.GetComponent<Player>();
         GameObject weaponSrc = Resources.Load<GameObject>("Item/Weapon/" + _item.image.name);
         Instantiate<GameObject>(weaponSrc, player.rWeaponDummy);
-        
-        if(!player.playerStat.equiped.TryGetValue(EquipPart.WEAPON, out Item _tmp))
+
+        if (!player.playerStat.equiped.TryGetValue(EquipPart.WEAPON, out Item _tmp)) 
         {
             player.playerStat.equiped.Add(EquipPart.WEAPON, _item);
-        } 
-        
+        }        
+
         if (Inventory.instance.onChangeItem != null)
         {
             Inventory.instance.onChangeItem();

@@ -31,7 +31,7 @@ public class InventoryUI : MonoBehaviour
     } 
     public void UpdateGold()
     {
-        gold.text = string.Format("{0:#,0}", Player.instance.playerStat.Gold);
+        gold.text = Player.instance.playerStat.Gold.ToString();
     }
 
     private void Awake()
