@@ -9,18 +9,27 @@ public class PantsEquip : ItemEffect
     public int num;
     public override void ExecuteRole(Item _item)
     {
+        _item.equipedState = EquipState.EQUIPED;
+
         Player player = Inventory.instance.transform.GetComponent<Player>();
-        player.playerStat.defPoint += def;
+
+        if (player.playerStat.equiped.TryGetValue(EquipPart.LEG, out Item _tmp))
+        {
+            _tmp.effects[1].ExecuteRole(_tmp);
+            player.playerStat.equiped.Add(EquipPart.LEG, _item);
+        }
+        else
+        {
+            player.playerStat.equiped.Add(EquipPart.LEG, _item);
+        }
+
         if (Player.instance.enabled)
         {
             player.playerStat.customized[0] = num;
             player.AvatarSet();
-        }
-
-        if (!player.playerStat.equiped.TryGetValue(EquipPart.LEG, out Item _tmp))
-        {
-            player.playerStat.equiped.Add(EquipPart.LEG, _item);
-        }
+            player.playerStat.defPoint += def;
+            player.SetState();
+        }        
 
         if (Inventory.instance.onChangeItem != null)
         {

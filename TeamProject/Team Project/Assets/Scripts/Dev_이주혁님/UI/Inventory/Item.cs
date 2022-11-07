@@ -47,24 +47,8 @@ public class Item
         return itemID;
     }
 
-    public void Use()
-    {        
-        foreach(ItemEffect one in effects)
-        {
-            one.ExecuteRole(this);
-        }             
-    }
-    public void Equip()
-    {
-        this.equipedState = EquipState.EQUIPED;
-        
-        if (Player.instance.playerStat.equiped.TryGetValue(EquipPart.WEAPON, out Item _val))
-        {
-            effects[1].ExecuteRole(_val);
-        }
-        
-        effects[0].ExecuteRole(this);        
-    }
+    public void Use() => effects.ForEach(e => e.ExecuteRole(this));    
+    public void Equip() => effects[0].ExecuteRole(this);    
     public void Unequip()
     {
         this.equipedState = EquipState.UNEQUIPED;

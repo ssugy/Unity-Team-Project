@@ -16,8 +16,12 @@ public class ShieldUnequip : ItemEffect
         {
             Destroy(Player.instance.lWeaponDummy.GetComponentInChildren<Shield>().gameObject);
         }
-        Inventory.instance.onChangeItem();
-        InventoryUI.instance.shieldIcon.sprite = null;
-        InventoryUI.instance.shieldIcon.gameObject.SetActive(false);
+        if (Inventory.instance.onChangeItem != null)
+            Inventory.instance.onChangeItem();
+        if (InventoryUI.instance != null)
+        {
+            InventoryUI.instance.shieldIcon.sprite = null;
+            InventoryUI.instance.shieldIcon.gameObject.SetActive(false);
+        }        
     }
 }

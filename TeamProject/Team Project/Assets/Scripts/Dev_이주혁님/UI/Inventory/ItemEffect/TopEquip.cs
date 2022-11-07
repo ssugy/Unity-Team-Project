@@ -9,18 +9,27 @@ public class TopEquip : ItemEffect
     public int num;
     public override void ExecuteRole(Item _item)
     {
-        Player player = Inventory.instance.transform.GetComponent<Player>();        
-        player.playerStat.defPoint += def;
+        _item.equipedState = EquipState.EQUIPED;
+
+        Player player = Inventory.instance.transform.GetComponent<Player>();
+
+        if (player.playerStat.equiped.TryGetValue(EquipPart.CHEST, out Item _tmp))
+        {
+            _tmp.effects[1].ExecuteRole(_tmp);
+            player.playerStat.equiped.Add(EquipPart.CHEST, _item);
+        }
+        else
+        {
+            player.playerStat.equiped.Add(EquipPart.CHEST, _item);
+        }
+
         if (Player.instance.enabled)
         {
             player.playerStat.customized[1] = num;
             player.AvatarSet();
-        }
-        
-        if(!player.playerStat.equiped.TryGetValue(EquipPart.CHEST, out Item _tmp))
-        {
-            player.playerStat.equiped.Add(EquipPart.CHEST, _item);
-        } 
+            player.playerStat.defPoint += def;            
+            player.SetState();
+        }               
         
         if (Inventory.instance.onChangeItem != null)
         {

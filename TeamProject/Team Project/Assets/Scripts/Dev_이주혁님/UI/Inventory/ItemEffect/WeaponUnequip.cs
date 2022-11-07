@@ -6,7 +6,7 @@ using UnityEngine;
 public class WeaponUnequip : ItemEffect
 {
     public override void ExecuteRole(Item _item)
-    {
+    {        
         if (Player.instance.playerStat.equiped.TryGetValue(EquipPart.WEAPON, out Item _val))
         {
             _val.equipedState = EquipState.UNEQUIPED;
@@ -15,9 +15,13 @@ public class WeaponUnequip : ItemEffect
         if (Player.instance.rWeaponDummy.GetComponentInChildren<Weapon>() != null)
         {
             Destroy(Player.instance.rWeaponDummy.GetComponentInChildren<Weapon>().gameObject);
-        }        
-        Inventory.instance.onChangeItem();
-        InventoryUI.instance.weaponIcon.sprite = null;
-        InventoryUI.instance.weaponIcon.gameObject.SetActive(false);        
+        }
+        if (Inventory.instance.onChangeItem != null)
+            Inventory.instance.onChangeItem();
+        if (InventoryUI.instance != null)
+        {
+            InventoryUI.instance.weaponIcon.sprite = null;
+            InventoryUI.instance.weaponIcon.gameObject.SetActive(false);
+        }
     }    
 }

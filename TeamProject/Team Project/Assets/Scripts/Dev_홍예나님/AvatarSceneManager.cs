@@ -183,15 +183,55 @@ public class AvatarSceneManager : MonoBehaviour
                             tmp.level = 1;
                             tmp.job = EJob.WARRIOR;
                             tmp.status = new int[4] { 7, 6, 10, 5 };
-                            tmp.gender = gender;
-                            tmp.itemList.Add(new(ItemType.EQUIPMENT, EquipState.EQUIPED, "∑’º“µÂ", 1));
-                            JY_CharacterListManager.s_instance.jInfoData.infoDataList[i] = tmp;
+                            tmp.gender = gender;                            
 
                             //∏µ®∏µ ¿€º∫
-                            JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].characterAvatar[0] = optionSubs[0];
-                            JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].characterAvatar[1] = optionSubs[1];
-                            JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].characterAvatar[2] = optionSubs[2];
-                            JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].characterAvatar[3] = optionSubs[3];
+                            tmp.characterAvatar[0] = optionSubs[0];
+                            tmp.characterAvatar[1] = optionSubs[1];
+                            tmp.characterAvatar[2] = optionSubs[2];
+                            tmp.characterAvatar[3] = optionSubs[3];
+
+                            // æ∆¿Ã≈€ ¿€º∫
+                            tmp.itemList.Add(new(ItemType.EQUIPMENT, EquipState.EQUIPED, "∑’º“µÂ", 1));                            
+                            switch (optionSubs[1])  // ªÛ¿«
+                            {
+                                case 1:
+                                    {
+                                        tmp.itemList.Add(new(ItemType.EQUIPMENT, EquipState.EQUIPED, "√∂¡¶ ∞©ø ", 1));
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        tmp.itemList.Add(new(ItemType.EQUIPMENT, EquipState.EQUIPED, "∞°∫≠øÓ ∞©ø ", 1));
+                                        break;
+                                    }
+                                case 3:
+                                    {
+                                        tmp.itemList.Add(new(ItemType.EQUIPMENT, EquipState.EQUIPED, "∞°¡◊ ªÛ¿«", 1));
+                                        break;
+                                    }
+                                default: break;
+                            }
+                            switch (optionSubs[0])  // «œ¿«
+                            {
+                                case 1:
+                                    {
+                                        tmp.itemList.Add(new(ItemType.EQUIPMENT, EquipState.EQUIPED, "√∂¡¶ ¥Ÿ∏Æ ∫∏»£¥Î", 1));
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        tmp.itemList.Add(new(ItemType.EQUIPMENT, EquipState.EQUIPED, "∞Ê∞© «œ¿«", 1));
+                                        break;
+                                    }
+                                case 3:
+                                    {
+                                        tmp.itemList.Add(new(ItemType.EQUIPMENT, EquipState.EQUIPED, "∞°¡◊ «œ¿«", 1));
+                                        break;
+                                    }
+                                default: break;
+                            }
+                            JY_CharacterListManager.s_instance.jInfoData.infoDataList[i] = tmp;
                             break;
                         }
                     }
