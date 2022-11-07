@@ -15,9 +15,7 @@ public class JY_AvatarLoad : MonoBehaviour
     public GameObject charMale;             // 남자
     public GameObject charFemale;           // 여자
     public GameObject charWeaponDummy;
-    public GameObject charShieldDummy;
-    public GameObject charWeapon;
-    public GameObject charShield;
+    public GameObject charShieldDummy;    
     public SetCharacter setChara;
     
     void Awake()
@@ -104,24 +102,6 @@ public class JY_AvatarLoad : MonoBehaviour
         }
     }
 
-    public void equipWeapon(int listNum)
-    {
-        if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender.Equals(EGender.MALE))
-        {
-            charWeaponDummy = FindGameObjectInChild("Character R Weapon Slot", charMale.transform).gameObject;            
-        }
-        else if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender.Equals(EGender.FEMALE))
-        {
-            charWeaponDummy = FindGameObjectInChild("Character R Weapon Slot", charFemale.transform).gameObject;            
-        }
-        GameObject weaponSc = Resources.Load<GameObject>("Item/Weapon/Sword_1");
-        charWeapon ??= Instantiate<GameObject>(weaponSc);        
-        charWeapon.transform.SetParent(charWeaponDummy.transform);
-        charWeapon.transform.localPosition = Vector3.zero;
-        charWeapon.transform.localRotation = Quaternion.identity;
-
-
-    }
 
 
     // 원래 들고 있는 무기와 방패를 삭제함.

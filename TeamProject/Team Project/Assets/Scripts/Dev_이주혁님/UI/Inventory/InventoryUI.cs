@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -20,11 +21,7 @@ public class InventoryUI : MonoBehaviour
     
     private void RedrawSlotUI()
     {
-        for(int i = 0; i < slots.Length; i++)
-        {
-            slots[i].RemoveSlot();
-
-        }
+        Array.ForEach(slots, e => e.RemoveSlot());               
         for (int i = 0; i < inventory.items.Count; i++)
         {
             slots[i].item = inventory.items[i];            
@@ -37,16 +34,17 @@ public class InventoryUI : MonoBehaviour
         gold.text = string.Format("{0:#,0}", Player.instance.playerStat.Gold);
     }
 
-    void Start()
+    private void Awake()
     {
-        inventory = Inventory.instance;
         instance = this;
+        inventory = Inventory.instance;
         slots = slotHolder.GetComponentsInChildren<Slot>();
         inventory.onChangeItem += RedrawSlotUI;
-        if (Player.instance != null)
-        {
-            UpdateGold();
-        }                    
-        this.gameObject.SetActive(false);        
-    }    
+    }
+    
+    private void OnEnable()
+    {
+        UpdateGold();
+        RedrawSlotUI();
+    }
 }

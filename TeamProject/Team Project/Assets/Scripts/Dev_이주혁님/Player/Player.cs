@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UniRx;
+using CartoonHeroes;
+using static CartoonHeroes.SetCharacter;
 public enum CharacterClass
 {
     NULL,
@@ -118,8 +120,8 @@ public class PlayerStat
             if (gold < 0)
             {
                 gold = 0;
-            }
-            InventoryUI.instance.UpdateGold();
+            }            
+            InventoryUI.instance?.UpdateGold();             
             }
     }
     public bool isDead;
@@ -167,9 +169,13 @@ public class Player : MonoBehaviour
     [HideInInspector] public bool isGround;    
     private Dictionary<int, int> EXP_TABLE;
 
+
+    SetCharacter setChara;
+
     private void Awake()
     {        
         instance = this;
+        playerStat = new();
         EXP_TABLE = new Dictionary<int, int>();
         TextAsset expTable = Resources.Load<TextAsset>("EXP_TABLE");
         string[] tmpTxt = expTable.text.Split("\n");        
@@ -216,7 +222,7 @@ public class Player : MonoBehaviour
             playerStat.strength = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[2];
             playerStat.dexterity = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[3];
         }
-        JY_QuestManager.s_instance.uiManager.StatusDataRenew();
+        JY_QuestManager.s_instance?.uiManager.StatusDataRenew();
         SetState();
         playerStat.CurHP = playerStat.HP;
         playerStat.CurSP = playerStat.SP;
@@ -226,6 +232,10 @@ public class Player : MonoBehaviour
         }
         controller.ObserveEveryValueChanged(_ => _.isGrounded).ThrottleFrame(30).Subscribe(_ => isGround = _);
         // UniRx를 이용하여 isGrounded 프로퍼티가 0.3초 이상 유지되어야 상태가 전이되게끔 함. isGrounded가 정교하지 않기 때문.
+
+
+        setChara = GetComponent<SetCharacter>();
+        AvatarSet();
     }
 
     void Move()
@@ -762,5 +772,39 @@ public class Player : MonoBehaviour
         Debug.Log("데이터 세이브");
         SaveData();
         instance = null;        
+    }
+        
+
+    public void AvatarSet()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            subOptionLoad(i, JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].characterAvatar[i]);
+        }
+    }
+    public void subOptionLoad(int currentOption, int sub)
+    {
+        DeleteSubOption(currentOption);
+        {
+            GameObject addedObj = setChara.AddItem(setChara.itemGroups[currentOption], sub);
+        }
+    }
+    void DeleteSubOption(int currentOption)
+    {
+        for (int j = 0; j < setChara.itemGroups[currentOption].slots; j++)
+        {
+            if (setChara.HasItem(setChara.itemGroups[currentOption], j))
+            {
+                List<GameObject> removedObjs = setChara.GetRemoveObjList(setChara.itemGroups[currentOption], j);
+                for (int m = 0; m < removedObjs.Count; m++)
+                {
+                    if (removedObjs[m] != null)
+                    {
+                        DestroyImmediate(removedObjs[m]);
+                    }
+                }
+            }
+        }
+
     }
 }

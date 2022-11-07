@@ -27,6 +27,11 @@ public class JY_NPCDialog : MonoBehaviour
     public List<Cinemachine.CinemachinePath> paths;
     int dialogPartNum;
 
+    private void OnEnable()
+    {
+        player = Player.instance.gameObject;
+    }
+
     private void SetGameLayerRecursive(GameObject _go, int _layer)
     {
         _go.layer = _layer;
