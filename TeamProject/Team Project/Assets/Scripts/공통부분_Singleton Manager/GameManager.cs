@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager _unique;
     public static GameManager s_instance { get { return _unique; } }
+    int ActiveScene;
 
     private void Awake()
     {
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        ActiveScene = (int)SceneName.Intro;
     }
 
 
@@ -70,27 +72,10 @@ public class GameManager : MonoBehaviour
     {
         InstanceManager.s_instance.ClearList();
         currentScene = SceneName.Loading;   // 로딩이 시작되면 Loading씬으로 변경한 뒤, 끝나면 목적씬으로 변경
-
-        if (index >= 5)
-            AudioManager.s_instance.SoundFadeInOut(AudioManager.SOUND_NAME.BGM_WORLD, 0, 2f);
-
-        if (SceneManager.GetActiveScene().name == "03. Lobby")
-        {
-            AudioManager.s_instance.SoundFadeInOut(AudioManager.SOUND_NAME.BGM, 0, 1f);
-            AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BGM_WORLD, true, 0.5f);
-        }
-        else if (SceneManager.GetActiveScene().name == "06. Dungeon_Fire")
-        {
-            AudioManager.s_instance.SoundFadeInOut(AudioManager.SOUND_NAME.BossBGM_01, 0, 0.1f);
-            AudioManager.s_instance.SoundFadeInOut(AudioManager.SOUND_NAME.BossBGM_02, 0, 0.1f);
-            if (AudioManager.s_instance.NOWPLAY != null)
-            {
-                if (!AudioManager.s_instance.NOWPLAY.name.Equals("BGM_WORLD"))
-                    AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BGM_WORLD, true, 0.5f);
-            }
-            
-        }        
+        //오디오 변경 함수  
+        AudioManager.s_instance.SceneBGMContorl(ActiveScene, index);
         LoadingSceneController.LoadScene(index);    // 로딩씬을 이용한 로딩
+        ActiveScene = index;
     }
 
     #region 다국어지원
