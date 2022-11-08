@@ -506,7 +506,7 @@ public class Player : MonoBehaviour
         playerStat.InitialStat(playerStat.job);
         SetState();        
         // UI 매니저를 호출하기 위해 퀘스트 매니저를 경유하고 있는데 좋지 않아 보입니다.
-        JY_QuestManager.s_instance.uiManager.StatusDataRenew();
+        JY_UIManager.instance.StatusDataRenew();
     }
     public void StatUp(Adjustable _stat)
     {
@@ -536,7 +536,7 @@ public class Player : MonoBehaviour
                     break;
             }
         }        
-        JY_QuestManager.s_instance.uiManager.StatusDataRenew();        
+        JY_UIManager.instance.StatusDataRenew();        
     }       
     // Adjustable 스탯으로부터 기타 스탯을 연산함.
     /// <summary>
@@ -718,7 +718,7 @@ public class Player : MonoBehaviour
             playerStat.Exp = _exp;
         }        
         playerStat.CurHP = playerStat.HP;        
-        JY_QuestManager.s_instance.uiManager.levelupUI();
+        JY_UIManager.instance.levelupUI();
     }
     
     // 이미 발동된 isAttack 트리거를 취소함. 선입력에 의한 의도치 않은 공격이 나가는 것을 방지.
