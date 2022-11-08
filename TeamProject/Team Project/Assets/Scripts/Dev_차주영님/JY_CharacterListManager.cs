@@ -130,14 +130,12 @@ public class JY_CharacterListManager : MonoBehaviour
     }    
     private void OnEnable()
     {
-        // 씬이 로드될 때의 이벤트 구독.
-        SceneManager.sceneLoaded += LoadAvatar;
+        // 씬이 로드될 때의 이벤트 구독.        
         SceneManager.sceneLoaded += Save_OnSceneLoad;
     }
     private void OnDisable()
     {
-        // 이벤트 구독 취소.
-        SceneManager.sceneLoaded -= LoadAvatar;
+        // 이벤트 구독 취소.        
         SceneManager.sceneLoaded -= Save_OnSceneLoad;
     }
 
@@ -149,18 +147,7 @@ public class JY_CharacterListManager : MonoBehaviour
         for (int i = 0; i < 4; i++)    
             tmp.infoDataList.Add(init);       
         File.WriteAllText(infoPath, JsonUtility.ToJson(tmp, true));
-    }
-    
-    void LoadAvatar(Scene scene, LoadSceneMode mode)
-    {
-        JY_AvatarLoad.s_instance.origin = JY_PlayerReturn.instance?.GetPlayerOrigin();
-        if (JY_AvatarLoad.s_instance.origin != null)
-        {
-            JY_AvatarLoad.s_instance.charMale = JY_AvatarLoad.s_instance.FindGameObjectInChild("BaseCharacterM", JY_AvatarLoad.s_instance.origin.transform).gameObject;
-            JY_AvatarLoad.s_instance.charFemale = JY_AvatarLoad.s_instance.FindGameObjectInChild("BaseCharacterF", JY_AvatarLoad.s_instance.origin.transform).gameObject;
-            JY_AvatarLoad.s_instance.LoadModelData(selectNum);
-        }
-    }
+    }        
 
     // 단순히 JinfoData를 파일에 옮겨 씀.
     public void Save() => File.WriteAllText(infoPath, JsonUtility.ToJson(jInfoData, true));

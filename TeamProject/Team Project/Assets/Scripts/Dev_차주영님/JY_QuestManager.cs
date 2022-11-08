@@ -49,6 +49,10 @@ public class JY_QuestManager : MonoBehaviour
         uiManager= GetComponentInParent<JY_UIManager>();
         selectNpcNum = -1;
     }
+    private void OnDisable()
+    {
+        instance = null;
+    }
 
     public void questJournalTitleRenew()
     {

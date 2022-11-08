@@ -9,35 +9,29 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 {
     #region 싱글톤 패턴
     private static NetworkManager instance;
-    public static NetworkManager s_instance { get => instance; }
-    #endregion
-
+    public static NetworkManager s_instance { get => instance; }    
     private void Awake()
-    {
-        #region 싱글톤 생성
+    {        
         instance ??= this;
         if (instance == this)
             DontDestroyOnLoad(gameObject);
         else
-            Destroy(gameObject);
-        #endregion
+            Destroy(gameObject);        
     }
-    public Room currentRoom = null;
+    #endregion
+
+    Room currentRoom = null;
 
     public void Connect() => PhotonNetwork.ConnectUsingSettings();
     public void Disconnect() => PhotonNetwork.Disconnect();
 
     // 최대 인원수를 임시로 1명으로 해놓음.
-    public void MatchMaking(int _dungeonNum)
-    {
-        PhotonNetwork.JoinOrCreateRoom(_dungeonNum.ToString(), new RoomOptions { MaxPlayers = 1 }, null);
-    }
+    public void MatchMaking(int _dungeonNum) => PhotonNetwork.JoinOrCreateRoom(_dungeonNum.ToString(), new RoomOptions { MaxPlayers = 1 }, null);    
 
     // 방을 떠나면 OnConnectedToMaster가 실행됨. 마스터 서버로 되돌아가기 때문.
     public void LeaveRoom()
     {
-        currentRoom = null;
-        // LeaveRoom을 호출하여도 실제로 Room을 떠나는 것은 이보다 더 뒤. 따라서 PhotonNetwork.CurrentRoom을 호출했을 때 예상치 않은 결과가 나올 수 있음.
+        currentRoom = null;        
         PhotonNetwork.LeaveRoom();
     }
     
@@ -75,30 +69,31 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         //SceneManager.sceneLoaded -= SetMine;
     }
 
+
+    // 현재 씬이 로비일 때만 코드를 실행. 던전 -> 월드 이동에선 실행되지 않음.
     public override void OnConnectedToMaster() 
-    {                       
-        // 현재 씬이 로비일 때만 월드씬으로 진입.
+    {                              
         if (GameManager.s_instance.currentScene.Equals(GameManager.SceneName.Lobby))
         {
             SceneManager.sceneLoaded += SetMine;
-            GameManager.s_instance.LoadScene(4);
             PhotonNetwork.LocalPlayer.NickName =
                 JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].name;
-            Debug.Log("서버에 접속한 사용자: " + PhotonNetwork.LocalPlayer.NickName);            
+            Debug.Log("서버에 접속한 사용자: " + PhotonNetwork.LocalPlayer.NickName);
+            GameManager.s_instance.LoadScene(4);                      
         }            
     }
+
+    // 로비로 되돌아갈 때 실행됨.
     public override void OnDisconnected(DisconnectCause cause)
     {
-        SceneManager.sceneLoaded -= SetMine;
+        SceneManager.sceneLoaded -= SetMine;        
         Debug.Log(cause);
     }
 
     // 자신의 캐릭터를 인스턴스화. PhotonNetwork.Instantiate는 반드시 룸 안에 있을 때만 사용할 수 있다.
     public void SetMine(Scene scene, LoadSceneMode mode)
     {                    
-        if (currentRoom != null)
-        {
-            Debug.Log("포톤");
+        if (currentRoom != null)                    
             #region 던전 씬에서는 방에 있으므로 PhotonNetwork.Instantiate
             switch (JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].gender)
             {
@@ -112,12 +107,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                     Debug.Log("성별 데이터 오류");
                     break;
             }
-            #endregion
-            
-        }        
-        else
-        {
-            Debug.Log("오브젝트");
+            #endregion                           
+        else                  
             #region 월드 씬에서는 방에 있지 않으므로 Object.Instantiate
             switch (JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].gender)
             {
@@ -131,7 +122,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                     Debug.Log("성별 데이터 오류");
                     break;
             }
-            #endregion
-        }
+            #endregion        
     }
 }

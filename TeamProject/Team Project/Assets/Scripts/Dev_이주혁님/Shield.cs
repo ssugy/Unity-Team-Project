@@ -11,11 +11,11 @@ public class Shield : MonoBehaviour
     {
         shield = GetComponent<Shield>();        
         player = Player.instance;        
-        Player.instance.SetState();
+        player?.SetState();
     }
     private void OnDisable()
     {
         shield = null;               
-        Player.instance.SetState();
+        player?.SetState();
     }
 }

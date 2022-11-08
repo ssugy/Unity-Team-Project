@@ -5,15 +5,15 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 // 로비에서만 사용될 스크립트.
-// CharacterListManager에 SelectNum을 넘겨주는 역할.
-// 캐릭터를 표시하는 역할.
 
 public class LobbyUI : MonoBehaviour
 {
-    public GameObject noSelect;
+    public GameObject noSelectCharacter;
     public GameObject connectServer;
+
     public Button enterWorld;
     public Button quitGame;
+
     public Button createChar_0;
     public Button createChar_1;
     public Button createChar_2;
@@ -23,6 +23,7 @@ public class LobbyUI : MonoBehaviour
     {
         enterWorld.onClick.AddListener(() => EnterWorld());
         quitGame.onClick.AddListener(() => Application.Quit());
+
         createChar_0.onClick.AddListener(() => GameManager.s_instance.LoadScene(3));
         createChar_1.onClick.AddListener(() => GameManager.s_instance.LoadScene(3));
         createChar_2.onClick.AddListener(() => GameManager.s_instance.LoadScene(3));
@@ -34,7 +35,7 @@ public class LobbyUI : MonoBehaviour
     {
         if (JY_CharacterListManager.s_instance.selectNum < 0)
         {
-            noSelect.SetActive(true);
+            noSelectCharacter.SetActive(true);
             return;
         }
         enterWorld.interactable = false;

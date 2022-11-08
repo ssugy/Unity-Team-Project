@@ -70,11 +70,11 @@ public class Item
     public void ShallowCopy()
     {
         Item tmp = new Item();        
-        for (int i=0;i< ItemDatabase.instance.itemDB.Count; i++)
+        for (int i=0;i< ItemDatabase.s_instance.itemDB.Count; i++)
         {
-            if(this.name.Equals(ItemDatabase.instance.itemDB[i].name))
+            if(this.name.Equals(ItemDatabase.s_instance.itemDB[i].name))
             {
-                tmp = ItemDatabase.instance.itemDB[i];
+                tmp = ItemDatabase.s_instance.itemDB[i];
                 break;
             }
         }

@@ -13,23 +13,23 @@ public class TopEquip : ItemEffect
 
         Player player = Inventory.instance.transform.GetComponent<Player>();
 
-        if (player.playerStat.equiped.TryGetValue(EquipPart.CHEST, out Item _tmp))
+        if (player != null)
         {
-            _tmp.effects[1].ExecuteRole(_tmp);
-            player.playerStat.equiped.Add(EquipPart.CHEST, _item);
-        }
-        else
-        {
-            player.playerStat.equiped.Add(EquipPart.CHEST, _item);
-        }
-
-        if (Player.instance.enabled)
-        {
+            if (player.playerStat.equiped.TryGetValue(EquipPart.CHEST, out Item _tmp))
+            {
+                _tmp.effects[1].ExecuteRole(_tmp);
+                player.playerStat.equiped.Add(EquipPart.CHEST, _item);
+            }
+            else
+            {
+                player.playerStat.equiped.Add(EquipPart.CHEST, _item);
+            }
             player.playerStat.customized[1] = num;
             player.AvatarSet();
-            player.playerStat.defPoint += def;            
+            player.playerStat.defPoint += def;
             player.SetState();
-        }               
+        }        
+                               
         
         if (Inventory.instance.onChangeItem != null)
         {

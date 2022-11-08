@@ -13,23 +13,22 @@ public class PantsEquip : ItemEffect
 
         Player player = Inventory.instance.transform.GetComponent<Player>();
 
-        if (player.playerStat.equiped.TryGetValue(EquipPart.LEG, out Item _tmp))
+        if (player != null)
         {
-            _tmp.effects[1].ExecuteRole(_tmp);
-            player.playerStat.equiped.Add(EquipPart.LEG, _item);
-        }
-        else
-        {
-            player.playerStat.equiped.Add(EquipPart.LEG, _item);
-        }
-
-        if (Player.instance.enabled)
-        {
+            if (player.playerStat.equiped.TryGetValue(EquipPart.LEG, out Item _tmp))
+            {
+                _tmp.effects[1].ExecuteRole(_tmp);
+                player.playerStat.equiped.Add(EquipPart.LEG, _item);
+            }
+            else
+            {
+                player.playerStat.equiped.Add(EquipPart.LEG, _item);
+            }
             player.playerStat.customized[0] = num;
             player.AvatarSet();
             player.playerStat.defPoint += def;
             player.SetState();
-        }        
+        }             
 
         if (Inventory.instance.onChangeItem != null)
         {

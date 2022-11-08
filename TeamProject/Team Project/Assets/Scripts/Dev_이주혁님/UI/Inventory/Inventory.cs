@@ -57,11 +57,11 @@ public class Inventory : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            AddItem(ItemDatabase.instance.itemDB[20].Copy(), 20);
+            AddItem(ItemDatabase.s_instance.itemDB[20].Copy(), 20);
         }
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            AddItem(ItemDatabase.instance.itemDB[16].Copy(), 16);
+            AddItem(ItemDatabase.s_instance.itemDB[16].Copy(), 16);
         }
     }
 #endif

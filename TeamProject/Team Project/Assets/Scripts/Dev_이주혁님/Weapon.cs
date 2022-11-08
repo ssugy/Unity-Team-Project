@@ -16,27 +16,21 @@ public class Weapon : MonoBehaviour
         weaponHitbox = GetComponentInChildren<BoxCollider>();
         player = Player.instance;
         if (player != null && player.playerAni != null)
-        {
             player.playerAni.SetFloat("AtkSpeed", atkSpeed);
-        }
-        if (player != null) Player.instance.SetState();
+        player?.SetState();
     }    
     private void OnDisable()
     {
         weapon = null;
         weaponHitbox = null;
         if (player != null && player.playerAni != null)
-        {            
             player.playerAni.SetFloat("AtkSpeed", 1f);
-        }
-        if (player != null) Player.instance.SetState();
+        player?.SetState();
     }
     
     private void OnTriggerEnter(Collider other)
     {        
         if (other.CompareTag("Enemy"))
-        {
-            player.Attack(other);            
-        }               
+            player.Attack(other);                       
     }
 }

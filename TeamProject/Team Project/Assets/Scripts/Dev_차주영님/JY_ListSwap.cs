@@ -17,7 +17,7 @@ public class JY_ListSwap : MonoBehaviour
 
     //캐릭터 선택시/데이터 로드시 변경 UI
     public Image frameBackground;
-    public Image portraitImage;
+    public Image portraitImage;    
 
     //소스 이미지 
     Sprite sourceImg_R;
@@ -122,7 +122,14 @@ public class JY_ListSwap : MonoBehaviour
         Inventory.instance.items.ForEach(e =>
         {
             if (e.equipedState.Equals(EquipState.EQUIPED))
-                e.effects[0].ExecuteRole(e);
+            {
+                GameObject weaponSrc = Resources.Load<GameObject>("Item/Weapon/" + e.image.name);
+                GameObject shieldSrc = Resources.Load<GameObject>("Item/Shield/" + e.image.name);
+                if (weaponSrc != null)
+                    Instantiate<GameObject>(weaponSrc, JY_AvatarLoad.s_instance.charWeaponDummy.transform);
+                if (shieldSrc != null)
+                    Instantiate<GameObject>(shieldSrc, JY_AvatarLoad.s_instance.charShieldDummy.transform);
+            }                       
         });                
     }
 

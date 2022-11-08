@@ -47,4 +47,8 @@ public class InventoryUI : MonoBehaviour
         UpdateGold();
         RedrawSlotUI();
     }
+    private void OnDisable()
+    {
+        instance = null;
+    }
 }

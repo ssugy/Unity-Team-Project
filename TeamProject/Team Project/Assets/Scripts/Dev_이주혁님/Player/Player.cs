@@ -217,7 +217,7 @@ public class Player : MonoBehaviour
             playerStat.strength = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[2];
             playerStat.dexterity = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[3];
         }
-        JY_QuestManager.s_instance?.uiManager.StatusDataRenew();
+        JY_UIManager.instance?.StatusDataRenew();
         SetState();
         playerStat.CurHP = playerStat.HP;
         playerStat.CurSP = playerStat.SP;
@@ -235,6 +235,8 @@ public class Player : MonoBehaviour
 
     void Move()
     {
+        if (playerJoysitck == null)
+            return;
         /** 조이스틱 입력을 감지하여 플레이어의 이동 방향을 결정.
          * x, z값은 -1과 1 사이의 값으로 결정됨. */
         movement = new Vector3(playerJoysitck.Horizontal, 0,

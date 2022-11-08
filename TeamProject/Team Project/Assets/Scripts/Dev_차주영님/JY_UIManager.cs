@@ -34,6 +34,10 @@ public class JY_UIManager : MonoBehaviour
         questMenuSwitch = false;
         nameText.text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].name;        
     }
+    private void OnDisable()
+    {
+        instance = null;
+    }
 
     //프로필 On/Off 함수
     public void switchProfile()
@@ -135,8 +139,9 @@ public class JY_UIManager : MonoBehaviour
     // Lobby씬 (캐릭터 선택창)으로 이동
     public void loadLobbyScene()
     {
-        NetworkManager.s_instance.Disconnect();
+        NetworkManager.s_instance.Disconnect();        
         GameManager.s_instance.LoadScene(2);
+        
     }
 
     public void StatusDataRenew()

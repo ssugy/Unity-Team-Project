@@ -21,7 +21,7 @@ public class JY_AvatarLoad : MonoBehaviour
     void Awake()
     {
         // 같은 오브젝트를 사용하는 캐릭터리스트매니저에서 싱글톤을 사용 중이므로 DontDestroyOnLoad를 할 필요 없음.
-        instance ??= this;
+        instance = this;
     }
 
     void Start()
@@ -29,6 +29,9 @@ public class JY_AvatarLoad : MonoBehaviour
         origin = JY_PlayerReturn.instance.GetPlayerOrigin();
         charMale = FindGameObjectInChild("BaseCharacterM", origin).gameObject;
         charFemale = FindGameObjectInChild("BaseCharacterF", origin).gameObject;
+
+        // 다시 로비씬으로 되돌아왔을 때 selectNum을 -1로 초기화해줌.
+        JY_CharacterListManager.s_instance.selectNum = -1;
     }
 
     public Transform FindGameObjectInChild(string nodename, Transform origin)
