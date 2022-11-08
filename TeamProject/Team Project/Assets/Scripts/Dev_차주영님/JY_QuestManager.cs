@@ -22,7 +22,7 @@ public class JY_QuestManager : MonoBehaviour
     public Text journalButton3;
     public Text journalButton4;
     
-    int selectNum;
+    public int selectNum;
     public int selectNpcNum;
     public JY_UIManager uiManager;
     public Sprite NPCPortrait;
@@ -45,9 +45,12 @@ public class JY_QuestManager : MonoBehaviour
             {
                 Quest_1_Bar.SetActive(true);
             }
-        }
-        uiManager= GetComponentInParent<JY_UIManager>();
+        }        
         selectNpcNum = -1;
+    }
+    private void OnEnable()
+    {
+        instance ??= this;
     }
     private void OnDisable()
     {

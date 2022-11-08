@@ -27,16 +27,21 @@ public class JY_UIManager : MonoBehaviour
     bool profileMenuSwitch;
     bool questMenuSwitch;
     private void Awake()
-    {
-        instance = this;
+    { 
+        instance ??= this;
         profileSwitch = false;
         profileMenuSwitch = false;
         questMenuSwitch = false;
         nameText.text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].name;        
     }
+
+    private void OnEnable()
+    {
+        instance ??= this;
+    }
     private void OnDisable()
     {
-        instance = null;
+        //instance = null;
     }
 
     //프로필 On/Off 함수

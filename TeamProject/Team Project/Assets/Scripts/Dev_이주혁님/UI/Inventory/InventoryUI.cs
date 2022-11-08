@@ -36,7 +36,7 @@ public class InventoryUI : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        instance ??= this;
         inventory = Inventory.instance;
         slots = slotHolder.GetComponentsInChildren<Slot>();
         inventory.onChangeItem += RedrawSlotUI;
@@ -44,6 +44,7 @@ public class InventoryUI : MonoBehaviour
     
     private void OnEnable()
     {
+        instance ??= this;
         UpdateGold();
         RedrawSlotUI();
     }

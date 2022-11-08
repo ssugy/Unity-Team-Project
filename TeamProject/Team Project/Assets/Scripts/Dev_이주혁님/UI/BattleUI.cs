@@ -34,7 +34,7 @@ public class BattleUI : MonoBehaviour
     public Text equipEmpty;    
     void Start()
     {
-        instance = this;
+        instance ??= this;
         player = Player.instance;
         normalAtk.onClick.AddListener(player.NormalAttack);
         skill_1.onClick.AddListener(player.PowerStrike);
@@ -67,6 +67,14 @@ public class BattleUI : MonoBehaviour
         backToWorld.onClick.AddListener(() => NetworkManager.s_instance.LeaveRoom());
         backToWorld.onClick.AddListener(() => GameManager.s_instance.LoadScene(4));
     }
+    private void OnEnable()
+    {
+        instance ??= this;
+    }
+    private void OnDisable()
+    {
+        instance = null;
+    }
 
     void LArmDown_Frame(PointerEventData data)
     {
@@ -96,4 +104,5 @@ public class BattleUI : MonoBehaviour
         }
 
     }
+    
 }
