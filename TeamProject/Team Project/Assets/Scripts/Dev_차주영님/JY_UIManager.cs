@@ -41,7 +41,7 @@ public class JY_UIManager : MonoBehaviour
     }
     private void OnDisable()
     {
-        //instance = null;
+        instance = null;
     }
 
     //프로필 On/Off 함수

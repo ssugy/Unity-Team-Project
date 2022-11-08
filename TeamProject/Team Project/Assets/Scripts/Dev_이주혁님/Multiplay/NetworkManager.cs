@@ -25,26 +25,27 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void Connect() => PhotonNetwork.ConnectUsingSettings();
     public void Disconnect() => PhotonNetwork.Disconnect();
 
-    // 최대 인원수를 임시로 1명으로 해놓음.
-    public void MatchMaking(int _dungeonNum) => PhotonNetwork.JoinOrCreateRoom(_dungeonNum.ToString(), new RoomOptions { MaxPlayers = 1 }, null);    
+    // 최대 인원수를 임시로 1명으로 해놓음. 방 이름은 가려는 던전의 씬 번호 + 방을 생성한 사람의 닉네임.
+    public void MatchMaking(int _dungeonNum) => PhotonNetwork.JoinOrCreateRoom(_dungeonNum.ToString() + "_" + PhotonNetwork.NickName, new RoomOptions { MaxPlayers = 1 }, null);    
 
     // 방을 떠나면 OnConnectedToMaster가 실행됨. 마스터 서버로 되돌아가기 때문.
     public void LeaveRoom()
     {
-        currentRoom = null;        
-        PhotonNetwork.LeaveRoom();
+        currentRoom = null;
+        if (PhotonNetwork.InRoom) PhotonNetwork.LeaveRoom();
     }
     
     // 누군가가 방에 들어왔을 때 호출되는 함수.
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
         Debug.Log("입장한 사용자: " + newPlayer.NickName);
+        Debug.Log("방 이름: " + PhotonNetwork.CurrentRoom.Name);
         // 방이 꽉 차면 던전 씬 진입.
         if (PhotonNetwork.CurrentRoom.MaxPlayers.Equals(PhotonNetwork.CurrentRoom.PlayerCount))
         {
             // 더 이상 사람이 참가할 수 없게 함.
             PhotonNetwork.CurrentRoom.IsOpen = false;
-            GameManager.s_instance.LoadScene(int.Parse(PhotonNetwork.CurrentRoom.Name));
+            GameManager.s_instance.LoadScene(int.Parse(PhotonNetwork.CurrentRoom.Name.Substring(0, 1)));
         }
     }
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
@@ -56,11 +57,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         currentRoom = PhotonNetwork.CurrentRoom;
         Debug.Log("매칭 시작");
+        Debug.Log("방 이름: " + PhotonNetwork.CurrentRoom.Name);
         // 방이 꽉 차면 던전 씬 진입.
         if (PhotonNetwork.CurrentRoom.MaxPlayers.Equals(PhotonNetwork.CurrentRoom.PlayerCount))
         {
             PhotonNetwork.CurrentRoom.IsOpen = false;
-            GameManager.s_instance.LoadScene(int.Parse(PhotonNetwork.CurrentRoom.Name));
+            GameManager.s_instance.LoadScene(int.Parse(PhotonNetwork.CurrentRoom.Name.Substring(0, 1)));
         }
     }
     public override void OnLeftRoom()
