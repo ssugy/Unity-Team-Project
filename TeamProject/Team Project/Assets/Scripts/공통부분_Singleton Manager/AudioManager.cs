@@ -254,7 +254,7 @@ public class AudioManager : MonoBehaviour
                 //World씬으로 이동시 BGM 변경
                 if(TargetScene == 4)
                 {
-                    AudioManager.s_instance.SoundFadeInOut(nowplayName, 0, 2f);
+                    AudioManager.s_instance.SoundFadeInOut(nowplayName, 0, 0.5f);
                     AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BGM_WORLD, true, 0.5f);
                 }
 
@@ -265,16 +265,16 @@ public class AudioManager : MonoBehaviour
                 //Lobby씬으로 이동시 BGM 변경
                 if(TargetScene == 2)
                 {
-                    AudioManager.s_instance.SoundFadeInOut(nowplayName, 0, 2f);
+                    AudioManager.s_instance.SoundFadeInOut(nowplayName, 0, 0.5f);
                     AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BGM, true, 0.5f);
                 }
                 //Dungeon씬들로 이동시 BGM 재생 종료
                 else if(TargetScene == 5 || TargetScene == 6)
-                    AudioManager.s_instance.SoundFadeInOut(nowplayName, 0, 2f);
+                    AudioManager.s_instance.SoundFadeInOut(nowplayName, 0, 0.5f);
                 break;
             case 5:             //Dungeon
                 if (bgmAudioSource != null)
-                    AudioManager.s_instance.SoundFadeInOut(nowplayName, 0, 2f);
+                    AudioManager.s_instance.SoundFadeInOut(nowplayName, 0, 0.5f);
 
                 if (TargetScene == 2)
                     AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BGM, true, 0.5f);
