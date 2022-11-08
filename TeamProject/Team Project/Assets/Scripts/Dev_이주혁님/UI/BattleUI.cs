@@ -20,6 +20,7 @@ public class BattleUI : MonoBehaviour
     public Button revive;
     public Button cancelMatching;
     public Button backToWorld;
+    public Button backToWorldClose;
     public Image cool_1;
     public Image cool_2;
     public Image cool_3;
@@ -66,6 +67,7 @@ public class BattleUI : MonoBehaviour
         // 마을로 가는 포탈을 타면 방을 나옴.
         backToWorld.onClick.AddListener(() => NetworkManager.s_instance.LeaveRoom());
         backToWorld.onClick.AddListener(() => GameManager.s_instance.LoadScene(4));
+        backToWorldClose.onClick.AddListener(() => backToWorldClose.transform.parent.gameObject.SetActive(false));
     }
     private void OnEnable()
     {

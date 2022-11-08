@@ -28,12 +28,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     // 최대 인원수를 임시로 1명으로 해놓음.
     // 방 이름은 가려는 던전의 씬 번호 + 방 번호.
     // 예를 들어 FIre_Dungeon 방을 생성하면 방 이름은 5_0, 같은 이름이 있다면 5_1, 5_2... 순으로 이어짐.
-    public void MatchMaking(int _dungeonNum)
+    public void MatchMaking(int _dungeonNum, byte _people)
     {
         int roomNum = 0;                
         while (true)
         {
-            if (PhotonNetwork.JoinOrCreateRoom(_dungeonNum.ToString() + "_" + roomNum.ToString(), new RoomOptions { MaxPlayers = 1 }, null))
+            if (PhotonNetwork.JoinOrCreateRoom(_dungeonNum.ToString() + "_" + roomNum.ToString(), new RoomOptions { MaxPlayers = _people }, null))
                 return;
             roomNum++;
         }
