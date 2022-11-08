@@ -72,15 +72,15 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {        
         // 방을 떠나면 OnConnecterToMaster가 호출되므로 SetMine이 두번 호출되는 것을 막기 위함.
-        SceneManager.sceneLoaded -= SetMine;
+        //SceneManager.sceneLoaded -= SetMine;
     }
 
     public override void OnConnectedToMaster() 
-    {                
-        SceneManager.sceneLoaded += SetMine;
+    {                       
         // 현재 씬이 로비일 때만 월드씬으로 진입.
         if (GameManager.s_instance.currentScene.Equals(GameManager.SceneName.Lobby))
         {
+            SceneManager.sceneLoaded += SetMine;
             GameManager.s_instance.LoadScene(4);
             PhotonNetwork.LocalPlayer.NickName =
                 JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].name;
@@ -98,6 +98,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {                    
         if (currentRoom != null)
         {
+            Debug.Log("포톤");
             #region 던전 씬에서는 방에 있으므로 PhotonNetwork.Instantiate
             switch (JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].gender)
             {
@@ -116,6 +117,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }        
         else
         {
+            Debug.Log("오브젝트");
             #region 월드 씬에서는 방에 있지 않으므로 Object.Instantiate
             switch (JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].gender)
             {
