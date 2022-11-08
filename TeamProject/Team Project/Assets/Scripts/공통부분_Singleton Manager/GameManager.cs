@@ -64,8 +64,8 @@ public class GameManager : MonoBehaviour
         Lobby,
         MakeCharacter,
         World,
-        Dungeon,
         Dungeon_Fire,
+        Dungeon        
     }
     public SceneName currentScene;
     public void LoadScene(int index)

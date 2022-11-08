@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
+using UnityEngine.SceneManagement;
 
 public class JY_UIManager : MonoBehaviour
 {
@@ -141,12 +143,22 @@ public class JY_UIManager : MonoBehaviour
     {
         Application.Quit();
     }
-    // Lobby씬 (캐릭터 선택창)으로 이동
+    // Lobby씬 (캐릭터 선택창)으로 이동. 던전 씬에서 로비로 되돌아갈 때는 먼저 LeaveRoom을 호출한 다음 Disconnect를 해야 함.
+    // 코루틴을 사용하여 로비 씬으로 로딩이 끝난 다음 LeaveRoom, Disconnect를 하도록 하여 해결함.
     public void loadLobbyScene()
     {
-        NetworkManager.s_instance.Disconnect();        
-        GameManager.s_instance.LoadScene(2);
-        
+        StartCoroutine(Disconnect());            
+    }
+    IEnumerator LoadLobby()
+    {
+        yield return null;
+        GameManager.s_instance.LoadScene((int)GameManager.SceneName.Lobby);        
+    }
+    IEnumerator Disconnect()
+    {
+        yield return LoadLobby();
+        if (NetworkManager.s_instance.currentRoom != null) NetworkManager.s_instance.LeaveRoom();
+        NetworkManager.s_instance.Disconnect();
     }
 
     public void StatusDataRenew()

@@ -20,13 +20,25 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     #endregion
 
-    Room currentRoom = null;
+    public Room currentRoom = null;
 
     public void Connect() => PhotonNetwork.ConnectUsingSettings();
     public void Disconnect() => PhotonNetwork.Disconnect();
 
-    // 최대 인원수를 임시로 1명으로 해놓음. 방 이름은 가려는 던전의 씬 번호 + 방을 생성한 사람의 닉네임.
-    public void MatchMaking(int _dungeonNum) => PhotonNetwork.JoinOrCreateRoom(_dungeonNum.ToString() + "_" + PhotonNetwork.NickName, new RoomOptions { MaxPlayers = 1 }, null);    
+    // 최대 인원수를 임시로 1명으로 해놓음.
+    // 방 이름은 가려는 던전의 씬 번호 + 방 번호.
+    // 예를 들어 FIre_Dungeon 방을 생성하면 방 이름은 5_0, 같은 이름이 있다면 5_1, 5_2... 순으로 이어짐.
+    public void MatchMaking(int _dungeonNum)
+    {
+        int roomNum = 0;                
+        while (true)
+        {
+            if (PhotonNetwork.JoinOrCreateRoom(_dungeonNum.ToString() + "_" + roomNum.ToString(), new RoomOptions { MaxPlayers = 1 }, null))
+                return;
+            roomNum++;
+        }
+    }
+    
 
     // 방을 떠나면 OnConnectedToMaster가 실행됨. 마스터 서버로 되돌아가기 때문.
     public void LeaveRoom()
@@ -67,8 +79,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     public override void OnLeftRoom()
     {        
-        // 방을 떠나면 OnConnecterToMaster가 호출되므로 SetMine이 두번 호출되는 것을 막기 위함.
-        //SceneManager.sceneLoaded -= SetMine;
+        
     }
 
 
