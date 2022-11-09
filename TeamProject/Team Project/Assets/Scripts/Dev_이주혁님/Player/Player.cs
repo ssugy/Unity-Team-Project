@@ -704,8 +704,10 @@ public class Player : MonoBehaviour
         Collider[] enemys = Physics.OverlapBox(transform.position + transform.forward * 0.75f, halfHitbox, transform.rotation, layerMask);
         if (enemys.Length > 0) 
         {
-            Transform target = enemys[0].transform;
-            transform.LookAt(target);
+            // 근처에 있는 적 중 랜덤한 한 적을 바라보도록 함.
+            Transform target = enemys[Random.Range(0, enemys.Length)].transform;
+            // target을 LookAt할 때 플레이어의 y축 외 다른 축의 회전이 발생하지 않게 하기 위해 Vector3.up을 매개변수로 추가함.      
+            transform.LookAt(target, Vector3.up);
         }
     }
     public void LevelUp()
