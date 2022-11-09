@@ -28,15 +28,22 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     // 최대 인원수를 임시로 1명으로 해놓음.
     // 방 이름은 가려는 던전의 씬 번호 + 방 번호.
     // 예를 들어 FIre_Dungeon 방을 생성하면 방 이름은 5_0, 같은 이름이 있다면 5_1, 5_2... 순으로 이어짐.
-    public void MatchMaking(int _dungeonNum, byte _people)
+    public void MatchMaking(int _dungeonNum, byte _people, byte roomNum)
     {
-        int roomNum = 0;                
-        while (true)
-        {
-            if (PhotonNetwork.JoinOrCreateRoom(_dungeonNum.ToString() + "_" + roomNum.ToString(), new RoomOptions { MaxPlayers = _people }, null))
-                return;
-            roomNum++;
-        }
+        StartCoroutine(Matching(_dungeonNum, _people, roomNum));
+    }
+    IEnumerator Matching(int _dungeonNum, byte _people, byte roomNum)
+    {
+        if (_people == 1)
+            // CreateRoom이나 joinRoom의 반환 bool 값은 방 생성 성공/실패 여부가 아님. 단순히 작업이 전송되었는가를 가리킴.
+            PhotonNetwork.CreateRoom(_dungeonNum.ToString() + "_" + roomNum.ToString(), new RoomOptions { MaxPlayers = _people }, null);
+        else
+            PhotonNetwork.JoinOrCreateRoom(_dungeonNum.ToString() + "_" + roomNum.ToString(), new RoomOptions { MaxPlayers = _people }, null);
+
+        // 방 입장에 실패했으면 다음 방 번호로 재입장 시도. 방에 접속하는 시간이 있으므로 유예해야 함.
+        yield return new WaitForSeconds(1f);
+        if (currentRoom == null)
+            StartCoroutine(Matching(_dungeonNum, _people, ++roomNum));
     }
     
 

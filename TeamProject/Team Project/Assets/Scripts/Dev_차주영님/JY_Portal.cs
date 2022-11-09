@@ -57,14 +57,14 @@ public class JY_Portal : MonoBehaviour
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Portal);     
         // 매칭 UI를 활성화하고 매칭 시작.
         BattleUI.instance.matchingUI.SetActive(true);
-        NetworkManager.s_instance.MatchMaking(targetSceneNum, 1);        
+        NetworkManager.s_instance.MatchMaking(targetSceneNum, 1,0);        
     }
     public void LoadScene_Doppio()
     {
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Portal);
         // 매칭 UI를 활성화하고 매칭 시작.
         BattleUI.instance.matchingUI.SetActive(true);
-        NetworkManager.s_instance.MatchMaking(targetSceneNum, 2);
+        NetworkManager.s_instance.MatchMaking(targetSceneNum, 2,0);
     }
 
     private void OnTriggerEnter(Collider other)
