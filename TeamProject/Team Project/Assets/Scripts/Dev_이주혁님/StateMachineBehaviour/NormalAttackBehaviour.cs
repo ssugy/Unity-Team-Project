@@ -9,6 +9,7 @@ public class NormalAttackBehaviour : StateMachineBehaviour
     public float atkMag;
     public float usingStamina;
     public string EffectName;
+    public int SkillNum;
     
     
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -19,6 +20,8 @@ public class NormalAttackBehaviour : StateMachineBehaviour
         Player.instance.UseStamina(usingStamina);
         Player.instance.WEOn();
         InstanceManager.s_instance.NormalAttackEffect(EffectName);
+        if (JY_Boss_FireDungeon.s_instance != null)
+            JY_Boss_FireDungeon.s_instance.HitSkillNum = SkillNum;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -31,7 +34,6 @@ public class NormalAttackBehaviour : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
-    //
     //}
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

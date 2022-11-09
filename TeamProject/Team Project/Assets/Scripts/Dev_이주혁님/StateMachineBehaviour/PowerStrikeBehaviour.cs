@@ -20,6 +20,9 @@ public class PowerStrikeBehaviour : StateMachineBehaviour
         InstanceManager.s_instance.PlaySkillEffect(EffectName1,0.5f);
         InstanceManager.s_instance.NormalAttackEffect("Normal_Attack_Effect3");
         InstanceManager.s_instance.PlaySkillEffect(EffectName2,0.6f);
+
+        if (JY_Boss_FireDungeon.s_instance != null)
+            JY_Boss_FireDungeon.s_instance.HitSkillNum = 1;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -31,7 +34,6 @@ public class PowerStrikeBehaviour : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
-    //    
     //}
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

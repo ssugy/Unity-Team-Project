@@ -14,8 +14,10 @@ public class JY_Boss_FireDungeon : Enemy
     bool DoAttack;
     [Header("보스 공격 범위 콜라이더")]
     public BoxCollider JumpAttackArea;
+    public BoxCollider KickAttackArea;
     public BoxCollider BossWeapon;
 
+    [HideInInspector] public int HitSkillNum;
 
     // Start is called before the first frame update
     void Awake()
@@ -27,6 +29,7 @@ public class JY_Boss_FireDungeon : Enemy
         anim = GetComponentInChildren<Animator>();
         originPos = transform.position;
         originRotateion = transform.rotation;
+        HitSkillNum = -1;
     }
     private new void Start()
     {
@@ -45,15 +48,22 @@ public class JY_Boss_FireDungeon : Enemy
             Vector3 dir = target.transform.position - this.transform.position;
             this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime);
         }
+        atkTime += Time.fixedDeltaTime;
+
         if (target != null && isAwake)
         {
             nav.SetDestination(target.position);
             float distance = Vector3.Distance(transform.position, target.position);
-            if (distance <= attackDistance && !DoAttack)
+            if (distance <= attackDistance && !DoAttack )
             {
-                FreezeEnemy();
-                FreezeBoss();
-                StartCoroutine(BossPattern(3));
+                if (atkTime >= attackCool)
+                {
+                    atkTime = 0f;
+                    FreezeEnemy();
+                    FreezeBoss();
+                    StartCoroutine(BossPattern(3));
+                }
+
             }
         }
         if (nav.velocity != Vector3.zero && !isStop)
@@ -118,6 +128,41 @@ public class JY_Boss_FireDungeon : Enemy
         UnfreezeBoss();
         UnfreezeEnemy();
     }
+    public override void IsAttacked(int _damage)
+    {
+        curHealth -= _damage;
+        Vector3 reactVec = transform.position - Player.instance.transform.position; // 넉백 거리.
+        StartCoroutine(OnDamage(reactVec*0.2f));
+        hpbar = Enemy_HP_UI.GetObject();
+        hpbar.Recognize(this);
+        EffectManager.Instance.PlayHitEffect(transform.position + offset, transform.rotation.eulerAngles, transform);
+
+    }
+    protected new IEnumerator OnDamage(Vector3 reactVec)
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (curHealth > 0)
+        {
+            if (HitSkillNum != -1)
+            {
+                isAttackedAnimPlay(HitSkillNum);
+                reactVec = reactVec.normalized;
+                reactVec += Vector3.up;
+                StartCoroutine(KnockBack(reactVec));
+            }
+        }
+        else
+        {
+            hitbox.enabled = false;
+            anim.SetTrigger("isDead");
+            FreezeEnemy();
+            questProgress();
+            DropExp();
+            DropGold();
+            DropItem();
+            Destroy(gameObject, 4);
+        }
+    }
 
     void FreezeVelocity()
     {
@@ -137,5 +182,14 @@ public class JY_Boss_FireDungeon : Enemy
         DoAttack = false;
         isLook = true;
     }
-
+    /// <summary>
+    /// 스킬에 따른 다른 피격모션 재생
+    /// </summary>
+    /// <param name="playerSkill">-1:Idle상태, 평타 1,2타, 0:플레이어 평타 3번째, 1:스킬1, 2:스킬2</param>
+    void isAttackedAnimPlay(int playerSkill)
+    {
+        Debug.Log(HitSkillNum);
+        anim.SetTrigger("isAttacked");
+        anim.SetInteger("HitNum",playerSkill);
+    }
 }
