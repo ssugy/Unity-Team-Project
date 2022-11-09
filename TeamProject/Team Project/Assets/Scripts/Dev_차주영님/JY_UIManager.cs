@@ -8,9 +8,6 @@ using UnityEngine.SceneManagement;
 public class JY_UIManager : MonoBehaviour
 {
     public static JY_UIManager instance;
-    public Transform profileGroup;
-    public Transform profileMenuGroup;
-    public Transform StatusMenuGroup;
     public Transform questMenuGroup;
     public GameObject alarmUI;
     public Image WhiteFade;
@@ -65,36 +62,6 @@ public class JY_UIManager : MonoBehaviour
         }
     }
 
-    //스텟 메뉴 On/Off함수
-    public void switchStatusMenu()
-    {
-        if (statusSwitch == false)
-        {
-            StatusMenuGroup.gameObject.SetActive(true);
-            statusSwitch = true;
-        }
-        else
-        {
-            StatusMenuGroup.gameObject.SetActive(false);
-            statusSwitch = false;
-        }
-    }
-
-
-    //프로필 메뉴 On/Off 함수
-    public void switchProfileMenu()
-    {
-        if (profileMenuSwitch == false)
-        {
-            profileMenuGroup.gameObject.SetActive(true);
-            profileMenuSwitch = true;
-        }
-        else
-        {
-            profileMenuGroup.gameObject.SetActive(false);
-            profileMenuSwitch = false;
-        }
-    }
     //퀘스트 메뉴 On/Off함수
     public void switchQuestMenu()
     {

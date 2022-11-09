@@ -14873,7 +14873,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 487046, guid: 015b5e41a4f67364fb6efa67f440c8aa, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.81
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 487046, guid: 015b5e41a4f67364fb6efa67f440c8aa, type: 3}
       propertyPath: m_LocalScale.z
@@ -14918,6 +14918,16 @@ PrefabInstance:
     - target: {fileID: 487046, guid: 015b5e41a4f67364fb6efa67f440c8aa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9524236, guid: 015b5e41a4f67364fb6efa67f440c8aa, type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'Bip001'\n\tTransform 'Bip001 L UpperArm'\n\tTransform
+        'Bip001 L Finger1'\n\tTransform 'Bip001 Spine1'\n\tTransform 'Bip001 R UpperArm'\n\tTransform
+        'Bip001 R Foot'\n\tTransform 'Bip001 Spine3'\n\tTransform 'Bip001 L Finger4'\n\tTransform
+        'Bip001 R Calf'\n\tTransform 'Bip001 L Finger0'\n\tand more ...\n\tFrom animation
+        clip 'mixamo.com'"
       objectReference: {fileID: 0}
     - target: {fileID: 11421528, guid: 015b5e41a4f67364fb6efa67f440c8aa, type: 3}
       propertyPath: m_Enabled
@@ -15859,7 +15869,7 @@ Transform:
   m_GameObject: {fileID: 1459265414}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 48.23, y: 0, z: 131.54634}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 2.3, y: 2.3, z: 2.3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1228672376}
@@ -15920,6 +15930,7 @@ MonoBehaviour:
   originPos: {x: 0, y: 0, z: 0}
   originRotateion: {x: 0, y: 0, z: 0, w: 0}
   totalTime: 0
+  isLook: 0
   isAwake: 0
   JumpAttackArea: {fileID: 232850721}
   BossWeapon: {fileID: 186312230}

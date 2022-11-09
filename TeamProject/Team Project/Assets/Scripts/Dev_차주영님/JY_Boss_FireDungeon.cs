@@ -9,7 +9,7 @@ public class JY_Boss_FireDungeon : Enemy
     public static JY_Boss_FireDungeon s_instance { get { return instacne; } }
     Vector3 lookVec;
     Vector3 tauntVec;
-    bool isLook;
+    public bool isLook;
     public bool isAwake;
     bool DoAttack;
     [Header("보스 공격 범위 콜라이더")]
@@ -41,7 +41,9 @@ public class JY_Boss_FireDungeon : Enemy
         if (isLook)
         {
             lookVec = Player.instance.movement;
-            transform.LookAt(target.position+lookVec);
+            //transform.LookAt(target.position+lookVec);
+            Vector3 dir = target.transform.position - this.transform.position;
+            this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime);
         }
         if (target != null && isAwake)
         {
@@ -135,4 +137,5 @@ public class JY_Boss_FireDungeon : Enemy
         DoAttack = false;
         isLook = true;
     }
+
 }
