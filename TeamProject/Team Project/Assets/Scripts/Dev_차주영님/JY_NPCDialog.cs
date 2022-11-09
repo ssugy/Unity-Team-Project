@@ -32,30 +32,14 @@ public class JY_NPCDialog : MonoBehaviour
         player = Player.instance.gameObject;
     }
 
-    private void SetGameLayerRecursive(GameObject _go, int _layer)
-    {
-        _go.layer = _layer;
-        foreach (Transform child in _go.transform)
-        {
-            child.gameObject.layer = _layer;
-
-            Transform _HasChildren = child.GetComponentInChildren<Transform>();
-            if (_HasChildren != null)
-                SetGameLayerRecursive(child.gameObject, _layer);
-
-        }
-    }
-
     public void EnterNpcDialog()
-    {
-        Debug.Log(dialogCam.cullingMask.ToString());
+    {        
         minimapCam.gameObject.SetActive(false);
         mainCam.gameObject.SetActive(false);
         dialogCam.gameObject.SetActive(true);
         dialogCam.GetComponent<Cinemachine.CinemachineDollyCart>().m_Position = 0;
-        dialogCam.GetComponent<Cinemachine.CinemachineDollyCart>().m_Path = paths[JY_QuestManager.s_instance.selectNpcNum];
-        SetGameLayerRecursive(player, 10);
-        dialogCam.cullingMask = dialogCam.cullingMask & ~(1 << LayerMask.NameToLayer("Player"));
+        dialogCam.GetComponent<Cinemachine.CinemachineDollyCart>().m_Path = paths[JY_QuestManager.s_instance.selectNpcNum];        
+        
         NPCCamPosition(JY_QuestManager.s_instance.selectNpcNum);
         DialogUI.SetActive(true);
         DialogPortrait.sprite = JY_QuestManager.s_instance.NPCPortrait;

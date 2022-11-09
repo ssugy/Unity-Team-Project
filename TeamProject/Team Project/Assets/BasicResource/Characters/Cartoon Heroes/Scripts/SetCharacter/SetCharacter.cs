@@ -48,11 +48,13 @@ namespace CartoonHeroes
             GameObject itemInstance = GameObject.Instantiate(item.prefab);
             itemInstance.name = itemInstance.name.Substring(0, itemInstance.name.Length - "(Clone)".Length);
 
-            // 추가한 코드.
+            // 추가한 코드. 생성된 파츠들이 그림자를 받지 않도록 함.
             SkinnedMeshRenderer tmp = itemInstance.GetComponentInChildren<SkinnedMeshRenderer>();
             if (tmp != null)
             {
                 tmp.receiveShadows = false;
+                // 추가한 코드. 파츠를 생성할 때 레이어를 Player(10)으로 설정해줌.
+                tmp.gameObject.layer = 10;
             }
             
             
@@ -61,6 +63,7 @@ namespace CartoonHeroes
 
             SetGraySkeletonVisibility(!VisibleItems());
 
+            
             return itemInstance;
         }
 
