@@ -26602,14 +26602,14 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: FreezePlayer
+    functionName: DisableAtk
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0
-    functionName: DisableAtk
+    functionName: FreezePlayer
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -26617,27 +26617,6 @@ AnimationClip:
     messageOptions: 0
   - time: 0.033333335
     functionName: StopRecoverSP
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 1.3666667
-    functionName: StartRecoverSP
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 1.4
-    functionName: UnFreezePlayer
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 1.4
-    functionName: EnableAtk
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
