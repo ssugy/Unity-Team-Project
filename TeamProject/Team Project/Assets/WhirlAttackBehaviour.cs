@@ -8,7 +8,7 @@ public class WhirlAttackBehaviour : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect3, 1.5f, JY_Boss_FireDungeon.s_instance.transform);
+        //InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect3, 1.5f, JY_Boss_FireDungeon.s_instance.transform);
     }
 
 

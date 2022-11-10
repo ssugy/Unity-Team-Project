@@ -9,8 +9,8 @@ public class BossJumpAttackBehaviour : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect, 1.8f, JY_Boss_FireDungeon.s_instance.transform);
-        InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect2, 1.8f, JY_Boss_FireDungeon.s_instance.transform);
+        //InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect, 1.8f, JY_Boss_FireDungeon.s_instance.transform);
+        //InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect2, 1.8f, JY_Boss_FireDungeon.s_instance.transform);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

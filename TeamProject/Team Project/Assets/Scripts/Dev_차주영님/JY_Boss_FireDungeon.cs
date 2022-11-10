@@ -61,7 +61,7 @@ public class JY_Boss_FireDungeon : Enemy
                     atkTime = 0f;
                     FreezeEnemy();
                     FreezeBoss();
-                    StartCoroutine(BossPattern(3));
+                    StartCoroutine(BossPattern(4));
                 }
 
             }
@@ -89,6 +89,9 @@ public class JY_Boss_FireDungeon : Enemy
                 StartCoroutine(JumpAttack());
                 break;
             case 2:
+                StartCoroutine(WhirlAttack());
+                break;
+            case 3:
                 StartCoroutine(Kick());
                 break;
         }
@@ -97,6 +100,13 @@ public class JY_Boss_FireDungeon : Enemy
     IEnumerator NormalAttack()
     {
         anim.SetTrigger("NoramlAttack");
+        yield return new WaitForSeconds(5f);
+        UnfreezeBoss();
+        UnfreezeEnemy();
+    }
+    IEnumerator WhirlAttack()
+    {
+        anim.SetTrigger("WhirlAttack");
         yield return new WaitForSeconds(5f);
         UnfreezeBoss();
         UnfreezeEnemy();
