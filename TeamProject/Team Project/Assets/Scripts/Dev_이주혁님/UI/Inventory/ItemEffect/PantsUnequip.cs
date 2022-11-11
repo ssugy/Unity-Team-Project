@@ -22,10 +22,12 @@ public class PantsUnequip : ItemEffect
             _player.SetState();
         }
 
-        
         if (Inventory.instance.onChangeItem != null)
-        {
             Inventory.instance.onChangeItem();
+        if (InventoryUI.instance != null)
+        {
+            InventoryUI.instance.legIcon.sprite = null;
+            InventoryUI.instance.legIcon.gameObject.SetActive(false);
         }
     }    
 }

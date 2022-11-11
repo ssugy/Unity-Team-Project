@@ -22,10 +22,12 @@ public class TopUnequip : ItemEffect
             _player.SetState();
         }
 
-        
         if (Inventory.instance.onChangeItem != null)
-        {
             Inventory.instance.onChangeItem();
+        if (InventoryUI.instance != null)
+        {
+            InventoryUI.instance.chestIcon.sprite = null;
+            InventoryUI.instance.chestIcon.gameObject.SetActive(false);
         }
     }    
 }

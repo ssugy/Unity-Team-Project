@@ -26,6 +26,15 @@ public class InventoryUI : MonoBehaviour
         {
             slots[i].item = inventory.items[i];            
             slots[i].isEmpty = false;
+            if (slots[i].item.type == ItemType.EQUIPMENT)
+            {
+                // 장착된 장비의 아이콘이 생겨야 하므로 slots[i].item.effect[0] 의 role을 실행한다.
+                //slots[i].item.effects[0].ExecuteRole(slots[i].item);
+                if (slots[i].item.equipedState == EquipState.EQUIPED)
+                {
+                    slots[i].item.Equip();
+                }                
+            }
             slots[i].UpdateSlotUI();
         }
     } 
@@ -39,7 +48,7 @@ public class InventoryUI : MonoBehaviour
         instance ??= this;
         inventory = Inventory.instance;
         slots = slotHolder.GetComponentsInChildren<Slot>();
-        inventory.onChangeItem += RedrawSlotUI;
+
     }
     
     private void OnEnable()
@@ -47,9 +56,24 @@ public class InventoryUI : MonoBehaviour
         instance ??= this;
         UpdateGold();
         RedrawSlotUI();
+        // 첫번째 RedrawSlotUI를 호출하여 장착된 Icon들을 초기화 시킵니다.
+        // 이후, OnChangeItem 이벤트를 설정합니다. Awake에서 먼저 등록하면 무한호출에 걸립니다.
+        //inventory.onChangeItem += RedrawSlotUI;
     }
     private void OnDisable()
     {
         instance = null;
+        // 이벤트를 해제합니다. 다시들어올때 다시 설정합니다.
+        //inventory.onChangeItem -= RedrawSlotUI;
+    }
+    public void Equip(Item _item, Slot _slot)
+    {
+        _item.Equip();
+        _slot.UpdateSlotUI();
+    }
+    public void Unequip(Item _item, Slot _slot)
+    {
+        _item.Unequip();
+        _slot.UpdateSlotUI();
     }
 }

@@ -9,8 +9,6 @@ public class PantsEquip : ItemEffect
     public int num;
     public override void ExecuteRole(Item _item)
     {
-        _item.equipedState = EquipState.EQUIPED;
-
         Player player = Inventory.instance.transform.GetComponent<Player>();
 
         if (player != null)
@@ -24,6 +22,7 @@ public class PantsEquip : ItemEffect
             {
                 player.playerStat.equiped.Add(EquipPart.LEG, _item);
             }
+            _item.equipedState = EquipState.EQUIPED;
             player.playerStat.customized[0] = num;
             player.AvatarSet();
             player.playerStat.defPoint += def;
@@ -33,6 +32,11 @@ public class PantsEquip : ItemEffect
         if (Inventory.instance.onChangeItem != null)
         {
             Inventory.instance.onChangeItem();
-        }                        
+        }
+        if (InventoryUI.instance != null)
+        {
+            InventoryUI.instance.legIcon.sprite = _item.image;
+            InventoryUI.instance.legIcon.gameObject.SetActive(true);
+        }
     }
 }

@@ -9,8 +9,6 @@ public class TopEquip : ItemEffect
     public int num;
     public override void ExecuteRole(Item _item)
     {
-        _item.equipedState = EquipState.EQUIPED;
-
         Player player = Inventory.instance.transform.GetComponent<Player>();
 
         if (player != null)
@@ -24,6 +22,7 @@ public class TopEquip : ItemEffect
             {
                 player.playerStat.equiped.Add(EquipPart.CHEST, _item);
             }
+            _item.equipedState = EquipState.EQUIPED;
             player.playerStat.customized[1] = num;
             player.AvatarSet();
             player.playerStat.defPoint += def;
@@ -34,6 +33,11 @@ public class TopEquip : ItemEffect
         if (Inventory.instance.onChangeItem != null)
         {
             Inventory.instance.onChangeItem();
-        }                
+        }
+        if (InventoryUI.instance != null)
+        {
+            InventoryUI.instance.chestIcon.sprite = _item.image;
+            InventoryUI.instance.chestIcon.gameObject.SetActive(true);
+        }
     }
 }

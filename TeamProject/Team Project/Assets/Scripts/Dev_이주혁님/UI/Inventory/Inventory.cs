@@ -63,6 +63,10 @@ public class Inventory : MonoBehaviour
         {
             AddItem(ItemDatabase.s_instance.itemDB[16].Copy(), 16);
         }
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            AddItem(ItemDatabase.s_instance.itemDB[14].Copy(), 14);
+        }
     }
 #endif
     // 아이템을 인벤토리에 추가하는 코드. 인벤토리가 가득 찼다면 아이템 획득 불가.

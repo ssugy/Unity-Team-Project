@@ -18,6 +18,8 @@ public class InfoPanel : MonoBehaviour
     public Text useButtonText;
     public Button destroyButton;
     public Text destroyButtonText;
+    [Header("인벤토리 UI")]
+    public InventoryUI iUi;
 
     // 아이템 패널을 출력하는 메소드. 인벤토리의 아이템을 클릭하면 해당 슬롯의 아이템 정보를 받아와 출력한다.
     public void SetInformation(Item _item, Slot _slot)
@@ -36,13 +38,15 @@ public class InfoPanel : MonoBehaviour
                 if (_item.equipedState == EquipState.UNEQUIPED)         // 장착 해제 상태면.
                 {
                     useButtonText.text = "장착";
-                    useButton.onClick.AddListener(() => _item.Equip());                    
+                    //useButton.onClick.AddListener(() => _item.Equip());
+                    useButton.onClick.AddListener(() => iUi.Equip(_item, _slot));
                 }
                 else if (_item.equipedState == EquipState.EQUIPED)      // 장착 상태면.
                 {
                     destroyButton.gameObject.SetActive(false);
                     useButtonText.text = "해제";
-                    useButton.onClick.AddListener(() => _item.Unequip());                    
+                    //useButton.onClick.AddListener(() => _item.Unequip());
+                    useButton.onClick.AddListener(() => iUi.Unequip(_item, _slot));
                 }                
                 break;
             case ItemType.CONSUMABLE:
