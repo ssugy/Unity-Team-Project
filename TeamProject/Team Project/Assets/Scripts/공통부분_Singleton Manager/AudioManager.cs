@@ -58,7 +58,10 @@ public class AudioManager : MonoBehaviour
         BOSS_SWING,
         Quest,
         BGM_WORLD,
-        Get_Gold
+        Get_Gold,
+        BOSS_HIT,
+        BOSS_KICK,
+        Boss_JUMP
     }
     public SOUND_NAME Name;
     public AudioClip[] clips;   // enum의 순서를 따라가야됨
@@ -241,7 +244,15 @@ public class AudioManager : MonoBehaviour
             effectVolumePivot = beforeEffectVolumePivot;
         }
     }
-
+    public void CallSFXPlay(SOUND_NAME name,float delay)
+    {
+        StartCoroutine(SFXPlay(name, delay));
+    }
+    IEnumerator SFXPlay(SOUND_NAME name, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SoundPlay(name);
+    }
     public void SceneBGMContorl(int ActiveScene, int TargetScene)
     {
         switch (ActiveScene)

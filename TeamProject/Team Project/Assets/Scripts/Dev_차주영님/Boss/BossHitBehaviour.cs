@@ -2,11 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IsAttakcedBehaviour : StateMachineBehaviour
+public class BossHitBehaviour : StateMachineBehaviour
 {
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        JY_Boss_FireDungeon.s_instance.StopAllCoroutines();
+        JY_Boss_FireDungeon.s_instance.WeaponEffectOnOff(false);
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BOSS_HIT);
+        JY_Boss_FireDungeon.s_instance.MeleeAreaDisEnable();
+        JY_Boss_FireDungeon.s_instance.ClearAttackCool();
+        InstanceManager.s_instance.StopAllBossEffect();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -18,6 +24,7 @@ public class IsAttakcedBehaviour : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        JY_Boss_FireDungeon.s_instance.HitSkillNum = -1;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

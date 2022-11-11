@@ -170,7 +170,8 @@ public class JY_Boss_FireDungeon : Enemy
         StartCoroutine(OnDamage(reactVec*0.2f));
         hpbar = Enemy_HP_UI.GetObject();
         hpbar.Recognize(this);
-        EffectManager.Instance.PlayHitEffect(transform.position + offset, transform.rotation.eulerAngles, transform);
+        if(EffectManager.Instance != null)
+            EffectManager.Instance.PlayHitEffect(transform.position + offset, transform.rotation.eulerAngles, transform);
 
     }
     protected new IEnumerator OnDamage(Vector3 reactVec)
@@ -199,7 +200,7 @@ public class JY_Boss_FireDungeon : Enemy
             DropExp();
             DropGold();
             DropItem();
-            Destroy(gameObject,6f);
+            Destroy(gameObject,10f);
         }
     }
 

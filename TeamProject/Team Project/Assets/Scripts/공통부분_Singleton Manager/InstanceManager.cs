@@ -119,8 +119,8 @@ public class InstanceManager : MonoBehaviour
         GameObject effect = FindEffect(EffectName, BossSkillEffectList);
         if (effect != null)
         {
-            if(effect.name.Equals(Boss_Skill_Effect))
-                effect.transform.position = boss.transform.position + new Vector3(0, 0, 2);
+            if(EffectName.Equals("Boss_Skill3_Effect") || EffectName.Equals("Boss_Skill3_Effect2") || EffectName.Equals("Boss_Skill3_Effect3") || EffectName.Equals("Boss_Skill3_Effect4"))
+                AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BOSS_KICK);
             effect.SetActive(true);
         }
         else
@@ -136,6 +136,7 @@ public class InstanceManager : MonoBehaviour
             {
                 effect = Instantiate<GameObject>(Boss_Skill_Effect3, boss);
                 effect.transform.localPosition = Vector3.up;
+                AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BOSS_KICK);
             }
             else if (EffectName.Equals("Boss_Skill_Effect4"))
             {
