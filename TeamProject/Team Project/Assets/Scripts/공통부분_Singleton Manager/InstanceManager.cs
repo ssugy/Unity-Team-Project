@@ -21,9 +21,10 @@ public class InstanceManager : MonoBehaviour
     public GameObject LevelUpEffect;
     [Header("보스 스킬 이펙트")]
     public GameObject Boss_Skill_Effect;
+    public GameObject Boss_Skill_Effect2;
     public GameObject Boss_Skill_Effect3;
-    public GameObject Boss_Skill2_Effect;
-    public GameObject Boss_Skill3_Effect;
+    public GameObject Boss_Skill_Effect4;
+
     private void Awake()
     {
         instance = this;
@@ -60,7 +61,8 @@ public class InstanceManager : MonoBehaviour
     public void PlayBossSkillEffect(string EffectName, float delay, Transform boss)
     {
         StartCoroutine(BossSkillEffectCreate(EffectName, delay, boss));
-        StartCoroutine(EffectOnDisable(EffectName,3.3f, BossSkillEffectList));
+        if(!EffectName.Equals("Boss_Skill_Effect"))
+            StartCoroutine(EffectOnDisable(EffectName,3.3f, BossSkillEffectList));
     }
     void PlayerEffectCreate(string EffectName)
     {
@@ -117,19 +119,29 @@ public class InstanceManager : MonoBehaviour
         GameObject effect = FindEffect(EffectName, BossSkillEffectList);
         if (effect != null)
         {
+            if(effect.name.Equals(Boss_Skill_Effect))
+                effect.transform.position = boss.transform.position + new Vector3(0, 0, 2);
             effect.SetActive(true);
         }
         else
         {
-            if (EffectName.Equals("Boss_Skill_Effect")|| EffectName.Equals("Boss_Skill_Effect2"))
-                effect = Instantiate<GameObject>(Boss_Skill_Effect,boss);
-            else if (EffectName.Equals("Boss_Skill_Effect3"))
-                effect = Instantiate<GameObject>(Boss_Skill_Effect3, boss);
-            else if (EffectName.Equals("Boss_Skill2_Effect"))
-                effect = Instantiate<GameObject>(Boss_Skill2_Effect, boss);
+            if (EffectName.Equals("Boss_Skill_Effect"))
+            {
+                effect = Instantiate<GameObject>(Boss_Skill_Effect);
+                effect.transform.position = boss.transform.position + new Vector3(0, 0, 2);
+            }
+            else if (EffectName.Equals("Boss_Skill_Effect2"))
+                effect = Instantiate<GameObject>(Boss_Skill_Effect2,boss);
             else if (EffectName.Equals("Boss_Skill3_Effect")|| EffectName.Equals("Boss_Skill3_Effect2")|| EffectName.Equals("Boss_Skill3_Effect3")|| EffectName.Equals("Boss_Skill3_Effect4"))
-                effect = Instantiate<GameObject>(Boss_Skill3_Effect, boss);
-            effect.transform.localPosition = new Vector3(0, 0,0);
+            {
+                effect = Instantiate<GameObject>(Boss_Skill_Effect3, boss);
+                effect.transform.localPosition = Vector3.up;
+            }
+            else if (EffectName.Equals("Boss_Skill_Effect4"))
+            {
+                effect = Instantiate<GameObject>(Boss_Skill_Effect4, boss);
+                effect.transform.localPosition = Vector3.forward;
+            }
             effect.gameObject.name = EffectName;
             BossSkillEffectList.Add(effect);
         }
@@ -170,6 +182,12 @@ public class InstanceManager : MonoBehaviour
     {
         foreach (GameObject one in SkillEffectList)
             one.SetActive(false);
+    }
+    public void StopAllBossEffect()
+    {
+        foreach (GameObject one in BossSkillEffectList)
+            if (!one.name.Equals("Boss_Skill_Effect"))
+                one.SetActive(false);
     }
     public void ClearList()
     {

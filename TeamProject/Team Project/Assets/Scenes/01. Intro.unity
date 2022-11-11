@@ -1621,7 +1621,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &386840836
 GameObject:
@@ -1656,7 +1656,7 @@ Transform:
   - {fileID: 1163805917}
   - {fileID: 714038132}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &386840838
 MonoBehaviour:
@@ -1757,10 +1757,10 @@ MonoBehaviour:
   Skill_2_Effect2: {fileID: 6810844234100877735, guid: 2aebf52f79e730740934d0afbdff28a6, type: 3}
   Skill_2_Effect3: {fileID: 1789270911803724, guid: 84ee1fb645e4d71428f2fac64f3b3869, type: 3}
   LevelUpEffect: {fileID: 8166768042605032452, guid: 249229ea8e1e2a9478a2083c1141829e, type: 3}
-  Boss_Skill_Effect: {fileID: 1485466043327710, guid: 933ae6b175550704a801f119fd9588dd, type: 3}
-  Boss_Skill_Effect3: {fileID: 1716312745680982, guid: 9496f79f318903c4a97ec2263649e989, type: 3}
-  Boss_Skill2_Effect: {fileID: 1312838344612490, guid: 3434f651ac1d3534a9a356e7ad3ebe6b, type: 3}
-  Boss_Skill3_Effect: {fileID: 1893033738566276, guid: 8c8e34050a922f84fbc572368f896777, type: 3}
+  Boss_Skill_Effect: {fileID: 7405487427060361274, guid: 653b8a094302fc641864ddee6dba51df, type: 3}
+  Boss_Skill_Effect2: {fileID: 1714681308540598, guid: 5cbc537826220e04592d5a41a0dd985f, type: 3}
+  Boss_Skill_Effect3: {fileID: 1893033738566276, guid: 8c8e34050a922f84fbc572368f896777, type: 3}
+  Boss_Skill_Effect4: {fileID: 1942681157837952, guid: 7b9296a8d60cac54dbadb06d1e8863ad, type: 3}
 --- !u!1 &456443822
 GameObject:
   m_ObjectHideFlags: 0
@@ -2761,7 +2761,7 @@ RectTransform:
   m_Children:
   - {fileID: 150643414}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5004,13 +5004,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1280564902}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_Father: {fileID: 1464214703}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1280564904
 MonoBehaviour:
@@ -5630,7 +5630,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1458533668
 MonoBehaviour:
@@ -5691,7 +5691,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1280564903}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7879,7 +7880,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1942651318
 MonoBehaviour:

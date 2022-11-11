@@ -12,10 +12,14 @@ public class JY_Boss_FireDungeon : Enemy
     public bool isLook;
     public bool isAwake;
     bool DoAttack;
+    bool isDead;
     [Header("보스 공격 범위 콜라이더")]
     public BoxCollider JumpAttackArea;
     public BoxCollider KickAttackArea;
     public BoxCollider BossWeapon;
+    public GameObject BossWeaponFire;
+    public GameObject FieldFire;
+    public GameObject Fireball;
 
     [HideInInspector] public int HitSkillNum;
 
@@ -29,6 +33,7 @@ public class JY_Boss_FireDungeon : Enemy
         anim = GetComponentInChildren<Animator>();
         originPos = transform.position;
         originRotateion = transform.rotation;
+        isDead = false;
         HitSkillNum = -1;
     }
     private new void Start()
@@ -40,39 +45,42 @@ public class JY_Boss_FireDungeon : Enemy
 
     private void FixedUpdate()
     {
-        FreezeVelocity();
-        if (isLook)
+        if (!isDead)
         {
-            lookVec = Player.instance.movement;
-            //transform.LookAt(target.position+lookVec);
-            Vector3 dir = target.transform.position - this.transform.position;
-            this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime);
-        }
-        atkTime += Time.fixedDeltaTime;
-
-        if (target != null && isAwake)
-        {
-            nav.SetDestination(target.position);
-            float distance = Vector3.Distance(transform.position, target.position);
-            if (distance <= attackDistance && !DoAttack )
+            FreezeVelocity();
+            if (isLook)
             {
-                if (atkTime >= attackCool)
-                {
-                    atkTime = 0f;
-                    FreezeEnemy();
-                    FreezeBoss();
-                    StartCoroutine(BossPattern(4));
-                }
-
+                lookVec = Player.instance.movement;
+                Vector3 dir = target.transform.position - this.transform.position;
+                this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime);
             }
-        }
-        if (nav.velocity != Vector3.zero && !isStop)
-        {
-            anim.SetBool("isWalk", true);
-        }
-        else
-        {
-            anim.SetBool("isWalk", false);
+            atkTime += Time.fixedDeltaTime;
+
+            float distance = Vector3.Distance(transform.position, target.position);
+            if (target != null && isAwake)
+            {
+                nav.SetDestination(target.position);
+                if (distance <= attackDistance && !DoAttack)
+                {
+                    if (atkTime >= attackCool)
+                    {
+                        atkTime = 0f;
+                        FreezeEnemy();
+                        FreezeBoss();
+                        StartCoroutine(BossPattern(4));
+                    }
+
+                }
+            }
+
+            if (distance >= attackDistance && nav.velocity != Vector3.zero && !isStop)
+            {
+                anim.SetBool("isWalk", true);
+            }
+            else
+            {
+                anim.SetBool("isWalk", false);
+            }
         }
     }
 
@@ -107,7 +115,11 @@ public class JY_Boss_FireDungeon : Enemy
     IEnumerator WhirlAttack()
     {
         anim.SetTrigger("WhirlAttack");
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(1f);
+        ShootFire();
+        yield return new WaitForSeconds(1f);
+        ShootFire();
+        yield return new WaitForSeconds(3f);
         UnfreezeBoss();
         UnfreezeEnemy();
     }
@@ -115,18 +127,17 @@ public class JY_Boss_FireDungeon : Enemy
     {
 
         anim.SetTrigger("JumpAttack");
-        tauntVec = target.position + lookVec;
-        nav.speed = 200f;
-        nav.isStopped = false;
-        nav.SetDestination(tauntVec);
-        hitbox.enabled = false;
+        tauntVec = target.position;
+        yield return new WaitForSeconds(0.5f);
+        while(transform.position != tauntVec)
+            transform.position = Vector3.MoveTowards(transform.position, tauntVec,Time.deltaTime);
         yield return new WaitForSeconds(1.0f);
         JumpAttackArea.enabled = true;
+        for (int i = 0; i < 3; i++)
+            FieldFireCreate();
         yield return new WaitForSeconds(0.5f);
         JumpAttackArea.enabled = false;
-        nav.isStopped = true;
         hitbox.enabled = true;
-        nav.speed = 6f;
         yield return new WaitForSeconds(2f);
         UnfreezeBoss();
         UnfreezeEnemy();
@@ -134,9 +145,23 @@ public class JY_Boss_FireDungeon : Enemy
     IEnumerator Kick()
     {
         anim.SetTrigger("KickAttack");
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(1f);
+        StartCoroutine("kickAttackAreaOnOff");
+        yield return new WaitForSeconds(0.5f);
+        StartCoroutine("kickAttackAreaOnOff");
+        yield return new WaitForSeconds(0.5f);
+        StartCoroutine("kickAttackAreaOnOff");
+        yield return new WaitForSeconds(1f);
+        StartCoroutine("kickAttackAreaOnOff");
+        yield return new WaitForSeconds(2f);
         UnfreezeBoss();
         UnfreezeEnemy();
+    }
+    IEnumerator kickAttackAreaOnOff()
+    {
+        KickAttackArea.enabled = true;
+        yield return new WaitForSeconds(0.3f);
+        KickAttackArea.enabled = false;
     }
     public override void IsAttacked(int _damage)
     {
@@ -163,14 +188,18 @@ public class JY_Boss_FireDungeon : Enemy
         }
         else
         {
+            StopAllCoroutines();
             hitbox.enabled = false;
+            target = null;
+            isDead = true;
             anim.SetTrigger("isDead");
             FreezeEnemy();
+
             questProgress();
             DropExp();
             DropGold();
             DropItem();
-            Destroy(gameObject, 4);
+            Destroy(gameObject,6f);
         }
     }
 
@@ -201,5 +230,36 @@ public class JY_Boss_FireDungeon : Enemy
         Debug.Log(HitSkillNum);
         anim.SetTrigger("isAttacked");
         anim.SetInteger("HitNum",playerSkill);
+    }
+    public void WeaponEffectOnOff(bool state)
+    {
+        BossWeaponFire.SetActive(state);
+    }
+    void FieldFireCreate()
+    {
+        GameObject tmp = Instantiate<GameObject>(FieldFire);
+        tmp.transform.position = transform.position + new Vector3(Random.Range(-3, 3), 0, Random.Range(-3, 3));
+    }
+    public void ClearAttackCool()
+    {
+        FreezeEnemy();
+        FreezeBoss();
+        atkTime = attackCool - 3f;
+        Invoke("UnFreezeAll", 3f);
+    }
+    public void MeleeAreaDisEnable()
+    {
+        KickAttackArea.enabled = false;
+        JumpAttackArea.enabled = false;
+        BossWeapon.enabled = false;
+    }
+    void UnFreezeAll()
+    {
+        UnfreezeBoss();
+        UnfreezeEnemy();
+    }
+    void ShootFire()
+    {
+        Instantiate(Fireball, BossWeapon.transform.position, transform.rotation);
     }
 }

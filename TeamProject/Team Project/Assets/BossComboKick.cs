@@ -11,6 +11,7 @@ public class BossComboKick : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        JY_Boss_FireDungeon.s_instance.WeaponEffectOnOff(true);
         InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect, 1f, JY_Boss_FireDungeon.s_instance.transform);
         InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect2, 1.5f, JY_Boss_FireDungeon.s_instance.transform);
         InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect3, 2f, JY_Boss_FireDungeon.s_instance.transform);
@@ -26,6 +27,7 @@ public class BossComboKick : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        JY_Boss_FireDungeon.s_instance.WeaponEffectOnOff(false);
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
