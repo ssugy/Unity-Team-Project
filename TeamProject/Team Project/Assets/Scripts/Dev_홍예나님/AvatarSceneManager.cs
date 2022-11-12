@@ -32,8 +32,17 @@ public class AvatarSceneManager : MonoBehaviour
     public List<Slider> sliders;
     public GameObject charMale;
     public GameObject charFemale;
+    public Transform mRWeapon;
+    public Transform mLWeapon;
+    public Transform fRWeapon;
+    public Transform fLWeapon;
+
+    public GameObject warriorInfo;
+    public GameObject magicianInfo;
+
 
     private EGender gender;
+    private EJob job;
     private List<int> optionSubs;
     public InputField CharacterNameInput;
     private SetCharacter targetScript;
@@ -50,12 +59,8 @@ public class AvatarSceneManager : MonoBehaviour
     private List<float> legOptions = new List<float>();      // Leg용 옵션들
     private SkinnedMeshRenderer currentSkinnedMesh = null;
 
-    private void OnDisable()
-    {
-        Time.timeScale = 1f;
-    }
-
-
+    // 씬을 빠져나갈 때, 타임 스케일을 원래대로.
+    private void OnDisable() => Time.timeScale = 1f;    
     void Start()
     {
 #if UNITY_EDITOR
@@ -97,10 +102,10 @@ public class AvatarSceneManager : MonoBehaviour
             {
                 blendOption.Add(0);
             }
-
         }
 
         gender = EGender.MALE;
+        job = EJob.WARRIOR;
         ShowCharacter();
         //첫번째 버튼을 누른것으로 간주함
         ShowOption(0);
@@ -122,18 +127,30 @@ public class AvatarSceneManager : MonoBehaviour
 
     private void ShowCharacter()
     {
-        if (gender == EGender.FEMALE)
+        switch (gender)
         {
-            charMale.SetActive(false);
-            charFemale.SetActive(true);
-            targetScript = charFemale.GetComponent<SetCharacter>();
-        }
-        else
-        {
-            charMale.SetActive(true);
-            charFemale.SetActive(false);
-            targetScript = charMale.GetComponent<SetCharacter>();
-        }
+            case EGender.MALE:
+                {
+                    charMale.SetActive(true);
+                    charFemale.SetActive(false);
+                    targetScript = charMale.GetComponent<SetCharacter>();
+                }
+                break;
+            case EGender.FEMALE:
+                {
+                    charMale.SetActive(false);
+                    charFemale.SetActive(true);
+                    targetScript = charFemale.GetComponent<SetCharacter>();
+                }
+                break;
+            default:
+                {
+                    charMale.SetActive(false);
+                    charFemale.SetActive(false);
+                    targetScript = null;
+                }
+                break;
+        }        
         SetMap();
     }
 
@@ -181,19 +198,34 @@ public class AvatarSceneManager : MonoBehaviour
                             tmp.name = CharacterNameInput.text;
                             tmp.isNull = false;
                             tmp.level = 1;
-                            tmp.job = EJob.WARRIOR;
-                            tmp.status = new int[4] { 7, 6, 10, 5 };
-                            tmp.gender = gender;                            
-
+                            tmp.job = job;                            
+                            tmp.gender = gender;     
+                            
                             //모델링 작성
                             tmp.characterAvatar[0] = optionSubs[0];
                             tmp.characterAvatar[1] = optionSubs[1];
                             tmp.characterAvatar[2] = optionSubs[2];
                             tmp.characterAvatar[3] = optionSubs[3];
 
-                            // 아이템 작성
-                            tmp.itemList.Add(new(ItemType.EQUIPMENT, EquipState.EQUIPED, "롱소드", 1));                            
-                            switch (optionSubs[1])  // 상의
+                            // 아이템 작성                            
+                            switch (job)
+                            {
+                                case EJob.WARRIOR:
+                                    {
+                                        tmp.status = new int[4] { 7, 6, 10, 5 };
+                                        tmp.itemList.Add(new(ItemType.EQUIPMENT, EquipState.EQUIPED, "롱소드", 1));
+                                        tmp.itemList.Add(new(ItemType.EQUIPMENT, EquipState.EQUIPED, "널빤지 방패", 1));
+                                        break;
+                                    }
+                                case EJob.MAGICIAN:
+                                    {
+                                        tmp.status = new int[4] { 5, 9, 5, 9 };
+                                        tmp.itemList.Add(new(ItemType.EQUIPMENT, EquipState.EQUIPED, "단도", 1));
+                                        tmp.itemList.Add(new(ItemType.EQUIPMENT, EquipState.EQUIPED, "우든 스태프", 1));
+                                        break;
+                                    }
+                            }           // 무기
+                            switch (optionSubs[1]) 
                             {
                                 case 1:
                                     {
@@ -211,8 +243,8 @@ public class AvatarSceneManager : MonoBehaviour
                                         break;
                                     }
                                 default: break;
-                            }
-                            switch (optionSubs[0])  // 하의
+                            } // 상의
+                            switch (optionSubs[0]) 
                             {
                                 case 1:
                                     {
@@ -230,7 +262,7 @@ public class AvatarSceneManager : MonoBehaviour
                                         break;
                                     }
                                 default: break;
-                            }
+                            } // 하의
                             JY_CharacterListManager.s_instance.jInfoData.infoDataList[i] = tmp;
                             break;
                         }
@@ -272,6 +304,55 @@ public class AvatarSceneManager : MonoBehaviour
         ShowCharacter();
         ShowOption(0);
         sliders.ForEach(e => { if (e.transform.parent.parent.parent.parent.gameObject.activeSelf) e.value -= 0.01f; });
+    }
+
+    public void OnClickWarrior()
+    {
+        job = EJob.WARRIOR;
+        warriorInfo.SetActive(true);
+        magicianInfo.SetActive(false);
+        for (int i = 0; i < fRWeapon.childCount; i++)
+            Destroy(fRWeapon.GetChild(i).gameObject);
+        for (int i = 0; i < fLWeapon.childCount; i++)
+            Destroy(fLWeapon.GetChild(i).gameObject);
+        for (int i = 0; i < mRWeapon.childCount; i++)
+            Destroy(mRWeapon.GetChild(i).gameObject);
+        for (int i = 0; i < mLWeapon.childCount; i++)
+            Destroy(mLWeapon.GetChild(i).gameObject);
+        GameObject weaponSrc = Resources.Load<GameObject>("Item/Weapon/Sword_1");
+        GameObject shieldSrc = Resources.Load<GameObject>("Item/Shield/Shield_2");
+        if (weaponSrc != null)
+            Instantiate(weaponSrc, fRWeapon);
+        if (shieldSrc != null)
+            Instantiate(shieldSrc, fLWeapon);               
+        if (weaponSrc != null)
+            Instantiate(weaponSrc, mRWeapon);
+        if (shieldSrc != null)
+            Instantiate(shieldSrc, mLWeapon);             
+    }
+    public void OnClickMagician()
+    {
+        job = EJob.MAGICIAN;
+        warriorInfo.SetActive(false);
+        magicianInfo.SetActive(true);
+        for (int i = 0; i < fRWeapon.childCount; i++)
+            Destroy(fRWeapon.GetChild(i).gameObject);
+        for (int i = 0; i < fLWeapon.childCount; i++)
+            Destroy(fLWeapon.GetChild(i).gameObject);
+        for (int i = 0; i < mRWeapon.childCount; i++)
+            Destroy(mRWeapon.GetChild(i).gameObject);
+        for (int i = 0; i < mLWeapon.childCount; i++)
+            Destroy(mLWeapon.GetChild(i).gameObject);
+        GameObject weaponSrc = Resources.Load<GameObject>("Item/Weapon/Dagger_2");
+        GameObject shieldSrc = Resources.Load<GameObject>("Item/Shield/Staff_2");
+        if (weaponSrc != null)
+            Instantiate(weaponSrc, fRWeapon);
+        if (shieldSrc != null)
+            Instantiate(shieldSrc, fLWeapon);                
+        if (weaponSrc != null)
+            Instantiate(weaponSrc, mRWeapon);
+        if (shieldSrc != null)
+            Instantiate(shieldSrc, mLWeapon);
     }
 
     private void ShowOption(int option)

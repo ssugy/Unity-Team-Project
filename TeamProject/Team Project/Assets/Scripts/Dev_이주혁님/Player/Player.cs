@@ -128,6 +128,12 @@ public class PlayerStat
                 strength = 10;
                 dexterity = 5;
                 break;
+            case EJob.MAGICIAN:
+                health = 5;
+                stamina = 9;
+                strength = 5;
+                dexterity = 9;
+                break;
         }        
     }
     // 캐릭터 생성 시, 혹은 스탯 초기화 시 할당할 클래스별 초기스탯.

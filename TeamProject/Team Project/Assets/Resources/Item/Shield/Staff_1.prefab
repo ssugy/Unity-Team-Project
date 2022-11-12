@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2681823412999475759}
-  m_Layer: 0
+  - component: {fileID: -209373993071200494}
+  m_Layer: 18
   m_Name: Staff_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33,6 +34,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-209373993071200494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394742109442059917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b33dc035397fea42bd671c1360d3c23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  atkDmg: 200
+  player: {fileID: 0}
 --- !u!1 &4375849633226600402
 GameObject:
   m_ObjectHideFlags: 0
@@ -42,7 +57,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4130703669379604917}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Staff_Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +90,7 @@ GameObject:
   - component: {fileID: 7517439206819301116}
   - component: {fileID: 6916566630176655705}
   - component: {fileID: 8653776624603430291}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Staff_1_Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
