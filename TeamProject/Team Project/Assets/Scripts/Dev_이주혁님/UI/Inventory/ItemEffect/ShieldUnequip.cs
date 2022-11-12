@@ -12,9 +12,9 @@ public class ShieldUnequip : ItemEffect
             _val.equipedState = EquipState.UNEQUIPED;
             Player.instance.playerStat.equiped.Remove(EquipPart.SHIELD);
         }
-        if (Player.instance.lWeaponDummy.GetComponentInChildren<Shield>() != null)
+        while (Player.instance.lWeaponDummy.GetComponentInChildren<Shield>() != null)
         {
-            Destroy(Player.instance.lWeaponDummy.GetComponentInChildren<Shield>().gameObject);
+            DestroyImmediate(Player.instance.lWeaponDummy.GetComponentInChildren<Shield>().gameObject);
         }
         if (Player.instance.lWeaponDummy.GetComponentInChildren<Staff>() != null)
         {

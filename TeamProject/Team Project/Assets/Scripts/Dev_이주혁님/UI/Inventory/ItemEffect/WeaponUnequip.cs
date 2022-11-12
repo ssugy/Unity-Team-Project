@@ -12,9 +12,9 @@ public class WeaponUnequip : ItemEffect
             _val.equipedState = EquipState.UNEQUIPED;
             Player.instance.playerStat.equiped.Remove(EquipPart.WEAPON);
         }
-        if (Player.instance.rWeaponDummy.GetComponentInChildren<Weapon>() != null)
+        while (Player.instance.rWeaponDummy.GetComponentInChildren<Weapon>() != null)
         {
-            Destroy(Player.instance.rWeaponDummy.GetComponentInChildren<Weapon>().gameObject);
+            DestroyImmediate(Player.instance.rWeaponDummy.GetComponentInChildren<Weapon>().gameObject);
         }
         if (Inventory.instance.onChangeItem != null)
             Inventory.instance.onChangeItem();

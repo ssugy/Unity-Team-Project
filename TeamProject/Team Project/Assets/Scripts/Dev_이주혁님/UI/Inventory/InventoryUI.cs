@@ -69,7 +69,8 @@ public class InventoryUI : MonoBehaviour
     public void Equip(Item _item, Slot _slot)
     {
         _item.Equip();
-        _slot.UpdateSlotUI();
+        //_slot.UpdateSlotUI();
+        RedrawSlotUI();
     }
     public void Unequip(Item _item, Slot _slot)
     {

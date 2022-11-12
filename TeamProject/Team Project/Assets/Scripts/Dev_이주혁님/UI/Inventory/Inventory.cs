@@ -55,17 +55,40 @@ public class Inventory : MonoBehaviour
 #if UNITY_EDITOR
     private void Update()
     {
+        // »ì¶ó¸¸µå¶ó ºÒµ¢ÀÌ
         if (Input.GetKeyDown(KeyCode.F1))
         {
             AddItem(ItemDatabase.s_instance.itemDB[20].Copy(), 20);
         }
+        // ¼ÒÇü Æ÷¼Ç
         if (Input.GetKeyDown(KeyCode.F2))
         {
             AddItem(ItemDatabase.s_instance.itemDB[16].Copy(), 16);
         }
+        // ¿øÇü ¹æÆÐ
         if (Input.GetKeyDown(KeyCode.F3))
         {
             AddItem(ItemDatabase.s_instance.itemDB[14].Copy(), 14);
+        }
+        // ³ÎºþÁö ¹æÆÐ
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+            AddItem(ItemDatabase.s_instance.itemDB[15].Copy(), 15);
+        }
+        // Ã¶Á¦ µµ³¢
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            AddItem(ItemDatabase.s_instance.itemDB[0].Copy(), 0);
+        }
+        // °¡º­¿î °©¿Ê
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            AddItem(ItemDatabase.s_instance.itemDB[23].Copy(), 23);
+        }
+        // °æ°© ÇÏÀÇ
+        if (Input.GetKeyDown(KeyCode.F7))
+        {
+            AddItem(ItemDatabase.s_instance.itemDB[26].Copy(), 26);
         }
     }
 #endif
