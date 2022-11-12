@@ -4,6 +4,7 @@ using CartoonHeroes;
 using static CartoonHeroes.SetCharacter;
 using UnityEngine;
 
+// 로비 씬에서만 사용됨.
 public class JY_AvatarLoad : MonoBehaviour
 {
     #region 싱글톤 패턴. 외부에선 s_instance 사용.
@@ -26,11 +27,11 @@ public class JY_AvatarLoad : MonoBehaviour
 
     void Start()
     {
-        origin = JY_PlayerReturn.instance.GetPlayerOrigin();
+        origin = this.transform;
         charMale = FindGameObjectInChild("BaseCharacterM", origin).gameObject;
         charFemale = FindGameObjectInChild("BaseCharacterF", origin).gameObject;
 
-        // 다시 로비씬으로 되돌아왔을 때 selectNum을 -1로 초기화해줌.
+        // 로비씬이 시작될 때 CharacterListManager의 selectNum을 -1로 초기화해줌.
         JY_CharacterListManager.s_instance.selectNum = -1;
     }
 
@@ -47,62 +48,50 @@ public class JY_AvatarLoad : MonoBehaviour
         return null;
     }
 
-    void DeleteSubOption(int currentOption)
+    public void SubOptionLoad(int currentOption, int sub)
     {
-        for (int j = 0; j < setChara.itemGroups[currentOption].slots; j++)
+        // 기존에 존재하는 파츠들을 삭제함.
+        for (int i = 0; i < setChara.itemGroups[currentOption].slots; i++)
         {
-            if (setChara.HasItem(setChara.itemGroups[currentOption], j))
+            if (setChara.HasItem(setChara.itemGroups[currentOption], i))
             {
-                List<GameObject> removedObjs = setChara.GetRemoveObjList(setChara.itemGroups[currentOption], j);
-                for (int m = 0; m < removedObjs.Count; m++)
+                setChara.GetRemoveObjList(setChara.itemGroups[currentOption], i).ForEach(e =>
                 {
-                    if (removedObjs[m] != null)
+                    if (e != null)
                     {
-                        DestroyImmediate(removedObjs[m]);
+                        DestroyImmediate(e);
                     }
-                }
+                });
             }
         }
-
-    }
-    public void subOptionLoad(int currentOption, int sub)
-    {
-        DeleteSubOption(currentOption);
-        {
-            GameObject addedObj = setChara.AddItem(setChara.itemGroups[currentOption], sub);
-        }
+        setChara.AddItem(setChara.itemGroups[currentOption], sub);        
     }
 
     public void LoadModelData(int listNum)
     {
-        //LobbyDummyClear(listNum);
-        if (JY_CharacterListManager.s_instance.selectNum == -1)
-        {            
-            charMale.SetActive(false);
-            charFemale.SetActive(false);
-            charWeaponDummy = null;
-            charShieldDummy = null;
-        }
-        else
+        //gender 갱신
+        switch (JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender)
         {
-            //gender 갱신
-            if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender.Equals(EGender.FEMALE))
-            {
-                charMale.SetActive(false);
-                charFemale.SetActive(true);
-                setChara = charFemale.GetComponent<SetCharacter>();
-            }
-            else
-            {
-                charFemale.SetActive(false);
-                charMale.SetActive(true);
-                setChara = charMale.GetComponent<SetCharacter>();
-            }
-            for (int i = 0; i < 4; i++)
-            {
-                subOptionLoad(i, JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].characterAvatar[i]);
-            }
+            case EGender.FEMALE:
+                {
+                    charMale.SetActive(false);
+                    charFemale.SetActive(true);
+                    setChara = charFemale.GetComponent<SetCharacter>();
+                }
+                break;
+            case EGender.MALE:
+                {
+                    charFemale.SetActive(false);
+                    charMale.SetActive(true);
+                    setChara = charMale.GetComponent<SetCharacter>();
+                }
+                break;
         }
+        for (int i = 0; i < 4; i++)
+        {
+            SubOptionLoad(i, JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].characterAvatar[i]);
+        }
+        LobbyDummyClear(listNum);
     }
 
 

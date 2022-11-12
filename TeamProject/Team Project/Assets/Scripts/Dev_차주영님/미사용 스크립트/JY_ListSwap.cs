@@ -106,13 +106,13 @@ public class JY_ListSwap : MonoBehaviour
         //선택 취소 구현
         if (JY_CharacterListManager.s_instance.selectNum == _num)
         {
-            JY_AvatarLoad.s_instance.origin.gameObject.SetActive(false);
+            //JY_AvatarLoad.s_instance.origin.gameObject.SetActive(false);
             JY_CharacterListManager.s_instance.selectNum = -1;
             PanelSwitch();
             return;
         }
         JY_CharacterListManager.s_instance.selectNum = _num;
-        JY_AvatarLoad.s_instance.origin.gameObject.SetActive(true);        
+        //JY_AvatarLoad.s_instance.origin.gameObject.SetActive(true);        
         JY_AvatarLoad.s_instance.LoadModelData(_num);        // 선택한 성별 캐릭터 활성화. inventory onenable
         // 선택한 캐릭터의 인벤토리를 카피해옴.
         JY_CharacterListManager.s_instance.CopyInventoryDataToScript(Inventory.instance.items);
