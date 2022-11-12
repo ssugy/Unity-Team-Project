@@ -1218,14 +1218,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1223367638}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: JY_ListSwap, Assembly-CSharp
-        m_MethodName: deleteButton
-        m_Mode: 1
+        m_MethodName: DeleteButton
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1879,10 +1879,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1809990487}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: JY_ListSwap, Assembly-CSharp
-        m_MethodName: deleteButton
-        m_Mode: 1
+        m_MethodName: DeleteButton
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2170,7 +2170,6 @@ GameObject:
   - component: {fileID: 813666329}
   - component: {fileID: 813666333}
   - component: {fileID: 813666332}
-  - component: {fileID: 813666330}
   m_Layer: 5
   m_Name: List 2
   m_TagString: Untagged
@@ -2200,26 +2199,6 @@ RectTransform:
   m_AnchoredPosition: {x: -465, y: 0}
   m_SizeDelta: {x: 930, y: 280}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &813666330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 813666328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 004fed581b335274794abab70e6cedda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  infoGroup: {fileID: 2019830977}
-  createButton: {fileID: 738884593}
-  check: 0
-  listNum: 2
-  nameTxt: {fileID: 453069497}
-  infoTxt: {fileID: 902947270}
-  frameBackground: {fileID: 465633526}
-  portraitImage: {fileID: 1684744827}
 --- !u!114 &813666332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2898,14 +2877,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1223367638}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: JY_ListSwap, Assembly-CSharp
         m_MethodName: SelectCharacter
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3252,10 +3231,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1809990487}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: JY_ListSwap, Assembly-CSharp
         m_MethodName: SelectCharacter
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3275,7 +3254,6 @@ GameObject:
   - component: {fileID: 1014604256}
   - component: {fileID: 1014604260}
   - component: {fileID: 1014604259}
-  - component: {fileID: 1014604257}
   m_Layer: 5
   m_Name: List 1
   m_TagString: Untagged
@@ -3305,26 +3283,6 @@ RectTransform:
   m_AnchoredPosition: {x: -465, y: 280}
   m_SizeDelta: {x: 930, y: 280}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &1014604257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1014604255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 004fed581b335274794abab70e6cedda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  infoGroup: {fileID: 1885378511}
-  createButton: {fileID: 1784247269}
-  check: 0
-  listNum: 1
-  nameTxt: {fileID: 629250814}
-  infoTxt: {fileID: 940565707}
-  frameBackground: {fileID: 946858680}
-  portraitImage: {fileID: 428368953}
 --- !u!114 &1014604259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3546,7 +3504,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1166479039}
   m_Layer: 7
-  m_Name: BackGround
+  m_Name: "\uBC30\uACBD"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3666,7 +3624,6 @@ GameObject:
   - component: {fileID: 1223367637}
   - component: {fileID: 1223367641}
   - component: {fileID: 1223367640}
-  - component: {fileID: 1223367638}
   m_Layer: 5
   m_Name: List 3
   m_TagString: Untagged
@@ -3696,26 +3653,6 @@ RectTransform:
   m_AnchoredPosition: {x: -465, y: -280}
   m_SizeDelta: {x: 930, y: 280}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &1223367638
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1223367636}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 004fed581b335274794abab70e6cedda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  infoGroup: {fileID: 961049348}
-  createButton: {fileID: 1051548772}
-  check: 0
-  listNum: 3
-  nameTxt: {fileID: 973026704}
-  infoTxt: {fileID: 1007351761}
-  frameBackground: {fileID: 776624182}
-  portraitImage: {fileID: 2060481912}
 --- !u!114 &1223367640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3989,14 +3926,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1014604257}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: JY_ListSwap, Assembly-CSharp
-        m_MethodName: deleteButton
-        m_Mode: 1
+        m_MethodName: DeleteButton
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -5221,7 +5158,6 @@ GameObject:
   - component: {fileID: 1809990486}
   - component: {fileID: 1809990489}
   - component: {fileID: 1809990488}
-  - component: {fileID: 1809990487}
   m_Layer: 5
   m_Name: List 0
   m_TagString: Untagged
@@ -5251,26 +5187,6 @@ RectTransform:
   m_AnchoredPosition: {x: -465, y: 560}
   m_SizeDelta: {x: 930, y: 280}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &1809990487
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1809990485}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 004fed581b335274794abab70e6cedda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  infoGroup: {fileID: 1012696564}
-  createButton: {fileID: 851984060}
-  check: 0
-  listNum: 0
-  nameTxt: {fileID: 320855976}
-  infoTxt: {fileID: 1731588706}
-  frameBackground: {fileID: 512986760}
-  portraitImage: {fileID: 1572822515}
 --- !u!114 &1809990488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5522,14 +5438,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1014604257}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: JY_ListSwap, Assembly-CSharp
         m_MethodName: SelectCharacter
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -5547,6 +5463,7 @@ GameObject:
   - component: {fileID: 1927713493}
   - component: {fileID: 1927713492}
   - component: {fileID: 1927713496}
+  - component: {fileID: 1927713497}
   m_Layer: 5
   m_Name: Lobby UI
   m_TagString: Untagged
@@ -5661,6 +5578,48 @@ MonoBehaviour:
   createChar_1: {fileID: 1784247272}
   createChar_2: {fileID: 738884596}
   createChar_3: {fileID: 1051548775}
+--- !u!114 &1927713497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927713491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 004fed581b335274794abab70e6cedda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoGroup:
+  - {fileID: 1012696566}
+  - {fileID: 1885378513}
+  - {fileID: 2019830979}
+  - {fileID: 961049350}
+  createButton:
+  - {fileID: 851984062}
+  - {fileID: 1784247272}
+  - {fileID: 738884596}
+  - {fileID: 1051548775}
+  nameTxt:
+  - {fileID: 320855976}
+  - {fileID: 629250814}
+  - {fileID: 453069497}
+  - {fileID: 973026704}
+  infoTxt:
+  - {fileID: 1731588706}
+  - {fileID: 940565707}
+  - {fileID: 902947270}
+  - {fileID: 1007351761}
+  frameBackground:
+  - {fileID: 512986760}
+  - {fileID: 946858680}
+  - {fileID: 465633526}
+  - {fileID: 776624182}
+  portrait:
+  - {fileID: 1572822515}
+  - {fileID: 428368953}
+  - {fileID: 1684744827}
+  - {fileID: 2060481912}
 --- !u!4 &1928839824 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: cae602f6ce981f242803ff07f4d119c9, type: 3}
@@ -5749,14 +5708,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 813666330}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: JY_ListSwap, Assembly-CSharp
-        m_MethodName: deleteButton
-        m_Mode: 1
+        m_MethodName: DeleteButton
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -5933,14 +5892,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 813666330}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: JY_ListSwap, Assembly-CSharp
         m_MethodName: SelectCharacter
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -10264,7 +10223,7 @@ Animator:
   m_GameObject: {fileID: 1668188461715358}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 7e30eee73c241d5448ce0ac372cf6602, type: 3}
-  m_Controller: {fileID: 9100000, guid: d7c55390ab0320c47b84f63184ecb1b9, type: 2}
+  m_Controller: {fileID: 9100000, guid: 02ffa4ff5c758d94f9a3cdaf983eb634, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -15296,7 +15255,7 @@ Animator:
   m_GameObject: {fileID: 4641566208676364083}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: d4bc8aeee1248da43a4176631929bc9d, type: 3}
-  m_Controller: {fileID: 9100000, guid: 65b24d220c8cbeb40a814835a4a35299, type: 2}
+  m_Controller: {fileID: 9100000, guid: 842f0ed280dcfdc4d8044c625e23bf39, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

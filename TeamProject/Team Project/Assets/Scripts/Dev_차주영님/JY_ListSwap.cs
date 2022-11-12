@@ -4,22 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class JY_ListSwap : MonoBehaviour
-{
-    //출력 UI GameObject
-    public GameObject infoGroup;
-    public GameObject createButton;
-    public bool check;
-    public int listNum;
+{    
+    public List<Button> infoGroup;     
+    public List<Button> createButton;
+        
+    public List<Text> nameTxt;
+    public List<Text> infoTxt;
 
-    //텍스트 변경
-    public Text nameTxt;
-    public Text infoTxt;       
-
-    //캐릭터 선택시/데이터 로드시 변경 UI
-    public Image frameBackground;
-    public Image portraitImage;    
-
-    //소스 이미지 
+    public List<Image> frameBackground;
+    public List<Image> portrait;     
+        
     Sprite sourceImg_R;
     Sprite sourceImg_B;
     Sprite warriorM;
@@ -36,86 +30,90 @@ public class JY_ListSwap : MonoBehaviour
         warriorM = Resources.Load<Sprite>("UI_Change/Portrait/27");
         warriorF = Resources.Load<Sprite>("UI_Change/Portrait/7");
         magicianM = Resources.Load<Sprite>("UI_Change/Portrait/21");
-        magicianF = Resources.Load<Sprite>("UI_Change/Portrait/6");
-    }
+        magicianF = Resources.Load<Sprite>("UI_Change/Portrait/6");        
+    }    
 
-    
-    void Update()
+    private void Start()
     {
-        PanelSwitch(check);
+        PanelSwitch();
     }
-
-    //캐릭터 생성 여부에 따른 Panel과 ButtonSwitch
-    //nullcheck = true일 때 CreateButton 활성화
-    //nullcheck = false일 때 Character info 활성화
-    void PanelSwitch(bool nullCheck)
-    {
-        //캐릭터 생성 check
-        check = JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].isNull;
-
-        if (nullCheck)
+        
+    void PanelSwitch()
+    {               
+        for (int i=0; i < 4; i++)
         {
-            infoGroup.SetActive(false);
-            createButton.SetActive(true);
-        }
-        else
-        {
-            createButton.SetActive(false);
-            infoGroup.SetActive(true);
-            DataRenew();
-            if (listNum == JY_CharacterListManager.s_instance.selectNum)
+            if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].isNull)
             {
-                frameBackground.sprite = sourceImg_R;
+                infoGroup[i].gameObject.SetActive(false);
+                createButton[i].gameObject.SetActive(true);
             }
             else
             {
-                frameBackground.sprite = sourceImg_B;
+                createButton[i].gameObject.SetActive(false);
+                infoGroup[i].gameObject.SetActive(true);
+                
+                if (i == JY_CharacterListManager.s_instance.selectNum)
+                {
+                    frameBackground[i].sprite = sourceImg_R;
+                }
+                else
+                {
+                    frameBackground[i].sprite = sourceImg_B;
+                }
             }
         }
+        DataRenew();
     }
+
     //Character Info의 Text 갱신
     void DataRenew()
     {        
-        nameTxt.text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].name;
-        infoTxt.text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].level + "레벨 ";        
-        switch (JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].job)
+        for(int i = 0; i < 4; i++)
         {
-            case EJob.WARRIOR:
-                infoTxt.text += "전사";
-                break;
-            case EJob.MAGICIAN:
-                infoTxt.text += "마법사";
-                break;
-            case EJob.NONE:
-                infoTxt.text += "무직";
-                break;
-            default:
-                break;
-        }        
-        portraitImage.sprite = SwitchPortrait(JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].gender,
-                                              JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].job);
+            nameTxt[i].text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].name;
+            infoTxt[i].text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].level + "레벨 ";
+            switch (JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].job)
+            {
+                case EJob.WARRIOR:
+                    infoTxt[i].text += "전사";
+                    break;
+                case EJob.MAGICIAN:
+                    infoTxt[i].text += "마법사";
+                    break;
+                case EJob.NONE:
+                    infoTxt[i].text += "무직";
+                    break;
+                default:
+                    break;
+            }
+            portrait[i].sprite = SwitchPortrait
+                (JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].gender, 
+                JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].job, i);
+        }
     }
 
-    public void deleteButton()
+    public void DeleteButton(int _num)
     {
         // 캐릭터를 삭제하면 플레이어를 비활성화.
         JY_AvatarLoad.s_instance.origin.gameObject.SetActive(false);
-        JY_CharacterListManager.s_instance.DeleteCharacter(listNum);
-        JY_CharacterListManager.s_instance.selectNum = -1;       
+        JY_CharacterListManager.s_instance.DeleteCharacter(_num);
+        JY_CharacterListManager.s_instance.selectNum = -1;
+        PanelSwitch();
     }
 
-    public void SelectCharacter()
+    public void SelectCharacter(int _num)
     {
         //선택 취소 구현
-        if (JY_CharacterListManager.s_instance.selectNum == listNum)
+        if (JY_CharacterListManager.s_instance.selectNum == _num)
         {
             JY_AvatarLoad.s_instance.origin.gameObject.SetActive(false);
-            JY_CharacterListManager.s_instance.selectNum = -1;            
+            JY_CharacterListManager.s_instance.selectNum = -1;
+            PanelSwitch();
             return;
         }
-        JY_CharacterListManager.s_instance.selectNum = listNum;
+        JY_CharacterListManager.s_instance.selectNum = _num;
         JY_AvatarLoad.s_instance.origin.gameObject.SetActive(true);        
-        JY_AvatarLoad.s_instance.LoadModelData(listNum);        // 선택한 성별 캐릭터 활성화. inventory onenable
+        JY_AvatarLoad.s_instance.LoadModelData(_num);        // 선택한 성별 캐릭터 활성화. inventory onenable
         // 선택한 캐릭터의 인벤토리를 카피해옴.
         JY_CharacterListManager.s_instance.CopyInventoryDataToScript(Inventory.instance.items);
         JY_AvatarLoad.s_instance.LobbyDummyClear(JY_CharacterListManager.s_instance.selectNum);
@@ -130,12 +128,13 @@ public class JY_ListSwap : MonoBehaviour
                 if (shieldSrc != null)
                     Instantiate<GameObject>(shieldSrc, JY_AvatarLoad.s_instance.charShieldDummy.transform);
             }                       
-        });                
+        });
+        PanelSwitch();
     }
 
-    Sprite SwitchPortrait(EGender gender, EJob job)
+    Sprite SwitchPortrait(EGender gender, EJob job, int _num)
     {        
-        if (!JY_CharacterListManager.s_instance.jInfoData.infoDataList[listNum].isNull)
+        if (!JY_CharacterListManager.s_instance.jInfoData.infoDataList[_num].isNull)
         {
             if (gender.Equals(EGender.MALE) && job.Equals(EJob.WARRIOR))
                 return warriorM;

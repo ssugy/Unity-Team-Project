@@ -22,14 +22,14 @@ public class JY_UIManager : MonoBehaviour
     public Text SPText;
 
     bool profileSwitch;
-    bool statusSwitch;
-    bool profileMenuSwitch;
+    //bool statusSwitch;
+    //bool profileMenuSwitch;
     bool questMenuSwitch;
     private void Awake()
     { 
         instance ??= this;
         profileSwitch = false;
-        profileMenuSwitch = false;
+        //profileMenuSwitch = false;
         questMenuSwitch = false;
         nameText.text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].name;        
     }
@@ -57,8 +57,8 @@ public class JY_UIManager : MonoBehaviour
             //profileMenuGroup.gameObject.SetActive(false);
             //StatusMenuGroup.gameObject.SetActive(false);
             profileSwitch = false;
-            statusSwitch = false;
-            profileMenuSwitch = false;
+            //statusSwitch = false;
+            //profileMenuSwitch = false;
         }
     }
 
