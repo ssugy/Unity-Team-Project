@@ -40,4 +40,8 @@ public class TopEquip : ItemEffect
             InventoryUI.instance.chestIcon.gameObject.SetActive(true);
         }
     }
+    public override int GetType()
+    {
+        return (int)EquipOption.EquipType.EquipTypeArmor;
+    }
 }

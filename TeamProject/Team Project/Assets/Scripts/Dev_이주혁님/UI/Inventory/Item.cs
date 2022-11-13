@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static EquipOption;
 
 public enum ItemType
 {
@@ -36,7 +37,7 @@ public class Item
     public Sprite image = null;
     public List<ItemEffect> effects = null;
     private int itemID;    
-    
+    public EquipOption option;
     public void SetID(int id)
     {
         itemID = id;
@@ -81,6 +82,14 @@ public class Item
         this.explanation = tmp.explanation;
         this.image = tmp.image;
         this.effects = tmp.effects;
+    }
+    public void SetOption()
+    {
+        if (type == ItemType.EQUIPMENT)
+        {
+            EquipType itemType = (EquipType)effects[0].GetType();
+            option = new EquipOption(itemType);
+        }
     }
 }
 

@@ -20,6 +20,9 @@ public class InfoPanel : MonoBehaviour
     public Text destroyButtonText;
     [Header("인벤토리 UI")]
     public InventoryUI iUi;
+    [Header("추가옵션 UI")]
+    public List<Text> options;
+    public List<string> optionNames;
 
     // 아이템 패널을 출력하는 메소드. 인벤토리의 아이템을 클릭하면 해당 슬롯의 아이템 정보를 받아와 출력한다.
     public void SetInformation(Item _item, Slot _slot)
@@ -47,7 +50,7 @@ public class InfoPanel : MonoBehaviour
                     useButtonText.text = "해제";
                     //useButton.onClick.AddListener(() => _item.Unequip());
                     useButton.onClick.AddListener(() => iUi.Unequip(_item, _slot));
-                }                
+                }
                 break;
             case ItemType.CONSUMABLE:
                 typeText.text = "소비";
@@ -62,7 +65,41 @@ public class InfoPanel : MonoBehaviour
             default:
                 typeText.text = "<오류>";
                 break;
-        }                        
-        destroyButton.onClick.AddListener(() => Inventory.instance.RemoveItem(_item));
+        }
+        // 추가 옵션 값 표시
+        ShowOptions(_item);
+
+        destroyButton.onClick.AddListener(() => //Inventory.instance.RemoveItem(_item));
+        iUi.DestroyItem(_item, _slot));
     }   
+
+    private void ShowOptions(Item _item)
+    {
+        if (_item.type != ItemType.EQUIPMENT)
+        {
+            for (int i = 0; i < options.Count; i++)
+            {
+                options[i].gameObject.SetActive(false);
+            }
+            return;
+        }
+        if (_item.option != null && options.Count > 0)
+        {
+            for(int i = 0; i < options.Count; i++)
+            {
+                EquipOption.EquipAttrib attrib;
+                float val;
+                bool valid = _item.option.GetOptionValue(i, out attrib, out val);
+                if (valid)
+                {
+                    options[i].gameObject.SetActive(true);
+                    options[i].text = string.Format("{0}: {1:F2}%", optionNames[(int)attrib], val);
+                }
+                else
+                {
+                    options[i].gameObject.SetActive(false);
+                }
+            }
+        }
+    }
 }

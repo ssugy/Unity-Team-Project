@@ -39,4 +39,8 @@ public class PantsEquip : ItemEffect
             InventoryUI.instance.legIcon.gameObject.SetActive(true);
         }
     }
+    public override int GetType()
+    {
+        return (int)EquipOption.EquipType.EquipTypeArmor;
+    }
 }

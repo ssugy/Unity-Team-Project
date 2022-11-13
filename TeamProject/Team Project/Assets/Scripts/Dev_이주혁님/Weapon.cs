@@ -10,6 +10,7 @@ public class Weapon : MonoBehaviour
     [HideInInspector] public Player player;
     [HideInInspector] public static Weapon weapon;
     [HideInInspector] public static BoxCollider weaponHitbox;
+
     private void OnEnable()
     {        
         weapon = GetComponent<Weapon>();

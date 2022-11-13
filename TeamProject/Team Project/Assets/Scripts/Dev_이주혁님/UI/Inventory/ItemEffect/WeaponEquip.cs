@@ -24,6 +24,7 @@ public class WeaponEquip : ItemEffect
             // 이미 장착한 아이템이 있는 경우 _tmp.effects[1].ExecuteRole(_tmp);에서 현재 장착한 아이템을 파괴하기 때문에, 무기/방패 인스턴스 생성은 그 다음에 해주어야 한다.
             GameObject weaponSrc = Resources.Load<GameObject>("Item/Weapon/" + _item.image.name);
             Instantiate<GameObject>(weaponSrc, player.rWeaponDummy);
+
         }              
 
         if (Inventory.instance.onChangeItem != null)
@@ -35,5 +36,9 @@ public class WeaponEquip : ItemEffect
             InventoryUI.instance.weaponIcon.sprite = _item.image;
             InventoryUI.instance.weaponIcon.gameObject.SetActive(true);
         }          
+    }
+    public override int GetType()
+    {
+        return (int)EquipOption.EquipType.EquipTypeWeapon;
     }
 }

@@ -36,4 +36,8 @@ public class ShieldEquip : ItemEffect
             InventoryUI.instance.shieldIcon.gameObject.SetActive(true);
         }                       
     }
+    public override int GetType()
+    {
+        return (int)EquipOption.EquipType.EquipTypeShield;
+    }
 }

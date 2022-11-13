@@ -118,6 +118,8 @@ public class Inventory : MonoBehaviour
             _item.itemCount = 1;
             itemMap[_item.GetID()] = _item;
             items.Add(_item);
+            // 해당 아이템의 Option을 지정한다.
+            _item.SetOption();
             if (onChangeItem != null)
                 onChangeItem();            
             return true;

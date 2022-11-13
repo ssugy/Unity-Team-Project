@@ -77,4 +77,9 @@ public class InventoryUI : MonoBehaviour
         _item.Unequip();
         _slot.UpdateSlotUI();
     }
+    public void DestroyItem(Item _item, Slot _slot)
+    {
+        Inventory.instance.RemoveItem(_item);
+        RedrawSlotUI();
+    }
 }
