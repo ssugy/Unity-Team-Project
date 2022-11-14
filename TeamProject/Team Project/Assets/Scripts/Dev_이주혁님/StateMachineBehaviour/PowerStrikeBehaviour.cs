@@ -18,7 +18,7 @@ public class PowerStrikeBehaviour : StateMachineBehaviour
         weapon.atkMag = atkMag;
         Player.instance.UseStamina(usingStamina);
         InstanceManager.s_instance.PlaySkillEffect(EffectName1,0.5f);
-        InstanceManager.s_instance.NormalAttackEffect("Normal_Attack_Effect3");
+        //InstanceManager.s_instance.NormalAttackEffect("Normal_Attack_Effect3");   // 이펙트가 중첩되고 과한 것 같아서 제외
         InstanceManager.s_instance.PlaySkillEffect(EffectName2,0.6f);
 
         if (JY_Boss_FireDungeon.s_instance != null)
