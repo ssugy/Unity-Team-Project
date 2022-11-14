@@ -11,6 +11,11 @@ public class JY_Bullet : MonoBehaviour
         if (other.gameObject.tag == "Wall")
             Destroy(gameObject);
         else if (other.gameObject.tag == "BossPartHitbox")
-                Debug.Log("충돌처리중:"+other.gameObject.name);
+        {
+            JY_Boss_FireDungeon.s_instance.PartDestruction(other.gameObject.name);
+            Destroy(gameObject);
+        }
+        else
+            Destroy(gameObject, 5f);
     }
 }

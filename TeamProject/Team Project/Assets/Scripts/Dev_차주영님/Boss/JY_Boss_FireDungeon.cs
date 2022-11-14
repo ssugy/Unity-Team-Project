@@ -13,6 +13,8 @@ public class JY_Boss_FireDungeon : Enemy
     public bool isAwake;
     bool DoAttack;
     bool isDead;
+    bool isStun;
+    int partCnt;
     [Header("보스 공격 범위 콜라이더")]
     public BoxCollider JumpAttackArea;
     public BoxCollider KickAttackArea;
@@ -20,8 +22,12 @@ public class JY_Boss_FireDungeon : Enemy
     public GameObject BossWeaponFire;
     public GameObject FieldFire;
     public GameObject Fireball;
-
     [HideInInspector] public int HitSkillNum;
+    [Header("부위파괴 콜라이더 및 파츠")]
+    public GameObject HeadPart;
+    public GameObject SholderPart;
+    public Collider SholderHitBox;
+    public Collider HeadHitBox;
 
     // Start is called before the first frame update
     void Awake()
@@ -35,17 +41,19 @@ public class JY_Boss_FireDungeon : Enemy
         originRotateion = transform.rotation;
         isDead = false;
         HitSkillNum = -1;
+        partCnt = 2;
     }
     private new void Start()
     {
         target = Player.instance.transform;
         isLook = true;
         isAwake = false;
+        isStun = false;
     }
 
     private void FixedUpdate()
     {
-        if (!isDead)
+        if (!isDead && isAwake)
         {
             FreezeVelocity();
             if (isLook)
@@ -57,7 +65,7 @@ public class JY_Boss_FireDungeon : Enemy
             atkTime += Time.fixedDeltaTime;
 
             float distance = Vector3.Distance(transform.position, target.position);
-            if (target != null && isAwake)
+            if (target != null)
             {
                 nav.SetDestination(target.position);
                 if (distance <= attackDistance && !DoAttack)
@@ -181,7 +189,8 @@ public class JY_Boss_FireDungeon : Enemy
         {
             if (HitSkillNum != -1)
             {
-                isAttackedAnimPlay(HitSkillNum);
+                if(!isStun)
+                    isAttackedAnimPlay(HitSkillNum);
                 reactVec = reactVec.normalized;
                 reactVec += Vector3.up;
                 StartCoroutine(KnockBack(reactVec));
@@ -262,5 +271,44 @@ public class JY_Boss_FireDungeon : Enemy
     void ShootFire()
     {
         Instantiate(Fireball, BossWeapon.transform.position, transform.rotation);
+    }
+    public void PartDestruction(string partName)
+    {
+        isStun = true;
+        if (partName.Equals("BossSholderHitBox"))
+        {
+            SholderHitBox.enabled = false;
+            SholderPart.SetActive(false);
+        }
+        else
+        {
+            HeadHitBox.enabled = false;
+            HeadPart.SetActive(false);
+        }
+
+        partCnt--;
+        switch (partCnt)
+        {
+            case 0:
+                defMag = 0.3f;
+                break;
+            case 1:
+                defMag = 0.4f;
+                break;
+            case 2:
+                break;
+        }
+        Debug.Log(partCnt);
+        anim.SetTrigger("Stun");
+    }
+    public void stunWakeUp()
+    {
+        anim.SetTrigger("StunWakeUP");
+        Invoke("BossAwake", 3f);
+        isStun = false;
+    }
+    void BossAwake()
+    {
+        isAwake = true;
     }
 }

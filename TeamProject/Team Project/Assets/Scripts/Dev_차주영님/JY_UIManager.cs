@@ -10,6 +10,7 @@ public class JY_UIManager : MonoBehaviour
     public static JY_UIManager instance;
     public Transform questMenuGroup;
     public GameObject alarmUI;
+    public GameObject partdestructionUI;
     public Image WhiteFade;
 
     public Text alarmText;
@@ -199,5 +200,9 @@ public class JY_UIManager : MonoBehaviour
     public void InitializeStatus()
     {
         Player.instance.InitializeStat();
+    }
+    public void ActiveAimUI(bool state)
+    {
+        partdestructionUI.SetActive(state);
     }
 }

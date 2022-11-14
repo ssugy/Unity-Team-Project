@@ -10,12 +10,14 @@ public class MainCamController : MonoBehaviour
     [HideInInspector] public float rotateX;           // 카메라의 상하 회전 값.
     [HideInInspector] public float rotateY;           // 카메라의 좌우 회전 값.
     public DragOn dragOn;                             // 카메라 회전을 위한 화면 드래그 값을 받아옴.
-    public Transform player;    
+    public Transform player;
+    public bool onPartDestruction;
     int layerMask;
 
     void Start()
     {        
-        camAxis = transform.parent;        
+        camAxis = transform.parent;
+        onPartDestruction = false;
         camSpeed = 30f;        
         rotateY = 0f; // 게임이 실행되었을 때, 카메라의 x축 회전을 기본값으로 맞춰줌.
         layerMask = 1 << LayerMask.NameToLayer("Building");
@@ -54,6 +56,7 @@ public class MainCamController : MonoBehaviour
     void FixedUpdate()
     {
         Rotate();
-        Move();        
+        if(!onPartDestruction)
+            Move();        
     }
 }
