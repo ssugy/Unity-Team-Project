@@ -18,7 +18,7 @@ public class HP_Bar_Boss : MonoBehaviour
     {
         if (enemy != null)
         {                        
-            hp.fillAmount = (float)enemy.CurHealth / enemy.maxHealth;
+            hp.fillAmount = (float)enemy.curHealth / enemy.maxHealth;
         }
         else
         {

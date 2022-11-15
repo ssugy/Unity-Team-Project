@@ -8,19 +8,8 @@ public class Enemy : MonoBehaviour, IPunObservable
 {
     [Header("몬스터 스탯 관련 프로퍼티")]
     public int maxHealth;             // 최대 체력.
-    protected int curHealth;             // 현재 체력.
-    public int CurHealth
-    {
-        get => curHealth;
-        set
-        {
-            curHealth = value;
-            if (curHealth <= 0)
-            {
-                StartCoroutine(OnDamage(Vector3.zero));
-            }
-        }
-    }
+    public int curHealth;             // 현재 체력.
+    
     public float defMag;              // 방어율.
     public int atkPoint;              // 몬스터의 공격력.
     public float atkMag;              // 몬스터의 공격 배율.
@@ -324,13 +313,6 @@ public class Enemy : MonoBehaviour, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if (stream.IsWriting)
-        {
-            stream.SendNext(CurHealth);
-        }
-        else
-        {
-            CurHealth = (int)stream.ReceiveNext();
-        }
+        
     }
 }
