@@ -272,7 +272,10 @@ public class Player : MonoBehaviourPun, IPunObservable
     
     public void PowerStrike()       // 스킬 1.
     {
-        photonView.RPC("PowerStrike_Do", RpcTarget.All);
+        if (PhotonNetwork.InRoom)
+            photonView.RPC("PowerStrike_Do", RpcTarget.All);
+        else
+            PowerStrike_Do();
     }
 
     [PunRPC]
@@ -294,7 +297,10 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     public void TurnAttack()        // 스킬 2.
     {
-        photonView.RPC("TurnAttack_Do", RpcTarget.All);
+        if (PhotonNetwork.InRoom)
+            photonView.RPC("TurnAttack_Do", RpcTarget.All);
+        else
+            TurnAttack_Do();
     }
     [PunRPC]
     public void TurnAttack_Do()        // 스킬 2.
@@ -316,7 +322,10 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     public void JumpAttack()        // 스킬 3.
     {
-        photonView.RPC("JumpAttack_Do", RpcTarget.All);
+        if (PhotonNetwork.InRoom)
+            photonView.RPC("JumpAttack_Do", RpcTarget.All);
+        else
+            JumpAttack_Do();
 
     }
     [PunRPC]
@@ -338,7 +347,10 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     public void Warcry()            // 스킬 4.
     {
-        photonView.RPC("Warcry_Do", RpcTarget.All);
+        if (PhotonNetwork.InRoom)
+            photonView.RPC("Warcry_Do", RpcTarget.All);
+        else
+            Warcry_Do();
     }
 
     [PunRPC]
