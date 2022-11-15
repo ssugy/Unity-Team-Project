@@ -86,42 +86,43 @@ public class JY_Boss_FireDungeon : Enemy
                 }
             }
         }*/
-
-
-        if (nav.velocity != Vector3.zero)
-        {
-            anim.SetBool("isWalk", true);
-        }
-        else
-        {
-            anim.SetBool("isWalk", false);
-        }
-
         atkTime += Time.fixedDeltaTime;
-        if (target != null)
+        if (isAwake && !isDead)
         {
-
-            nav.SetDestination(target.position);
-            float distance = Vector3.Distance(transform.position, target.position);
-            if (!isStop)
+            if (target != null)
             {
-                Vector3 dir = target.transform.position - this.transform.position;
-                this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime);
-                anim.SetBool("isWalk", true);
-            }
-
-            if (distance <= attackDistance)
-            {
-                totalTime = 0f;
-                FreezeEnemy();
-                if (atkTime >= attackCool)
-
+                if (nav.velocity != Vector3.zero)
                 {
-                    atkTime = 0f;
-                    isStop = true;
+                    anim.SetBool("isWalk", true);
+                }
+                else
+                {
+                    anim.SetBool("isWalk", false);
+                }
+
+                nav.SetDestination(target.position);
+                float distance = Vector3.Distance(transform.position, target.position);
+                if (!isStop)
+                {
+                    Vector3 dir = target.transform.position - this.transform.position;
+                    this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime);
+                    //anim.SetBool("isWalk", true);
+                }
+
+                if (distance <= attackDistance)
+                {
+                    totalTime = 0f;
                     FreezeEnemy();
-                    FreezeBoss();
-                    StartCoroutine(BossPattern(4)); 
+                    if (atkTime >= attackCool)
+
+                    {
+                        atkTime = 0f;
+                        isStop = true;
+                        Vector3 dir = target.transform.position - this.transform.position;
+                        this.transform.rotation = Quaternion.LookRotation(dir);
+                        FreezeEnemy();
+                        StartCoroutine(BossPattern(4));
+                    }
                 }
             }
         }
@@ -151,22 +152,23 @@ public class JY_Boss_FireDungeon : Enemy
     IEnumerator NormalAttack()
     {
         anim.SetTrigger("NoramlAttack");
-        yield return new WaitForSeconds(5f);
-        UnFreezeAll();
+        BossAttackIntermission();
+        yield return null;
     }
     IEnumerator WhirlAttack()
     {
         anim.SetTrigger("WhirlAttack");
+        BossAttackIntermission();
         yield return new WaitForSeconds(1f);
         ShootFire();
         yield return new WaitForSeconds(1f);
         ShootFire();
         yield return new WaitForSeconds(3f);
-        UnFreezeAll();
     }
     IEnumerator JumpAttack()
     {
         anim.SetTrigger("JumpAttack");
+        BossAttackIntermission();
         tauntVec = target.position;
         yield return new WaitForSeconds(0.5f);
         while(transform.position != tauntVec)
@@ -179,11 +181,11 @@ public class JY_Boss_FireDungeon : Enemy
         JumpAttackArea.enabled = false;
         hitbox.enabled = true;
         yield return new WaitForSeconds(3f);
-        UnFreezeAll();
     }
     IEnumerator Kick()
     {
         anim.SetTrigger("KickAttack");
+        BossAttackIntermission();
         yield return new WaitForSeconds(1f);
         StartCoroutine("kickAttackAreaOnOff");
         yield return new WaitForSeconds(0.5f);
@@ -193,7 +195,6 @@ public class JY_Boss_FireDungeon : Enemy
         yield return new WaitForSeconds(1f);
         StartCoroutine("kickAttackAreaOnOff");
         yield return new WaitForSeconds(2f);
-        UnFreezeAll();
     }
     IEnumerator kickAttackAreaOnOff()
     {
@@ -243,22 +244,6 @@ public class JY_Boss_FireDungeon : Enemy
         }
     }
 
-    void FreezeVelocity()
-    {
-        rigid.velocity = Vector3.zero;
-        rigid.angularVelocity = Vector3.zero;
-    }
-
-    void FreezeBoss()
-    {
-        isStop = true;
-        DoAttack = true;
-    }
-    void UnfreezeBoss()
-    {
-        isStop = false;
-        DoAttack = false;
-    }
     /// <summary>
     /// 스킬에 따른 다른 피격모션 재생
     /// </summary>
@@ -281,7 +266,6 @@ public class JY_Boss_FireDungeon : Enemy
     public void ClearAttackCool()
     {
         FreezeEnemy();
-        FreezeBoss();
         atkTime = attackCool - 3f;
         Invoke("UnFreezeAll", 3f);
     }
@@ -290,11 +274,6 @@ public class JY_Boss_FireDungeon : Enemy
         KickAttackArea.enabled = false;
         JumpAttackArea.enabled = false;
         BossWeapon.enabled = false;
-    }
-    void UnFreezeAll()
-    {
-        UnfreezeBoss();
-        UnfreezeEnemy();
     }
     void ShootFire()
     {
@@ -331,7 +310,7 @@ public class JY_Boss_FireDungeon : Enemy
     }
     void BossAttackIntermission()
     {
-        Invoke("UnfreezeEnemy",2f);
+        Invoke("UnfreezeEnemy",5f);
     }
     public void stunWakeUp()
     {
@@ -339,8 +318,8 @@ public class JY_Boss_FireDungeon : Enemy
         Invoke("BossAwake", 3f);
         isStun = false;
     }
-    void BossAwake()
+    public void BossRotate()
     {
-        isAwake = true;
+        isStop = false;
     }
 }
