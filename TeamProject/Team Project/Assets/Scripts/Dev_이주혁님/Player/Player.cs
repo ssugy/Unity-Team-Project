@@ -198,7 +198,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         SetState();
         playerStat.CurHP = playerStat.HP;
         playerStat.CurSP = playerStat.SP;               
-        controller.ObserveEveryValueChanged(_ => _.isGrounded).ThrottleFrame(30).Subscribe(_ => isGround = _);
+        controller.ObserveEveryValueChanged(_ => _.isGrounded).ThrottleFrame(100).Subscribe(_ => isGround = _);
         // UniRx를 이용하여 isGrounded 프로퍼티가 0.3초 이상 유지되어야 상태가 전이되게끔 함. isGrounded가 정교하지 않기 때문.
         
         AvatarSet();
@@ -269,7 +269,14 @@ public class Player : MonoBehaviourPun, IPunObservable
             playerAni.SetTrigger("isAttack");
         }              
     }
+    
     public void PowerStrike()       // 스킬 1.
+    {
+        photonView.RPC("PowerStrike_Do", RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void PowerStrike_Do()
     {
         if (Weapon.weapon == null)
         {
@@ -284,7 +291,13 @@ public class Player : MonoBehaviourPun, IPunObservable
             StartCoroutine(BattleUI.instance.Cooldown(4f, BattleUI.instance.skill_1, BattleUI.instance.cool_1));
         }
     }
+
     public void TurnAttack()        // 스킬 2.
+    {
+        photonView.RPC("TurnAttack_Do", RpcTarget.All);
+    }
+    [PunRPC]
+    public void TurnAttack_Do()        // 스킬 2.
     {
         if (Weapon.weapon == null)
         {
@@ -298,9 +311,16 @@ public class Player : MonoBehaviourPun, IPunObservable
             playerAni.Play("Player Skill 2");
             StartCoroutine(BattleUI.instance.Cooldown(4f, BattleUI.instance.skill_2, BattleUI.instance.cool_2));
         }
-              
     }
+
+
     public void JumpAttack()        // 스킬 3.
+    {
+        photonView.RPC("JumpAttack_Do", RpcTarget.All);
+
+    }
+    [PunRPC]
+    public void JumpAttack_Do()        // 스킬 3.
     {
         if (Weapon.weapon == null)
         {
@@ -315,7 +335,14 @@ public class Player : MonoBehaviourPun, IPunObservable
             StartCoroutine(BattleUI.instance.Cooldown(8f, BattleUI.instance.skill_3, BattleUI.instance.cool_3));
         }
     }
+
     public void Warcry()            // 스킬 4.
+    {
+        photonView.RPC("Warcry_Do", RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void Warcry_Do()            // 스킬 4.
     {
         if (Weapon.weapon == null)
         {
@@ -324,10 +351,10 @@ public class Player : MonoBehaviourPun, IPunObservable
             return;
         }
         if (enableAtk)
-        { 
+        {
             SetRotate();
             playerAni.Play("Player Skill 4");
-            if(photonView.IsMine)
+            if (photonView.IsMine)
                 StartCoroutine(BattleUI.instance.Cooldown(10f, BattleUI.instance.skill_4, BattleUI.instance.cool_4));
         }
     }

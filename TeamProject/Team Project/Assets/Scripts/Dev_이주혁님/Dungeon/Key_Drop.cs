@@ -25,7 +25,7 @@ public class Key_Drop : MonoBehaviour
     }
     private void Update()
     {
-        if (enemy.curHealth <= 0 && !keyDrop) 
+        if (enemy.CurHealth <= 0 && !keyDrop) 
         {
             PickUpKey();
             keyDrop = true;

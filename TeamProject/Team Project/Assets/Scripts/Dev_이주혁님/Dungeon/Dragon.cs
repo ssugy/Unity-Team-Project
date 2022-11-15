@@ -22,6 +22,7 @@ public class Dragon : Enemy
         atkTime = 0f;
         fireballPrefab = Resources.Load<GameObject>("Monster\\Fireball");
         isStop = false;
+        curHealth = maxHealth;
     }
     
     void FixedUpdate()

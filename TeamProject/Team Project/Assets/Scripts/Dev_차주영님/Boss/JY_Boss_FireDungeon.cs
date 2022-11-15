@@ -42,6 +42,7 @@ public class JY_Boss_FireDungeon : Enemy
         isDead = false;
         HitSkillNum = -1;
         partCnt = 2;
+        curHealth = maxHealth;
     }
     private new void Start()
     {
