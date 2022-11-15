@@ -40,13 +40,13 @@ public class InventoryUI : MonoBehaviour
     } 
     public void UpdateGold()
     {
-        gold.text = Player.instance.playerStat.Gold.ToString();
+        gold.text = JY_CharacterListManager.s_instance.playerList[0].playerStat.Gold.ToString();
     }
 
     private void Awake()
     {
         instance ??= this;
-        inventory = Inventory.instance;
+        inventory = JY_CharacterListManager.s_instance.invenList[0];
         slots = slotHolder.GetComponentsInChildren<Slot>();
 
     }
@@ -79,7 +79,7 @@ public class InventoryUI : MonoBehaviour
     }
     public void DestroyItem(Item _item, Slot _slot)
     {
-        Inventory.instance.RemoveItem(_item);
+        JY_CharacterListManager.s_instance.invenList[0].RemoveItem(_item);
         RedrawSlotUI();
     }
 }

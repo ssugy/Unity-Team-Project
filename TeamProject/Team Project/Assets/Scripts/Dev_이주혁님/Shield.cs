@@ -9,8 +9,8 @@ public class Shield : MonoBehaviour
     [HideInInspector] public static Shield shield;
     private void OnEnable()
     {
-        shield = GetComponent<Shield>();        
-        player = Player.instance;        
+        shield = GetComponent<Shield>();
+        player = GetComponentInParent<Player>();        
         player?.SetState();
     }
     private void OnDisable()

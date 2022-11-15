@@ -36,7 +36,7 @@ public class BattleUI : MonoBehaviour
     void Start()
     {
         instance ??= this;
-        player = Player.instance;
+        player = JY_CharacterListManager.s_instance.playerList[0];
         normalAtk.onClick.AddListener(player.NormalAttack);
         skill_1.onClick.AddListener(player.PowerStrike);
         //skill_1.onClick.AddListener(() => StartCoroutine(Cooldown(4f, skill_1, cool_1)));

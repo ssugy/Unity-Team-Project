@@ -2987,24 +2987,25 @@ MonoBehaviour:
     dexterity: 0
     job: 0
     gender: 0
-    level: 0
     customized: 
+    statPoint: 0
+    level: 0
     Exp: 0
     HP: 0
     SP: 0
     criPro: 0
     defPoint: 0
     defMag: 0
-    statPoint: 0
     atkPoint: 0
     HPRecoverCoolTime: 3
     HpRecover: 0
     SpRecover: 0
     isDead: 0
   camAxis: {fileID: 0}
-  playerAni: {fileID: 0}
   playerJoysitck: {fileID: 0}
+  playerAni: {fileID: 0}
   controller: {fileID: 0}
+  setChara: {fileID: 0}
   rotateSpeed: 0
   moveSpeed: 0
   gravity: 0
@@ -3012,11 +3013,11 @@ MonoBehaviour:
   enableMove: 0
   enableAtk: 0
   enableRecoverSP: 0
+  isGround: 0
   isGaurd: 0
   rWeaponDummy: {fileID: 436675578}
   WeaponEffect: {fileID: 1157836330088897736}
   lWeaponDummy: {fileID: 2952390939901109010}
-  isGround: 0
 --- !u!114 &784678566230183479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3049,6 +3050,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
+  - {fileID: 4476257686687804683}
   - {fileID: 3228529404043378632}
   - {fileID: 6509619811308943723}
   sceneViewId: 0
@@ -3070,31 +3072,31 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 1
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isMove
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isAttack
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isRoll
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isLArm
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isGround
   - Type: 1
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isAttacked
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isDead
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isExhausted
   - Type: 1
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: AtkSpeed
   m_SynchronizeLayers:
   - SynchronizeType: 0

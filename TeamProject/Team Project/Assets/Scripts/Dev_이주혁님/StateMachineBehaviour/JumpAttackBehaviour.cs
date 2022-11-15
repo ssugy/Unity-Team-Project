@@ -14,11 +14,11 @@ public class JumpAttackBehaviour : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        player = Player.instance;
+        player = animator.GetComponent<Player>();
         weapon = Weapon.weapon;
         weapon.atkMag = atkMag;
         time = 0f;
-        Player.instance.UseStamina(usingStamina);
+        animator.GetComponent<Player>().UseStamina(usingStamina);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

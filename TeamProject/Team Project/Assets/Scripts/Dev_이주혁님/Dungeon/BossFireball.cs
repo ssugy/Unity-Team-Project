@@ -12,7 +12,7 @@ public class BossFireball : Fireball
     }
     private void OnEnable()
     {
-        targetVec = Player.instance.transform.position;
+        targetVec = JY_CharacterListManager.s_instance.playerList[0].transform.position;
         moveVec = targetVec - transform.position;
         Invoke("DestroySelf", 4f);
     }

@@ -45,7 +45,7 @@ public class JY_Boss_FireDungeon : Enemy
     }
     private new void Start()
     {
-        target = Player.instance.transform;
+        target = JY_CharacterListManager.s_instance.playerList[0].transform;
         isLook = true;
         isAwake = false;
         isStun = false;
@@ -58,7 +58,7 @@ public class JY_Boss_FireDungeon : Enemy
             FreezeVelocity();
             if (isLook)
             {
-                lookVec = Player.instance.movement;
+                lookVec = JY_CharacterListManager.s_instance.playerList[0].movement;
                 Vector3 dir = target.transform.position - this.transform.position;
                 this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime);
             }
@@ -171,10 +171,10 @@ public class JY_Boss_FireDungeon : Enemy
         yield return new WaitForSeconds(0.3f);
         KickAttackArea.enabled = false;
     }
-    public override void IsAttacked(int _damage)
+    public override void IsAttacked(int _damage, Vector3 _player)
     {
         curHealth -= _damage;
-        Vector3 reactVec = transform.position - Player.instance.transform.position; // ³Ë¹é °Å¸®.
+        Vector3 reactVec = transform.position - _player; // ³Ë¹é °Å¸®.
         StartCoroutine(OnDamage(reactVec*0.2f));
         hpbar = Enemy_HP_UI.GetObject();
         hpbar.Recognize(this);

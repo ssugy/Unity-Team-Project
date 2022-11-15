@@ -112,16 +112,31 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     // 자신의 캐릭터를 인스턴스화. PhotonNetwork.Instantiate는 반드시 룸 안에 있을 때만 사용할 수 있다.
     public void SetMine(Scene scene, LoadSceneMode mode)
-    {                    
+    {
+        // 로딩 씬에서는 인스턴스를 생성하지 않음. 빌드에서의 씬 Index를 통해 로딩씬을 판별.
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+            return;
+
         if (currentRoom != null)                    
             #region 던전 씬에서는 방에 있으므로 PhotonNetwork.Instantiate
             switch (JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].gender)
             {
                 case EGender.MALE:
-                    PhotonNetwork.Instantiate("Prefabs/BaseCharacterM", Vector3.zero, Quaternion.identity);
+                    {
+                        GameObject mine = PhotonNetwork.Instantiate("Prefabs/BaseCharacterM", Vector3.zero, Quaternion.identity);
+                        mine.name = PhotonNetwork.LocalPlayer.NickName;
+                        JY_CharacterListManager.s_instance.playerList.Insert(0, mine.GetComponent<Player>());
+                        JY_CharacterListManager.s_instance.invenList.Insert(0, mine.GetComponent<Inventory>());
+
+                    }                    
                     break;
                 case EGender.FEMALE:
-                    PhotonNetwork.Instantiate("Prefabs/BaseCharacterF", Vector3.zero, Quaternion.identity);
+                    {
+                        GameObject mine = PhotonNetwork.Instantiate("Prefabs/BaseCharacterF", Vector3.zero, Quaternion.identity);
+                        mine.name = PhotonNetwork.LocalPlayer.NickName;
+                        JY_CharacterListManager.s_instance.playerList.Insert(0, mine.GetComponent<Player>());
+                        JY_CharacterListManager.s_instance.invenList.Insert(0, mine.GetComponent<Inventory>());
+                    }
                     break;
                 default:
                     Debug.Log("성별 데이터 오류");
@@ -133,10 +148,20 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             switch (JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].gender)
             {
                 case EGender.MALE:
-                    Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/BaseCharacterM"));
+                    {
+                        GameObject mine = Instantiate(Resources.Load<GameObject>("Prefabs/BaseCharacterM"));
+                        mine.name = PhotonNetwork.LocalPlayer.NickName;
+                        JY_CharacterListManager.s_instance.playerList.Insert(0, mine.GetComponent<Player>());
+                        JY_CharacterListManager.s_instance.invenList.Insert(0, mine.GetComponent<Inventory>());
+                    }
                     break;
                 case EGender.FEMALE:
-                    Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/BaseCharacterF"));
+                    {
+                        GameObject mine = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/BaseCharacterF"));
+                        mine.name = PhotonNetwork.LocalPlayer.NickName;
+                        JY_CharacterListManager.s_instance.playerList.Insert(0, mine.GetComponent<Player>());
+                        JY_CharacterListManager.s_instance.invenList.Insert(0, mine.GetComponent<Inventory>());
+                    }
                     break;
                 default:
                     Debug.Log("성별 데이터 오류");

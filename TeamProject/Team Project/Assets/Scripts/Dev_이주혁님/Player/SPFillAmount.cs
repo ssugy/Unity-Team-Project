@@ -13,7 +13,7 @@ public class SPFillAmount : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        stat = Player.instance.playerStat;
+        stat = JY_CharacterListManager.s_instance.playerList[0].playerStat;
         isExhausted = false;
     }
 
@@ -21,18 +21,18 @@ public class SPFillAmount : MonoBehaviour
     void Update()
     {
 
-        if (Player.instance.enableRecoverSP && stat.CurSP < stat.SP)
+        if (JY_CharacterListManager.s_instance.playerList[0].enableRecoverSP && stat.CurSP < stat.SP)
         {
             stat.CurSP += stat.SpRecover * Time.deltaTime;
         }
         if (stat.CurSP <= 0.1f)
         {
-            Player.instance.Exhausted();
+            JY_CharacterListManager.s_instance.playerList[0].Exhausted();
             isExhausted = true;
         }
         else if (isExhausted && stat.CurSP >= stat.SP * 0.2)
         {
-            Player.instance.Recovered();
+            JY_CharacterListManager.s_instance.playerList[0].Recovered();
             isExhausted = false;
         }
         barFront.fillAmount = (float)stat.CurSP / stat.SP;

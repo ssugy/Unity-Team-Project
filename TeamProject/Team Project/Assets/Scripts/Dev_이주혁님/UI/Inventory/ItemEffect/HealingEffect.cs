@@ -9,6 +9,6 @@ public class HealingEffect : ItemEffect
     public override void ExecuteRole(Item _item)
     {
         Debug.Log("체력 회복");
-        Player.instance.playerStat.CurHP += healingPoint;        
+        JY_CharacterListManager.s_instance.playerList[0].playerStat.CurHP += healingPoint;        
     }
 }

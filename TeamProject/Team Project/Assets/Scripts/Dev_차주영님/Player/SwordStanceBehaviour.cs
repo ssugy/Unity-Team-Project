@@ -7,8 +7,8 @@ public class SwordStanceBehaviour : StateMachineBehaviour
     //OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if(Player.instance!=null)
-            Player.instance.WEOff();
+        if(animator.GetComponent<Player>()!=null)
+            animator.GetComponent<Player>().WEOff();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

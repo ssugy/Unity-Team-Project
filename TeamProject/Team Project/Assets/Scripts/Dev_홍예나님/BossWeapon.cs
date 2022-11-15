@@ -19,6 +19,6 @@ public class BossWeapon : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log("Attack Weapon");
-        Player.instance.IsAttacked(30);
+        other.GetComponent<Player>().IsAttacked(30);
     }
 }

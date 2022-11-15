@@ -10,7 +10,7 @@ public class EXPFillAmount : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        stat = Player.instance.playerStat;
+        stat = JY_CharacterListManager.s_instance.playerList[0].playerStat;
     }
 
     // Update is called once per frame

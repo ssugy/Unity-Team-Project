@@ -56,7 +56,7 @@ public class InfoPanel : MonoBehaviour
                 typeText.text = "소비";
                 useButtonText.text = "사용";
                 useButton.onClick.AddListener(()=>_item.Use());     // 사용 버튼을 누르면 소비 아이템의 효과가 발동.
-                useButton.onClick.AddListener(() => Inventory.instance.RemoveItem(_item));      // 사용 버튼을 누르면 아이템이 사라짐.
+                useButton.onClick.AddListener(() => JY_CharacterListManager.s_instance.invenList[0].RemoveItem(_item));      // 사용 버튼을 누르면 아이템이 사라짐.
                 break;
             case ItemType.INGREDIENTS:
                 typeText.text = "재료";

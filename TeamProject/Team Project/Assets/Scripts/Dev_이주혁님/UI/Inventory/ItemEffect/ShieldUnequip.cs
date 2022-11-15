@@ -7,21 +7,22 @@ public class ShieldUnequip : ItemEffect
 {
     public override void ExecuteRole(Item _item)
     {
-        if (Player.instance.playerStat.equiped.TryGetValue(EquipPart.SHIELD, out Item _val))
+        
+        if (JY_CharacterListManager.s_instance.playerList[0].playerStat.equiped.TryGetValue(EquipPart.SHIELD, out Item _val))
         {
             _val.equipedState = EquipState.UNEQUIPED;
-            Player.instance.playerStat.equiped.Remove(EquipPart.SHIELD);
+            JY_CharacterListManager.s_instance.playerList[0].playerStat.equiped.Remove(EquipPart.SHIELD);
         }
-        while (Player.instance.lWeaponDummy.GetComponentInChildren<Shield>() != null)
+        while (JY_CharacterListManager.s_instance.playerList[0].lWeaponDummy.GetComponentInChildren<Shield>() != null)
         {
-            DestroyImmediate(Player.instance.lWeaponDummy.GetComponentInChildren<Shield>().gameObject);
+            DestroyImmediate(JY_CharacterListManager.s_instance.playerList[0].lWeaponDummy.GetComponentInChildren<Shield>().gameObject);
         }
-        if (Player.instance.lWeaponDummy.GetComponentInChildren<Staff>() != null)
+        if (JY_CharacterListManager.s_instance.playerList[0].lWeaponDummy.GetComponentInChildren<Staff>() != null)
         {
-            Destroy(Player.instance.lWeaponDummy.GetComponentInChildren<Staff>().gameObject);
+            Destroy(JY_CharacterListManager.s_instance.playerList[0].lWeaponDummy.GetComponentInChildren<Staff>().gameObject);
         }
-        if (Inventory.instance.onChangeItem != null)
-            Inventory.instance.onChangeItem();
+        if (JY_CharacterListManager.s_instance.invenList[0].onChangeItem != null)
+            JY_CharacterListManager.s_instance.invenList[0].onChangeItem();
         if (InventoryUI.instance != null)
         {
             InventoryUI.instance.shieldIcon.sprite = null;

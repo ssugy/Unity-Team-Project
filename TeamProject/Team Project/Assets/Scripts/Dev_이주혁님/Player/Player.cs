@@ -5,44 +5,27 @@ using UnityEngine.EventSystems;
 using UniRx;
 using CartoonHeroes;
 using static CartoonHeroes.SetCharacter;
+using Photon.Pun;
+using Photon.Realtime;
 
-public enum Sex
-{
-    NULL,
-    male,
-    female
-}
-public enum Adjustable
-{
-    health,
-    stamina,
-    strength,
-    dexterity
-}
-public enum EquipPart
-{
-    WEAPON,
-    SHIELD,
-    HELMET,
-    CHEST,
-    LEG
-}
+public enum Sex { NULL, MALE, FEMALE }
+public enum Adjustable { HEALTH, STAMINA, STRENGTH, DEXTERITY }
+public enum EquipPart { WEAPON, SHIELD, HELMET, CHEST, LEG }
+
 [System.Serializable]
 public class PlayerStat
 {
-    [Header("Adjustable")]
+    [Header("조정 가능")]
     public int health;
-    public int stamina;
-    public int strength;
-    public int dexterity;
+    public int stamina, strength, dexterity;    
 
-    [Header("Statistic")]
+    [Header("조정 불가")]
     public EJob job;
     public EGender gender;
-    public int level;
     public int[] customized;
-    public Dictionary<EquipPart, Item> equiped = new Dictionary<EquipPart, Item>();
-    public int Exp;    
+    public Dictionary<EquipPart, Item> equiped = new Dictionary<EquipPart, Item>();    
+
+    public int statPoint, level, Exp, HP;
     private int curExp;
     public int CurExp           // 프로퍼티를 사용하여 현재 경험치가 증가했을 때만 LevelUp을 판정.
     {
@@ -51,13 +34,9 @@ public class PlayerStat
         {
             curExp = value;
             if (curExp >= Exp)
-            {
-                Player.instance.LevelUp();
-            }
-            
+                JY_CharacterListManager.s_instance.playerList[0].LevelUp();
         }
-    }
-    public int HP;
+    }                   
     private int curHP;
     public int CurHP
     {
@@ -65,14 +44,10 @@ public class PlayerStat
         set 
         {
             curHP = value;
-            if (curHP < 0)
-            {
-                curHP = 0;                
-            }
-            else if (curHP > HP)
-            {
-                curHP = HP;
-            }
+            if (curHP < 0)            
+                curHP = 0;                         
+            else if (curHP > HP)            
+                curHP = HP;            
         }
     }
     public float SP;
@@ -83,36 +58,32 @@ public class PlayerStat
         set 
         {
             curSP = value;
-            if (curSP < 0)
-            {
-                curSP = 0;
-            }
-            else if (curSP > SP)
-            {
-                curSP = SP;
-            }
+            if (curSP < 0)            
+                curSP = 0;            
+            else if (curSP > SP)            
+                curSP = SP;            
         }
     }
+
     public float criPro;
     public const float criMag = 1.5f;
+
     public int defPoint;
     public float defMag;
-    public int statPoint;
-    public int atkPoint;
-    private int gold;
+    
+    public int atkPoint;    
 
     public float HPRecoverCoolTime = 3f;
     public int HpRecover;
     public int SpRecover;
+    private int gold;
     public int Gold
     {
         get { return gold; }
         set {            
             gold = value;
-            if (gold < 0)
-            {
-                gold = 0;
-            }            
+            if (gold < 0)            
+                gold = 0;                        
             InventoryUI.instance?.UpdateGold();             
             }
     }
@@ -140,66 +111,68 @@ public class PlayerStat
 }
 
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviourPun, IPunObservable
 {    
-    public static Player instance;
+    //public static Player instance;
     public PlayerStat playerStat;
     public Transform camAxis;                     // 메인 카메라 축.      
-    [Header("플레이어의 컴포넌트")]
-    public Animator playerAni;                    // 플레이어의 애니메이션.
     public FloatingJoystick playerJoysitck;          // 조이스틱 입력을 받아옴.
+    [Header("플레이어의 컴포넌트")]
+    public Animator playerAni;                    // 플레이어의 애니메이션.    
     public CharacterController controller;        // 플레이어의 캐릭터 컨트롤러.
-    
+    public SetCharacter setChara;
+
     [Header("이동 관련 변수")]
     public float rotateSpeed;
     public float moveSpeed;
+
     [HideInInspector] public float gravity;
     [HideInInspector] public Vector3 movement;    // 조이스틱 입력 이동 방향.
     [HideInInspector] public bool enableMove;      // 이동 가능 여부를 표시.
     [HideInInspector] public bool enableAtk;       // 공격 가능 여부 표시.
     [HideInInspector] public bool enableRecoverSP; // 스태미너 회복 가능 여부 표시.
+    [HideInInspector] public bool isGround;
     [HideInInspector] public bool isGaurd; // 방패막기 스킬 플래그
 
     public Transform rWeaponDummy;              // 오른손 무기 더미.
     private TrailRenderer rWeaponEffect;        // 오른손 무기 이펙트. (검기)
     public GameObject WeaponEffect;
     public Transform lWeaponDummy;              // 왼손 무기 더미.
-    [HideInInspector] public bool isGround;    
-    private Dictionary<int, int> EXP_TABLE;
-
-
-    SetCharacter setChara;
+      
+    private Dictionary<int, int> EXP_TABLE;      
 
     private void Awake()
-    {        
-        instance = this;
+    {                
         playerStat = new();
         EXP_TABLE = new Dictionary<int, int>();
         TextAsset expTable = Resources.Load<TextAsset>("EXP_TABLE");
         string[] tmpTxt = expTable.text.Split("\n");        
         tmpTxt = tmpTxt[1].Split(",");
-        for (int i =1; i < tmpTxt.Length; i++)
-        {            
-            EXP_TABLE.Add(i, int.Parse(tmpTxt[i]));                       
-        }
+        for (int i =1; i < tmpTxt.Length; i++)                    
+            EXP_TABLE.Add(i, int.Parse(tmpTxt[i]));                                    
     }
 
     private void Start()
-    {
-        isGround = true;
+    {        
         camAxis = Camera.main.transform.parent;
-        playerAni = GetComponent<Animator>();
         playerJoysitck = FloatingJoystick.instance;
+
+        playerAni = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
+        setChara = GetComponent<SetCharacter>();
+
+        isGround = true;
         enableMove = true;
         enableAtk = true;
         isGaurd = false;
         enableRecoverSP = true;
+
         movement = Vector3.zero;
         rotateSpeed = 5f;
         moveSpeed = 8f;
         gravity = 0f;
-        if (rWeaponDummy.childCount != 0)
+
+        if (rWeaponDummy.childCount > 0)
         {
             rWeaponEffect = rWeaponDummy.GetChild(0).GetChild(2).GetComponent<TrailRenderer>();
         }
@@ -212,9 +185,7 @@ public class Player : MonoBehaviour
             playerStat.customized = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].characterAvatar;
             playerStat.level = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level;
             if (EXP_TABLE.TryGetValue(playerStat.level, out int _exp))
-            {
-                playerStat.Exp = _exp;
-            }
+                playerStat.Exp = _exp;        
             playerStat.CurExp = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp;
             playerStat.Gold = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].gold;
             playerStat.statPoint = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].statusPoint;
@@ -226,31 +197,28 @@ public class Player : MonoBehaviour
         JY_UIManager.instance?.StatusDataRenew();
         SetState();
         playerStat.CurHP = playerStat.HP;
-        playerStat.CurSP = playerStat.SP;
-        if (EXP_TABLE.TryGetValue(playerStat.level, out int _tmpExp))       // 테이블에서 필요 경험치를 불러옴.
-        {
-            playerStat.Exp = _tmpExp;
-        }
+        playerStat.CurSP = playerStat.SP;               
         controller.ObserveEveryValueChanged(_ => _.isGrounded).ThrottleFrame(30).Subscribe(_ => isGround = _);
         // UniRx를 이용하여 isGrounded 프로퍼티가 0.3초 이상 유지되어야 상태가 전이되게끔 함. isGrounded가 정교하지 않기 때문.
-
-
-        setChara = GetComponent<SetCharacter>();
+        
         AvatarSet();
+        if (!JY_CharacterListManager.s_instance.playerList.Contains(this))
+            JY_CharacterListManager.s_instance.playerList.Add(this);
     }
 
     void Move()
     {
         if (playerJoysitck == null)
             return;
+
         /** 조이스틱 입력을 감지하여 플레이어의 이동 방향을 결정.
          * x, z값은 -1과 1 사이의 값으로 결정됨. */
         movement = new Vector3(playerJoysitck.Horizontal, 0,
             playerJoysitck.Vertical);
-        if (!enableMove)  // 공격 중일 땐 이동을 못하게 함.
-        {
+
+        if (!enableMove)  // 공격 중일 땐 이동을 못하게 함.        
             movement = Vector3.zero;
-        }
+        
         if (movement != Vector3.zero)   // 무브먼트가 영벡터가 아닐 때 캐릭터 이동.
         {
             Quaternion target = Quaternion.Euler(new Vector3(0, camAxis.rotation.eulerAngles.y, 0))
@@ -262,39 +230,24 @@ public class Player : MonoBehaviour
              * 따라서 플레이어의 애니메이션 상태를 전환함. */
             playerAni.SetFloat("isMove", movement.magnitude);
         }
-        else
-        {
+        else        
             playerAni.SetFloat("isMove", 0f);
-        }
-        if (!controller.isGrounded)
-        {
-            gravity = -30f;
-        }
-        else
-        {
-            gravity = 0f;
-        }
+
+        gravity = controller.isGrounded ? 0f : -30f;        
+        
         controller.Move(transform.forward * moveSpeed * movement.magnitude *
             Time.deltaTime + new Vector3(0, gravity * Time.deltaTime, 0));
     }    
     void FixedUpdate()
     {
-        Move();
-
-        if (!isGround)
+        if (photonView.IsMine || JY_CharacterListManager.s_instance.playerList[0].Equals(this))
         {
-            playerAni.SetBool("isGround", false);
-        }
-        else
-        {            
-            playerAni.SetBool("isGround", true);
-        }
+            Move();
+            playerAni.SetBool("isGround", isGround);
+        }        
     }
 
-    public void Fall()
-    {
-        playerAni.SetBool("isGround", false);
-    }
+    public void Fall() => playerAni.SetBool("isGround", false);
 
     public void SetRotate()
     {
@@ -374,7 +327,8 @@ public class Player : MonoBehaviour
         { 
             SetRotate();
             playerAni.Play("Player Skill 4");
-            StartCoroutine(BattleUI.instance.Cooldown(10f, BattleUI.instance.skill_4, BattleUI.instance.cool_4));
+            if(photonView.IsMine)
+                StartCoroutine(BattleUI.instance.Cooldown(10f, BattleUI.instance.skill_4, BattleUI.instance.cool_4));
         }
     }
 
@@ -384,15 +338,11 @@ public class Player : MonoBehaviour
         CancelInvoke("_Roll");
         Invoke("_Roll", 0.4f);
     }
-    void _Roll()
-    {
-        playerAni.SetBool("isRoll", false);
-    }
-    public void RollMove()
-    {
-        controller.Move(transform.forward * 6f *
+    void _Roll() => playerAni.SetBool("isRoll", false);
+
+    public void RollMove() => controller.Move(transform.forward * 6f *
             Time.deltaTime + new Vector3(0, gravity * Time.deltaTime, 0));
-    }
+    
 
     public void LArmDown(PointerEventData data)
     {
@@ -441,17 +391,18 @@ public class Player : MonoBehaviour
         playerAni.SetTrigger("isDead");
         transform.tag = "Dead";
         gameObject.layer = 16;      // 죽으면 레이어 Dead로 변경.
-        Camera.main.GetComponent<MainCamController>().enabled = false;   // 플레이어가 사망하면 더 이상 카메라가 움직이지 않게 함.    
-        Camera.main.GetComponent<WhenPlayerDie>().enabled = true;
-        BattleUI.instance.deathUI.SetActive(true);
+        if (photonView.IsMine)
+        {
+            Camera.main.GetComponent<MainCamController>().enabled = false;   // 플레이어가 사망하면 더 이상 카메라가 움직이지 않게 함.    
+            Camera.main.GetComponent<WhenPlayerDie>().enabled = true;
+            BattleUI.instance.deathUI.SetActive(true);
+        }        
     }
     private void OnTriggerEnter(Collider other)
     {
         // 화염, 심연 등 닿으면 죽는 오브젝트와 닿으면 사망함.        
-        if (other.CompareTag("Die"))
-        {
-            Die();
-        }
+        if (other.CompareTag("Die"))        
+            Die();        
     }
 
     // 애니메이션 이벤트 함수.
@@ -510,8 +461,7 @@ public class Player : MonoBehaviour
     {
         playerStat.statPoint = (playerStat.level - 1) * 3;
         playerStat.InitialStat(playerStat.job);
-        SetState();        
-        // UI 매니저를 호출하기 위해 퀘스트 매니저를 경유하고 있는데 좋지 않아 보입니다.
+        SetState();               
         JY_UIManager.instance.StatusDataRenew();
     }
     public void StatUp(Adjustable _stat)
@@ -520,22 +470,22 @@ public class Player : MonoBehaviour
         {
             switch (_stat)
             {
-                case Adjustable.health:
+                case Adjustable.HEALTH:
                     --playerStat.statPoint;
                     ++playerStat.health;
                     SetState();
                     break;
-                case Adjustable.stamina:
+                case Adjustable.STAMINA:
                     --playerStat.statPoint;
                     ++playerStat.stamina;
                     SetState();
                     break;
-                case Adjustable.strength:
+                case Adjustable.STRENGTH:
                     --playerStat.statPoint;
                     ++playerStat.strength;
                     SetState();
                     break;
-                case Adjustable.dexterity:
+                case Adjustable.DEXTERITY:
                     --playerStat.statPoint;
                     ++playerStat.dexterity;
                     SetState();
@@ -602,7 +552,7 @@ public class Player : MonoBehaviour
         {
             SoundAttack();
             int damage = AttackDamage(Weapon.weapon.atkMag, enemy.defMag);
-            enemy.IsAttacked(damage);            
+            enemy.IsAttacked(damage, transform.position);            
         }        
     }
     public void PowerStrikeDamage()
@@ -760,29 +710,39 @@ public class Player : MonoBehaviour
     // 플레이어 스크립트에서 인포, 인벤 데이터를 JInfoData로 옮기는 메소드가 필요.
     public void SaveData()
     {
-        InfoData tmp = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum];
-        tmp.level = playerStat.level;
-        tmp.exp = playerStat.CurExp;
-        tmp.gold = playerStat.Gold;
-        tmp.statusPoint = playerStat.statPoint;
-        tmp.characterAvatar = playerStat.customized;
-        tmp.status[(int)Adjustable.health] = playerStat.health;
-        tmp.status[(int)Adjustable.stamina] = playerStat.stamina;
-        tmp.status[(int)Adjustable.strength] = playerStat.strength;
-        tmp.status[(int)Adjustable.dexterity] = playerStat.dexterity;
-        JY_CharacterListManager.CopyInventoryData(Inventory.instance.items, tmp.itemList);
-        JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum] = tmp;
+        if (JY_CharacterListManager.s_instance.playerList[0].Equals(this))
+        {
+            Debug.Log("데이터 세이브");
+            InfoData tmp = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum];
+            tmp.level = playerStat.level;
+            tmp.exp = playerStat.CurExp;
+            tmp.gold = playerStat.Gold;
+            tmp.statusPoint = playerStat.statPoint;
+            tmp.characterAvatar = playerStat.customized;
+            tmp.status[(int)Adjustable.HEALTH] = playerStat.health;
+            tmp.status[(int)Adjustable.STAMINA] = playerStat.stamina;
+            tmp.status[(int)Adjustable.STRENGTH] = playerStat.strength;
+            tmp.status[(int)Adjustable.DEXTERITY] = playerStat.dexterity;
+            JY_CharacterListManager.CopyInventoryData(JY_CharacterListManager.s_instance.invenList[0].items, tmp.itemList);
+            JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum] = tmp;
+        }
+        
     }
-    private void OnDisable()
+    public void OnDisable()
     {
-        Debug.Log("데이터 세이브");
+        
         SaveData();
-        instance = null;        
+        //instance = null;        
+        JY_CharacterListManager.s_instance.playerList.Remove(this);        
     }
         
 
     public void AvatarSet()
     {
+        if (setChara == null)
+        {
+            return;
+        }
         for (int i = 0; i < 4; i++)
         {
             subOptionLoad(i, playerStat.customized[i]);
@@ -797,6 +757,7 @@ public class Player : MonoBehaviour
     }
     void DeleteSubOption(int currentOption)
     {
+        
         for (int j = 0; j < setChara.itemGroups[currentOption].slots; j++)
         {
             if (setChara.HasItem(setChara.itemGroups[currentOption], j))
@@ -812,5 +773,29 @@ public class Player : MonoBehaviour
             }
         }
 
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(playerStat.HP);
+            stream.SendNext(playerStat.CurHP);
+            stream.SendNext(playerStat.atkPoint);
+            stream.SendNext(playerStat.defMag);
+            stream.SendNext(gameObject.name);
+            stream.SendNext(playerStat.customized);
+        }
+        else
+        {
+            playerStat.HP = (int)stream.ReceiveNext();
+            playerStat.CurHP = (int)stream.ReceiveNext();
+            playerStat.atkPoint = (int)stream.ReceiveNext();
+            playerStat.defMag = (float)stream.ReceiveNext();
+            gameObject.name = (string)stream.ReceiveNext();
+
+            playerStat.customized = (int[])stream.ReceiveNext();
+            AvatarSet();
+        }
     }
 }

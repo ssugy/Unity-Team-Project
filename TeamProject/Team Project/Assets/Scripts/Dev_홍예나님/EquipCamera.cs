@@ -16,7 +16,7 @@ public class EquipCamera : MonoBehaviour
 
     void FindPlayer()
     {
-        player = Player.instance.gameObject;
+        player = JY_CharacterListManager.s_instance.playerList[0].gameObject;
     }
 
     // Update is called once per frame

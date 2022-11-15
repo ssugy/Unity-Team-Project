@@ -2,12 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IPunObservable
 {
     [Header("몬스터 스탯 관련 프로퍼티")]
     public int maxHealth;             // 최대 체력.
-    public int curHealth;             // 현재 체력.
+    protected int curHealth;             // 현재 체력.
+    public int CurHealth
+    {
+        get => curHealth;
+        set
+        {
+            curHealth = value;
+            if (curHealth <= 0)
+            {
+                StartCoroutine(OnDamage(Vector3.zero));
+            }
+        }
+    }
     public float defMag;              // 방어율.
     public int atkPoint;              // 몬스터의 공격력.
     public float atkMag;              // 몬스터의 공격 배율.
@@ -190,10 +203,10 @@ public class Enemy : MonoBehaviour
             player.IsAttacked(damage);
         }
     }
-    public virtual void IsAttacked(int _damage)
+    public virtual void IsAttacked(int _damage, Vector3 _player)
     {
         curHealth -= _damage;
-        Vector3 reactVec = transform.position - Player.instance.transform.position; // 넉백 거리.
+        Vector3 reactVec = transform.position - _player; // 넉백 거리.
         StartCoroutine(OnDamage(reactVec));
         hpbar = Enemy_HP_UI.GetObject();
         hpbar.Recognize(this);
@@ -306,6 +319,18 @@ public class Enemy : MonoBehaviour
         {
             nav.Move(_dir * 0.03f);
             yield return null;
+        }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(CurHealth);
+        }
+        else
+        {
+            CurHealth = (int)stream.ReceiveNext();
         }
     }
 }

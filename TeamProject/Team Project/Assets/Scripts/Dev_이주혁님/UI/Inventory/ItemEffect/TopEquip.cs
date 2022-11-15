@@ -9,7 +9,7 @@ public class TopEquip : ItemEffect
     public int num;
     public override void ExecuteRole(Item _item)
     {
-        Player player = Inventory.instance.transform.GetComponent<Player>();
+        Player player = JY_CharacterListManager.s_instance.playerList[0];
 
         if (player != null)
         {
@@ -30,9 +30,9 @@ public class TopEquip : ItemEffect
         }        
                                
         
-        if (Inventory.instance.onChangeItem != null)
+        if (JY_CharacterListManager.s_instance.invenList[0].onChangeItem != null)
         {
-            Inventory.instance.onChangeItem();
+            JY_CharacterListManager.s_instance.invenList[0].onChangeItem();
         }
         if (InventoryUI.instance != null)
         {

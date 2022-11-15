@@ -17,8 +17,8 @@ public class NormalAttackBehaviour : StateMachineBehaviour
     {        
         weapon = Weapon.weapon;        
         weapon.atkMag = atkMag;
-        Player.instance.UseStamina(usingStamina);
-        Player.instance.WEOn();
+        animator.GetComponent<Player>().UseStamina(usingStamina);
+        animator.GetComponent<Player>().WEOn();
         InstanceManager.s_instance.NormalAttackEffect(EffectName);
         if (JY_Boss_FireDungeon.s_instance != null)
             JY_Boss_FireDungeon.s_instance.HitSkillNum = SkillNum;

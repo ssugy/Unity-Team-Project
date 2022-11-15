@@ -75,7 +75,7 @@ public class InstanceManager : MonoBehaviour
         else
         {
             if(EffectName.Equals("LevelUpEffect"))
-                effect = Instantiate<GameObject>(LevelUpEffect, Player.instance.transform);
+                effect = Instantiate<GameObject>(LevelUpEffect, JY_CharacterListManager.s_instance.playerList[0].transform);
             effect.transform.localPosition = Vector3.forward;
             effect.gameObject.name = EffectName;
             PlayerEffectList.Add(effect);
@@ -94,15 +94,15 @@ public class InstanceManager : MonoBehaviour
         else
         {
             if (EffectName.Equals("Skill_1_Effect"))
-                effect = Instantiate<GameObject>(Skill_1_Effect, Player.instance.transform);
+                effect = Instantiate<GameObject>(Skill_1_Effect, JY_CharacterListManager.s_instance.playerList[0].transform);
             else if (EffectName.Equals("Skill_1_Effect2"))
-                effect = Instantiate<GameObject>(Skill_1_Effect2, Player.instance.transform);
+                effect = Instantiate<GameObject>(Skill_1_Effect2, JY_CharacterListManager.s_instance.playerList[0].transform);
             else if (EffectName.Equals("Skill_2_Effect"))
-                effect = Instantiate<GameObject>(Skill_2_Effect, Player.instance.transform);
+                effect = Instantiate<GameObject>(Skill_2_Effect, JY_CharacterListManager.s_instance.playerList[0].transform);
             else if (EffectName.Equals("Skill_2_Effect2"))
-                effect = Instantiate<GameObject>(Skill_2_Effect2, Player.instance.transform);
+                effect = Instantiate<GameObject>(Skill_2_Effect2, JY_CharacterListManager.s_instance.playerList[0].transform);
             else if (EffectName.Equals("Skill_2_Effect3"))
-                effect = Instantiate<GameObject>(Skill_2_Effect3, Player.instance.transform);
+                effect = Instantiate<GameObject>(Skill_2_Effect3, JY_CharacterListManager.s_instance.playerList[0].transform);
             effect.transform.localPosition =  Vector3.forward;
             if (EffectName.Equals("Skill_1_Effect2"))
                 effect.transform.localPosition = new Vector3(0, 0, 2);
@@ -158,11 +158,11 @@ public class InstanceManager : MonoBehaviour
         else
         {
             if (EffectName.Equals("Normal_Attack_Effect"))
-                effect = Instantiate<GameObject>(Normal_Attack_Effect, Player.instance.transform);
+                effect = Instantiate<GameObject>(Normal_Attack_Effect, JY_CharacterListManager.s_instance.playerList[0].transform);
             else if (EffectName.Equals("Normal_Attack_Effect2"))
-                effect = Instantiate<GameObject>(Normal_Attack_Effect2, Player.instance.transform);
+                effect = Instantiate<GameObject>(Normal_Attack_Effect2, JY_CharacterListManager.s_instance.playerList[0].transform);
             else if (EffectName.Equals("Normal_Attack_Effect3"))
-                effect = Instantiate<GameObject>(Normal_Attack_Effect3, Player.instance.transform);
+                effect = Instantiate<GameObject>(Normal_Attack_Effect3, JY_CharacterListManager.s_instance.playerList[0].transform);
             effect.transform.localPosition = new Vector3(0, 1f, 1f);
             effect.gameObject.name = EffectName;
             SkillEffectList.Add(effect);

@@ -29,7 +29,7 @@ public class JY_NPCDialog : MonoBehaviour
 
     private void OnEnable()
     {
-        player = Player.instance.gameObject;
+        player = JY_CharacterListManager.s_instance.playerList[0].gameObject;
     }
 
     public void EnterNpcDialog()

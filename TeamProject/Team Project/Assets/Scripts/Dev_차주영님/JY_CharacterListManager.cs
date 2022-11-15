@@ -96,7 +96,10 @@ public class JY_CharacterListManager : MonoBehaviour
     private string stringJson;    
 
     // 선택된 캐릭터의 번호
-    public int selectNum;    
+    public int selectNum;
+
+    public List<Player> playerList;
+    public List<Inventory> invenList;
 
     // Awake에서 Json 파일을 로드함.
     private void Awake()

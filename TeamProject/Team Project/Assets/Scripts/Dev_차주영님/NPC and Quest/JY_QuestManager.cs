@@ -103,12 +103,12 @@ public class JY_QuestManager : MonoBehaviour
                 {
 
                     JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress[3] = 1;
-                    Player.instance.questExp(15);
+                    JY_CharacterListManager.s_instance.playerList[0].questExp(15);
                 }
                 else
                 {
                     JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].questProgress2[3] = 1;
-                    Player.instance.questExp(30);
+                    JY_CharacterListManager.s_instance.playerList[0].questExp(30);
                 }
                 Debug.Log("Äù½ºÆ® ¿Ï·á");
                 Quest_1_Bar.SetActive(false);

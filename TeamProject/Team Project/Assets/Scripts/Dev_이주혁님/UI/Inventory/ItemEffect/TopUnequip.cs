@@ -8,22 +8,22 @@ public class TopUnequip : ItemEffect
     public int def;
     public override void ExecuteRole(Item _item)
     {        
-        if (Player.instance.playerStat.equiped.TryGetValue(EquipPart.CHEST, out Item _val))
+        if (JY_CharacterListManager.s_instance.playerList[0].playerStat.equiped.TryGetValue(EquipPart.CHEST, out Item _val))
         {
             _val.equipedState = EquipState.UNEQUIPED;
-            Player.instance.playerStat.equiped.Remove(EquipPart.CHEST);
+            JY_CharacterListManager.s_instance.playerList[0].playerStat.equiped.Remove(EquipPart.CHEST);
         }
-        if (Player.instance.enabled)
+        if (JY_CharacterListManager.s_instance.playerList[0].enabled)
         {
-            Player _player = Player.instance;
+            Player _player = JY_CharacterListManager.s_instance.playerList[0];
             _player.playerStat.customized[1] = 0;
             _player.AvatarSet();
             _player.playerStat.defPoint -= def;            
             _player.SetState();
         }
 
-        if (Inventory.instance.onChangeItem != null)
-            Inventory.instance.onChangeItem();
+        if (JY_CharacterListManager.s_instance.invenList[0].onChangeItem != null)
+            JY_CharacterListManager.s_instance.invenList[0].onChangeItem();
         if (InventoryUI.instance != null)
         {
             InventoryUI.instance.chestIcon.sprite = null;

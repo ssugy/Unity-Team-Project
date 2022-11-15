@@ -82,7 +82,7 @@ public class JY_UIManager : MonoBehaviour
     {
         alarmUI.SetActive(true);
         WhiteFadeIn();
-        alarmText.text = "레벨업! Lv." + Player.instance.playerStat.level;        
+        alarmText.text = "레벨업! Lv." + JY_CharacterListManager.s_instance.playerList[0].playerStat.level;        
         InstanceManager.s_instance.PlayPlayerEffect("LevelUpEffect");
         Invoke("closeAlarm", 2f);
         StatusDataRenew();
@@ -131,12 +131,12 @@ public class JY_UIManager : MonoBehaviour
 
     public void StatusDataRenew()
     {    
-        levelText.text = "Lv." + Player.instance.playerStat.level.ToString();
-        healthText.text = "체력: " + Player.instance.playerStat.health.ToString();
-        steminaText.text = "지구력: " + Player.instance.playerStat.stamina.ToString();
-        strengthText.text = "근력: " + Player.instance.playerStat.strength.ToString();
-        dexterityText.text = "민첩: " + Player.instance.playerStat.dexterity.ToString();
-        SPText.text = "스탯 포인트:"+ Player.instance.playerStat.statPoint.ToString(); 
+        levelText.text = "Lv." + JY_CharacterListManager.s_instance.playerList[0].playerStat.level.ToString();
+        healthText.text = "체력: " + JY_CharacterListManager.s_instance.playerList[0].playerStat.health.ToString();
+        steminaText.text = "지구력: " + JY_CharacterListManager.s_instance.playerList[0].playerStat.stamina.ToString();
+        strengthText.text = "근력: " + JY_CharacterListManager.s_instance.playerList[0].playerStat.strength.ToString();
+        dexterityText.text = "민첩: " + JY_CharacterListManager.s_instance.playerList[0].playerStat.dexterity.ToString();
+        SPText.text = "스탯 포인트:"+ JY_CharacterListManager.s_instance.playerList[0].playerStat.statPoint.ToString(); 
     }
 
     void WhiteFadeIn()
@@ -161,16 +161,16 @@ public class JY_UIManager : MonoBehaviour
         switch (StatType)
         {
             case 0:
-                Player.instance.StatUp(Adjustable.health);
+                JY_CharacterListManager.s_instance.playerList[0].StatUp(Adjustable.HEALTH);
                 break;
             case 1:
-                Player.instance.StatUp(Adjustable.stamina);
+                JY_CharacterListManager.s_instance.playerList[0].StatUp(Adjustable.STAMINA);
                 break;
             case 2:
-                Player.instance.StatUp(Adjustable.strength);
+                JY_CharacterListManager.s_instance.playerList[0].StatUp(Adjustable.STRENGTH);
                 break;
             case 3:
-                Player.instance.StatUp(Adjustable.dexterity);
+                JY_CharacterListManager.s_instance.playerList[0].StatUp(Adjustable.DEXTERITY);
                 break;
         }
 
@@ -181,16 +181,16 @@ public class JY_UIManager : MonoBehaviour
         switch (StatType)
         {
             case 0:
-                Player.instance.StatUp(Adjustable.health);
+                JY_CharacterListManager.s_instance.playerList[0].StatUp(Adjustable.HEALTH);
                 break;
             case 1:
-                Player.instance.StatUp(Adjustable.stamina);
+                JY_CharacterListManager.s_instance.playerList[0].StatUp(Adjustable.STAMINA);
                 break;
             case 2:
-                Player.instance.StatUp(Adjustable.strength);
+                JY_CharacterListManager.s_instance.playerList[0].StatUp(Adjustable.STRENGTH);
                 break;
             case 3:
-                Player.instance.StatUp(Adjustable.dexterity);
+                JY_CharacterListManager.s_instance.playerList[0].StatUp(Adjustable.DEXTERITY);
                 break;
         }
 
@@ -199,7 +199,7 @@ public class JY_UIManager : MonoBehaviour
 
     public void InitializeStatus()
     {
-        Player.instance.InitializeStat();
+        JY_CharacterListManager.s_instance.playerList[0].InitializeStat();
     }
     public void ActiveAimUI(bool state)
     {

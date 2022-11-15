@@ -10,7 +10,7 @@ public class MainCamRaycast : MonoBehaviour
 
     private void Start()
     {
-        player = Player.instance.transform;
+        player = JY_CharacterListManager.s_instance.playerList[0].transform;
         hits = new RaycastHit[0];
         layerMask = 1 << LayerMask.NameToLayer("Obstacle");
     }

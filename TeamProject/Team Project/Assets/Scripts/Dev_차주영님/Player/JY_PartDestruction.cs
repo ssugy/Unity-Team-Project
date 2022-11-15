@@ -47,7 +47,7 @@ public class JY_PartDestruction : MonoBehaviour, IPointerDownHandler, IPointerUp
         mainCamControl.onPartDestruction = true;
         isShoot = true;
         originPos = mainCam.transform.position;
-        targetPos = Player.instance.transform.position + Vector3.up;
+        targetPos = JY_CharacterListManager.s_instance.playerList[0].transform.position + Vector3.up;
         JY_UIManager.instance.ActiveAimUI(true);
     }
     public void OnPointerUp(PointerEventData eventData)
@@ -57,8 +57,8 @@ public class JY_PartDestruction : MonoBehaviour, IPointerDownHandler, IPointerUp
         RaycastHit hitinfo;
         if(Physics.Raycast(ray, out hitinfo, Mathf.Infinity))
         {
-            Vector3 shootVec = hitinfo.point - Player.instance.rWeaponDummy.position;
-            GameObject bullet = GameObject.Instantiate<GameObject>(Bullet, Player.instance.rWeaponDummy.transform.position, Quaternion.identity,Player.instance.rWeaponDummy);
+            Vector3 shootVec = hitinfo.point - JY_CharacterListManager.s_instance.playerList[0].rWeaponDummy.position;
+            GameObject bullet = GameObject.Instantiate<GameObject>(Bullet, JY_CharacterListManager.s_instance.playerList[0].rWeaponDummy.transform.position, Quaternion.identity, JY_CharacterListManager.s_instance.playerList[0].rWeaponDummy);
             Rigidbody bulletRigid = bullet.GetComponent<Rigidbody>();
             bulletRigid.velocity = shootVec.normalized * 50f;
         }

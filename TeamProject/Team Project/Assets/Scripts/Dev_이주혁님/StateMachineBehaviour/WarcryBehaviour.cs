@@ -13,8 +13,8 @@ public class WarcryBehaviour : StateMachineBehaviour
     {
         weapon = Weapon.weapon;
         weapon.atkMag = atkMag;
-        Player.instance.UseStamina(usingStamina);
-        Player.instance.playerStat.defMag += 0.3f;
+        animator.GetComponent<Player>().UseStamina(usingStamina);
+        animator.GetComponent<Player>().playerStat.defMag += 0.3f;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -26,7 +26,7 @@ public class WarcryBehaviour : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Player.instance.playerStat.defMag -= 0.3f;
+        animator.GetComponent<Player>().playerStat.defMag -= 0.3f;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

@@ -80,10 +80,10 @@ public class Dragon : Enemy
                
     }
 
-    public override void IsAttacked(int _damage)
+    public override void IsAttacked(int _damage, Vector3 _player)
     {
         curHealth -= _damage;
-        Vector3 reactVec = transform.position - Player.instance.transform.position; // ³Ë¹é °Å¸®.
+        Vector3 reactVec = transform.position - _player; // ³Ë¹é °Å¸®.
         StartCoroutine(OnDamage(reactVec, _damage));
         hpbar = Enemy_HP_UI.GetObject();
         hpbar.Recognize(this);

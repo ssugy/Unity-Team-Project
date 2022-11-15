@@ -12,7 +12,7 @@ public class Exp_Text : MonoBehaviour
     void Start()
     {
         expText = GetComponent<Text>();
-        stat = Player.instance.playerStat;
+        stat = JY_CharacterListManager.s_instance.playerList[0].playerStat;
     }
 
     // Update is called once per frame

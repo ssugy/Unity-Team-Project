@@ -7,17 +7,17 @@ public class WeaponUnequip : ItemEffect
 {
     public override void ExecuteRole(Item _item)
     {        
-        if (Player.instance.playerStat.equiped.TryGetValue(EquipPart.WEAPON, out Item _val))
+        if (JY_CharacterListManager.s_instance.playerList[0].playerStat.equiped.TryGetValue(EquipPart.WEAPON, out Item _val))
         {
             _val.equipedState = EquipState.UNEQUIPED;
-            Player.instance.playerStat.equiped.Remove(EquipPart.WEAPON);
+            JY_CharacterListManager.s_instance.playerList[0].playerStat.equiped.Remove(EquipPart.WEAPON);
         }
-        while (Player.instance.rWeaponDummy.GetComponentInChildren<Weapon>() != null)
+        while (JY_CharacterListManager.s_instance.playerList[0].rWeaponDummy.GetComponentInChildren<Weapon>() != null)
         {
-            DestroyImmediate(Player.instance.rWeaponDummy.GetComponentInChildren<Weapon>().gameObject);
+            DestroyImmediate(JY_CharacterListManager.s_instance.playerList[0].rWeaponDummy.GetComponentInChildren<Weapon>().gameObject);
         }
-        if (Inventory.instance.onChangeItem != null)
-            Inventory.instance.onChangeItem();
+        if (JY_CharacterListManager.s_instance.invenList[0].onChangeItem != null)
+            JY_CharacterListManager.s_instance.invenList[0].onChangeItem();
         if (InventoryUI.instance != null)
         {
             InventoryUI.instance.weaponIcon.sprite = null;

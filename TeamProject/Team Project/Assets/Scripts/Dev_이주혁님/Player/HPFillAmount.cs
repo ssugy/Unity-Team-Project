@@ -13,7 +13,7 @@ public class HPFillAmount : MonoBehaviour
     void Start()
     {
         HpRecoverTime = 0f;
-        stat = Player.instance.playerStat;
+        stat = JY_CharacterListManager.s_instance.playerList[0].playerStat;
     }
 
     // Update is called once per frame

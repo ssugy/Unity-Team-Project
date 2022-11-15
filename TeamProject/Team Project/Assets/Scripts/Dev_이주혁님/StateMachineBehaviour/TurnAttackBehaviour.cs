@@ -15,7 +15,7 @@ public class TurnAttackBehaviour : StateMachineBehaviour
     {
         weapon = Weapon.weapon;
         weapon.atkMag = atkMag;
-        Player.instance.UseStamina(usingStamina);
+        animator.GetComponent<Player>().UseStamina(usingStamina);
         InstanceManager.s_instance.PlaySkillEffect(EffectName1, 0.8f);
         InstanceManager.s_instance.PlaySkillEffect(EffectName2, 0f);
         InstanceManager.s_instance.PlaySkillEffect(EffectName3, 0.8f);

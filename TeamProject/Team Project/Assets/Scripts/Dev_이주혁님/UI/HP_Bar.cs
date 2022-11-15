@@ -20,7 +20,7 @@ public class HP_Bar : MonoBehaviour
         {            
             Vector2 screenPos = Camera.main.WorldToScreenPoint(enemy.transform.position +offset);
             transform.position = screenPos;            
-            hp.fillAmount = (float)enemy.curHealth / enemy.maxHealth;                        
+            hp.fillAmount = (float)enemy.CurHealth / enemy.maxHealth;                        
         }             
     }
     public void Recognize(Enemy _enemy)

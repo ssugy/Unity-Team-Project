@@ -15,7 +15,7 @@ public class Weapon : MonoBehaviour
     {        
         weapon = GetComponent<Weapon>();
         weaponHitbox = GetComponentInChildren<BoxCollider>();
-        player = Player.instance;
+        player = GetComponentInParent<Player>();
         if (player != null && player.playerAni != null)
             player.playerAni.SetFloat("AtkSpeed", atkSpeed);
         player?.SetState();

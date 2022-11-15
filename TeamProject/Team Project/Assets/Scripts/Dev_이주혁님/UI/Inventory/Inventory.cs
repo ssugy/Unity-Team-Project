@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    public static Inventory instance;
+    //public static Inventory instance;
     public List<Item> items = new List<Item>();
     private Dictionary<int, Item> itemMap = new Dictionary<int, Item>();
     public delegate void OnChangeItem();        // 아이템이 변경되면 인벤토리 UI를 갱신하는 델리게이트.
@@ -18,19 +18,29 @@ public class Inventory : MonoBehaviour
 
     private void OnEnable()
     {
-        instance = this;        
-        if (JY_CharacterListManager.s_instance.selectNum >= 0)
-        {
-            JY_CharacterListManager.s_instance.CopyInventoryDataToScript(items);
-        }
+        //instance = this;
+        
+        
+        
     }
     private void OnDisable()
     {
-        instance = null;
+        //instance = null;
+        JY_CharacterListManager.s_instance.invenList.Remove(this);
         items.Clear();       
     }
     void Start()
     {
+        if (JY_CharacterListManager.s_instance.invenList.Count > 0)
+        {
+            if (JY_CharacterListManager.s_instance.invenList[0].Equals(this))
+            {
+                if (JY_CharacterListManager.s_instance.selectNum >= 0)
+                {
+                    JY_CharacterListManager.s_instance.CopyInventoryDataToScript(items);
+                }
+            }
+        }
         SlotCnt = 36;
         // 월드 씬과 던전 씬이 시작되었을 때, 인벤토리의 아이템 설명/아이콘/이펙트를 불러옴.
         // 인벤토리를 로드할 때, 아이템의 이름과 타입, 착용 정보만을 불러오기 때문.    
@@ -160,7 +170,7 @@ public class Inventory : MonoBehaviour
         else if (other.CompareTag("Gold"))
         {
             FieldGold fieldGold = other.GetComponent<FieldGold>();
-            Player.instance.playerStat.Gold += fieldGold.ammount;
+            JY_CharacterListManager.s_instance.playerList[0].playerStat.Gold += fieldGold.ammount;
             // 골드 획득 사운드 변경 필요.
             AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Get_Gold);
             Destroy(fieldGold.gameObject);

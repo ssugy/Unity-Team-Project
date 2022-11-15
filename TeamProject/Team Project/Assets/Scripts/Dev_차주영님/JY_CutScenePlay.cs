@@ -62,15 +62,15 @@ public class JY_CutScenePlay : MonoBehaviour
         cutSceneCam.gameObject.SetActive(false);
         mainCam.gameObject.SetActive(true);
         yield return new WaitForSeconds(1f);
-        Player.instance.enableMove = true;
-        Player.instance.movement = Vector3.zero;
+        JY_CharacterListManager.s_instance.playerList[0].enableMove = true;
+        JY_CharacterListManager.s_instance.playerList[0].movement = Vector3.zero;
         yield return new WaitForSeconds(1f);
         StartCoroutine(Fade(1, 0));
         BattleUI.SetActive(true);
 
         hpBarBoss.gameObject.SetActive(true);
         hpBarBoss.Recognize(boss);
-        boss.target = Player.instance.transform;
+        boss.target = JY_CharacterListManager.s_instance.playerList[0].transform;
     }
 
     //중간 컷신은 조정해야함.
@@ -78,7 +78,7 @@ public class JY_CutScenePlay : MonoBehaviour
     {
         mainCam.gameObject.SetActive(false);
         cutSceneCam.gameObject.SetActive(true);
-        Player.instance.enableMove = false;
+        JY_CharacterListManager.s_instance.playerList[0].enableMove = false;
         BattleUI.SetActive(false);
         AudioManager.s_instance.SoundFadeInOut(AudioManager.SOUND_NAME.BossBGM_01, 0, 1);
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BossBGM_02, true, 0.5f);
@@ -90,8 +90,8 @@ public class JY_CutScenePlay : MonoBehaviour
         yield return new WaitForSeconds(18f);
 
 
-        Player.instance.enableMove = true;
-        Player.instance.movement = Vector3.zero;
+        JY_CharacterListManager.s_instance.playerList[0].enableMove = true;
+        JY_CharacterListManager.s_instance.playerList[0].movement = Vector3.zero;
         CutScene2.SetActive(false);
         BattleUI.SetActive(true);
         boss.gameObject.SetActive(true);

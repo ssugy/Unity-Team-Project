@@ -18,11 +18,13 @@ public class JY_AvatarLoad : MonoBehaviour
     public GameObject charWeaponDummy;
     public GameObject charShieldDummy;    
     public SetCharacter setChara;
+    public Inventory inven;
     
     void Awake()
     {
         // 같은 오브젝트를 사용하는 캐릭터리스트매니저에서 싱글톤을 사용 중이므로 DontDestroyOnLoad를 할 필요 없음.
         instance = this;
+        inven = GetComponent<Inventory>();
     }
 
     void Start()

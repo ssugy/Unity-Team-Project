@@ -10,10 +10,10 @@ public class RollBehaviour : StateMachineBehaviour
     
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        player = Player.instance;     
+        player = animator.GetComponent<Player>();     
         player.SetRotate();
         time = 0f;
-        Player.instance.UseStamina(usingStamina);
+        animator.GetComponent<Player>().UseStamina(usingStamina);
     }
     
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

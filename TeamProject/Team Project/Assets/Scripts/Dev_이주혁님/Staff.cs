@@ -10,7 +10,7 @@ public class Staff : MonoBehaviour
     private void OnEnable()
     {
         staff = GetComponent<Staff>();
-        player = Player.instance;
+        player = GetComponentInParent<Player>();
         player?.SetState();
     }
     private void OnDisable()

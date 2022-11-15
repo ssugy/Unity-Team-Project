@@ -84,7 +84,7 @@ public class DoubleHeaded : Enemy
             anim.SetBool("isWalk", false);
         }
     }
-    public override void IsAttacked(int _damage)
+    public override void IsAttacked(int _damage, Vector3 _player)
     {
         curHealth -= _damage;       
         if (curHealth <= 0)
