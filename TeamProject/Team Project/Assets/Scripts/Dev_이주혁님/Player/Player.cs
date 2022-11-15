@@ -441,7 +441,40 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         // 화염, 심연 등 닿으면 죽는 오브젝트와 닿으면 사망함.        
         if (other.CompareTag("Die"))        
-            Die();        
+            Die();
+        if (other.tag == "Buff")
+        {
+            Buff buff = other.GetComponent<Buff>();
+            switch (buff.type)
+            {
+                /*case Buff.Type.공격력증가:
+                    공격력증가 += buff.value; // 30증가
+                    if 
+                    break;
+                case Buff.Type.공격속도증가:
+                    공격력속도증가 += buff.value; //20%증가
+                    if 
+                    break;
+                case Buff.Type.스테미나회복:
+                    스테미나회복 += buff.value; // 20%증가
+                    if 
+                    break;*/
+                case Buff.Type.HP:
+                    playerStat.HP += buff.value; // 300증가
+                    //if 
+                    break;
+                    /*case Buff.Type.체력회복속도증가:
+                        체력회복속도증가 += buff.value; // 초당 10씩증가
+                        if 
+                        break;
+                    case Buff.Type.보스에게추가데미지:
+                        보스에게추가데미지 += buff.value; //보스몬스터 공격시 50증가
+                        if 
+                        break;*/
+            }
+
+            Destroy(other.gameObject);
+        }
     }
 
     // 애니메이션 이벤트 함수.
