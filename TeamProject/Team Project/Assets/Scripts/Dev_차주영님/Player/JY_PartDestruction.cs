@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 public class JY_PartDestruction : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public Camera mainCam;
-    public Camera PartDestrcutionCam;
     public GameObject Bullet;
     public DragOn dragOn;
     [HideInInspector] public float camSpeed;          // 카메라 회전 속도.

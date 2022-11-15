@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37690857, g: 0.27781683, b: 0.26629424, a: 1}
+  m_IndirectSpecularColor: {r: 0.37690774, g: 0.27781713, b: 0.26629606, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1211,6 +1211,7 @@ MonoBehaviour:
   rotateY: 0
   dragOn: {fileID: 1805880935}
   player: {fileID: 0}
+  onPartDestruction: 0
 --- !u!114 &26546308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26252,6 +26253,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3810051220536461934, guid: 519d896951ed2b540a9ddaa21999464d, type: 3}
+      propertyPath: sceneViewId
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3810051220878022312, guid: 519d896951ed2b540a9ddaa21999464d, type: 3}
+      propertyPath: sceneViewId
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3810051221191522762, guid: 519d896951ed2b540a9ddaa21999464d, type: 3}
+      propertyPath: sceneViewId
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3810051221924440714, guid: 519d896951ed2b540a9ddaa21999464d, type: 3}
+      propertyPath: sceneViewId
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3810051222027536061, guid: 519d896951ed2b540a9ddaa21999464d, type: 3}
+      propertyPath: sceneViewId
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3810051222257534210, guid: 519d896951ed2b540a9ddaa21999464d, type: 3}
+      propertyPath: sceneViewId
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3846305544813436315, guid: 519d896951ed2b540a9ddaa21999464d, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7114311192252597178, guid: 519d896951ed2b540a9ddaa21999464d, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -26304,6 +26333,14 @@ PrefabInstance:
       propertyPath: message
       value: 
       objectReference: {fileID: 1069458825}
+    - target: {fileID: 8222913016487322565, guid: 519d896951ed2b540a9ddaa21999464d, type: 3}
+      propertyPath: sceneViewId
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8222913016969306200, guid: 519d896951ed2b540a9ddaa21999464d, type: 3}
+      propertyPath: sceneViewId
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 519d896951ed2b540a9ddaa21999464d, type: 3}
 --- !u!1001 &771292879
@@ -35980,6 +36017,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3404023954399248647, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
+      propertyPath: mainCam
+      value: 
+      objectReference: {fileID: 26546304}
     - target: {fileID: 3636529578054237400, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
