@@ -138,6 +138,8 @@ public class Player : MonoBehaviourPun, IPunObservable
     private TrailRenderer rWeaponEffect;        // 오른손 무기 이펙트. (검기)
     public GameObject WeaponEffect;
     public Transform lWeaponDummy;              // 왼손 무기 더미.
+    public Weapon rWeapon;
+    public Shield lWeapon;
       
     private Dictionary<int, int> EXP_TABLE;      
 
@@ -257,7 +259,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     }
     public void NormalAttack()
     {
-        if (Weapon.weapon == null)
+        if (rWeapon == null)
         {
             BattleUI.instance.equipEmpty.text = "무기를 착용하지 않았습니다.";
             BattleUI.instance.equipEmpty.gameObject.SetActive(true);
@@ -281,7 +283,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     [PunRPC]
     public void PowerStrike_Do()
     {
-        if (Weapon.weapon == null)
+        if (rWeapon == null)
         {
             BattleUI.instance.equipEmpty.text = "무기를 착용하지 않았습니다.";
             BattleUI.instance.equipEmpty.gameObject.SetActive(true);
@@ -305,7 +307,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     [PunRPC]
     public void TurnAttack_Do()        // 스킬 2.
     {
-        if (Weapon.weapon == null)
+        if (rWeapon == null)
         {
             BattleUI.instance.equipEmpty.text = "무기를 착용하지 않았습니다.";
             BattleUI.instance.equipEmpty.gameObject.SetActive(true);
@@ -331,7 +333,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     [PunRPC]
     public void JumpAttack_Do()        // 스킬 3.
     {
-        if (Weapon.weapon == null)
+        if (rWeapon == null)
         {
             BattleUI.instance.equipEmpty.text = "무기를 착용하지 않았습니다.";
             BattleUI.instance.equipEmpty.gameObject.SetActive(true);
@@ -356,7 +358,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     [PunRPC]
     public void Warcry_Do()            // 스킬 4.
     {
-        if (Weapon.weapon == null)
+        if (rWeapon == null)
         {
             BattleUI.instance.equipEmpty.text = "무기를 착용하지 않았습니다.";
             BattleUI.instance.equipEmpty.gameObject.SetActive(true);
@@ -385,7 +387,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     public void LArmDown(PointerEventData data)
     {
-        if (Shield.shield == null)
+        if (lWeapon == null)
         {
             BattleUI.instance.equipEmpty.text = "방패를 착용하지 않았습니다.";
             BattleUI.instance.equipEmpty.gameObject.SetActive(true);
@@ -505,16 +507,16 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     void HitboxOn()
     {
-        if (Weapon.weaponHitbox != null)
+        if (rWeapon.weaponHitbox != null)
         {
-            Weapon.weaponHitbox.enabled = true;
+            rWeapon.weaponHitbox.enabled = true;
         }        
     }
     void HitboxOff()
     {
-        if (Weapon.weaponHitbox != null)
+        if (rWeapon.weaponHitbox != null)
         {
-            Weapon.weaponHitbox.enabled = false;
+            rWeapon.weaponHitbox.enabled = false;
         }
     }
     void EnableAtk()
@@ -586,8 +588,8 @@ public class Player : MonoBehaviourPun, IPunObservable
         //Strength and Dexterity
         playerStat.criPro = (20f + Sigma(2f, 1.03f, playerStat.dexterity)) / 100f;
         playerStat.defMag = 1 - Mathf.Pow(1.02f, -playerStat.defPoint);
-        if (Weapon.weapon != null)
-            playerStat.atkPoint = Weapon.weapon.atkPoint + Mathf.CeilToInt(Sigma(2f, 1.02f, playerStat.strength) + Sigma(1f, 1.1f, playerStat.dexterity));       
+        if (rWeapon != null)
+            playerStat.atkPoint = rWeapon.atkPoint + Mathf.CeilToInt(Sigma(2f, 1.02f, playerStat.strength) + Sigma(1f, 1.1f, playerStat.dexterity));       
         else        
             playerStat.atkPoint = 0;
         
@@ -623,7 +625,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         if (enemy != null)
         {
             SoundAttack();
-            int damage = AttackDamage(Weapon.weapon.atkMag, enemy.defMag);
+            int damage = AttackDamage(rWeapon.atkMag, enemy.defMag);
             enemy.IsAttacked(damage, transform.position);            
         }        
     }
@@ -801,24 +803,18 @@ public class Player : MonoBehaviourPun, IPunObservable
         
     }
     public void OnDisable()
-    {
-        
-        SaveData();
-        //instance = null;        
+    {        
+        SaveData();             
         JY_CharacterListManager.s_instance.playerList.Remove(this);        
     }
         
 
     public void AvatarSet()
     {
-        if (setChara == null)
-        {
-            return;
-        }
-        for (int i = 0; i < 4; i++)
-        {
-            subOptionLoad(i, playerStat.customized[i]);
-        }
+        if (setChara == null) return;
+
+        for (int i = 0; i < 4; i++)        
+            subOptionLoad(i, playerStat.customized[i]);        
     }
     public void subOptionLoad(int currentOption, int sub)
     {

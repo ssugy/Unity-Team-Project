@@ -18,7 +18,7 @@ public class BlockBehaviour : StateMachineBehaviour
     {
         animator.GetComponent<Player>().enableRecoverSP = false;
         animator.GetComponent<Player>().isGaurd = true;
-        animator.GetComponent<Player>().playerStat.defMag = Shield.shield.defPro;
+        animator.GetComponent<Player>().playerStat.defMag = animator.GetComponent<Player>().lWeapon.defPro;
         animator.GetComponent<Player>().UseStamina(usingStamina * Time.deltaTime * 0.3f);
     }
 

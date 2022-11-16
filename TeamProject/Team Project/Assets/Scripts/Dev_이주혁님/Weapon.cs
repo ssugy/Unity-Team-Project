@@ -7,26 +7,32 @@ public class Weapon : MonoBehaviour
     public int atkPoint;                // 무기별 공격력.
     public float atkSpeed;
     public float atkMag;                // 일반공격을 사용할 때, 혹은 스킬을 사용할 때 미리 정해둔 배율이 여기에 대입됨.
-    [HideInInspector] public Player player;
-    [HideInInspector] public static Weapon weapon;
-    [HideInInspector] public static BoxCollider weaponHitbox;
+    public Player player;    
+    public BoxCollider weaponHitbox;
 
     private void OnEnable()
-    {        
-        weapon = GetComponent<Weapon>();
+    {                      
+        player = GetComponentInParent<Player>();                               
         weaponHitbox = GetComponentInChildren<BoxCollider>();
-        player = GetComponentInParent<Player>();
         if (player != null && player.playerAni != null)
             player.playerAni.SetFloat("AtkSpeed", atkSpeed);
-        player?.SetState();
+        if (player != null)
+        {
+            player.rWeapon = this;
+            player.SetState();
+        }            
     }    
     private void OnDisable()
     {
-        weapon = null;
+        
         weaponHitbox = null;
         if (player != null && player.playerAni != null)
             player.playerAni.SetFloat("AtkSpeed", 1f);
-        player?.SetState();
+        if (player != null)
+        {
+            player.rWeapon = null;
+            player.SetState();
+        }        
     }
     
     private void OnTriggerEnter(Collider other)

@@ -15,7 +15,7 @@ public class JumpAttackBehaviour : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         player = animator.GetComponent<Player>();
-        weapon = Weapon.weapon;
+        weapon = player.rWeapon;
         weapon.atkMag = atkMag;
         time = 0f;
         animator.GetComponent<Player>().UseStamina(usingStamina);

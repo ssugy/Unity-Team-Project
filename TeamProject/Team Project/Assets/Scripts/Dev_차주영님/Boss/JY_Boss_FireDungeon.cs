@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
 public class JY_Boss_FireDungeon : Enemy
 {
@@ -202,18 +203,23 @@ public class JY_Boss_FireDungeon : Enemy
     {
         MeleeAttackArea.gameObject.SetActive(false);
         MeleeAttackArea.gameObject.SetActive(true);
-    }
+    }    
     public override void IsAttacked(int _damage, Vector3 _player)
+    {
+        photonView.RPC("IsAttacked_Do", RpcTarget.All, _damage, _player);
+    }
+    [PunRPC]
+    public override void IsAttacked_Do(int _damage, Vector3 _player)
     {
         curHealth -= _damage;
         Vector3 reactVec = transform.position - _player; // ³Ë¹é °Å¸®.
-        StartCoroutine(OnDamage(reactVec*0.2f));
+        StartCoroutine(OnDamage(reactVec * 0.2f));
         hpbar = Enemy_HP_UI.GetObject();
         hpbar.Recognize(this);
-        if(EffectManager.Instance != null)
+        if (EffectManager.Instance != null)
             EffectManager.Instance.PlayHitEffect(transform.position + offset, transform.rotation.eulerAngles, transform);
-
     }
+
     protected new IEnumerator OnDamage(Vector3 reactVec)
     {
         yield return new WaitForSeconds(0.1f);

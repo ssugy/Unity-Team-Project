@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Photon.Pun;
 
-public class Enemy : MonoBehaviour, IPunObservable
+public class Enemy : MonoBehaviourPun, IPunObservable
 {
     [Header("몬스터 스탯 관련 프로퍼티")]
     public int maxHealth;             // 최대 체력.
@@ -12,14 +12,8 @@ public class Enemy : MonoBehaviour, IPunObservable
     public int CurHealth
     {
         get => curHealth;
-        set
-        {
-            curHealth = value;
-            if (curHealth <= 0)
-            {
-                StartCoroutine(OnDamage(Vector3.zero));
-            }
-        }
+        set => curHealth = value;         
+        
     }
     
     public float defMag;              // 방어율.
@@ -207,14 +201,18 @@ public class Enemy : MonoBehaviour, IPunObservable
     }
     public virtual void IsAttacked(int _damage, Vector3 _player)
     {
+        photonView.RPC("IsAttacked_Do", RpcTarget.All, _damage, _player);
+    }   
+    [PunRPC]
+    public virtual void IsAttacked_Do(int _damage, Vector3 _player)
+    {
         curHealth -= _damage;
         Vector3 reactVec = transform.position - _player; // 넉백 거리.
         StartCoroutine(OnDamage(reactVec));
         hpbar = Enemy_HP_UI.GetObject();
         hpbar.Recognize(this);
-        EffectManager.Instance.PlayHitEffect(transform.position+offset  ,transform.rotation.eulerAngles,transform);
-
-    }   
+        EffectManager.Instance.PlayHitEffect(transform.position + offset, transform.rotation.eulerAngles, transform);
+    }
     protected IEnumerator OnDamage(Vector3 reactVec)
     {        
         yield return new WaitForSeconds(0.1f);

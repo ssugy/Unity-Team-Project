@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
 public class Dragon : Enemy
 {    
@@ -82,6 +83,13 @@ public class Dragon : Enemy
     }
 
     public override void IsAttacked(int _damage, Vector3 _player)
+    {
+        photonView.RPC("IsAttacked_Do", RpcTarget.All, _damage, _player);        
+    }
+
+    
+    [PunRPC]
+    public override void IsAttacked_Do(int _damage, Vector3 _player)
     {
         curHealth -= _damage;
         Vector3 reactVec = transform.position - _player; // ³Ë¹é °Å¸®.
