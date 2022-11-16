@@ -8,7 +8,6 @@ public class WhirlAttackBehaviour : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        JY_Boss_FireDungeon.s_instance.BossWeapon.enabled = true;
         JY_Boss_FireDungeon.s_instance.WeaponEffectOnOff(true);
     }
 

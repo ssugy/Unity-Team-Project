@@ -1836,24 +1836,6 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 1322553341}
---- !u!1 &186312226 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 176284, guid: 015b5e41a4f67364fb6efa67f440c8aa, type: 3}
-  m_PrefabInstance: {fileID: 1228672369}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &186312230
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 186312226}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 0.59, y: 0.46, z: 0.93}
-  m_Center: {x: -0.0025412878, y: 0.023386663, z: 1.25}
 --- !u!1 &232850719
 GameObject:
   m_ObjectHideFlags: 0
@@ -1879,11 +1861,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 232850719}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.1700028}
+  m_LocalPosition: {x: 0, y: 0.070000015, z: -0.1700028}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1228672376}
+  m_Father: {fileID: 1328898509}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &232850721
@@ -4107,12 +4089,12 @@ GameObject:
   - component: {fileID: 380488777}
   - component: {fileID: 380488778}
   m_Layer: 0
-  m_Name: KickMelee Area
+  m_Name: Melee Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &380488777
 Transform:
   m_ObjectHideFlags: 0
@@ -4120,12 +4102,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 380488776}
-  m_LocalRotation: {x: -0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0.10699728}
-  m_LocalScale: {x: 1, y: 1.1111112, z: 1}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1.0980026}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1228672376}
+  m_Father: {fileID: 1328898509}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &380488778
@@ -4139,8 +4121,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.82, y: 1, z: 0.59}
-  m_Center: {x: 0, y: 0.6, z: 0.5}
+  m_Size: {x: 1, y: 1, z: 0.77}
+  m_Center: {x: 0, y: 0.66, z: 0.77}
 --- !u!1001 &383330515
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6995,7 +6977,7 @@ GameObject:
   - component: {fileID: 794617597}
   - component: {fileID: 794617596}
   m_Layer: 0
-  m_Name: Portal (1)
+  m_Name: BossRoom Portal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12386,12 +12368,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 984708426}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1228672376}
+  m_Father: {fileID: 1328898509}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &984708428
@@ -15151,6 +15133,22 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 421036, guid: 015b5e41a4f67364fb6efa67f440c8aa, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 421036, guid: 015b5e41a4f67364fb6efa67f440c8aa, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 421036, guid: 015b5e41a4f67364fb6efa67f440c8aa, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421036, guid: 015b5e41a4f67364fb6efa67f440c8aa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
     - target: {fileID: 431524, guid: 015b5e41a4f67364fb6efa67f440c8aa, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.5
@@ -15205,19 +15203,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 487046, guid: 015b5e41a4f67364fb6efa67f440c8aa, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 487046, guid: 015b5e41a4f67364fb6efa67f440c8aa, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 487046, guid: 015b5e41a4f67364fb6efa67f440c8aa, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 487046, guid: 015b5e41a4f67364fb6efa67f440c8aa, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 487046, guid: 015b5e41a4f67364fb6efa67f440c8aa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -15225,7 +15223,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 487046, guid: 015b5e41a4f67364fb6efa67f440c8aa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 487046, guid: 015b5e41a4f67364fb6efa67f440c8aa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -15274,9 +15272,9 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 184648, guid: 015b5e41a4f67364fb6efa67f440c8aa, type: 3}
   m_PrefabInstance: {fileID: 1228672369}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1228672376 stripped
+--- !u!4 &1228672374 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 487046, guid: 015b5e41a4f67364fb6efa67f440c8aa, type: 3}
+  m_CorrespondingSourceObject: {fileID: 467566, guid: 015b5e41a4f67364fb6efa67f440c8aa, type: 3}
   m_PrefabInstance: {fileID: 1228672369}
   m_PrefabAsset: {fileID: 0}
 --- !u!54 &1228672377
@@ -15356,8 +15354,8 @@ MonoBehaviour:
   fieldGold: {fileID: 1498403948531744, guid: fa2c57d3f28a5e6419393e8bc3eeb32a, type: 3}
   targetRadius: 0
   targetRange: 0
-  attackDistance: 5
-  attackCool: 5
+  attackDistance: 3
+  attackCool: 4
   target: {fileID: 0}
   originPos: {x: 0, y: 0, z: 0}
   originRotateion: {x: 0, y: 0, z: 0, w: 0}
@@ -15365,11 +15363,12 @@ MonoBehaviour:
   isLook: 0
   isAwake: 0
   JumpAttackArea: {fileID: 232850721}
-  KickAttackArea: {fileID: 380488778}
-  BossWeapon: {fileID: 186312230}
+  MeleeAttackArea: {fileID: 380488778}
+  BossWeapon: {fileID: 1228672374}
   BossWeaponFire: {fileID: 1228672371}
   FieldFire: {fileID: 7405487427060361274, guid: 653b8a094302fc641864ddee6dba51df, type: 3}
   Fireball: {fileID: 7853561587912700220, guid: 83f8c52802db3194db846160ac58517d, type: 3}
+  BossRoomPortal: {fileID: 794617595}
   HitSkillNum: 0
   HeadPart: {fileID: 1228672373}
   SholderPart: {fileID: 1228672372}
@@ -15663,6 +15662,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1328898509 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 487046, guid: 015b5e41a4f67364fb6efa67f440c8aa, type: 3}
+  m_PrefabInstance: {fileID: 1228672369}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1353937342
 GameObject:
   m_ObjectHideFlags: 0
@@ -19651,12 +19655,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1664164813}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1228672376}
+  m_Father: {fileID: 1328898509}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1664164815

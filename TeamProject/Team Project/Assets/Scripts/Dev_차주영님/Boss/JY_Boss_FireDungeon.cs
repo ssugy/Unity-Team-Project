@@ -17,11 +17,13 @@ public class JY_Boss_FireDungeon : Enemy
     int partCnt;
     [Header("보스 공격 범위 콜라이더")]
     public BoxCollider JumpAttackArea;
-    public BoxCollider KickAttackArea;
-    public BoxCollider BossWeapon;
+    public BoxCollider MeleeAttackArea;
+    public Transform BossWeapon;
+    [Header("보스 관련 인스턴스")]
     public GameObject BossWeaponFire;
     public GameObject FieldFire;
     public GameObject Fireball;
+    public GameObject BossRoomPortal;
     [HideInInspector] public int HitSkillNum;
     [Header("부위파괴 콜라이더 및 파츠")]
     public GameObject HeadPart;
@@ -153,7 +155,8 @@ public class JY_Boss_FireDungeon : Enemy
     {
         anim.SetTrigger("NoramlAttack");
         BossAttackIntermission();
-        yield return null;
+        yield return new WaitForSeconds(0.2f);
+        MeleeAttackArea.gameObject.SetActive(true);
     }
     IEnumerator WhirlAttack()
     {
@@ -161,9 +164,10 @@ public class JY_Boss_FireDungeon : Enemy
         BossAttackIntermission();
         yield return new WaitForSeconds(1f);
         ShootFire();
+        meleeInitialize();
         yield return new WaitForSeconds(1f);
         ShootFire();
-        yield return new WaitForSeconds(3f);
+        meleeInitialize();
     }
     IEnumerator JumpAttack()
     {
@@ -173,34 +177,31 @@ public class JY_Boss_FireDungeon : Enemy
         yield return new WaitForSeconds(0.5f);
         while(transform.position != tauntVec)
             transform.position = Vector3.MoveTowards(transform.position, tauntVec,Time.deltaTime);
-        yield return new WaitForSeconds(1.0f);
-        JumpAttackArea.enabled = true;
-        for (int i = 0; i < 3; i++)
+        yield return new WaitForSeconds(1.3f);
+        JumpAttackArea.gameObject.SetActive(true);
+        for (int i = 0; i < 5; i++)
             FieldFireCreate();
         yield return new WaitForSeconds(0.5f);
-        JumpAttackArea.enabled = false;
+        JumpAttackArea.gameObject.SetActive(false);
         hitbox.enabled = true;
-        yield return new WaitForSeconds(3f);
     }
     IEnumerator Kick()
     {
         anim.SetTrigger("KickAttack");
         BossAttackIntermission();
         yield return new WaitForSeconds(1f);
-        StartCoroutine("kickAttackAreaOnOff");
+        meleeInitialize();
         yield return new WaitForSeconds(0.5f);
-        StartCoroutine("kickAttackAreaOnOff");
+        meleeInitialize();
         yield return new WaitForSeconds(0.5f);
-        StartCoroutine("kickAttackAreaOnOff");
+        meleeInitialize();
         yield return new WaitForSeconds(1f);
-        StartCoroutine("kickAttackAreaOnOff");
-        yield return new WaitForSeconds(2f);
+        meleeInitialize();
     }
-    IEnumerator kickAttackAreaOnOff()
+    void meleeInitialize()
     {
-        KickAttackArea.enabled = true;
-        yield return new WaitForSeconds(0.3f);
-        KickAttackArea.enabled = false;
+        MeleeAttackArea.gameObject.SetActive(false);
+        MeleeAttackArea.gameObject.SetActive(true);
     }
     public override void IsAttacked(int _damage, Vector3 _player)
     {
@@ -240,6 +241,7 @@ public class JY_Boss_FireDungeon : Enemy
             DropExp();
             DropGold();
             DropItem();
+            portalCreate();
             Destroy(gameObject,10f);
         }
     }
@@ -267,17 +269,16 @@ public class JY_Boss_FireDungeon : Enemy
     {
         FreezeEnemy();
         atkTime = attackCool - 3f;
-        Invoke("UnFreezeAll", 3f);
+        Invoke("UnFreezeAll", 1f);
     }
     public void MeleeAreaDisEnable()
     {
-        KickAttackArea.enabled = false;
-        JumpAttackArea.enabled = false;
-        BossWeapon.enabled = false;
+        MeleeAttackArea.gameObject.SetActive(false);
+        JumpAttackArea.gameObject.SetActive(false);
     }
     void ShootFire()
     {
-        Instantiate(Fireball, BossWeapon.transform.position, transform.rotation);
+        Instantiate(Fireball, BossWeapon.position, transform.rotation);
     }
     public void PartDestruction(string partName)
     {
@@ -310,16 +311,21 @@ public class JY_Boss_FireDungeon : Enemy
     }
     void BossAttackIntermission()
     {
-        Invoke("UnfreezeEnemy",5f);
+        Invoke("UnfreezeEnemy",4f);
     }
     public void stunWakeUp()
     {
         anim.SetTrigger("StunWakeUP");
-        Invoke("BossAwake", 3f);
+        Invoke("BossAwake", 2f);
         isStun = false;
     }
     public void BossRotate()
     {
         isStop = false;
+    }
+
+    void portalCreate()
+    {
+        BossRoomPortal.SetActive(true);
     }
 }

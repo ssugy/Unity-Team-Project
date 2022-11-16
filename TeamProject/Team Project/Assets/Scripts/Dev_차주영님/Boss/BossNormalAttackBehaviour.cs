@@ -8,7 +8,6 @@ public class BossNormalAttackBehaviour : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         JY_Boss_FireDungeon.s_instance.WeaponEffectOnOff(true);
-        JY_Boss_FireDungeon.s_instance.BossWeapon.enabled = true;
         AudioManager.s_instance.CallSFXPlay(AudioManager.SOUND_NAME.BOSS_SWING, 0.5f);
     }
 
