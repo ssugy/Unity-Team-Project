@@ -174,7 +174,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &715416930
 RectTransform:
   m_ObjectHideFlags: 0
@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.92156863, b: 0.16862746, a: 1}
+  m_Color: {r: 0.63607466, g: 0.25, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -348,7 +348,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &990297653
 RectTransform:
   m_ObjectHideFlags: 0
@@ -390,7 +390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.92142063, b: 0.16509432, a: 1}
+  m_Color: {r: 0.63607466, g: 0.25, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -630,7 +630,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1243880705
 RectTransform:
   m_ObjectHideFlags: 0
@@ -672,7 +672,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.92156863, b: 0.16862746, a: 1}
+  m_Color: {r: 0.63607466, g: 0.25, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -17053,8 +17053,28 @@ MonoBehaviour:
   destroyButton: {fileID: 970053432644365634}
   destroyButtonText: {fileID: 3330820057128247467}
   iUi: {fileID: 1748669735845751422}
-  options: []
-  optionNames: []
+  options:
+  - {fileID: 990297654}
+  - {fileID: 1243880706}
+  - {fileID: 715416931}
+  optionNames:
+  - "\uACF5\uC18D\uC99D\uAC00"
+  - "\uACF5\uACA9\uB825\uC99D\uAC00"
+  - "\uCE58\uBA85\uD0C0\uC99D\uAC00"
+  - "\uCC44\uB825\uC99D\uAC00"
+  - "\uADFC\uB825\uC99D\uAC00"
+  - "\uC2A4\uD0DC\uBBF8\uB098\uC99D\uAC00"
+  - "\uBBFC\uCCA9\uC99D\uAC00"
+  - "\uBC29\uC5B4\uB825\uC99D\uAC00"
+  - "\uCD5C\uB300\uCCB4\uB825\uC99D\uAC00"
+  - "\uCD5C\uB300\uC2A4\uD0DC\uBBF8\uB098\uC99D\uAC00"
+  - "\uCCB4\uB825\uC99D\uAC00"
+  - "\uADFC\uB825\uC99D\uAC00"
+  - "\uC2A4\uD0DC\uBBF8\uB098\uC99D\uAC00"
+  - "\uBBFC\uCCA9\uC99D\uAC00"
+  - "\uD68C\uBCF5\uB7C9\uC99D\uAC00"
+  - "\uD68C\uD53C\uD655\uB960\uC99D\uAC00"
+  - "\uB370\uBBF8\uC9C0\uAC10\uC18C"
 --- !u!1 &6008413287419836417
 GameObject:
   m_ObjectHideFlags: 0
