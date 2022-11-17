@@ -25,8 +25,7 @@ public class Inventory : MonoBehaviour
     }
     private void OnDisable()
     {
-        //instance = null;
-        JY_CharacterListManager.s_instance.invenList.Remove(this);
+        //instance = null;        
         items.Clear();       
     }
     void Start()

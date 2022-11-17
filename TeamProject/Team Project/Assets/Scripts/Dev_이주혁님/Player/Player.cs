@@ -805,7 +805,8 @@ public class Player : MonoBehaviourPun, IPunObservable
     public void OnDisable()
     {        
         SaveData();             
-        JY_CharacterListManager.s_instance.playerList.Remove(this);        
+        JY_CharacterListManager.s_instance.playerList.Remove(this);
+        JY_CharacterListManager.s_instance.invenList.Remove(GetComponent<Inventory>());
     }
         
 
