@@ -7,6 +7,7 @@ public class JY_ShakeCamera : MonoBehaviour
     public float shakeTime;
     public float shakeIntensity;
     public float delay;
+    bool isShake;
     public void onSakeCamera()
     {
         StopCoroutine("ShakeByPosition");
@@ -15,14 +16,23 @@ public class JY_ShakeCamera : MonoBehaviour
     IEnumerator ShakeByPosition()
     {
         yield return new WaitForSeconds(delay);
-        Vector3 startposition = transform.position;
-        float tmp = shakeTime;
-        while (tmp > 0.0f)
+        isShake = true;
+    }
+    
+    private void FixedUpdate()
+    {
+        if (isShake)
         {
-            transform.position = startposition + Random.insideUnitSphere * shakeIntensity;
-            tmp -= Time.deltaTime;
-            yield return null;
+            /*float tmp = shakeTime;
+            while (tmp > 0.0f)
+            {
+                float cameraShakeY = Random.Range(0f, 1f) * shakeIntensity;
+                Vector3 moveVec = new Vector3(0f,cameraShakeY,0f);
+                Vector3 tmpVec = transform.position + moveVec;
+                transform.position = tmpVec;
+                tmp -= Time.deltaTime;
+            }
+            isShake = false;*/
         }
-        transform.position = startposition;
     }
 }
