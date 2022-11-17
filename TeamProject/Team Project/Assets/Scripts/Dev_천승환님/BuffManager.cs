@@ -31,9 +31,9 @@ public class BuffManager : MonoBehaviour
         Coordinates.Add(tmp[i]);
         for(int i = 0; i < 6; i++)
         {
-            GameObject buff_Prefabs = Buff_Prefabs[i];
-            Vector3 buff_Position = Coordinates[Random.Range(0, Coordinates.Length)].GetPosition();
-            SpawnBuff(buff_Prefabs, buff_Position);
+            //GameObject buff_Prefabs = Buff_Prefabs[i];
+            //Vector3 buff_Position = Coordinates[Random.Range(0, Coordinates.Length)].GetPosition();
+            //SpawnBuff(buff_Prefabs, buff_Position);
         }
     }
 
@@ -56,10 +56,10 @@ public class BuffManager : MonoBehaviour
             this.z = z;
         }
 
-        public Vector3 GetPosition()
+        /*public Vector3 GetPosition()
         {
             return new Vector3(x, y, z);
             
-        }
+        }*/
     }
 }
