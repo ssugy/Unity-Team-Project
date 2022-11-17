@@ -15650,6 +15650,57 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c986e44a5c9673f48a6a6ef5ff00b27a, type: 3}
+--- !u!1 &1301725827
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1301725829}
+  - component: {fileID: 1301725828}
+  m_Layer: 0
+  m_Name: "\uBC84\uD504\uB9E4\uB2C8\uC800"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1301725828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1301725827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 880d2d099938cf041a14ef4361b1b37a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Buff_Prefabs:
+  - {fileID: 9126388054813989982, guid: f673a36bddd20494bba2a87582054d3c, type: 3}
+  - {fileID: 519398326267694562, guid: 31a41eda08fc25a46b4ff35c6cab32a9, type: 3}
+  - {fileID: 8291433470989405597, guid: e177694e7104c134e865da2416e6488d, type: 3}
+  - {fileID: 5169475541898004473, guid: 8a30883e276029f499fd726c0da184c4, type: 3}
+  - {fileID: 621322129882614995, guid: 9ee1b7de625b39c4b87735686e0d0fc6, type: 3}
+  - {fileID: 6868465471487316701, guid: f8eb3a86ff887974d8e3f32c80f06778, type: 3}
+--- !u!4 &1301725829
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1301725827}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 36
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1322553340
 GameObject:
   m_ObjectHideFlags: 3
