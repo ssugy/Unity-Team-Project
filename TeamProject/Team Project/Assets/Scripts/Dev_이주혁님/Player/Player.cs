@@ -449,30 +449,29 @@ public class Player : MonoBehaviourPun, IPunObservable
             Buff buff = other.GetComponent<Buff>();
             switch (buff.type)
             {
-                /*case Buff.Type.공격력증가:
-                    공격력증가 += buff.value; // 30증가
-                    if 
+                case Buff.Type.AtkPoint:
+                    gameObject.AddComponent<Buff_AtkPoint>();
                     break;
-                case Buff.Type.공격속도증가:
-                    공격력속도증가 += buff.value; //20%증가
-                    if 
+
+                case Buff.Type.AtkSpeed:
+                    gameObject.AddComponent<Buff_AtkSpeed>();
                     break;
-                case Buff.Type.스테미나회복:
-                    스테미나회복 += buff.value; // 20%증가
-                    if 
-                    break;*/
+
+                case Buff.Type.SpRecover:
+                    gameObject.AddComponent<Buff_SpRecover>();
+                    break;
+
                 case Buff.Type.HP:
-                    playerStat.HP += buff.value; // 300증가
-                    //if 
+                    gameObject.AddComponent<Buff_HP>();
                     break;
-                    /*case Buff.Type.체력회복속도증가:
-                        체력회복속도증가 += buff.value; // 초당 10씩증가
-                        if 
-                        break;
-                    case Buff.Type.보스에게추가데미지:
-                        보스에게추가데미지 += buff.value; //보스몬스터 공격시 50증가
-                        if 
-                        break;*/
+
+                case Buff.Type.HPRecover:
+                    gameObject.AddComponent<Buff_HpRecover>();
+                    break;
+
+                case Buff.Type.defPoint:
+                    gameObject.AddComponent<Buff_defPoint>();
+                    break;
             }
 
             Destroy(other.gameObject);

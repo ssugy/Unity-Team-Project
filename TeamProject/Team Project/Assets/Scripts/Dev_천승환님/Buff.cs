@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Buff : MonoBehaviour
 {
-    public enum Type { HP, STEMENA };
+    public enum Type { HP, AtkPoint, SpRecover, HPRecover, AtkSpeed, defPoint };
     public Type type;
     public int value;
+   
 
     void Update()
     {
