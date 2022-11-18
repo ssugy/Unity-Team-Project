@@ -8,12 +8,11 @@ public class BossFireball : Fireball
     Vector3 moveVec;
     private void Update()
     {
-        transform.Translate(moveVec * Time.deltaTime);
+        targetVec = JY_CharacterListManager.s_instance.playerList[0].transform.position;
+        transform.position = Vector3.MoveTowards(transform.position,targetVec,Time.deltaTime*10f);
     }
     private void OnEnable()
     {
-        targetVec = JY_CharacterListManager.s_instance.playerList[0].transform.position;
-        moveVec = targetVec - transform.position;
         Invoke("DestroySelf", 4f);
     }
 }

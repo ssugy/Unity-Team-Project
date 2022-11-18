@@ -11,8 +11,8 @@ public class BossJumpAttackBehaviour : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         JY_Boss_FireDungeon.s_instance.WeaponEffectOnOff(true);
-        InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect2, 2f, JY_Boss_FireDungeon.s_instance.transform);
-        AudioManager.s_instance.CallSFXPlay(AudioManager.SOUND_NAME.Boss_JUMP,2f);
+        InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect2, 1.5f, JY_Boss_FireDungeon.s_instance.transform);
+        AudioManager.s_instance.CallSFXPlay(AudioManager.SOUND_NAME.Boss_JUMP,1.5f);
         JY_ShakeCamera cam = Camera.main.GetComponent<JY_ShakeCamera>();
         cam.onSakeCamera();
     }
