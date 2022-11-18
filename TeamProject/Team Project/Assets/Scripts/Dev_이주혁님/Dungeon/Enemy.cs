@@ -240,16 +240,13 @@ public class Enemy : MonoBehaviourPun, IPunObservable
     // 경험치와 골드를 드랍. 아이템은 플레이어의 스탯에 직접 반영되는 것이 아닌 필드에 드랍되므로 별도의 메소드를 사용.
     protected void DropExp()
     {
-        if (target != null)
+        Player player = JY_CharacterListManager.s_instance.playerList[0];
+        if (player != null) 
         {
-            Player player = target.GetComponent<Player>();
-            if (player != null)
-            {
-                player.playerStat.CurExp += dropExp;
-                player.SaveData();
-                JY_CharacterListManager.s_instance.Save();
-            }
-        }
+            player.playerStat.CurExp += dropExp;
+            player.SaveData();
+            JY_CharacterListManager.s_instance.Save();
+        }                   
     }
     protected void DropGold()
     {

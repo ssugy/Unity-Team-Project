@@ -854,6 +854,16 @@ public class Player : MonoBehaviourPun, IPunObservable
             stream.SendNext(playerStat.defMag);
             stream.SendNext(gameObject.name);
             stream.SendNext(playerStat.customized);
+            if (rWeapon == null)            
+                stream.SendNext(string.Empty);            
+            else            
+                stream.SendNext(rWeapon.name);
+            if (lWeapon == null)
+                stream.SendNext(string.Empty);
+            else
+                stream.SendNext(lWeapon.name);
+
+
         }
         else
         {
@@ -865,6 +875,41 @@ public class Player : MonoBehaviourPun, IPunObservable
 
             playerStat.customized = (int[])stream.ReceiveNext();
             AvatarSet();
+
+            string weaponName= (string)stream.ReceiveNext();
+            if (weaponName.Equals(string.Empty))
+            { 
+                while (this.rWeaponDummy.GetComponentInChildren<Weapon>() != null)                
+                    DestroyImmediate(this.rWeaponDummy.GetComponentInChildren<Weapon>().gameObject);
+            }
+            else if (rWeapon==null || !weaponName.Equals(rWeapon.name))
+            {
+                while (this.rWeaponDummy.GetComponentInChildren<Weapon>() != null)
+                    DestroyImmediate(this.rWeaponDummy.GetComponentInChildren<Weapon>().gameObject);
+                GameObject weaponSrc = Resources.Load<GameObject>("Item/Weapon/" + weaponName);
+                GameObject weapon = Instantiate(weaponSrc, rWeaponDummy);
+                weapon.name = string.Copy(weaponSrc.name);
+            }
+
+            string shieldName = (string)stream.ReceiveNext();
+            if (shieldName.Equals(string.Empty))
+            {
+                while (this.lWeaponDummy.GetComponentInChildren<Shield>() != null)
+                    DestroyImmediate(this.lWeaponDummy.GetComponentInChildren<Shield>().gameObject);
+                while (this.lWeaponDummy.GetComponentInChildren<Staff>() != null)
+                    DestroyImmediate(this.lWeaponDummy.GetComponentInChildren<Staff>().gameObject);
+            }
+            else if (lWeapon == null || !shieldName.Equals(lWeapon.name))
+            {
+                while (this.lWeaponDummy.GetComponentInChildren<Shield>() != null)
+                    DestroyImmediate(this.lWeaponDummy.GetComponentInChildren<Shield>().gameObject);
+                while (this.lWeaponDummy.GetComponentInChildren<Staff>() != null)
+                    DestroyImmediate(this.lWeaponDummy.GetComponentInChildren<Staff>().gameObject);
+                GameObject shieldSrc = Resources.Load<GameObject>("Item/Shield/" + shieldName);
+                GameObject shield = Instantiate(shieldSrc, lWeaponDummy);
+                shield.name = string.Copy(shieldSrc.name);
+            }
+
         }
     }
 }
