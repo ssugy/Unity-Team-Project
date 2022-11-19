@@ -15,6 +15,7 @@ public class JY_Boss_FireDungeon : Enemy
     bool DoAttack;
     bool isDead;
     bool isStun;
+    bool isJump;
     int partCnt;
     [Header("보스 공격 범위 콜라이더")]
     public BoxCollider JumpAttackArea;
@@ -53,42 +54,11 @@ public class JY_Boss_FireDungeon : Enemy
         isLook = true;
         isAwake = false;
         isStun = false;
+        isJump = false;
     }
 
     private void FixedUpdate()
-    {/*
-        if (!isDead && isAwake)
-        {
-            float distance = Vector3.Distance(transform.position, target.position);
-            if (target != null)
-            {
-                FreezeVelocity();
-                BossRotate();
-                nav.SetDestination(target.position);
-                atkTime += Time.fixedDeltaTime;
-
-                if (distance <= attackDistance && !DoAttack)
-                {
-                    if (atkTime >= attackCool)
-                    {
-                        atkTime = 0f;
-                        FreezeEnemy();
-                        FreezeBoss();
-                        StartCoroutine(BossPattern(4));
-                    }
-
-                }
-
-                if (distance >= attackDistance && nav.velocity != Vector3.zero && !isStop)
-                {
-                    anim.SetBool("isWalk", true);
-                }
-                else
-                {
-                    anim.SetBool("isWalk", false);
-                }
-            }
-        }*/
+    {
         atkTime += Time.fixedDeltaTime;
         if (isAwake && !isDead)
         {
@@ -109,7 +79,7 @@ public class JY_Boss_FireDungeon : Enemy
                 {
                     Vector3 dir = target.transform.position - this.transform.position;
                     this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime);
-                    //anim.SetBool("isWalk", true);
+                    anim.SetBool("isWalk", true);
                 }
 
                 if (distance <= attackDistance)
@@ -117,15 +87,29 @@ public class JY_Boss_FireDungeon : Enemy
                     totalTime = 0f;
                     FreezeEnemy();
                     if (atkTime >= attackCool)
-
                     {
                         atkTime = 0f;
                         isStop = true;
                         Vector3 dir = target.transform.position - this.transform.position;
                         this.transform.rotation = Quaternion.LookRotation(dir);
                         FreezeEnemy();
-                        StartCoroutine(BossPattern(4));
+                        int ranAction = Random.Range(0, 3);
+                        StartCoroutine(BossPattern(ranAction));
                     }
+                }
+                else if(distance > attackDistance && atkTime >= attackCool)
+                {
+                    atkTime = 0f;
+                    isStop = true;
+                    Vector3 dir = target.transform.position - this.transform.position;
+                    this.transform.rotation = Quaternion.LookRotation(dir);
+                    FreezeEnemy();
+                    StartCoroutine(BossPattern(3));
+                }
+
+                if (isJump)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, tauntVec, Time.deltaTime * 10f);
                 }
             }
         }
@@ -134,20 +118,19 @@ public class JY_Boss_FireDungeon : Enemy
     IEnumerator BossPattern(int patternNum)
     {
         yield return new WaitForSeconds(0.1f);
-        int ranAction = Random.Range(0, patternNum);
-        switch (ranAction)
+        switch (patternNum)
         {
             case 0:
                 StartCoroutine(NormalAttack());
                 break;
             case 1:
-                StartCoroutine(JumpAttack());
-                break;
-            case 2:
                 StartCoroutine(WhirlAttack());
                 break;
-            case 3:
+            case 2:
                 StartCoroutine(Kick());
+                break;
+            case 3:
+                StartCoroutine(JumpAttack());
                 break;
         }
     }
@@ -174,17 +157,18 @@ public class JY_Boss_FireDungeon : Enemy
     {
         anim.SetTrigger("JumpAttack");
         BossAttackIntermission();
-        tauntVec = target.position;
         yield return new WaitForSeconds(0.5f);
-        while(transform.position != tauntVec)
-            transform.position = Vector3.MoveTowards(transform.position, tauntVec,Time.deltaTime);
+        isJump = true;
+        tauntVec = target.position;
         yield return new WaitForSeconds(1.3f);
         JumpAttackArea.gameObject.SetActive(true);
         for (int i = 0; i < 5; i++)
             FieldFireCreate();
         yield return new WaitForSeconds(0.5f);
+        isJump = false;
         JumpAttackArea.gameObject.SetActive(false);
         hitbox.enabled = true;
+
     }
     IEnumerator Kick()
     {
