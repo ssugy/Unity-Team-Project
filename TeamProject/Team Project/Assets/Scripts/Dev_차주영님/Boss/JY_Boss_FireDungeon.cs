@@ -78,7 +78,7 @@ public class JY_Boss_FireDungeon : Enemy
                 if (!isStop)
                 {
                     Vector3 dir = target.transform.position - this.transform.position;
-                    this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime);
+                    this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime*3f);
                     anim.SetBool("isWalk", true);
                 }
 
@@ -97,7 +97,7 @@ public class JY_Boss_FireDungeon : Enemy
                         StartCoroutine(BossPattern(ranAction));
                     }
                 }
-                else if(distance > attackDistance && atkTime >= attackCool)
+                else if(distance > 10f && atkTime >= attackCool)
                 {
                     atkTime = 0f;
                     isStop = true;
