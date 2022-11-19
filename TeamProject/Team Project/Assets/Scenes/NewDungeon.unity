@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37690797, g: 0.27781743, b: 0.266296, a: 1}
+  m_IndirectSpecularColor: {r: 0.37690857, g: 0.27781683, b: 0.26629424, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -51836,13 +51836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed0ef645f493daa479b4e3b851e53dad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetSceneNum: 4
-  player: {fileID: 0}
-  portalUI: {fileID: 1069458826}
-  selectArrow: {fileID: 0}
-  enterText: {fileID: 0}
-  solo: {fileID: 0}
-  doppio: {fileID: 0}
+  portalPanel: {fileID: 1069458826}
 --- !u!135 &1515082898
 SphereCollider:
   m_ObjectHideFlags: 0

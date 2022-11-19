@@ -85,8 +85,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
     }
     public override void OnLeftRoom()
-    {        
-        
+    {
+        Debug.Log("방을 나감");
     }
 
 

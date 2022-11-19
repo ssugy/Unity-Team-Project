@@ -21513,7 +21513,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 0.33343717, g: 0.47843665, b: 0.5566038, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -22027,7 +22027,7 @@ ParticleSystem:
     m_UseMeshMaterialIndex: 0
     m_UseMeshColors: 1
     alignToDirection: 0
-    m_Texture: {fileID: 0}
+    m_Texture: {fileID: 2800000, guid: ef40b00a83f7bd34f84851386b3321f0, type: 3}
     m_TextureClipChannel: 3
     m_TextureClipThreshold: 0
     m_TextureUVChannel: 0
@@ -26113,7 +26113,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.04705882, g: 0.11782463, b: 0.36862746, a: 1}
   m_Intensity: 30
   m_Range: 3
   m_SpotAngle: 30
@@ -26189,12 +26189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed0ef645f493daa479b4e3b851e53dad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetSceneNum: 5
-  player: {fileID: 0}
-  portalUI: {fileID: 0}
-  selectArrow: {fileID: 0}
-  enterText: {fileID: 0}
-  enterButton: {fileID: 0}
+  portalPanel: {fileID: 0}
 --- !u!1 &2504660206553413058
 GameObject:
   m_ObjectHideFlags: 0
