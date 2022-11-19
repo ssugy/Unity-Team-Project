@@ -16,6 +16,7 @@ public class JY_Boss_FireDungeon : Enemy
     bool isDead;
     bool isStun;
     bool isJump;
+    bool isKick;
     int partCnt;
     [Header("보스 공격 범위 콜라이더")]
     public BoxCollider JumpAttackArea;
@@ -55,6 +56,7 @@ public class JY_Boss_FireDungeon : Enemy
         isAwake = false;
         isStun = false;
         isJump = false;
+        isKick = false;
     }
 
     private void FixedUpdate()
@@ -75,6 +77,7 @@ public class JY_Boss_FireDungeon : Enemy
 
                 nav.SetDestination(target.position);
                 float distance = Vector3.Distance(transform.position, target.position);
+                anim.SetFloat("distance", distance);
                 if (!isStop)
                 {
                     Vector3 dir = target.transform.position - this.transform.position;
@@ -85,7 +88,8 @@ public class JY_Boss_FireDungeon : Enemy
                 if (distance <= attackDistance)
                 {
                     totalTime = 0f;
-                    FreezeEnemy();
+                    if (distance <= 1f)
+                        FreezeEnemy();
                     if (atkTime >= attackCool)
                     {
                         atkTime = 0f;
@@ -106,6 +110,16 @@ public class JY_Boss_FireDungeon : Enemy
                     FreezeEnemy();
                     StartCoroutine(BossPattern(3));
                 }
+                else if(distance > 7f && isKick)
+                {
+                    StopAllCoroutines();
+                    InstanceManager.s_instance.StopAllBossEffect();
+                    Vector3 dir = target.transform.position - this.transform.position;
+                    this.transform.rotation = Quaternion.LookRotation(dir);
+                    StartCoroutine(JumpAttack());
+                    isKick = false;
+                }
+
 
                 if (isJump)
                 {
@@ -138,14 +152,12 @@ public class JY_Boss_FireDungeon : Enemy
     IEnumerator NormalAttack()
     {
         anim.SetTrigger("NoramlAttack");
-        BossAttackIntermission();
         yield return new WaitForSeconds(0.2f);
         MeleeAttackArea.gameObject.SetActive(true);
     }
     IEnumerator WhirlAttack()
     {
         anim.SetTrigger("WhirlAttack");
-        BossAttackIntermission();
         yield return new WaitForSeconds(1f);
         ShootFire();
         meleeInitialize();
@@ -156,7 +168,6 @@ public class JY_Boss_FireDungeon : Enemy
     IEnumerator JumpAttack()
     {
         anim.SetTrigger("JumpAttack");
-        BossAttackIntermission();
         yield return new WaitForSeconds(0.5f);
         isJump = true;
         tauntVec = target.position;
@@ -172,8 +183,8 @@ public class JY_Boss_FireDungeon : Enemy
     }
     IEnumerator Kick()
     {
+        isKick = true;
         anim.SetTrigger("KickAttack");
-        BossAttackIntermission();
         yield return new WaitForSeconds(1f);
         meleeInitialize();
         yield return new WaitForSeconds(0.5f);
@@ -302,6 +313,10 @@ public class JY_Boss_FireDungeon : Enemy
     void BossAttackIntermission()
     {
         Invoke("UnfreezeEnemy",4f);
+    }
+    public void UnfreezeBoss()
+    {
+        UnfreezeEnemy();
     }
     public void stunWakeUp()
     {

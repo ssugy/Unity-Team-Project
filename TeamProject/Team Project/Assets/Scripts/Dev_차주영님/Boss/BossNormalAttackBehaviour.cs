@@ -21,7 +21,8 @@ public class BossNormalAttackBehaviour : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         JY_Boss_FireDungeon.s_instance.BossRotate();
-        JY_Boss_FireDungeon.s_instance.MeleeAreaDisEnable();   
+        JY_Boss_FireDungeon.s_instance.MeleeAreaDisEnable();
+        JY_Boss_FireDungeon.s_instance.UnfreezeBoss();
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

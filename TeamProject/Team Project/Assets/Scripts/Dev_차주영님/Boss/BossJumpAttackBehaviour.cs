@@ -29,6 +29,7 @@ public class BossJumpAttackBehaviour : StateMachineBehaviour
         JY_Boss_FireDungeon.s_instance.BossRotate();
         JY_Boss_FireDungeon.s_instance.WeaponEffectOnOff(false);
         JY_Boss_FireDungeon.s_instance.MeleeAreaDisEnable();
+        JY_Boss_FireDungeon.s_instance.UnfreezeBoss();
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
