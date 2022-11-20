@@ -17,6 +17,7 @@ public class JY_Boss_FireDungeon : Enemy
     bool isKick;
     [HideInInspector]public bool isAttack;
     int partCnt;
+    float angleRange;
     [Header("보스 공격 범위 콜라이더")]
     public BoxCollider JumpAttackArea;
     public BoxCollider MeleeAttackArea;
@@ -47,6 +48,7 @@ public class JY_Boss_FireDungeon : Enemy
         HitSkillNum = -1;
         partCnt = 2;
         curHealth = maxHealth;
+        angleRange = 30f;
     }
     private new void Start()
     {
@@ -65,7 +67,7 @@ public class JY_Boss_FireDungeon : Enemy
         {
             if (target != null)
             {
-                if (nav.velocity != Vector3.zero)
+                if (nav.velocity != Vector3.zero &&!isAttack )
                 {
                     anim.SetBool("isWalk", true);
                 }
@@ -81,7 +83,11 @@ public class JY_Boss_FireDungeon : Enemy
                     Vector3 dir = target.transform.position - this.transform.position;
                     float t = Mathf.Clamp(Time.deltaTime*3f,0f,0.99f);
                     this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), t);
-                    anim.SetBool("isWalk", true);
+                    float dot = Vector3.Dot(dir, transform.forward);
+                    float theta = Mathf.Acos(dot);
+                    float degree = Mathf.Rad2Deg * theta;
+                    if(degree > angleRange / 2f)
+                        anim.SetBool("isWalk", true);
                 }
 
                 if (distance <= attackDistance)
@@ -102,6 +108,7 @@ public class JY_Boss_FireDungeon : Enemy
                         FreezeEnemy();
                         int ranAction = Random.Range(0, 3);
                         StartCoroutine(BossPattern(ranAction));
+                        //StartCoroutine(BossPattern(0));
                     }
                 }
                 else if(distance > 10f && atkTime >= attackCool)
@@ -334,8 +341,8 @@ public class JY_Boss_FireDungeon : Enemy
     {
         BossRoomPortal.SetActive(true);
     }
-    public void HitIntermission(float intermission)
+    public void SetAtkTime(float tmp)
     {
-        atkTime = intermission;
+        atkTime = tmp;
     }
 }
