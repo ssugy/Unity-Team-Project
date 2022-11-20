@@ -88,7 +88,7 @@ public class JY_Boss_FireDungeon : Enemy
                 if (distance <= attackDistance)
                 {
                     totalTime = 0f;
-                    if (distance <= 1f)
+                    if (distance <= 2f)
                         FreezeEnemy();
                     if (atkTime >= attackCool)
                     {

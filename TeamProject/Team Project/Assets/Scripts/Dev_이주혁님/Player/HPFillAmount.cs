@@ -19,7 +19,7 @@ public class HPFillAmount : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (stat.CurHP < stat.HP)
+        if (stat.CurHP < stat.HP && !JY_CharacterListManager.s_instance.playerList[0].CompareTag("Dead"))
         {
             HpRecoverTime += Time.deltaTime;
             if(HpRecoverTime >= stat.HPRecoverCoolTime)
