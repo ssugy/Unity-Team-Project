@@ -11,7 +11,6 @@ public class BossHitBehaviour : StateMachineBehaviour
         JY_Boss_FireDungeon.s_instance.WeaponEffectOnOff(false);
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BOSS_HIT);
         JY_Boss_FireDungeon.s_instance.MeleeAreaDisEnable();
-        JY_Boss_FireDungeon.s_instance.ClearAttackCool();
         InstanceManager.s_instance.StopAllBossEffect();
     }
 
@@ -25,6 +24,7 @@ public class BossHitBehaviour : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         JY_Boss_FireDungeon.s_instance.HitSkillNum = -1;
+        JY_Boss_FireDungeon.s_instance.UnfreezeBoss();
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

@@ -266,12 +266,6 @@ public class JY_Boss_FireDungeon : Enemy
         GameObject tmp = Instantiate<GameObject>(FieldFire);
         tmp.transform.position = transform.position + new Vector3(Random.Range(-3, 3), 0, Random.Range(-3, 3));
     }
-    public void ClearAttackCool()
-    {
-        FreezeEnemy();
-        atkTime = attackCool - 3f;
-        Invoke("UnFreezeAll", 1f);
-    }
     public void MeleeAreaDisEnable()
     {
         MeleeAttackArea.gameObject.SetActive(false);
@@ -310,19 +304,9 @@ public class JY_Boss_FireDungeon : Enemy
         Debug.Log(partCnt);
         anim.SetTrigger("Stun");
     }
-    void BossAttackIntermission()
-    {
-        Invoke("UnfreezeEnemy",4f);
-    }
     public void UnfreezeBoss()
     {
         UnfreezeEnemy();
-    }
-    public void stunWakeUp()
-    {
-        anim.SetTrigger("StunWakeUP");
-        Invoke("BossAwake", 2f);
-        isStun = false;
     }
     public void BossRotate()
     {

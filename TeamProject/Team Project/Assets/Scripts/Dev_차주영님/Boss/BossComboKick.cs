@@ -12,10 +12,10 @@ public class BossComboKick : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         JY_Boss_FireDungeon.s_instance.WeaponEffectOnOff(true);
-        InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect, 0.5f, JY_Boss_FireDungeon.s_instance.transform);
-        InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect2, 1f, JY_Boss_FireDungeon.s_instance.transform);
-        InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect3, 1.5f, JY_Boss_FireDungeon.s_instance.transform);
-        InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect4, 2f, JY_Boss_FireDungeon.s_instance.transform);
+        //InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect, 0.5f, JY_Boss_FireDungeon.s_instance.transform);
+        //InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect2, 1f, JY_Boss_FireDungeon.s_instance.transform);
+        //InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect3, 1.5f, JY_Boss_FireDungeon.s_instance.transform);
+        //InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect4, 2f, JY_Boss_FireDungeon.s_instance.transform);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
