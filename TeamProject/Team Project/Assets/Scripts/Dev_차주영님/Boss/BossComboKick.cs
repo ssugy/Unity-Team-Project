@@ -11,11 +11,11 @@ public class BossComboKick : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //JY_Boss_FireDungeon.s_instance.WeaponEffectOnOff(true);
-        //InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect, 0.5f, JY_Boss_FireDungeon.s_instance.transform);
-        //InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect2, 1f, JY_Boss_FireDungeon.s_instance.transform);
-        //InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect3, 1.5f, JY_Boss_FireDungeon.s_instance.transform);
-        //InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect4, 2f, JY_Boss_FireDungeon.s_instance.transform);
+        JY_Boss_FireDungeon.s_instance.WeaponEffectOnOff(true);
+        InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect, 0.5f, JY_Boss_FireDungeon.s_instance.transform);
+        InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect2, 1f, JY_Boss_FireDungeon.s_instance.transform);
+        InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect3, 1.5f, JY_Boss_FireDungeon.s_instance.transform);
+        InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect4, 2f, JY_Boss_FireDungeon.s_instance.transform);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -28,7 +28,7 @@ public class BossComboKick : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         JY_Boss_FireDungeon.s_instance.BossRotate();
-        //JY_Boss_FireDungeon.s_instance.WeaponEffectOnOff(false);
+        JY_Boss_FireDungeon.s_instance.WeaponEffectOnOff(false);
         JY_Boss_FireDungeon.s_instance.UnfreezeBoss();
     }
 
