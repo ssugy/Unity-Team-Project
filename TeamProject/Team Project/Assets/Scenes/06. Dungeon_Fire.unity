@@ -15438,13 +15438,15 @@ MonoBehaviour:
   targetRadius: 0
   targetRange: 0
   attackDistance: 3
-  attackCool: 4
+  attackCool: 3
   target: {fileID: 0}
   originPos: {x: 0, y: 0, z: 0}
   originRotateion: {x: 0, y: 0, z: 0, w: 0}
   totalTime: 0
   isLook: 0
   isAwake: 0
+  isJump: 0
+  isAttack: 0
   JumpAttackArea: {fileID: 232850721}
   MeleeAttackArea: {fileID: 380488778}
   BossWeapon: {fileID: 1228672374}

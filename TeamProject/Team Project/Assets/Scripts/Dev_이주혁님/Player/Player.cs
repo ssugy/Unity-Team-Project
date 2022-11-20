@@ -133,6 +133,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     [HideInInspector] public bool enableRecoverSP; // 스태미너 회복 가능 여부 표시.
     [HideInInspector] public bool isGround;
     [HideInInspector] public bool isGaurd; // 방패막기 스킬 플래그
+    [HideInInspector] public bool isJumpAttacked;
 
     public Transform rWeaponDummy;              // 오른손 무기 더미.
     private TrailRenderer rWeaponEffect;        // 오른손 무기 이펙트. (검기)
@@ -246,6 +247,12 @@ public class Player : MonoBehaviourPun, IPunObservable
         {
             Move();
             playerAni.SetBool("isGround", isGround);
+            if (isJumpAttacked)
+            {
+                Vector3 dir = JY_CharacterListManager.s_instance.playerList[0].transform.position - JY_Boss_FireDungeon.s_instance.JumpAttackArea.transform.position;
+                PlayerKnockBack(dir.normalized);
+                Invoke("StopKnockBack",0.3f);
+            }
         }        
     }
 
@@ -384,8 +391,12 @@ public class Player : MonoBehaviourPun, IPunObservable
     public void RollMove() => controller.Move(transform.forward * 6f *
             Time.deltaTime + new Vector3(0, gravity * Time.deltaTime, 0));
 
-    public void PlayerKnockBack() => controller.Move(transform.forward * -1 * Time.deltaTime);
+    public void PlayerKnockBack(Vector3 dir) => controller.Move(dir * 6f * Time.deltaTime);
+    void StopKnockBack()
+    {
+        isJumpAttacked = false;
 
+    }
     public void LArmDown(PointerEventData data)
     {
         if (lWeapon == null)
@@ -693,8 +704,10 @@ public class Player : MonoBehaviourPun, IPunObservable
         if (isGaurd)
             playerStat.CurSP -= 10f;
         playerAni.SetFloat("isAttacked", (float)_damage / playerStat.HP);
+
         if (JY_Boss_FireDungeon.s_instance.isJump)
-            PlayerKnockBack();
+            isJumpAttacked = true;
+
     }
     public void DamageReset()
     {

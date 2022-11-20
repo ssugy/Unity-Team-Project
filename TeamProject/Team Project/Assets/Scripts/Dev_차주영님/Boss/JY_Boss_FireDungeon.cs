@@ -79,7 +79,8 @@ public class JY_Boss_FireDungeon : Enemy
                 if (!isStop)
                 {
                     Vector3 dir = target.transform.position - this.transform.position;
-                    this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime*3f);
+                    float t = Mathf.Clamp(Time.deltaTime*3f,0f,0.99f);
+                    this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), t);
                     anim.SetBool("isWalk", true);
                 }
 
@@ -115,6 +116,7 @@ public class JY_Boss_FireDungeon : Enemy
                 else if(distance > 8f && isKick)
                 {
                     StopAllCoroutines();
+                    atkTime = 0f;
                     InstanceManager.s_instance.StopAllBossEffect();
                     Vector3 dir = target.transform.position - this.transform.position;
                     this.transform.rotation = Quaternion.LookRotation(dir);
@@ -125,7 +127,7 @@ public class JY_Boss_FireDungeon : Enemy
 
                 if (isJump)
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, tauntVec, Time.deltaTime * 10f);
+                    transform.position = Vector3.MoveTowards(transform.position, tauntVec, Time.deltaTime * 20f);
                 }
 
                 if (JY_CharacterListManager.s_instance.playerList[0].CompareTag("Dead"))
@@ -182,7 +184,7 @@ public class JY_Boss_FireDungeon : Enemy
         isJump = true;
         tauntVec = target.position;
         hitbox.enabled = false;
-        yield return new WaitForSeconds(1.3f);
+        yield return new WaitForSeconds(0.5f);
         JumpAttackArea.gameObject.SetActive(true);
         for (int i = 0; i < 5; i++)
             FieldFireCreate();
