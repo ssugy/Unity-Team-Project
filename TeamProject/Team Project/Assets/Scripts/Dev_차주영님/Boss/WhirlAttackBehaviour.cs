@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class WhirlAttackBehaviour : StateMachineBehaviour
 {
-    public string Boss_Skill_Effect3;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -25,6 +24,8 @@ public class WhirlAttackBehaviour : StateMachineBehaviour
         JY_Boss_FireDungeon.s_instance.WeaponEffectOnOff(false);
         JY_Boss_FireDungeon.s_instance.MeleeAreaDisEnable();
         JY_Boss_FireDungeon.s_instance.UnfreezeBoss();
+        JY_Boss_FireDungeon.s_instance.isAttack = false;
+        InstanceManager.s_instance.StopAllBossEffect();
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

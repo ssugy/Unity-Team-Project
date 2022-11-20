@@ -17,6 +17,7 @@ public class JY_Boss_FireDungeon : Enemy
     bool isStun;
     bool isJump;
     bool isKick;
+    [HideInInspector]public bool isAttack;
     int partCnt;
     [Header("보스 공격 범위 콜라이더")]
     public BoxCollider JumpAttackArea;
@@ -77,7 +78,6 @@ public class JY_Boss_FireDungeon : Enemy
 
                 nav.SetDestination(target.position);
                 float distance = Vector3.Distance(transform.position, target.position);
-                anim.SetFloat("distance", distance);
                 if (!isStop)
                 {
                     Vector3 dir = target.transform.position - this.transform.position;
@@ -88,10 +88,14 @@ public class JY_Boss_FireDungeon : Enemy
                 if (distance <= attackDistance)
                 {
                     totalTime = 0f;
-                    if (distance <= 2f)
+                    if (distance <= 2f && !isAttack)
                         FreezeEnemy();
+                    else if (distance > 2f && !isAttack)
+                        UnfreezeEnemy();
+
                     if (atkTime >= attackCool)
                     {
+                        isAttack = true;
                         atkTime = 0f;
                         isStop = true;
                         Vector3 dir = target.transform.position - this.transform.position;
@@ -110,7 +114,7 @@ public class JY_Boss_FireDungeon : Enemy
                     FreezeEnemy();
                     StartCoroutine(BossPattern(3));
                 }
-                else if(distance > 7f && isKick)
+                else if(distance > 10f && isKick)
                 {
                     StopAllCoroutines();
                     InstanceManager.s_instance.StopAllBossEffect();
@@ -133,6 +137,7 @@ public class JY_Boss_FireDungeon : Enemy
                     UnfreezeEnemy();
                     target = null;
                     isAwake = false;
+                    anim.SetBool("isWalk", false);
                 }
             }
         }
@@ -194,8 +199,6 @@ public class JY_Boss_FireDungeon : Enemy
     {
         isKick = true;
         anim.SetTrigger("KickAttack");
-        yield return new WaitForSeconds(1f);
-        meleeInitialize();
         yield return new WaitForSeconds(0.5f);
         meleeInitialize();
         yield return new WaitForSeconds(0.5f);
@@ -205,9 +208,15 @@ public class JY_Boss_FireDungeon : Enemy
     }
     void meleeInitialize()
     {
-        MeleeAttackArea.gameObject.SetActive(false);
         MeleeAttackArea.gameObject.SetActive(true);
+        StartCoroutine(meleeOffDelay());
     }    
+
+    IEnumerator meleeOffDelay()
+    {
+        yield return new WaitForSeconds(0.2f);
+        MeleeAttackArea.gameObject.SetActive(false);
+    }
     public override void IsAttacked(int _damage, Vector3 _player)
     {
         photonView.RPC("IsAttacked_Do", RpcTarget.All, _damage, _player);
@@ -325,5 +334,9 @@ public class JY_Boss_FireDungeon : Enemy
     void portalCreate()
     {
         BossRoomPortal.SetActive(true);
+    }
+    public void HitIntermission(float intermission)
+    {
+        atkTime = intermission;
     }
 }
