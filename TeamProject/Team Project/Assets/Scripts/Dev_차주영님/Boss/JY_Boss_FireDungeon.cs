@@ -125,6 +125,15 @@ public class JY_Boss_FireDungeon : Enemy
                 {
                     transform.position = Vector3.MoveTowards(transform.position, tauntVec, Time.deltaTime * 10f);
                 }
+
+                if (JY_CharacterListManager.s_instance.playerList[0].CompareTag("Dead"))
+                {
+                    nav.SetDestination(originPos);
+                    transform.rotation = originRotateion;
+                    UnfreezeEnemy();
+                    target = null;
+                    isAwake = false;
+                }
             }
         }
     }
