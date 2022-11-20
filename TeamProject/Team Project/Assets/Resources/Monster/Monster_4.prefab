@@ -1842,7 +1842,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 350
-  curHealth: 350
   defMag: 0.5
   atkPoint: 50
   atkMag: 1.5
@@ -1867,7 +1866,7 @@ MonoBehaviour:
   originRotateion: {x: 0, y: 0, z: 0, w: 0}
   totalTime: 0
   skillCool: 5
-  skillDistance: 6
+  skillDistance: 3
   shooter: {fileID: 5635370030993390824}
 --- !u!195 &7393200756165185175
 NavMeshAgent:
@@ -1910,6 +1909,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
+  - {fileID: 1295775362}
   - {fileID: -7366758392195524724}
   - {fileID: -4536718879022763569}
   sceneViewId: 0
@@ -1929,8 +1929,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
-  m_SynchronizeLayers: []
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 0
+    Name: isWalk
+  - Type: 9
+    SynchronizeType: 0
+    Name: isAttack
+  - Type: 9
+    SynchronizeType: 0
+    Name: isDead
+  - Type: 9
+    SynchronizeType: 0
+    Name: isAttacked
+  - Type: 9
+    SynchronizeType: 0
+    Name: isSkill
+  - Type: 9
+    SynchronizeType: 0
+    Name: isWakeUp
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
 --- !u!114 &-4536718879022763569
 MonoBehaviour:
   m_ObjectHideFlags: 0

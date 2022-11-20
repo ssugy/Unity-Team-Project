@@ -17,6 +17,11 @@ public class Buff_AtkPoint : MonoBehaviour
     {
         mine = GetComponent<Player>();
         mine.playerStat.atkPoint += 30;
+
+        TrailRenderer Effect = mine.WeaponEffect.GetComponent<TrailRenderer>();
+        Effect.material.color = new Color(1f, 0f, 0f);
+        Effect.endColor = new Color(1f, 0f, 0f);
+
         GameObject Sources = Resources.Load<GameObject>("Sprites/BuffTime");
         blinktime = Instantiate(Sources , BattleUI.instance.BuffLayout).GetComponent<Image>();
         Sprite GetImage = Resources.Load<Sprite>("Sprites/skill2");
@@ -47,6 +52,9 @@ public class Buff_AtkPoint : MonoBehaviour
         if(time>30f)
         {
             mine.playerStat.atkPoint -= 30;
+            TrailRenderer Effect = mine.WeaponEffect.GetComponent<TrailRenderer>();
+            Effect.material.color = new Color(1f, 1f, 1f);
+            Effect.endColor = new Color(1f, 1f, 1f, 0f);
             Destroy(blinktime);
             Destroy(this);
         }
