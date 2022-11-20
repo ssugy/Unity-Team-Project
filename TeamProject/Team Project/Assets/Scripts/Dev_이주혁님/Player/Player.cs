@@ -383,7 +383,8 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     public void RollMove() => controller.Move(transform.forward * 6f *
             Time.deltaTime + new Vector3(0, gravity * Time.deltaTime, 0));
-    
+
+    public void PlayerKnockBack() => controller.Move(transform.forward * -1 * Time.deltaTime);
 
     public void LArmDown(PointerEventData data)
     {
@@ -692,20 +693,8 @@ public class Player : MonoBehaviourPun, IPunObservable
         if (isGaurd)
             playerStat.CurSP -= 10f;
         playerAni.SetFloat("isAttacked", (float)_damage / playerStat.HP);
-        
-        /*float time = 0f;
-        while (time < 2f)
-        {
-            Debug.Log(time);
-            time += Time.deltaTime;
-            if (Attacked >= 2)
-            {
-                playerAni.SetFloat("isAttacked", Attacked);
-                break;
-            }
-        }
-        Attacked = 0;*/
-        
+        if (JY_Boss_FireDungeon.s_instance.isJump)
+            PlayerKnockBack();
     }
     public void DamageReset()
     {

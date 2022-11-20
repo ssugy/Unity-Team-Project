@@ -62,7 +62,8 @@ public class AudioManager : MonoBehaviour
         BOSS_HIT,
         BOSS_KICK,
         Boss_JUMP,
-        PLYAER_SHOOT
+        PLYAER_SHOOT,
+        Boss_FireBall
     }
     public SOUND_NAME Name;
     public AudioClip[] clips;   // enum의 순서를 따라가야됨

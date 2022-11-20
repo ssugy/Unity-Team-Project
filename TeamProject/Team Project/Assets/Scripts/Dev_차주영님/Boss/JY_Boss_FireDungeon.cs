@@ -8,14 +8,12 @@ public class JY_Boss_FireDungeon : Enemy
 {
     public static JY_Boss_FireDungeon instacne;
     public static JY_Boss_FireDungeon s_instance { get { return instacne; } }
-    Vector3 lookVec;
     Vector3 tauntVec;
     public bool isLook;
     public bool isAwake;
-    bool DoAttack;
     bool isDead;
     bool isStun;
-    bool isJump;
+    [HideInInspector]public bool isJump;
     bool isKick;
     [HideInInspector]public bool isAttack;
     int partCnt;
@@ -114,7 +112,7 @@ public class JY_Boss_FireDungeon : Enemy
                     FreezeEnemy();
                     StartCoroutine(BossPattern(3));
                 }
-                else if(distance > 10f && isKick)
+                else if(distance > 8f && isKick)
                 {
                     StopAllCoroutines();
                     InstanceManager.s_instance.StopAllBossEffect();
@@ -172,12 +170,10 @@ public class JY_Boss_FireDungeon : Enemy
     IEnumerator WhirlAttack()
     {
         anim.SetTrigger("WhirlAttack");
+        yield return new WaitForSeconds(0.5f);
+        ShootFire();
         yield return new WaitForSeconds(1f);
         ShootFire();
-        meleeInitialize();
-        yield return new WaitForSeconds(1f);
-        ShootFire();
-        meleeInitialize();
     }
     IEnumerator JumpAttack()
     {
@@ -185,6 +181,7 @@ public class JY_Boss_FireDungeon : Enemy
         yield return new WaitForSeconds(0.5f);
         isJump = true;
         tauntVec = target.position;
+        hitbox.enabled = false;
         yield return new WaitForSeconds(1.3f);
         JumpAttackArea.gameObject.SetActive(true);
         for (int i = 0; i < 5; i++)

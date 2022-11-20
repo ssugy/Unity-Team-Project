@@ -14,5 +14,6 @@ public class BossFireball : Fireball
     private void OnEnable()
     {
         Invoke("DestroySelf", 4f);
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Boss_FireBall);
     }
 }
