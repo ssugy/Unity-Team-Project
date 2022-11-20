@@ -61,6 +61,8 @@ public class BattleUI : MonoBehaviour
         instance = null;
     }
 
+    public Transform BuffLayout;
+
     void Start()
     {
         // 조작에 사용할 플레이어는 자기 자신의 플레이어뿐. (playerList의 0번)
