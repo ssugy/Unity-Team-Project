@@ -26253,6 +26253,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2681159996070717304, guid: 519d896951ed2b540a9ddaa21999464d, type: 3}
+      propertyPath: sceneViewId
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3810051220536461934, guid: 519d896951ed2b540a9ddaa21999464d, type: 3}
       propertyPath: sceneViewId
       value: 2
@@ -26330,9 +26334,17 @@ PrefabInstance:
       value: Level_1
       objectReference: {fileID: 0}
     - target: {fileID: 7114311193829795876, guid: 519d896951ed2b540a9ddaa21999464d, type: 3}
+      propertyPath: door
+      value: 
+      objectReference: {fileID: 771073996}
+    - target: {fileID: 7114311193829795876, guid: 519d896951ed2b540a9ddaa21999464d, type: 3}
       propertyPath: message
       value: 
       objectReference: {fileID: 1069458825}
+    - target: {fileID: 7521738178411138264, guid: 519d896951ed2b540a9ddaa21999464d, type: 3}
+      propertyPath: isLocked
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8222913016487322565, guid: 519d896951ed2b540a9ddaa21999464d, type: 3}
       propertyPath: sceneViewId
       value: 9
@@ -26343,6 +26355,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 519d896951ed2b540a9ddaa21999464d, type: 3}
+--- !u!114 &771073996 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7521738178411138264, guid: 519d896951ed2b540a9ddaa21999464d, type: 3}
+  m_PrefabInstance: {fileID: 771073995}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0179c65b681e384e976d911e4d2a70f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &771292879
 PrefabInstance:
   m_ObjectHideFlags: 0

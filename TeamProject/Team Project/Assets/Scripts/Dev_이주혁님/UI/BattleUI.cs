@@ -46,11 +46,15 @@ public class BattleUI : MonoBehaviour
 
     [Header("팝업 메시지")]
     public Text equipEmpty;
+    public Text getKey;
 
     [Header("던전 입장 관련 변수")]
     public int targetSceneNum;
     public Transform selectArrow;
     public Text enterText;
+
+    [Header("버프 레이아웃")]
+    public Transform BuffLayout;
 
     private void OnEnable()
     {
@@ -61,7 +65,7 @@ public class BattleUI : MonoBehaviour
         instance = null;
     }
 
-    public Transform BuffLayout;
+    
 
     void Start()
     {

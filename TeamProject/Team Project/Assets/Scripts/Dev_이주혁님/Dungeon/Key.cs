@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Key : MonoBehaviour
 {
-    public Door door;      // 해당 열쇠가 열 문.
-    public GameObject message;
+    public Door door;      // 해당 열쇠가 열 문.    
 
     private void OnTriggerEnter(Collider other)
     {
+        // 내가 아닌 다른 플레이어가 열쇠를 획득해도 작동함.
         if (other.CompareTag("Player"))
         {
             PickUpKey();
@@ -16,9 +16,9 @@ public class Key : MonoBehaviour
     }
     public void PickUpKey()
     {
-        message.SetActive(true);
+        BattleUI.instance.getKey.gameObject.SetActive(true);
         door.isLocked = false;
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Key);
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }
