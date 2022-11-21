@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
 
+[System.Serializable]
 public class EquipOption
 {
-    private EquipType part;
-    private Dictionary<EquipAttrib, float> options = new Dictionary<EquipAttrib, float>();
-    private List<EquipAttrib> optionList = new List<EquipAttrib>();
+    public EquipType part;
+    public Dictionary<EquipAttrib, float> options = new Dictionary<EquipAttrib, float>();
+    public List<EquipAttrib> optionList = new List<EquipAttrib>();
+    public List<float> valueList = new List<float>();
     private const int MAX_OPTIONS = 3;
     public enum EquipType
     {
@@ -16,6 +18,7 @@ public class EquipOption
         EquipTypeShield
     }
 
+    [System.Serializable]
     public enum EquipAttrib
     {
         // 무기 속성
@@ -101,9 +104,11 @@ public class EquipOption
     private void MakeList()
     {
         optionList = new List<EquipAttrib>();
+        valueList = new List<float>();
         foreach (KeyValuePair<EquipAttrib, float> entry in options)
         {
             optionList.Add(entry.Key);
+            valueList.Add(entry.Value);
         }
     }
 
@@ -153,16 +158,16 @@ public class EquipOption
     }
     public bool GetOptionValue(int idx, out EquipAttrib attrib, out float value)
     {
-        if (idx < optionList.Count)
+        if (optionList == null || idx >= optionList.Count)
+        {
+            attrib = EquipAttrib.AttribNone;
+            value = 0;
+        }
+        else
         {
             attrib = optionList[idx];
             value = options[attrib];
             return true;
-        }
-        else
-        {
-            attrib = EquipAttrib.AttribNone;
-            value = 0;
         }
         return false;
     }

@@ -20,12 +20,13 @@ public enum EquipState
 [System.Serializable]
 public class Item
 {
-    public Item(ItemType _type = ItemType.NONE, EquipState _state = EquipState.NONE, string _name = null, int _count = 0)
+    public Item(ItemType _type = ItemType.NONE, EquipState _state = EquipState.NONE, string _name = null, int _count = 0, EquipOption _option = null)
     {
         type = _type;
         equipedState = _state;
         name = _name;
         itemCount = _count;
+        option = _option;
     }
 
     public ItemType type = ItemType.NONE;
@@ -37,7 +38,7 @@ public class Item
     public Sprite image = null;
     public List<ItemEffect> effects = null;
     private int itemID;    
-    public EquipOption option;
+    public EquipOption option = null;
     public void SetID(int id)
     {
         itemID = id;
@@ -64,6 +65,8 @@ public class Item
         copied.explanation = this.explanation;
         copied.image = this.image;
         copied.effects = this.effects;
+        // 可记 历厘
+        copied.option = this.option;
         return copied;
     }
 
@@ -82,6 +85,8 @@ public class Item
         this.explanation = tmp.explanation;
         this.image = tmp.image;
         this.effects = tmp.effects;
+        // 可记 历厘
+        this.option = tmp.option;
     }
     public void SetOption()
     {

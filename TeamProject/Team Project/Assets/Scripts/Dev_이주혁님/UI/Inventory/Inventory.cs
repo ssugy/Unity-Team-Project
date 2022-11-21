@@ -1,3 +1,4 @@
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -64,40 +65,54 @@ public class Inventory : MonoBehaviour
 #if UNITY_EDITOR
     private void Update()
     {
+        bool isSave = false;
         // 살라만드라 불덩이
         if (Input.GetKeyDown(KeyCode.F1))
         {
             AddItem(ItemDatabase.s_instance.itemDB[20].Copy(), 20);
+            isSave = true;
         }
         // 소형 포션
         if (Input.GetKeyDown(KeyCode.F2))
         {
             AddItem(ItemDatabase.s_instance.itemDB[16].Copy(), 16);
+            isSave = true;
         }
         // 원형 방패
         if (Input.GetKeyDown(KeyCode.F3))
         {
             AddItem(ItemDatabase.s_instance.itemDB[14].Copy(), 14);
+            isSave = true;
         }
         // 널빤지 방패
         if (Input.GetKeyDown(KeyCode.F4))
         {
             AddItem(ItemDatabase.s_instance.itemDB[15].Copy(), 15);
+            isSave = true;
         }
         // 철제 도끼
         if (Input.GetKeyDown(KeyCode.F5))
         {
             AddItem(ItemDatabase.s_instance.itemDB[0].Copy(), 0);
+            isSave = true;
         }
         // 가벼운 갑옷
         if (Input.GetKeyDown(KeyCode.F6))
         {
             AddItem(ItemDatabase.s_instance.itemDB[23].Copy(), 23);
+            isSave = true;
         }
         // 경갑 하의
         if (Input.GetKeyDown(KeyCode.F7))
         {
             AddItem(ItemDatabase.s_instance.itemDB[26].Copy(), 26);
+            isSave = true;
+        }
+        if(isSave)
+        {
+            Player player = JY_CharacterListManager.s_instance.playerList[0];
+            player.SaveData();
+            JY_CharacterListManager.s_instance.Save();
         }
     }
 #endif
@@ -159,12 +174,16 @@ public class Inventory : MonoBehaviour
     // 필드에 있는 아이템과 골드를 줍는 코드.
     private void OnTriggerEnter(Collider other)
     {
+        bool isSave = false;
         if (other.CompareTag("Item"))
         {            
             FieldItem fieldItem = other.GetComponent<FieldItem>();
             // 필드 아이템을 인벤토리에 넣음. 인벤토리가 가득 찼으면 얻을 수 없음.
             if (AddItem(fieldItem.GetItem()))
+            {
                 fieldItem.DestroyItem();
+                isSave = true;
+            }
         }
         else if (other.CompareTag("Gold"))
         {
@@ -173,6 +192,13 @@ public class Inventory : MonoBehaviour
             // 골드 획득 사운드 변경 필요.
             AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Get_Gold);
             Destroy(fieldGold.gameObject);
+            isSave = true;
+        }
+        if (isSave)
+        {
+            Player player = JY_CharacterListManager.s_instance.playerList[0];
+            player.SaveData();
+            JY_CharacterListManager.s_instance.Save();
         }
     }
 }

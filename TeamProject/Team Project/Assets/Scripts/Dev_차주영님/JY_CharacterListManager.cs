@@ -170,7 +170,7 @@ public class JY_CharacterListManager : MonoBehaviour
     public static void CopyInventoryData(List<Item> _source, List<Item> _destination)
     {
         _destination.Clear();
-        _source.ForEach(e => { _destination.Add(new(e.type, e.equipedState, e.name, e.itemCount)); });
+        _source.ForEach(e => { _destination.Add(new(e.type, e.equipedState, e.name, e.itemCount, e.option)); });
     }
 
     // 세이브 파일로부터 인벤토리를 카피함.
@@ -180,7 +180,7 @@ public class JY_CharacterListManager : MonoBehaviour
         (target ??= new()).Clear();  
         jInfoData.infoDataList[selectNum].itemList.ForEach(e =>
         {
-            Item copied = new(e.type, e.equipedState, e.name, e.itemCount);
+            Item copied = new(e.type, e.equipedState, e.name, e.itemCount, e.option);
             copied.ShallowCopy();
             target.Add(copied);
         });       
