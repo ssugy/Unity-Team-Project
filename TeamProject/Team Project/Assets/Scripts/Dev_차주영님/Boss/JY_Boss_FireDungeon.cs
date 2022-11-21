@@ -13,9 +13,9 @@ public class JY_Boss_FireDungeon : Enemy
     public bool isAwake;
     bool isDead;
     bool isStun;
-    [HideInInspector]public bool isJump;
+    [HideInInspector] public bool isJump;
     bool isKick;
-    [HideInInspector]public bool isAttack;
+    [HideInInspector] public bool isAttack;
     int partCnt;
     float angleRange;
     [Header("보스 공격 범위 콜라이더")]
@@ -67,26 +67,24 @@ public class JY_Boss_FireDungeon : Enemy
         {
             if (target != null)
             {
-                if (nav.velocity != Vector3.zero &&!isAttack )
+                nav.SetDestination(target.position);
+                float distance = Vector3.Distance(transform.position, target.position);
+                if (nav.velocity != Vector3.zero && !isAttack)
                 {
-                    anim.SetBool("isWalk", true);
+                    Vector3 dir = target.transform.position - this.transform.position;
+                    if (distance > 2f) 
+                        anim.SetBool("isWalk", true);
                 }
                 else
                 {
                     anim.SetBool("isWalk", false);
                 }
 
-                nav.SetDestination(target.position);
-                float distance = Vector3.Distance(transform.position, target.position);
+
                 if (!isStop)
                 {
                     Vector3 dir = target.transform.position - this.transform.position;
-                    float t = Mathf.Clamp(Time.deltaTime*3f,0f,0.99f);
-                    this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), t);
-                    float dot = Vector3.Dot(dir, transform.forward);
-                    float theta = Mathf.Acos(dot);
-                    float degree = Mathf.Rad2Deg * theta;
-                    if(degree > angleRange / 2f)
+                    if (CheckInsight(dir))
                         anim.SetBool("isWalk", true);
                 }
 
@@ -108,10 +106,9 @@ public class JY_Boss_FireDungeon : Enemy
                         FreezeEnemy();
                         int ranAction = Random.Range(0, 3);
                         StartCoroutine(BossPattern(ranAction));
-                        //StartCoroutine(BossPattern(0));
                     }
                 }
-                else if(distance > 10f && atkTime >= attackCool)
+                else if (distance > 10f && atkTime >= attackCool)
                 {
                     atkTime = 0f;
                     isStop = true;
@@ -120,7 +117,7 @@ public class JY_Boss_FireDungeon : Enemy
                     FreezeEnemy();
                     StartCoroutine(BossPattern(3));
                 }
-                else if(distance > 8f && isKick)
+                else if (distance > 8f && isKick)
                 {
                     StopAllCoroutines();
                     atkTime = 0f;
@@ -148,6 +145,17 @@ public class JY_Boss_FireDungeon : Enemy
                 }
             }
         }
+    }
+
+    bool CheckInsight(Vector3 dir)
+    {
+        float t = Mathf.Clamp(Time.deltaTime * 3f, 0f, 0.99f);
+        this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), t);
+        float dot = Vector3.Dot(dir, transform.forward);
+        float theta = Mathf.Acos(dot);
+        float degree = Mathf.Rad2Deg * theta;
+        bool result = degree <= angleRange / 2f ? true : false;
+        return result;
     }
 
     IEnumerator BossPattern(int patternNum)
