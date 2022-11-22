@@ -129,8 +129,20 @@ public class JY_CharacterListManager : MonoBehaviour
 
         // 세이브 파일을 로드.
         stringJson = File.ReadAllText(infoPath);
-        jInfoData = JsonUtility.FromJson<JInfoData>(stringJson);        
-    }    
+        jInfoData = JsonUtility.FromJson<JInfoData>(stringJson);
+        // 세이브 파일을 읽어들인 JInfoData에는 EquipOption이 들어있고 Dictionary값은 Serialize가 불가능 하다. (유니티 자체의 제한)
+        // 따라서, jInfoData의 모든 옵션값에서 MakeDictionary를 실행해야 한다.
+        foreach(var info in jInfoData.infoDataList)
+        {
+            foreach (var item in info.itemList)
+            {
+                if (item.option != null)
+                {
+                    item.option.MakeDictionary();
+                }
+            }
+        }
+    }
     private void OnEnable()
     {
         // 씬이 로드될 때의 이벤트 구독.        
@@ -178,11 +190,11 @@ public class JY_CharacterListManager : MonoBehaviour
     {
         // target이 null이면 new List를 만들어서 target에 대입. null이 아니면 Clear.
         (target ??= new()).Clear();  
-        jInfoData.infoDataList[selectNum].itemList.ForEach(e =>
+        foreach(var e in jInfoData.infoDataList[selectNum].itemList)
         {
             Item copied = new(e.type, e.equipedState, e.name, e.itemCount, e.option);
             copied.ShallowCopy();
             target.Add(copied);
-        });       
+        }     
     }
 }

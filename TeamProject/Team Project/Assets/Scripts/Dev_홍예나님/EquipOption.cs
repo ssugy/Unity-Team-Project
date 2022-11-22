@@ -112,6 +112,16 @@ public class EquipOption
         }
     }
 
+    public void MakeDictionary()
+    {
+        options = new Dictionary<EquipAttrib, float>();
+        if (optionList != null && valueList != null)
+        for(int i = 0; i < optionList.Count; i++)
+        {
+            options.Add(optionList[i], valueList[i]);
+        }
+    }
+
     private void EquipOptionWeapon()
     {
         int num = Random.Range(1, MAX_OPTIONS+1);

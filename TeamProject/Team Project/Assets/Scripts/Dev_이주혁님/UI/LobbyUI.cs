@@ -184,7 +184,8 @@ public class LobbyUI : MonoBehaviour
         JY_CharacterListManager.s_instance.selectNum = _num;            
         JY_AvatarLoad.s_instance.LoadModelData(_num);        // 선택한 성별 캐릭터 활성화. inventory onenable
         // 선택한 캐릭터의 인벤토리를 카피해옴.
-        JY_CharacterListManager.s_instance.CopyInventoryDataToScript(JY_AvatarLoad.s_instance.inven.items);        
+        JY_CharacterListManager.s_instance.CopyInventoryDataToScript(JY_AvatarLoad.s_instance.inven.items);
+        //JY_CharacterListManager.s_instance.CopyInventoryDataToScript(JY_CharacterListManager.s_instance.jInfoData.infoDataList[_num].itemList);
         JY_AvatarLoad.s_instance.inven.items.ForEach(e =>
         {
             if (e.equipedState.Equals(EquipState.EQUIPED))

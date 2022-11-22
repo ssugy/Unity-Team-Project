@@ -85,8 +85,6 @@ public class Item
         this.explanation = tmp.explanation;
         this.image = tmp.image;
         this.effects = tmp.effects;
-        // 옵션 저장
-        this.option = tmp.option;
     }
     public void SetOption()
     {
