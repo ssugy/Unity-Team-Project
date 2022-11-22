@@ -204,9 +204,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         controller.ObserveEveryValueChanged(_ => _.isGrounded).ThrottleFrame(100).Subscribe(_ => isGround = _);
         // UniRx를 이용하여 isGrounded 프로퍼티가 0.3초 이상 유지되어야 상태가 전이되게끔 함. isGrounded가 정교하지 않기 때문.
         
-        AvatarSet();
-        if (!JY_CharacterListManager.s_instance.playerList.Contains(this))
-            JY_CharacterListManager.s_instance.playerList.Add(this);
+        AvatarSet();        
     }
 
     void Move()
@@ -456,6 +454,8 @@ public class Player : MonoBehaviourPun, IPunObservable
         // 화염, 심연 등 닿으면 죽는 오브젝트와 닿으면 사망함.        
         if (other.CompareTag("Die"))        
             Die();
+        if (!photonView.IsMine)
+            return;
         if (other.tag == "Buff")
         {
             Buff buff = other.GetComponent<Buff>();
@@ -785,22 +785,26 @@ public class Player : MonoBehaviourPun, IPunObservable
     // 플레이어 스크립트에서 인포, 인벤 데이터를 JInfoData로 옮기는 메소드가 필요.
     public void SaveData()
     {
-        if (JY_CharacterListManager.s_instance.playerList[0].Equals(this))
+        if (JY_CharacterListManager.s_instance.playerList.Count > 0)
         {
-            Debug.Log("데이터 세이브");
-            InfoData tmp = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum];
-            tmp.level = playerStat.level;
-            tmp.exp = playerStat.CurExp;
-            tmp.gold = playerStat.Gold;
-            tmp.statusPoint = playerStat.statPoint;
-            tmp.characterAvatar = playerStat.customized;
-            tmp.status[(int)Adjustable.HEALTH] = playerStat.health;
-            tmp.status[(int)Adjustable.STAMINA] = playerStat.stamina;
-            tmp.status[(int)Adjustable.STRENGTH] = playerStat.strength;
-            tmp.status[(int)Adjustable.DEXTERITY] = playerStat.dexterity;
-            JY_CharacterListManager.CopyInventoryData(JY_CharacterListManager.s_instance.invenList[0].items, tmp.itemList);
-            JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum] = tmp;
+            if (JY_CharacterListManager.s_instance.playerList[0].Equals(this))
+            {
+                Debug.Log("데이터 세이브");
+                InfoData tmp = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum];
+                tmp.level = playerStat.level;
+                tmp.exp = playerStat.CurExp;
+                tmp.gold = playerStat.Gold;
+                tmp.statusPoint = playerStat.statPoint;
+                tmp.characterAvatar = playerStat.customized;
+                tmp.status[(int)Adjustable.HEALTH] = playerStat.health;
+                tmp.status[(int)Adjustable.STAMINA] = playerStat.stamina;
+                tmp.status[(int)Adjustable.STRENGTH] = playerStat.strength;
+                tmp.status[(int)Adjustable.DEXTERITY] = playerStat.dexterity;
+                JY_CharacterListManager.CopyInventoryData(JY_CharacterListManager.s_instance.invenList[0].items, tmp.itemList);
+                JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum] = tmp;
+            }
         }
+        
         
     }
     public void OnDisable()

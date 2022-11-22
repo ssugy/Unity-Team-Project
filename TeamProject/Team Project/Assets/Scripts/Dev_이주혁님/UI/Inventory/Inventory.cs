@@ -15,18 +15,11 @@ public class Inventory : MonoBehaviour
     {
         get => slotCnt;
         set => slotCnt = value;
-    }
-
-    private void OnEnable()
-    {
-        //instance = this;
-        
-        
-        
-    }
+    } 
+    
     private void OnDisable()
     {
-        //instance = null;        
+            
         items.Clear();       
     }
     void Start()
@@ -174,6 +167,12 @@ public class Inventory : MonoBehaviour
     // 필드에 있는 아이템과 골드를 줍는 코드.
     private void OnTriggerEnter(Collider other)
     {
+        Player player = GetComponent<Player>();
+        if (!player.photonView.IsMine)
+        {
+            return;
+        }
+
         bool isSave = false;
         if (other.CompareTag("Item"))
         {            
@@ -195,8 +194,7 @@ public class Inventory : MonoBehaviour
             isSave = true;
         }
         if (isSave)
-        {
-            Player player = JY_CharacterListManager.s_instance.playerList[0];
+        {            
             player.SaveData();
             JY_CharacterListManager.s_instance.Save();
         }
