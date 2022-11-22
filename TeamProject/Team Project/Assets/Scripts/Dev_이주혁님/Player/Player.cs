@@ -693,25 +693,26 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     public void IsAttacked(int _damage)
     {
+        InstanceManager.s_instance.StopAllSkillEffect();
+        WEOff();
+        playerStat.CurHP -= _damage;
+
         if (isGaurd)
             playerStat.CurSP -= 10f;
         else
-            SoundHit();
-        InstanceManager.s_instance.StopAllSkillEffect();
-        playerStat.CurHP -= _damage;
-        if (playerStat.CurHP == 0)
         {
-            Die();
+            SoundHit();
+            playerAni.SetFloat("isAttacked", (float)_damage / playerStat.HP);
         }
-        WEOff();
 
-
-        playerAni.SetFloat("isAttacked", (float)_damage / playerStat.HP);
+        if (playerStat.CurHP == 0)
+            Die();
 
         if (JY_Boss_FireDungeon.s_instance != null)
+        {
             if (JY_Boss_FireDungeon.s_instance.isJump)
                 isJumpAttacked = true;
-
+        }
     }
     public void DamageReset()
     {
