@@ -141,7 +141,10 @@ public class JY_Boss_FireDungeon : Enemy
                     UnfreezeEnemy();
                     target = null;
                     isAwake = false;
-                    anim.SetBool("isWalk", false);
+                    if(transform.position == originPos)
+                        anim.SetBool("isWalk", true);
+                    else
+                        anim.SetBool("isWalk", false);
                 }
             }
         }
