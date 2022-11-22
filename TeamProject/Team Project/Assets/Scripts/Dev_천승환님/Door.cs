@@ -3,26 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class Door : MonoBehaviour, IPunObservable
-{    
-    Animator doorPivotAni;         //doorPivot 애니메이터.
-    DoorButton doorButton;    
-    [HideInInspector] public bool isClose;
 
+public class Door : MonoBehaviourPun
+{    
+    public Animator doorPivotAni;         //doorPivot 애니메이터.
+    public DoorButton doorButton;
+
+    public bool isClose;    
     public bool isLocked;
+    
     
     void Start()
     {        
         doorPivotAni = GetComponent<Animator>();             //doorPivot = 부모오브젝트
+        if (doorPivotAni == null)
+        {
+            doorPivotAni = GetComponentInParent<Animator>();
+        }
         doorButton = DoorButton.instance;                    //도어버튼을 인스턴스로 접근 어떤 스크립트에서라도 접근할수있도록 만듬
-        isClose = true;        
+        isClose = true;                    
     }   
    
     private void OnTriggerEnter(Collider other)              // 트리거 충돌을 이용해서 어떤 문을 열지 확인
     {
         if (other.CompareTag("Player"))
         {
-            if (other.GetComponent<Player>().photonView.IsMine)
+            if (GameManager.s_instance.currentScene.Equals(GameManager.SceneName.World) || other.GetComponent<Player>().photonView.IsMine)
             {
                 doorButton.gameObject.SetActive(true);       // doorButton gameObject 활성화 
                 DoorButton.door = this;
@@ -34,37 +40,46 @@ public class Door : MonoBehaviour, IPunObservable
     {
         if (other.CompareTag("Player"))
         {
-            if (other.GetComponent<Player>().photonView.IsMine)
+            if (GameManager.s_instance.currentScene.Equals(GameManager.SceneName.World) || other.GetComponent<Player>().photonView.IsMine)
             {
                 doorButton.gameObject.SetActive(false);               //도어버튼 게임오브젝트 비활성화
                 DoorButton.door = null;
             }            
         }
-    }
+        
+    }    
+        
+    // 문의 열고 닫힘은 RPC를 사용함.
     public void Open()
     {
-        if (isClose)
-        {
-            isClose = false;
-            doorPivotAni.SetTrigger("Interact");
-            AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.DOOR_01, false, 1f);
-        }        
+        if(PhotonNetwork.InRoom)
+            photonView.RPC("OpenP", RpcTarget.All);
+        else        
+            OpenP();
+        
     }
+    [PunRPC]
+    public void OpenP()
+    {
+        isClose = false;
+        doorPivotAni.SetTrigger("Interact");
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.DOOR_01, false, 1f);        
+    }
+    
     public void Close()
     {
-        if (!isClose)
-        {
-            isClose = true;
-            doorPivotAni.SetTrigger("Interact");
-            AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.DOOR_01, false, 1f);
-        }
+        if (PhotonNetwork.InRoom)
+            photonView.RPC("CloseP", RpcTarget.All);
+        else
+            CloseP();
     }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    [PunRPC]
+    public void CloseP()
     {
-        if (stream.IsWriting)        
-            stream.SendNext(isClose);        
-        else        
-            isClose = (bool)stream.ReceiveNext();                
+        isClose = true;
+        doorPivotAni.SetTrigger("Interact");
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.DOOR_01, false, 1f);       
     }
+    
+
 }

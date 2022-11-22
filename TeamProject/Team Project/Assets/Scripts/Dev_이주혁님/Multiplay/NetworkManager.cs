@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.SceneManagement;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
@@ -33,12 +34,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         StartCoroutine(Matching(_dungeonNum, _people, roomNum));
     }
     IEnumerator Matching(int _dungeonNum, byte _people, byte roomNum)
-    {
+    {        
+        RoomOptions roomOptions = new RoomOptions();
+        roomOptions.IsOpen = true;
+        roomOptions.MaxPlayers = _people;        
+
         if (_people == 1)
             // CreateRoom이나 joinRoom의 반환 bool 값은 방 생성 성공/실패 여부가 아님. 단순히 작업이 전송되었는가를 가리킴.
-            PhotonNetwork.CreateRoom(_dungeonNum.ToString() + "_" + roomNum.ToString(), new RoomOptions { MaxPlayers = _people }, null);
+            PhotonNetwork.CreateRoom(_dungeonNum.ToString() + "_" + roomNum.ToString(), roomOptions, null);
         else
-            PhotonNetwork.JoinOrCreateRoom(_dungeonNum.ToString() + "_" + roomNum.ToString(), new RoomOptions { MaxPlayers = _people }, null);
+            PhotonNetwork.JoinOrCreateRoom(_dungeonNum.ToString() + "_" + roomNum.ToString(), roomOptions, null);
 
         // 방 입장에 실패했으면 다음 방 번호로 재입장 시도. 방에 접속하는 시간이 있으므로 유예해야 함.
         yield return new WaitForSeconds(1f);

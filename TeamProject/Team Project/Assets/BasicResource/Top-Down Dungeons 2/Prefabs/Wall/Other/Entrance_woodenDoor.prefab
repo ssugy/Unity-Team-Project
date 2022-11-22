@@ -1311,8 +1311,7 @@ GameObject:
   - component: {fileID: 6264229518826760232}
   - component: {fileID: 5358057400206201191}
   - component: {fileID: 7906207207921988369}
-  - component: {fileID: 3737769929421048857}
-  - component: {fileID: 2501855443262180017}
+  - component: {fileID: 3210722217059264734}
   m_Layer: 0
   m_Name: Door_1_Pivot
   m_TagString: Untagged
@@ -1381,9 +1380,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0179c65b681e384e976d911e4d2a70f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorPivotAni: {fileID: 0}
+  doorButton: {fileID: 0}
   isClose: 0
   isLocked: 0
---- !u!114 &3737769929421048857
+  num: 0
+--- !u!114 &3210722217059264734
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1401,25 +1403,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: 7906207207921988369}
-  - {fileID: 2501855443262180017}
+  ObservedComponents: []
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &2501855443262180017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6464965133878864274}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1

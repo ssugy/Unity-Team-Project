@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class DoorButton : MonoBehaviour
 {
@@ -28,13 +29,9 @@ public class DoorButton : MonoBehaviour
             doorLocked.SetActive(true);
             return;
         }
-        if (door.isClose)  // 자식door오브젝트에서 Door스크립트를 받아오고 isClose가 false이면 열리고
-        {
-            door.Open();
-        }
-        else                                              // true면 닫는다.
-        {
-            door.Close();
-        }
+        if (door.isClose)  // 자식door오브젝트에서 Door스크립트를 받아오고 isClose가 false이면 열리고        
+            door.Open();        
+        else                                              // true면 닫는다.        
+            door.Close();        
     }
 }

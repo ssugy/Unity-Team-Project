@@ -3479,6 +3479,8 @@ MonoBehaviour:
   jInfoData:
     infoDataList: []
   selectNum: 0
+  playerList: []
+  invenList: []
 --- !u!4 &1149489881
 Transform:
   m_ObjectHideFlags: 0
@@ -4335,6 +4337,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3210722217059264734, guid: cae602f6ce981f242803ff07f4d119c9, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6464965133878864274, guid: cae602f6ce981f242803ff07f4d119c9, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -4559,6 +4565,7 @@ MonoBehaviour:
   charWeaponDummy: {fileID: 0}
   charShieldDummy: {fileID: 0}
   setChara: {fileID: 0}
+  inven: {fileID: 0}
 --- !u!1 &1684744826
 GameObject:
   m_ObjectHideFlags: 0
@@ -10622,6 +10629,10 @@ MonoBehaviour:
     effects:
     - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
     - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 1
     equipedState: 1
     name: "\uD751\uAE30\uC0AC\uC758 \uB3C4\uB07C"
@@ -10633,6 +10644,10 @@ MonoBehaviour:
     effects:
     - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
     - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 1
     equipedState: 1
     name: "\uB370\uBAAC\uC758 \uB300\uD615 \uB3C4\uB07C"
@@ -10644,6 +10659,10 @@ MonoBehaviour:
     effects:
     - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
     - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 1
     equipedState: 1
     name: "\uD669\uCCA0\uC11D \uB2E8\uAC80"
@@ -10655,6 +10674,10 @@ MonoBehaviour:
     effects:
     - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
     - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 1
     equipedState: 1
     name: "\uB2E8\uB3C4"
@@ -10666,6 +10689,10 @@ MonoBehaviour:
     effects:
     - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
     - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 1
     equipedState: 1
     name: "\uC804\uD22C\uC6A9 \uD574\uBA38"
@@ -10678,6 +10705,10 @@ MonoBehaviour:
     effects:
     - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
     - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 1
     equipedState: 1
     name: "\uC6D4\uB3C4"
@@ -10689,6 +10720,10 @@ MonoBehaviour:
     effects:
     - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
     - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 1
     equipedState: 1
     name: "\uAC08\uB9DD\uC758 \uB0AB"
@@ -10700,6 +10735,10 @@ MonoBehaviour:
     effects:
     - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
     - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 1
     equipedState: 1
     name: "\uB871\uC18C\uB4DC"
@@ -10711,6 +10750,10 @@ MonoBehaviour:
     effects:
     - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
     - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 1
     equipedState: 1
     name: "\uAE00\uB77C\uB514\uC6B0\uC2A4"
@@ -10722,6 +10765,10 @@ MonoBehaviour:
     effects:
     - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
     - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 1
     equipedState: 1
     name: "\uACE1\uAC80"
@@ -10732,6 +10779,10 @@ MonoBehaviour:
     effects:
     - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
     - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 1
     equipedState: 1
     name: "\uB2E8\uB450\uAC80"
@@ -10743,6 +10794,10 @@ MonoBehaviour:
     effects:
     - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
     - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 1
     equipedState: 1
     name: "\uD751\uCCA0\uAC80"
@@ -10754,6 +10809,10 @@ MonoBehaviour:
     effects:
     - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
     - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 1
     equipedState: 1
     name: "\uC601\uC6C5\uC758 \uAC80"
@@ -10765,6 +10824,10 @@ MonoBehaviour:
     effects:
     - {fileID: 11400000, guid: 5d605eddeafb8c846ade7b24ad52b920, type: 2}
     - {fileID: 11400000, guid: 7ba9cc2b64b0b7445ae5f950a73d5efe, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 1
     equipedState: 1
     name: "\uC6D0\uD615 \uBAA9\uC81C \uBC29\uD328"
@@ -10775,6 +10838,10 @@ MonoBehaviour:
     effects:
     - {fileID: 11400000, guid: 3013d6af27246c94faa7c955a779b7de, type: 2}
     - {fileID: 11400000, guid: 06b0affd1e097904faeb64c90663f15f, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 1
     equipedState: 1
     name: "\uB110\uBE64\uC9C0 \uBC29\uD328"
@@ -10786,6 +10853,10 @@ MonoBehaviour:
     effects:
     - {fileID: 11400000, guid: 3013d6af27246c94faa7c955a779b7de, type: 2}
     - {fileID: 11400000, guid: 06b0affd1e097904faeb64c90663f15f, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 2
     equipedState: 0
     name: "\uCCB4\uB825 \uBB3C\uC57D (\uC18C)"
@@ -10794,6 +10865,10 @@ MonoBehaviour:
     image: {fileID: 21300000, guid: 87f230a909b82d74f826052551f88a1b, type: 3}
     effects:
     - {fileID: 11400000, guid: 7780ae5d2c8590846890aa2c06ff7e29, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 2
     equipedState: 0
     name: "\uCCB4\uB825 \uBB3C\uC57D (\uB300)"
@@ -10802,6 +10877,10 @@ MonoBehaviour:
     image: {fileID: 21300000, guid: 78157eb0e2172d5408b70a91139af177, type: 3}
     effects:
     - {fileID: 11400000, guid: c737e7df0fcf3a84e8e536bc447f6337, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 3
     equipedState: 0
     name: "\uC2A4\uCF08\uB808\uD1A4\uC758 \uBA38\uB9AC\uBF08"
@@ -10811,6 +10890,10 @@ MonoBehaviour:
       \uC54A\uB294\uB2E4."
     image: {fileID: 21300000, guid: e33ea4ee424abf04098dc0012eb330c8, type: 3}
     effects: []
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 3
     equipedState: 0
     name: "\uC5FC\uB8E1\uC758 \uBA38\uB9AC\uBF08"
@@ -10820,6 +10903,10 @@ MonoBehaviour:
       \uB290\uAEF4\uC9C4\uB2E4."
     image: {fileID: 21300000, guid: b6a9d54b797e9b14eafc9983c6aa7754, type: 3}
     effects: []
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 3
     equipedState: 0
     name: "\uC0B4\uB77C\uB9CC\uB4DC\uB77C\uC758 \uBD88\uB369\uC774"
@@ -10830,6 +10917,10 @@ MonoBehaviour:
       \uC783\uC5B4\uBC84\uB838\uB2E4."
     image: {fileID: 21300000, guid: 40803fc42a37f704884d7de3194985e0, type: 3}
     effects: []
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 2
     equipedState: 0
     name: "\uC0C1\uC2E4\uC758 \uC218\uC815"
@@ -10840,6 +10931,10 @@ MonoBehaviour:
     image: {fileID: 21300000, guid: 6c08dc51260d9ee4fbd0753964e82c9a, type: 3}
     effects:
     - {fileID: 11400000, guid: b2aba7e10109b01449357647a738f97f, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 1
     equipedState: 1
     name: "\uCCA0\uC81C \uAC11\uC637"
@@ -10850,6 +10945,10 @@ MonoBehaviour:
     effects:
     - {fileID: 11400000, guid: 6b90b7be413f31b4c932ee6674c1eb0b, type: 2}
     - {fileID: 11400000, guid: 94cd234d682bd8e4fa95bf6d71c98174, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 1
     equipedState: 1
     name: "\uAC00\uBCBC\uC6B4 \uAC11\uC637"
@@ -10861,6 +10960,10 @@ MonoBehaviour:
     effects:
     - {fileID: 11400000, guid: 8591011336795cf49957dfb5bd83faf8, type: 2}
     - {fileID: 11400000, guid: d3dfbcc7412ace2419a8cf1ec2b580e9, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 1
     equipedState: 1
     name: "\uAC00\uC8FD \uC0C1\uC758"
@@ -10871,6 +10974,10 @@ MonoBehaviour:
     effects:
     - {fileID: 11400000, guid: c20afa54599f22540a8ced7ff871af88, type: 2}
     - {fileID: 11400000, guid: 8bf8c649a9fc1d142b5564d831a2f4f7, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 1
     equipedState: 1
     name: "\uCCA0\uC81C \uB2E4\uB9AC \uBCF4\uD638\uB300"
@@ -10881,6 +10988,10 @@ MonoBehaviour:
     effects:
     - {fileID: 11400000, guid: a715f56202789fb4eb5d4c0b86543d75, type: 2}
     - {fileID: 11400000, guid: bdbee2e05352a8b449a59fdfe1a0e688, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 1
     equipedState: 1
     name: "\uACBD\uAC11 \uD558\uC758"
@@ -10891,6 +11002,10 @@ MonoBehaviour:
     effects:
     - {fileID: 11400000, guid: b8f8e5ecc6fb6ac41b9d3159f586005d, type: 2}
     - {fileID: 11400000, guid: 8e5f35b9bbc9b5840bf822ffd2fe40f0, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 1
     equipedState: 1
     name: "\uAC00\uC8FD \uD558\uC758"
@@ -10901,6 +11016,10 @@ MonoBehaviour:
     effects:
     - {fileID: 11400000, guid: c79e63fb137f5524887a69b2a26798a9, type: 2}
     - {fileID: 11400000, guid: 418509351f8c2cf4297d800c2b60b07f, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 1
     equipedState: 1
     name: "\uB370\uBAA8\uB2C9 \uC2A4\uD0DC\uD504"
@@ -10910,6 +11029,10 @@ MonoBehaviour:
     effects:
     - {fileID: 11400000, guid: 3013d6af27246c94faa7c955a779b7de, type: 2}
     - {fileID: 11400000, guid: 06b0affd1e097904faeb64c90663f15f, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 1
     equipedState: 1
     name: "\uC6B0\uB4E0 \uC2A4\uD0DC\uD504"
@@ -10919,6 +11042,10 @@ MonoBehaviour:
     effects:
     - {fileID: 11400000, guid: 3013d6af27246c94faa7c955a779b7de, type: 2}
     - {fileID: 11400000, guid: 06b0affd1e097904faeb64c90663f15f, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
   - type: 1
     equipedState: 1
     name: "\uD06C\uB9AC\uC2A4\uD0C8 \uC2A4\uD0DC\uD504"
@@ -10928,6 +11055,10 @@ MonoBehaviour:
     effects:
     - {fileID: 11400000, guid: 3013d6af27246c94faa7c955a779b7de, type: 2}
     - {fileID: 11400000, guid: 06b0affd1e097904faeb64c90663f15f, type: 2}
+    option:
+      part: 0
+      optionList: 
+      valueList: []
 --- !u!4 &646897396423619277
 Transform:
   m_ObjectHideFlags: 0
