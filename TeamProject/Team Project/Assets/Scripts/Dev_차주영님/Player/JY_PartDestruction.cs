@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class JY_PartDestruction : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class JY_PartDestruction : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,IDragHandler
 {
     public Camera mainCam;
     public GameObject Bullet;
@@ -24,7 +24,6 @@ public class JY_PartDestruction : MonoBehaviour, IPointerDownHandler, IPointerUp
     }
     void Start()
     {
-        //PartDestrcutionCam.transform.SetParent(Player.instance.transform);
     }
 
     // Update is called once per frame
@@ -35,10 +34,7 @@ public class JY_PartDestruction : MonoBehaviour, IPointerDownHandler, IPointerUp
             if (mainCam.gameObject.activeSelf)
             {
                 mainCam.transform.position = targetPos;
-                //mainCam.gameObject.SetActive(false);
-                //PartDestrcutionCam.gameObject.SetActive(true);
             }
-            //PartDestrcutionCam.gameObject.transform.localPosition=new Vector3(0,2f,4f);
         }
     }
     public void OnPointerDown(PointerEventData eventData)
@@ -51,8 +47,8 @@ public class JY_PartDestruction : MonoBehaviour, IPointerDownHandler, IPointerUp
     }
     public void OnPointerUp(PointerEventData eventData)
     {
-        //È­¸é °¡¿îµ¥¿¡¼­ ±¤¼±À» ½ð´Ù.
-        Ray ray = mainCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
+        //±¤¼±À» ½ð´Ù.
+        Ray ray = Camera.main.ScreenPointToRay(eventData.position);
         RaycastHit hitinfo;
         if(Physics.Raycast(ray, out hitinfo, Mathf.Infinity))
         {
@@ -69,5 +65,9 @@ public class JY_PartDestruction : MonoBehaviour, IPointerDownHandler, IPointerUp
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.PLYAER_SHOOT);
         //PartDestrcutionCam.gameObject.SetActive(false);
         //mainCam.gameObject.SetActive(true);
+    }
+    public void OnDrag(PointerEventData eventData)
+    {
+        JY_UIManager.instance.TranslateAimUI(eventData.position);
     }
 }

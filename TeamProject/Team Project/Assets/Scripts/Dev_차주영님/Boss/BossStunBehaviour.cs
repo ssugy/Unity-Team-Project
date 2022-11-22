@@ -14,7 +14,7 @@ public class BossStunBehaviour : StateMachineBehaviour
             JY_Boss_FireDungeon.s_instance.MeleeAreaDisEnable();
             JY_Boss_FireDungeon.s_instance.isAwake = false;
             InstanceManager.s_instance.StopAllBossEffect();
-            JY_Boss_FireDungeon.s_instance.Invoke("stunWakeUp", 10f);
+            JY_Boss_FireDungeon.s_instance.Invoke("stunWakeUp", 5f);
         }
     }
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

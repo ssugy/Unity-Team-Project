@@ -23,8 +23,6 @@ public class JY_UIManager : MonoBehaviour
     public Text SPText;
 
     bool profileSwitch;
-    //bool statusSwitch;
-    //bool profileMenuSwitch;
     bool questMenuSwitch;
     private void Awake()
     { 
@@ -204,5 +202,9 @@ public class JY_UIManager : MonoBehaviour
     public void ActiveAimUI(bool state)
     {
         partdestructionUI.SetActive(state);
+    }
+    public void TranslateAimUI(Vector3 position)
+    {
+        partdestructionUI.transform.position = position;
     }
 }

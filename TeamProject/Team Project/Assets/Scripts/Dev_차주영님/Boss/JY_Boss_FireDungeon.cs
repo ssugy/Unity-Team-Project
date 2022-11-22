@@ -353,4 +353,10 @@ public class JY_Boss_FireDungeon : Enemy
     {
         atkTime = tmp;
     }
+    public void stunWakeUp()
+    {
+        anim.SetTrigger("StunWakeUP");
+        isStun = false;
+        isAwake = true;
+    }
 }
