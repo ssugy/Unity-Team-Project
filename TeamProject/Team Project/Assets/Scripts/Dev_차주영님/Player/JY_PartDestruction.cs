@@ -33,7 +33,8 @@ public class JY_PartDestruction : MonoBehaviour, IPointerDownHandler, IPointerUp
         {
             if (mainCam.gameObject.activeSelf)
             {
-                mainCam.transform.position = targetPos;
+                mainCam.transform.localPosition = targetPos;
+                mainCam.transform.localRotation = Quaternion.Euler(-15f, 0f, 0f);
             }
         }
     }
@@ -41,8 +42,8 @@ public class JY_PartDestruction : MonoBehaviour, IPointerDownHandler, IPointerUp
     {
         mainCamControl.onPartDestruction = true;
         isShoot = true;
-        originPos = mainCam.transform.position;
-        targetPos = JY_CharacterListManager.s_instance.playerList[0].transform.position + Vector3.up;
+        originPos = mainCam.transform.localPosition;
+        targetPos = originPos + new Vector3(0f,-1f,-1f);
         JY_UIManager.instance.ActiveAimUI(true);
     }
     public void OnPointerUp(PointerEventData eventData)
@@ -59,12 +60,12 @@ public class JY_PartDestruction : MonoBehaviour, IPointerDownHandler, IPointerUp
         }
 
         isShoot = false;
-        mainCam.transform.position = originPos;
+        mainCam.transform.localPosition = originPos;
+        mainCam.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
         JY_UIManager.instance.ActiveAimUI(false);
         mainCamControl.onPartDestruction = false;
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.PLYAER_SHOOT);
-        //PartDestrcutionCam.gameObject.SetActive(false);
-        //mainCam.gameObject.SetActive(true);
+
     }
     public void OnDrag(PointerEventData eventData)
     {
