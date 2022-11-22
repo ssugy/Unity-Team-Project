@@ -63,7 +63,8 @@ public class AudioManager : MonoBehaviour
         BOSS_KICK,
         Boss_JUMP,
         PLYAER_SHOOT,
-        Boss_FireBall
+        Boss_FireBall,
+        BOSS_DEAD
     }
     public SOUND_NAME Name;
     public AudioClip[] clips;   // enum의 순서를 따라가야됨
@@ -203,10 +204,13 @@ public class AudioManager : MonoBehaviour
     // 슬라이더 값은 
     public void BGMSliderValueChanged(Slider slider)
     {
-        bgmVolumePivot = slider.value;
-        if (!isBGMMute)
+        if(NOWPLAY != null)
         {
-            bgmAudioSource.volume = slider.value;
+            bgmVolumePivot = slider.value;
+            if (!isBGMMute)
+            {
+                bgmAudioSource.volume = slider.value;
+            }
         }
     }
 

@@ -28,6 +28,7 @@ public class HP_Bar_Boss : MonoBehaviour
     }
     public void Recognize(Enemy _enemy)
     {
+        this.gameObject.SetActive(true);
         enemy = _enemy;
         nameText.text = enemy.gameObject.name;        
     }

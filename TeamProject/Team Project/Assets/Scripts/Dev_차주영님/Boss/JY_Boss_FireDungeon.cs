@@ -264,11 +264,14 @@ public class JY_Boss_FireDungeon : Enemy
         else
         {
             StopAllCoroutines();
+            AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BOSS_DEAD,false,1f);
             hitbox.enabled = false;
             target = null;
             isDead = true;
+            isAwake = false;
             anim.SetTrigger("isDead");
             FreezeEnemy();
+            InstanceManager.s_instance.PlayBossSkillEffect("Boss_Dead_Effect", 0f, this.transform);
 
             questProgress();
             DropExp();
