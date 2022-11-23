@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static EquipOption;
 
 public class Weapon : MonoBehaviour
 {
@@ -15,7 +16,9 @@ public class Weapon : MonoBehaviour
         player = GetComponentInParent<Player>();                               
         weaponHitbox = GetComponentInChildren<BoxCollider>();
         if (player != null && player.playerAni != null)
+        {
             player.playerAni.SetFloat("AtkSpeed", atkSpeed);
+        }
         if (player != null)
         {
             player.rWeapon = this;
@@ -39,5 +42,66 @@ public class Weapon : MonoBehaviour
     {        
         if (other.CompareTag("Enemy"))
             player.Attack(other);                       
+    }
+
+    public void ApplyOptions(Item _item)
+    {
+        float value = 0f;
+
+        if (_item != null && _item.option != null && _item.option.optionList != null) 
+        {
+            player.playerStat.CopyToTemp();
+            foreach (var e in _item.option.optionList)
+            {
+                switch (e)
+                {
+                    // 공속 증가
+                    case EquipOption.EquipAttrib.AttribAtkSpeed:
+                        value = _item.option.options[e];
+                        atkSpeed -= atkSpeed * value / 100.0f;
+                        player.playerAni.SetFloat("AtkSpeed", atkSpeed);
+                        break;
+                    // 공격력 증가
+                    case EquipOption.EquipAttrib.AttribAtkPower:
+                        value = _item.option.options[e];
+                        atkPoint += (int)value;
+                        break;
+                    // 체력(Health) 증가
+                    case EquipOption.EquipAttrib.AtrribAtkHP:
+                        value = _item.option.options[e];
+                        if (player != null && player.playerStat != null)
+                        {
+                            player.playerStat.tmpHealth += (int)value;
+                        }
+                        break;
+                    // 근력 증가
+                    case EquipOption.EquipAttrib.AtrribAtkStrength:
+                        value = _item.option.options[e];
+                        if (player != null && player.playerStat != null)
+                        {
+                            player.playerStat.tmpStrength += (int)value;
+                        }
+                        break;
+                    // 스태미나 증가
+                    case EquipOption.EquipAttrib.AtrribAtkStamina:
+                        value = _item.option.options[e];
+                        if (player != null && player.playerStat != null)
+                        {
+                            player.playerStat.tmpStamina += (int)value;
+                        }
+                        break;
+                    // 민첩 증가
+                    case EquipOption.EquipAttrib.AtrribAtkDex:
+                        value = _item.option.options[e];
+                        if (player != null && player.playerStat != null)
+                        {
+                            player.playerStat.tmpDexterity += (int)value;
+                        }
+                        break;
+                }
+                // temp값을 이용해 플레이어 능력치를 새로 계산
+                player.SetStateOption();
+            }
+        }
     }
 }

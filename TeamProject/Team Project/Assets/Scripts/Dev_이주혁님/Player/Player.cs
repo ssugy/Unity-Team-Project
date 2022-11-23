@@ -17,7 +17,9 @@ public class PlayerStat
 {
     [Header("조정 가능")]
     public int health;
-    public int stamina, strength, dexterity;    
+    public int stamina, strength, dexterity;   
+    // 장비 교체시 임시 적용되는 수치
+    public int tmpHealth, tmpStamina, tmpStrength, tmpDexterity;
 
     [Header("조정 불가")]
     public EJob job;
@@ -107,6 +109,15 @@ public class PlayerStat
                 break;
         }        
     }
+
+    public void CopyToTemp()
+    {
+        tmpHealth = health;
+        tmpStamina = stamina;
+        tmpStrength = strength;
+        tmpDexterity = dexterity;
+    }
+
     // 캐릭터 생성 시, 혹은 스탯 초기화 시 할당할 클래스별 초기스탯.
 }
 
@@ -605,6 +616,27 @@ public class Player : MonoBehaviourPun, IPunObservable
             playerStat.atkPoint = 0;
         
     }
+    //옵션이 적용된 플레이어 상태값 계산 : 아이템 교체시 적용
+    public void SetStateOption()
+    {
+        //Health
+        playerStat.HP = 210 + playerStat.tmpHealth * 20 + playerStat.tmpStrength * 5;   // 1레벨 스탯 기준 400
+        playerStat.HpRecover = 10 + playerStat.tmpHealth / 5;
+        playerStat.CurHP = playerStat.CurHP;
+        //Stemina
+        playerStat.SP = 46 + playerStat.tmpStamina * 4 + playerStat.tmpStrength * 1;    // 1레벨 스탯 기준 80
+        playerStat.SpRecover = 10 + playerStat.tmpStamina / 5;
+        playerStat.CurSP = playerStat.CurSP;
+        //Strength and Dexterity
+        playerStat.criPro = (20f + Sigma(2f, 1.03f, playerStat.tmpDexterity)) / 100f;
+        playerStat.defMag = 1 - Mathf.Pow(1.02f, -playerStat.defPoint);
+        if (rWeapon != null)
+            playerStat.atkPoint = rWeapon.atkPoint + Mathf.CeilToInt(Sigma(2f, 1.02f, playerStat.tmpStrength) + Sigma(1f, 1.1f, playerStat.tmpDexterity));
+        else
+            playerStat.atkPoint = 0;
+
+    }
+
     // 특별히 사용하기 위해 만든 시그마 연산용 함수. 일반적인 시그마 연산에는 사용하지 말 것.
     public float Sigma(float a, float b, int c)
     {
