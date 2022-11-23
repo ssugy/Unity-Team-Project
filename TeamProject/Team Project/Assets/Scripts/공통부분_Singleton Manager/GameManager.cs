@@ -42,6 +42,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         GetTranlate();  // 싱글톤 객체이기에, 게임시작 최초 한번에 번역 데이터를 가져옵니다.
+        // 모바일 빌드 시 어플리케이션이 백그라운드에서 실행될 수 있도록 합니다. (잠시 화면 포커스를 이동하였을 때, 포톤 연결이 끊어지지 않게 하기 위함)
+        Application.runInBackground = true;
     }
 
     private void Update()
