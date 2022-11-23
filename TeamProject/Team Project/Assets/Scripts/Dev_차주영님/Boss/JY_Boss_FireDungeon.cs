@@ -131,7 +131,7 @@ public class JY_Boss_FireDungeon : Enemy
 
                 if (isJump)
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, tauntVec, Time.deltaTime * 20f);
+                    transform.position = Vector3.MoveTowards(transform.position, tauntVec, Time.deltaTime * 15f);
                 }
 
                 if (JY_CharacterListManager.s_instance.playerList[0].CompareTag("Dead"))
@@ -150,6 +150,7 @@ public class JY_Boss_FireDungeon : Enemy
         }
     }
 
+    // 전방에 플레이어가 있는지를 체크하는 함수 -> 없으면 걷는모션, 있으면 공격
     bool CheckInsight(Vector3 dir)
     {
         float t = Mathf.Clamp(Time.deltaTime * 3f, 0f, 0.99f);
@@ -181,12 +182,15 @@ public class JY_Boss_FireDungeon : Enemy
         }
     }
 
+    // 일반공격 몽둥이를 위에서 아래로 한번 내리치는 것.
     IEnumerator NormalAttack()
     {
         anim.SetTrigger("NoramlAttack");
         yield return new WaitForSeconds(0.2f);
         MeleeAttackArea.gameObject.SetActive(true);
     }
+
+    // 회전하면서 파이어볼 쓰는 공격
     IEnumerator WhirlAttack()
     {
         anim.SetTrigger("WhirlAttack");
@@ -195,6 +199,8 @@ public class JY_Boss_FireDungeon : Enemy
         yield return new WaitForSeconds(1f);
         ShootFire();
     }
+
+    // 멀리서부터 돌진해서 찍고, 불덩어리가 바닥에 뿌려지는 공격
     IEnumerator JumpAttack()
     {
         anim.SetTrigger("JumpAttack");
@@ -212,6 +218,8 @@ public class JY_Boss_FireDungeon : Enemy
         hitbox.enabled = true;
 
     }
+
+    // 발차리 계속하는 공격
     IEnumerator Kick()
     {
         isKick = true;
@@ -223,6 +231,9 @@ public class JY_Boss_FireDungeon : Enemy
         yield return new WaitForSeconds(1f);
         meleeInitialize();
     }
+
+    // 원래는 무기에 콜라이더를 달았는데, 잘 안맞아서 보스 전방에 근접공격 콜라이더를 달아서 처리하는 구문
+    // 0.2초의 판정을 유지한다.
     void meleeInitialize()
     {
         MeleeAttackArea.gameObject.SetActive(true);
@@ -234,6 +245,8 @@ public class JY_Boss_FireDungeon : Enemy
         yield return new WaitForSeconds(0.2f);
         MeleeAttackArea.gameObject.SetActive(false);
     }
+
+    // 보스가 플레이어한테 공격 받았으면에 대한 판정
     public override void IsAttacked(int _damage, Vector3 _player)
     {
         photonView.RPC("IsAttacked_Do", RpcTarget.All, _damage, _player);
@@ -250,6 +263,7 @@ public class JY_Boss_FireDungeon : Enemy
             EffectManager.Instance.PlayHitEffect(transform.position + offset, transform.rotation.eulerAngles, transform);
     }
 
+    // 어택에서 이어져서, 데미지를 처리하는 구문, 사망했는지 여부도 처리
     protected new IEnumerator OnDamage(Vector3 reactVec)
     {
         yield return new WaitForSeconds(0.1f);
@@ -286,7 +300,7 @@ public class JY_Boss_FireDungeon : Enemy
     }
 
     /// <summary>
-    /// 스킬에 따른 다른 피격모션 재생
+    /// 스킬에 따른 다른 피격모션 재생, 플레이어가 어떤 스킬로 보스에게 공격했냐에 따라서 보스의 피격 애니매이션을 결정하는 함수.
     /// </summary>
     /// <param name="playerSkill">-1:Idle상태, 평타 1,2타, 0:플레이어 평타 3번째, 1:스킬1, 2:스킬2</param>
     void isAttackedAnimPlay(int playerSkill)
@@ -295,24 +309,34 @@ public class JY_Boss_FireDungeon : Enemy
         anim.SetTrigger("isAttacked");
         anim.SetInteger("HitNum",playerSkill);
     }
+
+    // 보스 무기에 나오는 불덩어리 - 외부에서 참조, 애니매이션 behaviour에서 제어
     public void WeaponEffectOnOff(bool state)
     {
         BossWeaponFire.SetActive(state);
     }
+
+    // 바닥에 불덩이(점프 공격 시 불덩어리 나오는 것)
     void FieldFireCreate()
     {
         GameObject tmp = Instantiate<GameObject>(FieldFire);
         tmp.transform.position = transform.position + new Vector3(Random.Range(-3, 3), 0, Random.Range(-3, 3));
     }
+
+    // 근접공격과 점프공격이 동시에 나가는 것, 한번에 쓰도록 하는 함수(콜라이더가 달라서 2개를 같이 활성화 시키거나 비활성화 시킴)
     public void MeleeAreaDisEnable()
     {
         MeleeAttackArea.gameObject.SetActive(false);
         JumpAttackArea.gameObject.SetActive(false);
     }
+
+    // 파이어볼 - 봉에서 날라가는 파이어볼
     void ShootFire()
     {
         Instantiate(Fireball, BossWeapon.position, transform.rotation);
     }
+
+    // 부위파괴 함수
     public void PartDestruction(string partName)
     {
         isStun = true;
@@ -342,23 +366,32 @@ public class JY_Boss_FireDungeon : Enemy
         Debug.Log(partCnt);
         anim.SetTrigger("Stun");
     }
+    
+    // 보스 네비게이션 메시 관련해서, 공격 할 때 계속 따라가지 않고 제자리에서 공격하는 함수 - 애니매이션에서 쓰고있음.
     public void UnfreezeBoss()
     {
         UnfreezeEnemy();
     }
+
+    // 보스 회전 - 애니매이션에서 사용
     public void BossRotate()
     {
         isStop = false;
     }
 
+    // 포탈 만드는 것
     void portalCreate()
     {
         BossRoomPortal.SetActive(true);
     }
+
+    // 피격 애니매이션 출력되었을 때 바로 공격하도록 공격 쿨타임 조정하는 함수
     public void SetAtkTime(float tmp)
     {
         atkTime = tmp;
     }
+
+    // 부위파괴 그로기상태 들어갔다가 일어날 때 사용하는 함수.
     public void stunWakeUp()
     {
         anim.SetTrigger("StunWakeUP");
