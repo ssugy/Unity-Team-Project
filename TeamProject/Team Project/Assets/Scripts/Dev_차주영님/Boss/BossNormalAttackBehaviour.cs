@@ -23,7 +23,6 @@ public class BossNormalAttackBehaviour : StateMachineBehaviour
         JY_Boss_FireDungeon.s_instance.BossRotate();
         JY_Boss_FireDungeon.s_instance.UnfreezeBoss();
         JY_Boss_FireDungeon.s_instance.isAttack = false;
-        InstanceManager.s_instance.StopAllBossEffect();
         JY_Boss_FireDungeon.s_instance.SetAtkTime(3f);
     }
 

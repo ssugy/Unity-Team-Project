@@ -106,7 +106,7 @@ public class JY_Boss_FireDungeon : Enemy
                         FreezeEnemy();
                         //int ranAction = Random.Range(0, 3);
                         //StartCoroutine(BossPattern(ranAction));
-                        StartCoroutine(BossPattern(0));
+                        StartCoroutine(BossPattern(1));
                     }
                 }
                 else if (distance > 10f && atkTime >= attackCool)
@@ -169,10 +169,10 @@ public class JY_Boss_FireDungeon : Enemy
         switch (patternNum)
         {
             case 0:
-                StartCoroutine(NormalAttack());
+                NormalAttack();
                 break;
             case 1:
-                StartCoroutine(WhirlAttack());
+                WhirlAttack();
                 break;
             case 2:
                 StartCoroutine(Kick());
@@ -184,21 +184,15 @@ public class JY_Boss_FireDungeon : Enemy
     }
 
     // 일반공격 몽둥이를 위에서 아래로 한번 내리치는 것.
-    IEnumerator NormalAttack()
+    void NormalAttack()
     {
         anim.SetTrigger("NoramlAttack");
-        yield return new WaitForSeconds(0.2f);
-        //MeleeAttackArea.gameObject.SetActive(true);
     }
 
     // 회전하면서 파이어볼 쓰는 공격
-    IEnumerator WhirlAttack()
+    void WhirlAttack()
     {
         anim.SetTrigger("WhirlAttack");
-        yield return new WaitForSeconds(0.5f);
-        ShootFire();
-        yield return new WaitForSeconds(1f);
-        ShootFire();
     }
 
     // 멀리서부터 돌진해서 찍고, 불덩어리가 바닥에 뿌려지는 공격
@@ -405,12 +399,10 @@ public class JY_Boss_FireDungeon : Enemy
     /// </summary>
     public void MeleeColliderOn()
     {
-        Debug.Log("on");
         MeleeAttackArea.gameObject.SetActive(true);
     }
     public void MeleeColliderOff()
     {
-        Debug.Log("off");
         MeleeAttackArea.gameObject.SetActive(false);
     }
 
