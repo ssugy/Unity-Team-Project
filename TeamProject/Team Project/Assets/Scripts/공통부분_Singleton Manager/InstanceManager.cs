@@ -163,10 +163,7 @@ public class InstanceManager : MonoBehaviour
         foreach(GameObject one in targetEffectList)
         {
             if (one.name.Equals(EffectName))
-            {
-                Debug.Log("Off");
                 one.SetActive(false);
-            }
         }    
     }
 

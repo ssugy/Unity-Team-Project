@@ -18,8 +18,6 @@ public class JY_CutScenePlay : MonoBehaviour
     public HP_Bar_Boss hpBarBoss;
 
     bool firstPlay;
-    Vector3 CamAxisPos;
-    Vector3 CamPos;
     private void Awake()
     {
         instance = this;

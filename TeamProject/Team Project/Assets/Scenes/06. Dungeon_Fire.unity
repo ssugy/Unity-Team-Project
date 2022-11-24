@@ -15334,6 +15334,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8520399263704723354, guid: 015b5e41a4f67364fb6efa67f440c8aa, type: 3}
+    - {fileID: 2376739739756159160, guid: 015b5e41a4f67364fb6efa67f440c8aa, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 015b5e41a4f67364fb6efa67f440c8aa, type: 3}
 --- !u!1 &1228672370 stripped
 GameObject:
@@ -15412,53 +15413,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &1228672380
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1228672370}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30f858d1025ad6f49ba9338a971861d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 1500
-  defMag: 0.5
-  atkPoint: 20
-  atkMag: 1.1
-  offset: {x: 0, y: 0, z: 0}
-  dropExp: 0
-  dropGold: 0
-  dropItem: 
-  dropPro: []
-  fieldItem: {fileID: 5869032223344055893, guid: 828de48909114044983e5627a3bc0a0b, type: 3}
-  fieldGold: {fileID: 1498403948531744, guid: fa2c57d3f28a5e6419393e8bc3eeb32a, type: 3}
-  targetRadius: 0
-  targetRange: 0
-  attackDistance: 3
-  attackCool: 3
-  target: {fileID: 0}
-  originPos: {x: 0, y: 0, z: 0}
-  originRotateion: {x: 0, y: 0, z: 0, w: 0}
-  totalTime: 0
-  isLook: 0
-  isAwake: 0
-  isJump: 0
-  isAttack: 0
-  JumpAttackArea: {fileID: 232850721}
-  MeleeAttackArea: {fileID: 380488778}
-  BossWeapon: {fileID: 1228672374}
-  BossWeaponFire: {fileID: 1228672371}
-  FieldFire: {fileID: 7405487427060361274, guid: 653b8a094302fc641864ddee6dba51df, type: 3}
-  Fireball: {fileID: 7853561587912700220, guid: 83f8c52802db3194db846160ac58517d, type: 3}
-  BossRoomPortal: {fileID: 794617595}
-  HitSkillNum: 0
-  HeadPart: {fileID: 1228672373}
-  SholderPart: {fileID: 1228672372}
-  SholderHitBox: {fileID: 984708428}
-  HeadHitBox: {fileID: 1664164815}
 --- !u!1 &1257316913
 GameObject:
   m_ObjectHideFlags: 0
@@ -15886,12 +15840,59 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 1228672380}
   - {fileID: 1328898510}
   - {fileID: 1328898511}
+  - {fileID: 1328898513}
   sceneViewId: 19
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1328898513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1228672370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30f858d1025ad6f49ba9338a971861d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 1500
+  defMag: 0.5
+  atkPoint: 20
+  atkMag: 1.1
+  offset: {x: 0, y: 0, z: 0}
+  dropExp: 0
+  dropGold: 0
+  dropItem: 
+  dropPro: []
+  fieldItem: {fileID: 5869032223344055893, guid: 828de48909114044983e5627a3bc0a0b, type: 3}
+  fieldGold: {fileID: 1498403948531744, guid: fa2c57d3f28a5e6419393e8bc3eeb32a, type: 3}
+  targetRadius: 0
+  targetRange: 0
+  attackDistance: 3
+  attackCool: 3
+  target: {fileID: 0}
+  originPos: {x: 0, y: 0, z: 0}
+  originRotateion: {x: 0, y: 0, z: 0, w: 0}
+  totalTime: 0
+  isLook: 0
+  isAwake: 0
+  isJump: 0
+  isAttack: 0
+  JumpAttackArea: {fileID: 232850721}
+  MeleeAttackArea: {fileID: 380488778}
+  BossWeapon: {fileID: 1228672374}
+  BossWeaponFire: {fileID: 1228672371}
+  FieldFire: {fileID: 7405487427060361274, guid: 653b8a094302fc641864ddee6dba51df, type: 3}
+  Fireball: {fileID: 7853561587912700220, guid: 83f8c52802db3194db846160ac58517d, type: 3}
+  BossRoomPortal: {fileID: 794617595}
+  HitSkillNum: 0
+  HeadPart: {fileID: 1228672373}
+  SholderPart: {fileID: 1228672372}
+  SholderHitBox: {fileID: 984708428}
+  HeadHitBox: {fileID: 1664164815}
 --- !u!1 &1353937342
 GameObject:
   m_ObjectHideFlags: 0
@@ -27221,7 +27222,7 @@ MonoBehaviour:
   CutScene1: {fileID: 1209279104}
   CutScene2: {fileID: 1084790079}
   BattleUI: {fileID: 1651880666}
-  boss: {fileID: 1228672380}
+  boss: {fileID: 1328898513}
   mainCam: {fileID: 960872774}
   cutSceneCam: {fileID: 409253787}
   fadeUI: {fileID: 1105162845}

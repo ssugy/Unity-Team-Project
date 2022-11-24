@@ -410,4 +410,9 @@ public class JY_Boss_FireDungeon : Enemy
     {
         MeleeAttackArea.gameObject.SetActive(false);
     }
+
+    public void eventTest()
+    {
+        Debug.Log("normal");
+    }
 }
