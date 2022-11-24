@@ -252,7 +252,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     }    
     void FixedUpdate()
     {
-        if (photonView.IsMine || JY_CharacterListManager.s_instance.playerList[0].Equals(this))
+        if (photonView.IsMine || JY_CharacterListManager.s_instance.playerList.Count > 0 && JY_CharacterListManager.s_instance.playerList[0].Equals(this))
         {
             Move();
             playerAni.SetBool("isGround", isGround);
