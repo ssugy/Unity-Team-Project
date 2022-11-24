@@ -788,7 +788,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             playerStat.Exp = _exp;
         }        
         playerStat.CurHP = playerStat.HP;        
-        JY_UIManager.instance.levelupUI();
+        JY_UIManager.instance?.levelupUI();
     }
     
     // 이미 발동된 isAttack 트리거를 취소함. 선입력에 의한 의도치 않은 공격이 나가는 것을 방지.

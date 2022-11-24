@@ -175,6 +175,7 @@ public class JY_NPCDialog : MonoBehaviour
         exitButton.SetActive(false);
         DialogUI.SetActive(false);
         BattleUI.SetActive(true);
+        JY_UIManager.instance.StatusDataRenew();
     }
 
     public void NPCCamPosition(int NPCNum)
