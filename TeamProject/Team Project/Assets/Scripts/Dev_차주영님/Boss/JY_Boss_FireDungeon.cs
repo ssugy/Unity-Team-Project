@@ -104,9 +104,9 @@ public class JY_Boss_FireDungeon : Enemy
                         Vector3 dir = target.transform.position - this.transform.position;
                         this.transform.rotation = Quaternion.LookRotation(dir.normalized);
                         FreezeEnemy();
-                        //int ranAction = Random.Range(0, 3);
-                        //StartCoroutine(BossPattern(ranAction));
-                        StartCoroutine(BossPattern(2));
+                        int ranAction = Random.Range(0, 3);
+                        StartCoroutine(BossPattern(ranAction));
+                        //StartCoroutine(BossPattern(2));
                     }
                 }
                 else if (distance > 10f && atkTime >= attackCool)
