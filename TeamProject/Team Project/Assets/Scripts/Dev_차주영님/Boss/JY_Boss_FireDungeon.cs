@@ -104,9 +104,9 @@ public class JY_Boss_FireDungeon : Enemy
                         Vector3 dir = target.transform.position - this.transform.position;
                         this.transform.rotation = Quaternion.LookRotation(dir.normalized);
                         FreezeEnemy();
-                        int ranAction = Random.Range(0, 3);
-                        StartCoroutine(BossPattern(ranAction));
-                        //StartCoroutine(BossPattern(3));
+                        //int ranAction = Random.Range(0, 3);
+                        //StartCoroutine(BossPattern(ranAction));
+                        StartCoroutine(BossPattern(2));
                     }
                 }
                 else if (distance > 10f && atkTime >= attackCool)
@@ -175,7 +175,7 @@ public class JY_Boss_FireDungeon : Enemy
                 WhirlAttack();
                 break;
             case 2:
-                StartCoroutine(Kick());
+                Kick();
                 break;
             case 3:
                 JumpAttack();
@@ -188,7 +188,19 @@ public class JY_Boss_FireDungeon : Enemy
     {
         anim.SetTrigger("NoramlAttack");
     }
-
+    public void SwingSound()
+    {
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BOSS_SWING);
+    }
+    public void KickEffect(string EffectName)
+    {
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BOSS_KICK);
+        InstanceManager.s_instance.PlayBossSkillEffect(EffectName,0,this.transform);
+    }
+    public void KickEffectOff()
+    {
+        InstanceManager.s_instance.StopAllBossEffect();
+    }
     // 회전하면서 파이어볼 쓰는 공격
     void WhirlAttack()
     {
@@ -226,16 +238,10 @@ public class JY_Boss_FireDungeon : Enemy
             FieldFireCreate();
     }
     // 발차리 계속하는 공격
-    IEnumerator Kick()
+    void Kick()
     {
         isKick = true;
         anim.SetTrigger("KickAttack");
-        yield return new WaitForSeconds(0.5f);
-        meleeInitialize();
-        yield return new WaitForSeconds(0.5f);
-        meleeInitialize();
-        yield return new WaitForSeconds(1f);
-        meleeInitialize();
     }
 
     // 원래는 무기에 콜라이더를 달았는데, 잘 안맞아서 보스 전방에 근접공격 콜라이더를 달아서 처리하는 구문
@@ -311,7 +317,6 @@ public class JY_Boss_FireDungeon : Enemy
     /// <param name="playerSkill">-1:Idle상태, 평타 1,2타, 0:플레이어 평타 3번째, 1:스킬1, 2:스킬2</param>
     void isAttackedAnimPlay(int playerSkill)
     {
-        Debug.Log(HitSkillNum);
         anim.SetTrigger("isAttacked");
         anim.SetInteger("HitNum",playerSkill);
     }
@@ -329,7 +334,7 @@ public class JY_Boss_FireDungeon : Enemy
         tmp.transform.position = transform.position + new Vector3(Random.Range(-3, 3), 0, Random.Range(-3, 3));
     }
 
-    // 근접공격과 점프공격이 동시에 나가는 것, 한번에 쓰도록 하는 함수(콜라이더가 달라서 2개를 같이 활성화 시키거나 비활성화 시킴)
+    // 공격중 피격 모션이 발생할 때 사용하는 함수. 공격판정 콜라이더 인스턴스를 전부 비활성화 시킴
     public void MeleeAreaDisEnable()
     {
         MeleeAttackArea.gameObject.SetActive(false);
@@ -415,10 +420,5 @@ public class JY_Boss_FireDungeon : Enemy
     public void MeleeColliderOff()
     {
         MeleeAttackArea.gameObject.SetActive(false);
-    }
-
-    public void eventTest()
-    {
-        Debug.Log("normal");
     }
 }
