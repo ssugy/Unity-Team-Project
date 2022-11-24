@@ -104,8 +104,9 @@ public class JY_Boss_FireDungeon : Enemy
                         Vector3 dir = target.transform.position - this.transform.position;
                         this.transform.rotation = Quaternion.LookRotation(dir.normalized);
                         FreezeEnemy();
-                        int ranAction = Random.Range(0, 3);
-                        StartCoroutine(BossPattern(ranAction));
+                        //int ranAction = Random.Range(0, 3);
+                        //StartCoroutine(BossPattern(ranAction));
+                        StartCoroutine(BossPattern(0));
                     }
                 }
                 else if (distance > 10f && atkTime >= attackCool)
@@ -187,7 +188,7 @@ public class JY_Boss_FireDungeon : Enemy
     {
         anim.SetTrigger("NoramlAttack");
         yield return new WaitForSeconds(0.2f);
-        MeleeAttackArea.gameObject.SetActive(true);
+        //MeleeAttackArea.gameObject.SetActive(true);
     }
 
     // 회전하면서 파이어볼 쓰는 공격
@@ -404,10 +405,12 @@ public class JY_Boss_FireDungeon : Enemy
     /// </summary>
     public void MeleeColliderOn()
     {
+        Debug.Log("on");
         MeleeAttackArea.gameObject.SetActive(true);
     }
     public void MeleeColliderOff()
     {
+        Debug.Log("off");
         MeleeAttackArea.gameObject.SetActive(false);
     }
 
