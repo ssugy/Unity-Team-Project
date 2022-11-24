@@ -102,7 +102,7 @@ public class JY_Boss_FireDungeon : Enemy
                         atkTime = 0f;
                         isStop = true;
                         Vector3 dir = target.transform.position - this.transform.position;
-                        this.transform.rotation = Quaternion.LookRotation(dir);
+                        this.transform.rotation = Quaternion.LookRotation(dir.normalized);
                         FreezeEnemy();
                         int ranAction = Random.Range(0, 3);
                         StartCoroutine(BossPattern(ranAction));
@@ -113,7 +113,7 @@ public class JY_Boss_FireDungeon : Enemy
                     atkTime = 0f;
                     isStop = true;
                     Vector3 dir = target.transform.position - this.transform.position;
-                    this.transform.rotation = Quaternion.LookRotation(dir);
+                    this.transform.rotation = Quaternion.LookRotation(dir.normalized);
                     FreezeEnemy();
                     StartCoroutine(BossPattern(3));
                 }
@@ -123,7 +123,7 @@ public class JY_Boss_FireDungeon : Enemy
                     atkTime = 0f;
                     InstanceManager.s_instance.StopAllBossEffect();
                     Vector3 dir = target.transform.position - this.transform.position;
-                    this.transform.rotation = Quaternion.LookRotation(dir);
+                    this.transform.rotation = Quaternion.LookRotation(dir.normalized);
                     StartCoroutine(JumpAttack());
                     isKick = false;
                 }
@@ -397,5 +397,17 @@ public class JY_Boss_FireDungeon : Enemy
         anim.SetTrigger("StunWakeUP");
         isStun = false;
         isAwake = true;
+    }
+
+    /// <summary>
+    /// 근접 공격 콜라이더 On/Off
+    /// </summary>
+    public void MeleeColliderOn()
+    {
+        MeleeAttackArea.gameObject.SetActive(true);
+    }
+    public void MeleeColliderOff()
+    {
+        MeleeAttackArea.gameObject.SetActive(false);
     }
 }

@@ -8,7 +8,6 @@ public class BossNormalAttackBehaviour : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         JY_Boss_FireDungeon.s_instance.WeaponEffectOnOff(true);
-        AudioManager.s_instance.CallSFXPlay(AudioManager.SOUND_NAME.BOSS_SWING, 0.3f);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

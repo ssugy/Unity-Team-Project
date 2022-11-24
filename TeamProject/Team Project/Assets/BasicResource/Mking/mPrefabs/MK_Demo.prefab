@@ -1036,6 +1036,7 @@ GameObject:
   m_Component:
   - component: {fileID: 487046}
   - component: {fileID: 9524236}
+  - component: {fileID: 2376739739756159160}
   m_Layer: 0
   m_Name: MK_Demo
   m_TagString: Untagged
@@ -1081,6 +1082,53 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2376739739756159160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30f858d1025ad6f49ba9338a971861d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 1500
+  defMag: 0.5
+  atkPoint: 20
+  atkMag: 1.1
+  offset: {x: 0, y: 0, z: 0}
+  dropExp: 0
+  dropGold: 0
+  dropItem: 
+  dropPro: []
+  fieldItem: {fileID: 5869032223344055893, guid: 828de48909114044983e5627a3bc0a0b, type: 3}
+  fieldGold: {fileID: 1498403948531744, guid: fa2c57d3f28a5e6419393e8bc3eeb32a, type: 3}
+  targetRadius: 0
+  targetRange: 0
+  attackDistance: 3
+  attackCool: 3
+  target: {fileID: 0}
+  originPos: {x: 0, y: 0, z: 0}
+  originRotateion: {x: 0, y: 0, z: 0, w: 0}
+  totalTime: 0
+  isLook: 0
+  isAwake: 0
+  isJump: 0
+  isAttack: 0
+  JumpAttackArea: {fileID: 0}
+  MeleeAttackArea: {fileID: 0}
+  BossWeapon: {fileID: 0}
+  BossWeaponFire: {fileID: 0}
+  FieldFire: {fileID: 7405487427060361274, guid: 653b8a094302fc641864ddee6dba51df, type: 3}
+  Fireball: {fileID: 7853561587912700220, guid: 83f8c52802db3194db846160ac58517d, type: 3}
+  BossRoomPortal: {fileID: 0}
+  HitSkillNum: 0
+  HeadPart: {fileID: 0}
+  SholderPart: {fileID: 0}
+  SholderHitBox: {fileID: 0}
+  HeadHitBox: {fileID: 0}
 --- !u!1 &169588
 GameObject:
   m_ObjectHideFlags: 0

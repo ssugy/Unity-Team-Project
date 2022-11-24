@@ -12,10 +12,7 @@ public class BossJumpAttackBehaviour : StateMachineBehaviour
     {
         InstanceManager.s_instance.StopAllCoroutines();
         JY_Boss_FireDungeon.s_instance.WeaponEffectOnOff(true);
-        InstanceManager.s_instance.PlayBossSkillEffect(Boss_Skill_Effect2, 0.9f, JY_Boss_FireDungeon.s_instance.transform);
         AudioManager.s_instance.CallSFXPlay(AudioManager.SOUND_NAME.Boss_JUMP,0.9f);
-        JY_ShakeCamera cam = Camera.main.GetComponent<JY_ShakeCamera>();
-        cam.onSakeCamera();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
