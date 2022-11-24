@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class BossJumpAttackBehaviour : StateMachineBehaviour
 {
-    public string Boss_Skill_Effect;
-    public string Boss_Skill_Effect2;
-    public string Boss_Skill_Effect3;
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        InstanceManager.s_instance.StopAllCoroutines();
         JY_Boss_FireDungeon.s_instance.WeaponEffectOnOff(true);
-        AudioManager.s_instance.CallSFXPlay(AudioManager.SOUND_NAME.Boss_JUMP,0.9f);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -26,10 +22,8 @@ public class BossJumpAttackBehaviour : StateMachineBehaviour
     {
         JY_Boss_FireDungeon.s_instance.BossRotate();
         JY_Boss_FireDungeon.s_instance.WeaponEffectOnOff(false);
-        JY_Boss_FireDungeon.s_instance.MeleeAreaDisEnable();
         JY_Boss_FireDungeon.s_instance.UnfreezeBoss();
         JY_Boss_FireDungeon.s_instance.isAttack = false;
-        InstanceManager.s_instance.StopAllBossEffect();
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

@@ -185,4 +185,16 @@ public class InstanceManager : MonoBehaviour
         PlayerEffectList.Clear();
         BossSkillEffectList.Clear();
     }
+    /// <summary>
+    /// 이하는 보스 애니메이션 이벤트 작업하며 만든 임시 코드, 위쪽 코드와 함께 수정 예정
+    /// </summary>
+    public void BossJumpAttackEffect()
+    {
+        BossSkillEffectCreate("Boss_Skill_Effect2", 0, JY_Boss_FireDungeon.instacne.transform);
+    }
+    public void StopBossEffect(string Skillname)
+    {
+        foreach (GameObject one in BossSkillEffectList)
+            one.SetActive(false);
+    }
 }

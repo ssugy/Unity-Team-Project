@@ -106,7 +106,7 @@ public class JY_Boss_FireDungeon : Enemy
                         FreezeEnemy();
                         //int ranAction = Random.Range(0, 3);
                         //StartCoroutine(BossPattern(ranAction));
-                        StartCoroutine(BossPattern(1));
+                        StartCoroutine(BossPattern(3));
                     }
                 }
                 else if (distance > 10f && atkTime >= attackCool)
@@ -125,7 +125,7 @@ public class JY_Boss_FireDungeon : Enemy
                     InstanceManager.s_instance.StopAllBossEffect();
                     Vector3 dir = target.transform.position - this.transform.position;
                     this.transform.rotation = Quaternion.LookRotation(dir.normalized);
-                    StartCoroutine(JumpAttack());
+                    JumpAttack();
                     isKick = false;
                 }
 
@@ -178,7 +178,7 @@ public class JY_Boss_FireDungeon : Enemy
                 StartCoroutine(Kick());
                 break;
             case 3:
-                StartCoroutine(JumpAttack());
+                JumpAttack();
                 break;
         }
     }
@@ -196,24 +196,35 @@ public class JY_Boss_FireDungeon : Enemy
     }
 
     // 멀리서부터 돌진해서 찍고, 불덩어리가 바닥에 뿌려지는 공격
-    IEnumerator JumpAttack()
+    void JumpAttack()
     {
         anim.SetTrigger("JumpAttack");
-        yield return new WaitForSeconds(0.5f);
+    }
+    public void JumpAttackStart()
+    {
         isJump = true;
         tauntVec = target.position;
         hitbox.enabled = false;
-        yield return new WaitForSeconds(0.5f);
-        JumpAttackArea.gameObject.SetActive(true);
-        for (int i = 0; i < 5; i++)
-            FieldFireCreate();
-        yield return new WaitForSeconds(0.5f);
-        isJump = false;
-        JumpAttackArea.gameObject.SetActive(false);
-        hitbox.enabled = true;
-
     }
-
+    public void JumpAttackFinish()
+    {
+        isJump = false;
+        hitbox.enabled = true;
+    }
+    public void JumpAttackAreaOn()
+    {
+        JumpAttackArea.gameObject.SetActive(true);
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Boss_JUMP);
+    }
+    public void JumpAttackAreaOff()
+    {
+        JumpAttackArea.gameObject.SetActive(false);
+    }
+    public void FieldFireGenerate(int num)
+    {
+        for (int i = 0; i < num; i++)
+            FieldFireCreate();
+    }
     // 발차리 계속하는 공격
     IEnumerator Kick()
     {
