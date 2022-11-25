@@ -9,6 +9,7 @@ public class BossJumpAttackBehaviour : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         JY_Boss_FireDungeon.s_instance.WeaponEffectOnOff(true);
+        InstanceManager.s_instance.StopAllBossEffect();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

@@ -106,7 +106,6 @@ public class JY_Boss_FireDungeon : Enemy
                         FreezeEnemy();
                         int ranAction = Random.Range(0, 3);
                         StartCoroutine(BossPattern(ranAction));
-                        //StartCoroutine(BossPattern(2));
                     }
                 }
                 else if (distance > 10f && atkTime >= attackCool)
@@ -125,8 +124,9 @@ public class JY_Boss_FireDungeon : Enemy
                     InstanceManager.s_instance.StopAllBossEffect();
                     Vector3 dir = target.transform.position - this.transform.position;
                     this.transform.rotation = Quaternion.LookRotation(dir.normalized);
-                    JumpAttack();
+                    FreezeEnemy();
                     isKick = false;
+                    StartCoroutine(BossPattern(3));
                 }
 
 
@@ -192,15 +192,6 @@ public class JY_Boss_FireDungeon : Enemy
     {
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BOSS_SWING);
     }
-    public void KickEffect(string EffectName)
-    {
-        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BOSS_KICK);
-        InstanceManager.s_instance.PlayBossSkillEffect(EffectName,0,this.transform);
-    }
-    public void KickEffectOff()
-    {
-        InstanceManager.s_instance.StopAllBossEffect();
-    }
     // 회전하면서 파이어볼 쓰는 공격
     void WhirlAttack()
     {
@@ -227,6 +218,7 @@ public class JY_Boss_FireDungeon : Enemy
     {
         JumpAttackArea.gameObject.SetActive(true);
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Boss_JUMP);
+        InstanceManager.s_instance.BossEffectCreate("Boss_Skill_Effect", this.transform);
     }
     public void JumpAttackAreaOff()
     {
@@ -243,21 +235,28 @@ public class JY_Boss_FireDungeon : Enemy
         isKick = true;
         anim.SetTrigger("KickAttack");
     }
-
-    // 원래는 무기에 콜라이더를 달았는데, 잘 안맞아서 보스 전방에 근접공격 콜라이더를 달아서 처리하는 구문
-    // 0.2초의 판정을 유지한다.
-    void meleeInitialize()
+    public void KickOff()
     {
-        MeleeAttackArea.gameObject.SetActive(true);
-        StartCoroutine(meleeOffDelay());
-    }    
-
-    IEnumerator meleeOffDelay()
-    {
-        yield return new WaitForSeconds(0.2f);
-        MeleeAttackArea.gameObject.SetActive(false);
+        isKick = false;
     }
-
+    public void KickEffect(string EffectName)
+    {
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BOSS_KICK);
+        InstanceManager.s_instance.BossEffectCreate(EffectName, this.transform);
+    }
+    public void KickEffectOff(string EffectName)
+    {
+        InstanceManager.s_instance.BossEffectOff(EffectName);
+    }
+    public void BossDieEffect()
+    {
+        InstanceManager.s_instance.BossEffectCreate("Boss_Dead_Effect", this.transform);
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BOSS_DEAD, false, 1f);
+    }
+    public void StopAllEffect()
+    {
+        InstanceManager.s_instance.StopAllBossEffect();
+    }
     // 보스가 플레이어한테 공격 받았으면에 대한 판정
     public override void IsAttacked(int _damage, Vector3 _player)
     {
@@ -293,14 +292,12 @@ public class JY_Boss_FireDungeon : Enemy
         else
         {
             StopAllCoroutines();
-            AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BOSS_DEAD,false,1f);
             hitbox.enabled = false;
             target = null;
             isDead = true;
             isAwake = false;
             anim.SetTrigger("isDead");
             FreezeEnemy();
-            InstanceManager.s_instance.PlayBossSkillEffect("Boss_Dead_Effect", 0f, this.transform);
 
             questProgress();
             DropExp();

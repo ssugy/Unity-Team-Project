@@ -22,7 +22,7 @@ public class InstanceManager : MonoBehaviour
     [Header("보스 스킬 이펙트")]
     public GameObject Boss_Skill_Effect;
     public GameObject Boss_Skill_Effect2;
-    public GameObject Boss_Skill_Effect3;
+    public GameObject Boss_Dead_Effect;
 
     private void Awake()
     {
@@ -57,11 +57,7 @@ public class InstanceManager : MonoBehaviour
         PlayerEffectCreate(EffectName);
         StartCoroutine(EffectOnDisable(EffectName, 2.5f, PlayerEffectList));
     }
-    public void PlayBossSkillEffect(string EffectName, float delay, Transform boss)
-    {
-        StartCoroutine(BossSkillEffectCreate(EffectName, delay, boss));
-        StartCoroutine(EffectOnDisable(EffectName,1f, BossSkillEffectList));
-    }
+
     void PlayerEffectCreate(string EffectName)
     {
         GameObject effect = FindEffect(EffectName,PlayerEffectList);
@@ -110,7 +106,7 @@ public class InstanceManager : MonoBehaviour
             SkillEffectList.Add(effect);
         }
     }
-
+    /*
     IEnumerator BossSkillEffectCreate(string EffectName, float delay, Transform boss)
     {
         yield return new WaitForSeconds(delay);
@@ -133,6 +129,34 @@ public class InstanceManager : MonoBehaviour
             }
             effect.name = EffectName;
             BossSkillEffectList.Add(effect);
+        }
+    }*/
+    public void BossEffectCreate(string EffectName, Transform boss)
+    {
+        GameObject effect = FindEffect(EffectName, BossSkillEffectList);
+        if (effect != null)
+            effect.SetActive(true);
+        else
+        {
+            if (EffectName.Equals("Boss_Skill_Effect"))
+                effect = Instantiate<GameObject>(Boss_Skill_Effect, boss);
+            else if (EffectName.Equals("Boss_Skill2_Effect") || EffectName.Equals("Boss_Skill2_Effect2") || EffectName.Equals("Boss_Skill2_Effect3"))
+            {
+                effect = Instantiate<GameObject>(Boss_Skill_Effect2, boss);
+                effect.transform.localPosition = Vector3.up;
+            }
+            else if (EffectName.Equals("Boss_Dead_Effect"))
+                effect= Instantiate<GameObject>(Boss_Dead_Effect, boss);
+            effect.name = EffectName;
+            BossSkillEffectList.Add(effect);
+        }
+    }
+    public void BossEffectOff(string EffectName)
+    {
+        foreach (GameObject one in BossSkillEffectList)
+        {
+            if(one.name.Equals(EffectName))
+                one.SetActive(false);
         }
     }
     IEnumerator NormalAttackEffectCreate(string EffectName)
@@ -184,17 +208,5 @@ public class InstanceManager : MonoBehaviour
         SkillEffectList.Clear();
         PlayerEffectList.Clear();
         BossSkillEffectList.Clear();
-    }
-    /// <summary>
-    /// 이하는 보스 애니메이션 이벤트 작업하며 만든 임시 코드, 위쪽 코드와 함께 수정 예정
-    /// </summary>
-    public void BossJumpAttackEffect()
-    {
-        BossSkillEffectCreate("Boss_Skill_Effect2", 0, JY_Boss_FireDungeon.instacne.transform);
-    }
-    public void StopBossEffect(string Skillname)
-    {
-        foreach (GameObject one in BossSkillEffectList)
-            one.SetActive(false);
     }
 }

@@ -18,21 +18,7 @@ public class EGA_EffectSound : MonoBehaviour
     {
         soundComponent = GetComponent<AudioSource>();
         clip = soundComponent.clip;
-        /*if (RandomVolume == true)
-        {
-            soundComponent.volume = Random.Range(minVolume, maxVolume);
-            RepeatSound();
-        }
-        if (Repeating == true)
-        {
-            InvokeRepeating("RepeatSound", StartTime, RepeatTime);
-        }*/
     }
-
-    /*void RepeatSound()
-    {
-        soundComponent.PlayOneShot(clip);
-    }*/
     private void OnEnable()
     {
         soundComponent.PlayOneShot(clip);

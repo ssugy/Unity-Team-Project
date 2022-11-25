@@ -8,10 +8,8 @@ public class BossStunBehaviour : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         {
-            JY_Boss_FireDungeon.s_instance.StopAllCoroutines();
             JY_Boss_FireDungeon.s_instance.WeaponEffectOnOff(false);
             AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BOSS_HIT);
-            JY_Boss_FireDungeon.s_instance.MeleeAreaDisEnable();
             JY_Boss_FireDungeon.s_instance.isAwake = false;
             InstanceManager.s_instance.StopAllBossEffect();
             JY_Boss_FireDungeon.s_instance.Invoke("stunWakeUp", 5f);
