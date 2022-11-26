@@ -125,7 +125,7 @@ public class JY_Boss_FireDungeon : Enemy
                     Vector3 dir = target.transform.position - this.transform.position;
                     this.transform.rotation = Quaternion.LookRotation(dir.normalized);
                     FreezeEnemy();
-                    isKick = false;
+                    KickOff();
                     StartCoroutine(BossPattern(3));
                 }
 

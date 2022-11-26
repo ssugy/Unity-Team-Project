@@ -106,31 +106,6 @@ public class InstanceManager : MonoBehaviour
             SkillEffectList.Add(effect);
         }
     }
-    /*
-    IEnumerator BossSkillEffectCreate(string EffectName, float delay, Transform boss)
-    {
-        yield return new WaitForSeconds(delay);
-        GameObject effect = FindEffect(EffectName, BossSkillEffectList);
-        if (effect != null)
-        {
-            if(EffectName.Equals("Boss_Skill3_Effect") || EffectName.Equals("Boss_Skill3_Effect2") || EffectName.Equals("Boss_Skill3_Effect3"))
-                AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BOSS_KICK);
-            effect.SetActive(true);
-        }
-        else
-        {
-            if (EffectName.Equals("Boss_Skill_Effect2"))
-                effect = Instantiate<GameObject>(Boss_Skill_Effect2,boss);
-            else if (EffectName.Equals("Boss_Skill3_Effect")|| EffectName.Equals("Boss_Skill3_Effect2")|| EffectName.Equals("Boss_Skill3_Effect3"))
-            {
-                effect = Instantiate<GameObject>(Boss_Skill_Effect3, boss);
-                effect.transform.localPosition = Vector3.up;
-                AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BOSS_KICK);
-            }
-            effect.name = EffectName;
-            BossSkillEffectList.Add(effect);
-        }
-    }*/
     public void BossEffectCreate(string EffectName, Transform boss)
     {
         GameObject effect = FindEffect(EffectName, BossSkillEffectList);
@@ -146,7 +121,10 @@ public class InstanceManager : MonoBehaviour
                 effect.transform.localPosition = Vector3.up;
             }
             else if (EffectName.Equals("Boss_Dead_Effect"))
-                effect= Instantiate<GameObject>(Boss_Dead_Effect, boss);
+            {
+                effect = Instantiate<GameObject>(Boss_Dead_Effect, boss);
+                effect.transform.localPosition = Vector3.forward;
+            }
             effect.name = EffectName;
             BossSkillEffectList.Add(effect);
         }
