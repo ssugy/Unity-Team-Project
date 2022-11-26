@@ -27,7 +27,7 @@ public class Weapon : MonoBehaviour
     }    
     private void OnDisable()
     {
-        
+        // 무기를 해제했을 경우
         weaponHitbox = null;
         if (player != null && player.playerAni != null)
             player.playerAni.SetFloat("AtkSpeed", 1f);
@@ -50,7 +50,7 @@ public class Weapon : MonoBehaviour
 
         if (_item != null && _item.option != null && _item.option.optionList != null) 
         {
-            player.playerStat.CopyToTemp();
+            //player.playerStat.CopyToTemp();
             foreach (var e in _item.option.optionList)
             {
                 switch (e)
@@ -96,6 +96,14 @@ public class Weapon : MonoBehaviour
                         if (player != null && player.playerStat != null)
                         {
                             player.playerStat.tmpDexterity += (int)value;
+                        }
+                        break;
+                    // 치명타 확률 증가
+                    case EquipOption.EquipAttrib.AtrribAtkCritical:
+                        value = _item.option.options[e];
+                        if (player != null && player.playerStat != null)
+                        {
+                            player.playerStat.addedCriticalPro += value;
                         }
                         break;
                 }

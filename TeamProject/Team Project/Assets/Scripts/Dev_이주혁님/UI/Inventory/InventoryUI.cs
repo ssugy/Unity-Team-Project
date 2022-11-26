@@ -21,6 +21,8 @@ public class InventoryUI : MonoBehaviour
     
     private void RedrawSlotUI()
     {
+        // CopyToTemp 함수는 redraw할때 한번만 해야 한다.
+        JY_CharacterListManager.s_instance.playerList[0].playerStat.CopyToTemp();
         Array.ForEach(slots, e => e.RemoveSlot());               
         for (int i = 0; i < inventory.items.Count; i++)
         {

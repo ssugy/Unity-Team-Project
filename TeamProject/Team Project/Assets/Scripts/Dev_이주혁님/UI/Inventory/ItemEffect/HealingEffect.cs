@@ -9,6 +9,8 @@ public class HealingEffect : ItemEffect
     public override void ExecuteRole(Item _item)
     {
         Debug.Log("체력 회복");
-        JY_CharacterListManager.s_instance.playerList[0].playerStat.CurHP += healingPoint;        
+        // 회복력 증가 옵션을 감안한 물약 사용
+        float total = (float)JY_CharacterListManager.s_instance.playerList[0].playerStat.addedRecover / 100.0f * healingPoint;
+        JY_CharacterListManager.s_instance.playerList[0].playerStat.CurHP += (int)total;        
     }
 }

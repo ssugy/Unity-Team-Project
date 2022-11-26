@@ -17,9 +17,11 @@ public class PlayerStat
 {
     [Header("조정 가능")]
     public int health;
-    public int stamina, strength, dexterity;   
+    public int stamina, strength, dexterity;
     // 장비 교체시 임시 적용되는 수치
     public int tmpHealth, tmpStamina, tmpStrength, tmpDexterity;
+    public float addedCriticalPro;
+    public int addedDefPoint, addedHP, addedSP, addedAvoid, addedRecover;
 
     [Header("조정 불가")]
     public EJob job;
@@ -116,6 +118,14 @@ public class PlayerStat
         tmpStamina = stamina;
         tmpStrength = strength;
         tmpDexterity = dexterity;
+
+        // 추가되는 모든 수치는 0으로 초기화.
+        addedCriticalPro = 0;
+        addedDefPoint = 0;
+        addedHP = 0;
+        addedSP = 0;
+        addedAvoid = 0;
+        addedRecover = 0;
     }
 
     // 캐릭터 생성 시, 혹은 스탯 초기화 시 할당할 클래스별 초기스탯.
@@ -609,27 +619,29 @@ public class Player : MonoBehaviourPun, IPunObservable
         playerStat.CurSP = playerStat.CurSP;
         //Strength and Dexterity
         playerStat.criPro = (20f + Sigma(2f, 1.03f, playerStat.dexterity)) / 100f;
-        playerStat.defMag = 1 - Mathf.Pow(1.02f, -playerStat.defPoint);
+        playerStat.defMag = 1 - Mathf.Pow(1.02f, -(playerStat.defPoint + playerStat.addedDefPoint));
         if (rWeapon != null)
             playerStat.atkPoint = rWeapon.atkPoint + Mathf.CeilToInt(Sigma(2f, 1.02f, playerStat.strength) + Sigma(1f, 1.1f, playerStat.dexterity));       
         else        
             playerStat.atkPoint = 0;
-        
+
+        // 크리티컬 확률을 원상복귀한다.
+        playerStat.addedCriticalPro = 0;
     }
     //옵션이 적용된 플레이어 상태값 계산 : 아이템 교체시 적용
     public void SetStateOption()
     {
         //Health
-        playerStat.HP = 210 + playerStat.tmpHealth * 20 + playerStat.tmpStrength * 5;   // 1레벨 스탯 기준 400
+        playerStat.HP = 210 + playerStat.tmpHealth * 20 + playerStat.tmpStrength * 5 + playerStat.addedHP;   // 1레벨 스탯 기준 400
         playerStat.HpRecover = 10 + playerStat.tmpHealth / 5;
         playerStat.CurHP = playerStat.CurHP;
         //Stemina
-        playerStat.SP = 46 + playerStat.tmpStamina * 4 + playerStat.tmpStrength * 1;    // 1레벨 스탯 기준 80
+        playerStat.SP = 46 + playerStat.tmpStamina * 4 + playerStat.tmpStrength * 1 + playerStat.addedSP;    // 1레벨 스탯 기준 80
         playerStat.SpRecover = 10 + playerStat.tmpStamina / 5;
         playerStat.CurSP = playerStat.CurSP;
         //Strength and Dexterity
         playerStat.criPro = (20f + Sigma(2f, 1.03f, playerStat.tmpDexterity)) / 100f;
-        playerStat.defMag = 1 - Mathf.Pow(1.02f, -playerStat.defPoint);
+        playerStat.defMag = 1 - Mathf.Pow(1.02f, -(playerStat.defPoint + playerStat.addedDefPoint));
         if (rWeapon != null)
             playerStat.atkPoint = rWeapon.atkPoint + Mathf.CeilToInt(Sigma(2f, 1.02f, playerStat.tmpStrength) + Sigma(1f, 1.1f, playerStat.tmpDexterity));
         else
@@ -650,7 +662,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     public int AttackDamage(float _atkMag, float _enemyDef)
     {
         float _criDamage;
-        if (Random.Range(0f, 1f) <= playerStat.criPro)
+        if (Random.Range(0f, 1f) <= playerStat.criPro + playerStat.addedCriticalPro)
         {
             _criDamage = PlayerStat.criMag;
         }
@@ -725,6 +737,12 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     public void IsAttacked(int _damage)
     {
+        // 만일 회피가 작동하면 데미지가 없다.
+        if (playerStat.addedAvoid > Random.Range(0,100))
+        {
+            //피했음
+            return;
+        }
         InstanceManager.s_instance.StopAllSkillEffect();
         WEOff();
         playerStat.CurHP -= _damage;
@@ -737,7 +755,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             playerAni.SetFloat("isAttacked", (float)_damage / playerStat.HP);
         }
 
-        if (playerStat.CurHP == 0)
+        if (playerStat.CurHP <= 0)
             Die();
 
         if (JY_Boss_FireDungeon.s_instance != null)

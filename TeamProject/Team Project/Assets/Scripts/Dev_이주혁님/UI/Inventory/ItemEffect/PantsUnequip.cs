@@ -18,7 +18,7 @@ public class PantsUnequip : ItemEffect
             Player _player = JY_CharacterListManager.s_instance.playerList[0];
             _player.playerStat.customized[0] = 0;
             _player.AvatarSet();
-            _player.playerStat.defPoint -= def;            
+            _player.playerStat.defPoint -= def;
             _player.SetState();
         }
 
