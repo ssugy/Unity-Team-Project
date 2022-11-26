@@ -52,12 +52,13 @@ public class JY_Boss_FireDungeon : Enemy
     }
     private new void Start()
     {
-        target = JY_CharacterListManager.s_instance.playerList[0].transform;
+        //target = JY_CharacterListManager.s_instance.playerList[0].transform;
         isLook = true;
         isAwake = false;
         isStun = false;
         isJump = false;
         isKick = false;
+        StartCoroutine(Targeting());
     }
 
     private void FixedUpdate()
@@ -112,6 +113,7 @@ public class JY_Boss_FireDungeon : Enemy
                 {
                     atkTime = 0f;
                     isStop = true;
+                    isAttack = true;
                     Vector3 dir = target.transform.position - this.transform.position;
                     this.transform.rotation = Quaternion.LookRotation(dir.normalized);
                     FreezeEnemy();
@@ -122,6 +124,7 @@ public class JY_Boss_FireDungeon : Enemy
                     StopAllCoroutines();
                     atkTime = 0f;
                     InstanceManager.s_instance.StopAllBossEffect();
+                    isAttack = true;
                     Vector3 dir = target.transform.position - this.transform.position;
                     this.transform.rotation = Quaternion.LookRotation(dir.normalized);
                     FreezeEnemy();
@@ -141,11 +144,16 @@ public class JY_Boss_FireDungeon : Enemy
                     transform.rotation = originRotateion;
                     UnfreezeEnemy();
                     target = null;
-                    isAwake = false;
-                    if(transform.position == originPos)
-                        anim.SetBool("isWalk", true);
-                    else
-                        anim.SetBool("isWalk", false);
+                    StartCoroutine(Targeting());
+
+                    if(target = null)
+                    {
+                        isAwake = false;
+                        if (transform.position == originPos)
+                            anim.SetBool("isWalk", true);
+                        else
+                            anim.SetBool("isWalk", false);
+                    }
                 }
             }
         }
