@@ -154,7 +154,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     [HideInInspector] public bool enableRecoverSP; // 스태미너 회복 가능 여부 표시.
     [HideInInspector] public bool isGround;
     [HideInInspector] public bool isGaurd; // 방패막기 스킬 플래그
-    [HideInInspector] public bool isJumpAttacked;
+    [HideInInspector] public bool isJumpAttacked;   //넉백 플래그
 
     public Transform rWeaponDummy;              // 오른손 무기 더미.
     private TrailRenderer rWeaponEffect;        // 오른손 무기 이펙트. (검기)
@@ -270,7 +270,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             {
                 Vector3 dir = JY_CharacterListManager.s_instance.playerList[0].transform.position - JY_Boss_FireDungeon.s_instance.JumpAttackArea.transform.position;
                 PlayerKnockBack(dir.normalized);
-                Invoke("StopKnockBack",0.3f);
+                Invoke("StopKnockBack",0.2f);
             }
         }        
     }
@@ -748,7 +748,11 @@ public class Player : MonoBehaviourPun, IPunObservable
         playerStat.CurHP -= _damage;
 
         if (isGaurd)
+        {
+            SoundShield();
             playerStat.CurSP -= 10f;
+            isJumpAttacked = true;
+        }
         else
         {
             SoundHit();
@@ -831,6 +835,10 @@ public class Player : MonoBehaviourPun, IPunObservable
     void SoundHit()
     {
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.PLAYER_HIT);
+    }
+    void SoundShield()
+    {
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.PLAYER_SHIELD);
     }
     void SoundAttack()
     {
