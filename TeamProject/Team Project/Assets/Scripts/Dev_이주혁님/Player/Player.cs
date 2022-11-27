@@ -20,7 +20,7 @@ public class PlayerStat
     public int stamina, strength, dexterity;
     // 장비 교체시 임시 적용되는 수치
     public int tmpHealth, tmpStamina, tmpStrength, tmpDexterity;
-    public float addedCriticalPro;
+    public float addedCriticalPro, addedShieldDef;
     public int addedDefPoint, addedHP, addedSP, addedAvoid, addedRecover;
 
     [Header("조정 불가")]
@@ -126,6 +126,7 @@ public class PlayerStat
         addedSP = 0;
         addedAvoid = 0;
         addedRecover = 0;
+        addedShieldDef = 0;
     }
 
     // 캐릭터 생성 시, 혹은 스탯 초기화 시 할당할 클래스별 초기스탯.

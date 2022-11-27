@@ -195,8 +195,14 @@ public class Enemy : MonoBehaviourPun, IPunObservable
         Player player = _player.GetComponent<Player>();
         if (player != null)
         {
-            int damage = Mathf.CeilToInt(atkPoint * atkMag * (1 - player.playerStat.defMag) * Random.Range(0.95f, 1.05f));
-            player.IsAttacked(damage);
+            //int damage = Mathf.CeilToInt(atkPoint * atkMag * (1 - player.playerStat.defMag) * Random.Range(0.95f, 1.05f));
+            float damage = atkPoint * atkMag * (1 - player.playerStat.defMag) * Random.Range(0.95f, 1.05f);
+            if (damage > 0)
+            {
+                // 실드 추가 방어 적용
+                damage = (1.0f - player.playerStat.addedShieldDef) * damage;
+                player.IsAttacked(Mathf.CeilToInt(damage));
+            }
         }
     }
     public virtual void IsAttacked(int _damage, Vector3 _player)
