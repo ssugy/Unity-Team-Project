@@ -42,11 +42,6 @@ public class InstanceManager : MonoBehaviour
         return null;
     }
 
-    public void NormalAttackEffect(string EffectName)
-    {
-        StartCoroutine(NormalAttackEffectCreate(EffectName));
-        StartCoroutine(EffectOnDisable(EffectName, 1f, SkillEffectList));
-    }
     public void PlaySkillEffect(string EffectName, float delay)
     {
         StartCoroutine(SkillEffectCreate(EffectName,delay));
@@ -137,9 +132,8 @@ public class InstanceManager : MonoBehaviour
                 one.SetActive(false);
         }
     }
-    IEnumerator NormalAttackEffectCreate(string EffectName)
+    public void NormalAttackEffectCreate(string EffectName)
     {
-        yield return new WaitForSeconds(0.5f);
         GameObject effect = FindEffect(EffectName, SkillEffectList);
         if (effect != null)
         {
@@ -156,6 +150,16 @@ public class InstanceManager : MonoBehaviour
             effect.transform.localPosition = new Vector3(0, 1f, 1f);
             effect.gameObject.name = EffectName;
             SkillEffectList.Add(effect);
+        }
+    }
+    public void PlayerEffectOff(string EffectName)
+    {
+        foreach (GameObject one in SkillEffectList)
+        {
+            if (one.name.Equals(EffectName))
+            {
+                one.SetActive(false);
+            }
         }
     }
 

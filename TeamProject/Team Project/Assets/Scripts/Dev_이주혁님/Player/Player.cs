@@ -298,7 +298,21 @@ public class Player : MonoBehaviourPun, IPunObservable
             playerAni.SetTrigger("isAttack");
         }              
     }
-    
+    public void NormalAttackEffect(int AttackNum)
+    {
+        switch (AttackNum)
+        {
+            case 0:
+                InstanceManager.s_instance.NormalAttackEffectCreate("Normal_Attack_Effect");
+                break;
+            case 1:
+                InstanceManager.s_instance.NormalAttackEffectCreate("Normal_Attack_Effect2");
+                break;
+            case 2:
+                InstanceManager.s_instance.NormalAttackEffectCreate("Normal_Attack_Effect3");
+                break;
+        }
+    }
     public void PowerStrike()       // 스킬 1.
     {
         if (PhotonNetwork.InRoom)
@@ -348,7 +362,10 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
     }
 
-
+    public void PlayerEffectOff(string EffectName)
+    {
+        InstanceManager.s_instance.PlayerEffectOff(EffectName);
+    }
     public void JumpAttack()        // 스킬 3.
     {
         if (PhotonNetwork.InRoom)
@@ -431,31 +448,17 @@ public class Player : MonoBehaviourPun, IPunObservable
     {        
         playerAni.SetBool("isLArm", false);
     }
-    public void WEOn()
-    {
-        if (WeaponEffect != null)
-            WeaponEffect.SetActive(true);
-    }
-    public void WEOff()
-    {
-        if (WeaponEffect != null)
-            WeaponEffect.SetActive(false);
-    }
 
     //사용하지않는 함수로 리팩토링시 제거
     public void WeaponEffectOn()
     {
-        if (rWeaponEffect != null)
-        {
-            rWeaponEffect.emitting = true;
-        }
+        if (WeaponEffect != null)
+            WeaponEffect.SetActive(true);
     }
     public void WeaponEffectOff()
     {
-        if (rWeaponEffect != null)
-        {
-            rWeaponEffect.emitting = false;
-        }
+        if (WeaponEffect != null)
+            WeaponEffect.SetActive(false);
     }
     public void Die()
     {
@@ -745,7 +748,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             return;
         }
         InstanceManager.s_instance.StopAllSkillEffect();
-        WEOff();
+        WeaponEffectOff();
         playerStat.CurHP -= _damage;
 
         if (isGaurd)

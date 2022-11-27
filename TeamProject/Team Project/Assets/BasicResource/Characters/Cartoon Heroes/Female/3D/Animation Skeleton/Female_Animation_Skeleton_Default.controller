@@ -362,18 +362,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!114 &-3053349113309612948
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b62efc0c9592a7a48860f4a432b7b1c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1101 &-2800824415829297690
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -524,7 +512,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   atkMag: 1.1
   usingStamina: 7
-  EffectName: Normal_Attack_Effect3
   SkillNum: 0
 --- !u!91 &9100000
 AnimatorController:
@@ -719,7 +706,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   atkMag: 1.05
   usingStamina: 7
-  EffectName: Normal_Attack_Effect
   SkillNum: -1
 --- !u!1101 &1060760590390589541
 AnimatorStateTransition:
@@ -922,8 +908,7 @@ AnimatorState:
   - {fileID: 640685430536733844}
   - {fileID: 1060760590390589541}
   - {fileID: -5013461014690989777}
-  m_StateMachineBehaviours:
-  - {fileID: -3053349113309612948}
+  m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -1603,7 +1588,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   atkMag: 1.05
   usingStamina: 7
-  EffectName: Normal_Attack_Effect2
   SkillNum: -1
 --- !u!114 &4335689979692645954
 MonoBehaviour:
