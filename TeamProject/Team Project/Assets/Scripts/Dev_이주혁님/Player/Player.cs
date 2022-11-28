@@ -768,7 +768,6 @@ public class Player : MonoBehaviourPun, IPunObservable
             //ÇÇÇßÀ½
             return;
         }
-        InstanceManager.s_instance.StopAllSkillEffect();
         WeaponEffectOff();
         playerStat.CurHP -= _damage;
 
@@ -781,6 +780,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         else
         {
             SoundHit();
+            InstanceManager.s_instance.StopAllSkillEffect();
             playerAni.SetFloat("isAttacked", (float)_damage / playerStat.HP);
         }
 
