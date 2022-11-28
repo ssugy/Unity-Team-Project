@@ -313,6 +313,27 @@ public class Player : MonoBehaviourPun, IPunObservable
                 break;
         }
     }
+    public void SkillAttackEffect(int AttackNum)
+    {
+        switch (AttackNum)
+        {
+            case 0:
+                InstanceManager.s_instance.SkillEffectCreate("Skill_1_Effect");
+                break;
+            case 1:
+                InstanceManager.s_instance.SkillEffectCreate("Skill_1_Effect2");
+                break;
+            case 2:
+                InstanceManager.s_instance.SkillEffectCreate("Skill_2_Effect");
+                break;
+            case 3:
+                InstanceManager.s_instance.SkillEffectCreate("Skill_2_Effect2");
+                break;
+            case 4:
+                InstanceManager.s_instance.SkillEffectCreate("Skill_2_Effect3");
+                break;
+        }
+    }
     public void PowerStrike()       // ½ºÅ³ 1.
     {
         if (PhotonNetwork.InRoom)

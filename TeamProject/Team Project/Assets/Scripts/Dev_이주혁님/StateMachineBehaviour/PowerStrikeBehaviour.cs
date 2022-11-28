@@ -7,8 +7,6 @@ public class PowerStrikeBehaviour : StateMachineBehaviour
     private Weapon weapon;
     public float atkMag;
     public float usingStamina;
-    public string EffectName1;
-    public string EffectName2;
 
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -17,10 +15,6 @@ public class PowerStrikeBehaviour : StateMachineBehaviour
         weapon = animator.GetComponent<Player>().rWeapon;
         weapon.atkMag = atkMag;
         animator.GetComponent<Player>().UseStamina(usingStamina);
-        InstanceManager.s_instance.PlaySkillEffect(EffectName1,0.5f);
-        //InstanceManager.s_instance.NormalAttackEffect("Normal_Attack_Effect3");   // 이펙트가 중첩되고 과한 것 같아서 제외
-        InstanceManager.s_instance.PlaySkillEffect(EffectName2,0.6f);
-
         if (JY_Boss_FireDungeon.s_instance != null)
             JY_Boss_FireDungeon.s_instance.HitSkillNum = 1;
     }
