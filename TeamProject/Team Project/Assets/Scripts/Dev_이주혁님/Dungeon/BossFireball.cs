@@ -36,7 +36,7 @@ public class BossFireball : Fireball
             Player player = other.GetComponent<Player>();
             if (player != null)
             {
-                player.IsAttacked(damage);
+                player.IsAttacked(damage,null);
                 Destroy(gameObject);
             }
         }

@@ -130964,6 +130964,13 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0
+    functionName: DisableAtk
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0
     functionName: LookTarget
     data: 
     objectReferenceParameter: {fileID: 0}
@@ -130971,11 +130978,18 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0
-    functionName: DisableAtk
+    functionName: PlayerAllEffectOff
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
+    messageOptions: 0
+  - time: 0.033333335
+    functionName: SkillAttackEffect
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 3
     messageOptions: 0
   - time: 0.06666667
     functionName: StopRecoverSP
@@ -130985,11 +130999,25 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 1.2
+    functionName: SkillAttackEffect
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 4
+    messageOptions: 0
+  - time: 1.2
     functionName: WeaponEffectOn
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
+    messageOptions: 0
+  - time: 1.2
+    functionName: SkillAttackEffect
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 2
     messageOptions: 0
   - time: 1.3666667
     functionName: TurnAttackDamage
@@ -131012,9 +131040,30 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 1.8
+    functionName: PlayerEffectOff
+    data: Skill_2_Effect3
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.8
+    functionName: PlayerEffectOff
+    data: Skill_2_Effect
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 1.9333333
     functionName: StartRecoverSP
     data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 3
+    functionName: PlayerEffectOff
+    data: Skill_2_Effect2
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

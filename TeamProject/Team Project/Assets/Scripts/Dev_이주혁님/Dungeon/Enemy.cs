@@ -201,7 +201,7 @@ public class Enemy : MonoBehaviourPun, IPunObservable
             {
                 // 실드 추가 방어 적용
                 damage = (1.0f - player.playerStat.addedShieldDef) * damage;
-                player.IsAttacked(Mathf.CeilToInt(damage));
+                player.IsAttacked(Mathf.CeilToInt(damage),hitbox);
             }
         }
     }

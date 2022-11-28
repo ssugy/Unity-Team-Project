@@ -155,10 +155,10 @@ public class Player : MonoBehaviourPun, IPunObservable
     [HideInInspector] public bool enableRecoverSP; // 스태미너 회복 가능 여부 표시.
     [HideInInspector] public bool isGround;
     [HideInInspector] public bool isGaurd; // 방패막기 스킬 플래그
-    [HideInInspector] public bool isJumpAttacked;   //넉백 플래그
+    [HideInInspector] public bool isKnockBack;  //넉백 플래그
+    Vector3 KnockbackVec;                       //넉백 방향 벡터
 
     public Transform rWeaponDummy;              // 오른손 무기 더미.
-    private TrailRenderer rWeaponEffect;        // 오른손 무기 이펙트. (검기)
     public GameObject WeaponEffect;
     public Transform lWeaponDummy;              // 왼손 무기 더미.
     public Weapon rWeapon;
@@ -196,11 +196,8 @@ public class Player : MonoBehaviourPun, IPunObservable
         rotateSpeed = 5f;
         moveSpeed = 8f;
         gravity = 0f;
+        KnockbackVec = Vector3.zero;
 
-        if (rWeaponDummy.childCount > 0)
-        {
-            rWeaponEffect = rWeaponDummy.GetChild(0).GetChild(2).GetComponent<TrailRenderer>();
-        }
         WeaponEffect.transform.SetParent(rWeaponDummy);
         WeaponEffect.SetActive(false);
         if (JY_CharacterListManager.s_instance != null)
@@ -267,11 +264,10 @@ public class Player : MonoBehaviourPun, IPunObservable
         {
             Move();
             playerAni.SetBool("isGround", isGround);
-            if (isJumpAttacked)
+            if (isKnockBack)
             {
-                Vector3 dir = JY_CharacterListManager.s_instance.playerList[0].transform.position - JY_Boss_FireDungeon.s_instance.JumpAttackArea.transform.position;
-                PlayerKnockBack(dir.normalized);
-                Invoke("StopKnockBack",0.2f);
+                PlayerKnockBack(KnockbackVec);
+                Invoke("StopKnockBack",0.3f);
             }
         }        
     }
@@ -387,6 +383,10 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         InstanceManager.s_instance.PlayerEffectOff(EffectName);
     }
+    public void PlayerAllEffectOff()
+    {
+        InstanceManager.s_instance.StopAllSkillEffect();
+    }
     public void JumpAttack()        // 스킬 3.
     {
         if (PhotonNetwork.InRoom)
@@ -449,10 +449,12 @@ public class Player : MonoBehaviourPun, IPunObservable
     public void RollMove() => controller.Move(transform.forward * 6f *
             Time.deltaTime + new Vector3(0, gravity * Time.deltaTime, 0));
 
+    public Vector3 KnockBackDir(Collider attacked) => JY_CharacterListManager.s_instance.playerList[0].transform.position - attacked.transform.position;
     public void PlayerKnockBack(Vector3 dir) => controller.Move(dir * 6f * Time.deltaTime);
     void StopKnockBack()
     {
-        isJumpAttacked = false;
+        isKnockBack = false;
+        KnockbackVec = Vector3.zero;
 
     }
     public void LArmDown(PointerEventData data)
@@ -760,7 +762,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
     }    
 
-    public void IsAttacked(int _damage)
+    public void IsAttacked(int _damage, Collider Enemy)
     {
         // 만일 회피가 작동하면 데미지가 없다.
         if (playerStat.addedAvoid > Random.Range(0,100))
@@ -775,7 +777,9 @@ public class Player : MonoBehaviourPun, IPunObservable
         {
             SoundShield();
             playerStat.CurSP -= 10f;
-            isJumpAttacked = true;
+            isKnockBack = true;
+            if(Enemy!=null)
+                KnockbackVec = KnockBackDir(Enemy);
         }
         else
         {
@@ -790,7 +794,11 @@ public class Player : MonoBehaviourPun, IPunObservable
         if (JY_Boss_FireDungeon.s_instance != null)
         {
             if (JY_Boss_FireDungeon.s_instance.isJump)
-                isJumpAttacked = true;
+            {
+                isKnockBack = true;
+                if (Enemy != null)
+                    KnockbackVec = KnockBackDir(Enemy);
+            }
         }
     }
     public void DamageReset()

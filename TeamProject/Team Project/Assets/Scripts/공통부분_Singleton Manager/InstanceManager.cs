@@ -42,18 +42,7 @@ public class InstanceManager : MonoBehaviour
         return null;
     }
 
-    public void PlaySkillEffect(string EffectName, float delay)
-    {
-        StartCoroutine(SkillEffectCreate(EffectName,delay));
-        StartCoroutine(EffectOnDisable(EffectName, 1.5f,SkillEffectList));
-    }
-    public void PlayPlayerEffect(string EffectName)
-    {
-        PlayerEffectCreate(EffectName);
-        StartCoroutine(EffectOnDisable(EffectName, 2.5f, PlayerEffectList));
-    }
-
-    void PlayerEffectCreate(string EffectName)
+    public void ExtraEffectCreate(string EffectName)
     {
         GameObject effect = FindEffect(EffectName,PlayerEffectList);
         if (effect != null)
@@ -70,36 +59,6 @@ public class InstanceManager : MonoBehaviour
             PlayerEffectList.Add(effect);
         }
 
-    }
-
-    IEnumerator SkillEffectCreate(string EffectName,float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        GameObject effect = FindEffect(EffectName,SkillEffectList);
-        if (effect != null)
-        {
-            effect.SetActive(true);
-        }
-        else
-        {
-            if (EffectName.Equals("Skill_1_Effect"))
-                effect = Instantiate<GameObject>(Skill_1_Effect, JY_CharacterListManager.s_instance.playerList[0].transform);
-            else if (EffectName.Equals("Skill_1_Effect2"))
-                effect = Instantiate<GameObject>(Skill_1_Effect2, JY_CharacterListManager.s_instance.playerList[0].transform);
-            else if (EffectName.Equals("Skill_2_Effect"))
-                effect = Instantiate<GameObject>(Skill_2_Effect, JY_CharacterListManager.s_instance.playerList[0].transform);
-            else if (EffectName.Equals("Skill_2_Effect2"))
-                effect = Instantiate<GameObject>(Skill_2_Effect2, JY_CharacterListManager.s_instance.playerList[0].transform);
-            else if (EffectName.Equals("Skill_2_Effect3"))
-                effect = Instantiate<GameObject>(Skill_2_Effect3, JY_CharacterListManager.s_instance.playerList[0].transform);
-            effect.transform.localPosition =  Vector3.forward;
-            if (EffectName.Equals("Skill_1_Effect2"))
-                effect.transform.localPosition = new Vector3(0, 0, 2);
-            else if (EffectName.Equals("Skill_2_Effect1") || EffectName.Equals("Skill_2_Effect3"))
-                effect.transform.localPosition = new Vector3(0, 2, 1);
-            effect.gameObject.name = EffectName;
-            SkillEffectList.Add(effect);
-        }
     }
     public void BossEffectCreate(string EffectName, Transform boss)
     {
@@ -191,26 +150,23 @@ public class InstanceManager : MonoBehaviour
             }
         }
     }
-
-    IEnumerator EffectOnDisable(string EffectName, float elapsed, List<GameObject> targetEffectList)
+    public void ExtraEffectOff(string EffectName)
     {
-        yield return new WaitForSeconds(elapsed);
-        foreach(GameObject one in targetEffectList)
+        foreach (GameObject one in PlayerEffectList)
         {
             if (one.name.Equals(EffectName))
+            {
                 one.SetActive(false);
-        }    
+            }
+        }
     }
-
     public void StopAllSkillEffect()
     {
-        StopAllCoroutines();
         foreach (GameObject one in SkillEffectList)
             one.SetActive(false);
     }
     public void StopAllBossEffect()
     {
-        StopAllCoroutines();
         foreach (GameObject one in BossSkillEffectList)
             one.SetActive(false);
     }

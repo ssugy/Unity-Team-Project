@@ -22,7 +22,7 @@ public class FieldFire : MonoBehaviour
         {
             Player player = other.GetComponent<Player>();
             if (player != null)
-                player.IsAttacked(damage);
+                player.IsAttacked(damage, null);
         }
     }
 

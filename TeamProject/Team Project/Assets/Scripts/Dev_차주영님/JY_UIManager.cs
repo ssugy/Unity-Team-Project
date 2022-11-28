@@ -81,7 +81,7 @@ public class JY_UIManager : MonoBehaviour
         alarmUI.SetActive(true);
         WhiteFadeIn();
         alarmText.text = "·¹º§¾÷! Lv." + JY_CharacterListManager.s_instance.playerList[0].playerStat.level;        
-        InstanceManager.s_instance.PlayPlayerEffect("LevelUpEffect");
+        InstanceManager.s_instance.ExtraEffectCreate("LevelUpEffect");
         Invoke("closeAlarm", 2f);
         StatusDataRenew();
     }
