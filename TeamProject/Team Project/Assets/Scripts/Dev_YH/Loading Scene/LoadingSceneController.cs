@@ -80,6 +80,7 @@ public class LoadingSceneController : MonoBehaviour
                 {
                     op.allowSceneActivation = true;
                     GameManager.s_instance.currentScene = (GameManager.SceneName)nextSceneIndex;
+                    AudioManager.s_instance.SceneBGMContorl(GameManager.s_instance.ActiveScene, (GameManager.SceneName)nextSceneIndex);
                     yield break;
                 }
             }

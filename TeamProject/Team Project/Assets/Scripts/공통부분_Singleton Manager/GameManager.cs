@@ -22,7 +22,8 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager _unique;
     public static GameManager s_instance { get { return _unique; } }
-    int ActiveScene;
+    public SceneName ActiveScene;
+    public  SceneName currentScene;
 
     private void Awake()
     {
@@ -35,7 +36,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        ActiveScene = (int)SceneName.Intro;
+        ActiveScene = SceneName.Intro;
     }
 
 
@@ -69,15 +70,15 @@ public class GameManager : MonoBehaviour
         Dungeon_Fire,
         Dungeon        
     }
-    public SceneName currentScene;
+    
     public void LoadScene(int index)
     {
         InstanceManager.s_instance.ClearList();
         currentScene = SceneName.Loading;   // 로딩이 시작되면 Loading씬으로 변경한 뒤, 끝나면 목적씬으로 변경
         //오디오 변경 함수  
-        AudioManager.s_instance.SceneBGMContorl(ActiveScene, index);
+        
         LoadingSceneController.LoadScene(index);    // 로딩씬을 이용한 로딩
-        ActiveScene = index;
+        ActiveScene = (SceneName)index;
     }
 
     #region 다국어지원

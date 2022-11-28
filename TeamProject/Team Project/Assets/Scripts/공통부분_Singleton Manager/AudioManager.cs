@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using static GameManager;
 
 public class AudioManager : MonoBehaviour
 {
@@ -24,9 +25,9 @@ public class AudioManager : MonoBehaviour
     }
 
     private void Start()
-    {
+    {        
         InitAudioSources();
-        SoundPlay(SOUND_NAME.BGM, true);  // 배경음 실행
+        SoundPlay(SOUND_NAME.BGM, true, 1f);  // 최초 BGM 실행
     }
 
 
@@ -65,43 +66,69 @@ public class AudioManager : MonoBehaviour
         PLYAER_SHOOT,
         Boss_FireBall,
         BOSS_DEAD,
-        PLAYER_SHIELD
+        PLAYER_SHIELD,
+        BGM_DUNGEON_01,
+        BGM_DUNGEON_02,
+        BGM_LOBBY
     }
-    public SOUND_NAME Name;
+    
     public AudioClip[] clips;   // enum의 순서를 따라가야됨
 
     public void InitAudioSources()
     {
-        sources = new Dictionary<SOUND_NAME, AudioClip>();
-        for (int i = 0; i < clips.Length; i++)
-        {
+        // 딕셔너리에 Sound_Name, AudioClip 쌍을 만듦.
+        sources = new();
+        for (int i = 0; i < clips.Length; i++)        
             sources.Add((SOUND_NAME)i, clips[i]);
-        }
 
-        bgmVolumePivot = 1;
-        effectVolumePivot = 1;
-        beforeEffectVolumePivot = effectVolumePivot;
-        isBGMMute = false;
-        isEffectMute = false;
+        // PlayerPrefs를 이용하여 사운드 옵션 설정을 저장하고 불러옴.
+        if (PlayerPrefs.HasKey("Volume_BGM")) bgmVolumePivot = PlayerPrefs.GetFloat("Volume_BGM");
+        else PlayerPrefs.SetFloat("Volume_BGM", bgmVolumePivot = 0.5f);
+        if (PlayerPrefs.HasKey("Volume_SFX")) effectVolumePivot = PlayerPrefs.GetFloat("Volume_SFX");
+        else PlayerPrefs.SetFloat("Volume_SFX", effectVolumePivot = 0.5f);
+        if (PlayerPrefs.HasKey("Mute_BGM"))
+        {
+            if (PlayerPrefs.GetInt("Mute_BGM") == 0)
+                isBGMMute = false;
+            else
+                isBGMMute = true;
+        }
+        else
+        {
+            PlayerPrefs.SetInt("Mute_BGM", 0);
+            isBGMMute = false;
+        }            
+        if (PlayerPrefs.HasKey("Mute_SFX"))
+        {
+            if (PlayerPrefs.GetInt("Mute_SFX") == 0)
+                isEffectMute = false;
+            else
+                isEffectMute = true;
+        }
+        else
+        {
+            PlayerPrefs.SetInt("Mute_SFX", 0);
+            isEffectMute = false;
+        }       
+        beforeEffectVolumePivot = effectVolumePivot;        
     }
 
     public void SoundPlay(SOUND_NAME name, bool isLoop = false, float volume = 0.5f)
     {
         GameObject go = new GameObject(name.ToString());
+        go.transform.SetParent(transform);
+
         AudioSource goAudio = go.AddComponent<AudioSource>();
         goAudio.clip = sources[name];
         goAudio.loop = isLoop;
-        go.transform.SetParent(transform);
-        if (name.Equals(SOUND_NAME.BGM)|| name.Equals(SOUND_NAME.BossBGM_01)|| name.Equals(SOUND_NAME.BossBGM_02 )|| name.Equals(SOUND_NAME.BGM_WORLD))
+
+        // 이름에 BGM이 포함되면. (배경음악에 해당하면)
+        if (name.ToString().Contains("BGM"))
         {
-            // 사운드 옵션때문에 배경음은 따로취급.
-            goAudio.volume = volume * bgmVolumePivot;
+            // 음소거 상태면 볼륨을 0으로 조정.
+            goAudio.volume = isBGMMute ? 0 : volume * bgmVolumePivot;            
             bgmAudioSource = goAudio;
-            nowplayName = name;
-            if (isBGMMute)
-            {
-                goAudio.volume = 0f;
-            }
+            nowplayName = name;            
         }
         else
         {
@@ -208,6 +235,7 @@ public class AudioManager : MonoBehaviour
         if(NOWPLAY != null)
         {
             bgmVolumePivot = slider.value;
+            PlayerPrefs.SetFloat("Volume_BGM", slider.value);
             if (!isBGMMute)
             {
                 bgmAudioSource.volume = slider.value;
@@ -217,21 +245,25 @@ public class AudioManager : MonoBehaviour
 
     public void BGMMute(Toggle toggle)
     {
+        isBGMMute = toggle.isOn;
         if (toggle.isOn)
         {
-            isBGMMute = true;
-            bgmAudioSource.volume = 0;
+            if (NOWPLAY != null)
+                bgmAudioSource.volume = 0;
+            PlayerPrefs.SetInt("Mute_BGM", 1);
         }
         else
         {
-            isBGMMute = false;
-            bgmAudioSource.volume = bgmVolumePivot;
+            if (NOWPLAY != null)
+                bgmAudioSource.volume = bgmVolumePivot;
+            PlayerPrefs.SetInt("Mute_BGM", 0);
         }
     }
 
     public void EffectSliderValueChanged(Slider slider)
     {
         beforeEffectVolumePivot = slider.value;
+        PlayerPrefs.SetFloat("Volume_SFX", slider.value);
         if (!isEffectMute)
         {
             effectVolumePivot = slider.value;   // 이펙터 소리는 이후에 나타날 이펙터들의 소리에 영향을 미치게 적용
@@ -243,11 +275,13 @@ public class AudioManager : MonoBehaviour
         if (toggle.isOn)
         {
             isEffectMute = true;
+            PlayerPrefs.SetInt("Mute_SFX", 1);
             effectVolumePivot = 0;
         }
         else
         {
             isEffectMute= false;
+            PlayerPrefs.SetInt("Mute_SFX", 0);
             effectVolumePivot = beforeEffectVolumePivot;
         }
     }
@@ -260,55 +294,90 @@ public class AudioManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
         SoundPlay(name);
     }
-    public void SceneBGMContorl(int ActiveScene, int TargetScene)
-    {
-        switch (ActiveScene)
-        {
-            case 0:             //Intro
-                break;
-            case 1:             //Loading
-                break;
-            case 2:             //Lobby
-                //World씬으로 이동시 BGM 변경
-                if(TargetScene == 4)
-                {
-                    AudioManager.s_instance.SoundFadeInOut(nowplayName, 0, 0.5f);
-                    AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BGM_WORLD, true, 0.5f);
-                }
 
+    // 씬 진입 시 재생되는 BGM 관리. 
+    // 주혁: BGM 전환 시점을 로딩이 끝난 뒤로, 변경하면서 PreviousScene 변수는 필요없게 되었습니다.
+    // 리팩토링 시 참고하시기 바랍니다.
+    // LoadingSceneController의 LoadSceneProcess 코루틴에서 로딩이 모두 끝난 뒤 BGM이 전환됩니다.
+    public void SceneBGMContorl(SceneName PreviousScene, SceneName TargetScene)
+    {        
+        switch (TargetScene)
+        {            
+            case SceneName.Lobby:
+                if (bgmAudioSource != null)
+                    SoundFadeInOut(nowplayName, 0, 0.5f);
+                SoundPlay(SOUND_NAME.BGM_LOBBY, true, 1f);
                 break;
-            case 3:             //MakeCharacter
+            case SceneName.World:             //World
+                if (bgmAudioSource != null)
+                    SoundFadeInOut(nowplayName, 0, 0.5f);
+                SoundPlay(SOUND_NAME.BGM_WORLD, true, 1f);             
                 break;
-            case 4:             //World
-                //Lobby씬으로 이동시 BGM 변경
-                if(TargetScene == 2)
+            case SceneName.Dungeon:             //Dungeon
+                if (bgmAudioSource != null)
+                    SoundFadeInOut(nowplayName, 0, 0.5f);
+                SoundPlay(SOUND_NAME.BGM_DUNGEON_02, true, 1f);
+                break;
+            case SceneName.Dungeon_Fire:             //Dungeon_Fire
+                if (bgmAudioSource != null)
+                    SoundFadeInOut(nowplayName, 0, 0.5f);
+                SoundPlay(SOUND_NAME.BGM_DUNGEON_01, true, 1f);
+                break;
+        }
+
+        /*
+        switch (PreviousScene)
+        {
+            case SceneName.Intro:             //Intro, Loading, MakeCharacter
+            case SceneName.Loading:
+            case SceneName.MakeCharacter:                
+                break;            
+            case SceneName.Lobby:             //Lobby
+                // 로비에서 World 씬으로 이동시 BGM 변경
+                if(TargetScene == SceneName.World)
                 {
-                    AudioManager.s_instance.SoundFadeInOut(nowplayName, 0, 0.5f);
-                    AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BGM, true, 0.5f);
+                    SoundFadeInOut(nowplayName, 0, 0.5f);
+                    SoundPlay(SOUND_NAME.BGM_WORLD, true, 1f);
+                }
+                break;                                        
+            case SceneName.World:             //World
+                //Lobby씬으로 이동시 BGM 변경
+                if(TargetScene == SceneName.Lobby)
+                {
+                    SoundFadeInOut(nowplayName, 0, 0.5f);
+                    SoundPlay(SOUND_NAME.BGM, true, 1f);
                 }
                 //Dungeon씬들로 이동시 BGM 재생 종료
-                else if(TargetScene == 5 || TargetScene == 6)
-                    AudioManager.s_instance.SoundFadeInOut(nowplayName, 0, 0.5f);
-                break;
-            case 5:             //Dungeon
-                if (bgmAudioSource != null)
-                    AudioManager.s_instance.SoundFadeInOut(nowplayName, 0, 0.5f);
+                else if(TargetScene == SceneName.Dungeon)
+                {
+                    SoundFadeInOut(nowplayName, 0, 0.5f);
+                    SoundPlay(SOUND_NAME.BGM_DUNGEON_02, true, 1f);
+                }
+                else if (TargetScene == SceneName.Dungeon_Fire)
+                {
+                    SoundFadeInOut(nowplayName, 0, 0.5f);
+                    SoundPlay(SOUND_NAME.BGM_DUNGEON_01, true, 1f);
+                }
 
-                if (TargetScene == 2)
-                    AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BGM, true, 0.5f);
-                else if(TargetScene == 4)
-                    AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BGM_WORLD, true, 0.5f);
                 break;
-            case 6:             //Dungeon_Fire
+            case SceneName.Dungeon:             //Dungeon
+                if (bgmAudioSource != null)
+                    SoundFadeInOut(nowplayName, 0, 0.5f);
+                if (TargetScene == SceneName.Lobby)
+                    SoundPlay(AudioManager.SOUND_NAME.BGM, true, 1f);
+                else if(TargetScene == SceneName.World)
+                    SoundPlay(AudioManager.SOUND_NAME.BGM_WORLD, true, 1f);
+                break;
+            case SceneName.Dungeon_Fire:             //Dungeon_Fire
                 //보스전 BGM이 재생 중일 경우 전부 재생 종료 시킨 후 이동
                 if(bgmAudioSource!=null)
-                    AudioManager.s_instance.SoundFadeInOut(nowplayName, 0,2f);
-                if(TargetScene == 2)
-                    AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BGM, true, 0.5f);
-                else if(TargetScene == 4)
-                    AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BGM_WORLD, true, 0.5f);
+                    SoundFadeInOut(nowplayName, 0,2f);
+                if(TargetScene == SceneName.Lobby)
+                    SoundPlay(AudioManager.SOUND_NAME.BGM, true, 1f);
+                else if(TargetScene == SceneName.World)
+                    SoundPlay(AudioManager.SOUND_NAME.BGM_WORLD, true, 1f);
                 break;
 
-        }
+        }*/
     }
 }

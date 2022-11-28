@@ -27,6 +27,7 @@ public class AvatarSceneManager : MonoBehaviour
     public GameObject zoomSlider;
     public GameObject popupToLobby;
     public GameObject popupNameIssue;
+    public Text nameIssueText;
     public List<GameObject> canvases;
     public List<GameObject> options;
     public List<Slider> sliders;
@@ -179,6 +180,7 @@ public class AvatarSceneManager : MonoBehaviour
         // 이름 글자수가 최소 글자보다 작으면 return.
         else if (currentStep == Steps.SELECT_NAME && CharacterNameInput.text.Length < MIN_NAME_LENGTH)
         {
+            nameIssueText.text = "이름이 너무 짧습니다.\r\n다른 이름을 입력하세요.";
             popupNameIssue.SetActive(true);
             return;
         }
@@ -270,6 +272,7 @@ public class AvatarSceneManager : MonoBehaviour
                     // 같은 이름이 있으면 리턴.
                     else if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].name.Equals(CharacterNameInput.text))
                     {
+                        nameIssueText.text = "중복된 이름이 존재합니다.\r\n다른 이름을 입력하세요.";
                         popupNameIssue.SetActive(true);
                         return;
                     }
