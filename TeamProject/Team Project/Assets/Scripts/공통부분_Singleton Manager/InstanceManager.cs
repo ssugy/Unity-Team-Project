@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class InstanceManager : MonoBehaviour
 {
-    static InstanceManager instance;
-    public static InstanceManager s_instance { get => instance; }
-    List<GameObject> SkillEffectList;
-    List<GameObject> PlayerEffectList;
+    #region 싱글톤 패턴
+    private static InstanceManager instance;
+    public static InstanceManager s_instance { get => instance; }    
+    private void Awake()
+    {
+        if (instance == null) instance = this;
+        else Destroy(gameObject);
+        DontDestroyOnLoad(gameObject);
+    }
+    #endregion
+
+    public List<PlayerEffect> SkillEffectList;
+    public List<GameObject> PlayerEffectList;
     public List<GameObject> BossSkillEffectList;
     [Header("플레이어 이펙트")]
     public GameObject Normal_Attack_Effect;
@@ -24,12 +33,12 @@ public class InstanceManager : MonoBehaviour
     public GameObject Boss_Skill_Effect2;
     public GameObject Boss_Dead_Effect;
 
-    private void Awake()
+
+    private void Start()
     {
-        instance = this;
-        SkillEffectList = new List<GameObject>();
-        PlayerEffectList = new List<GameObject>();
-        BossSkillEffectList = new List<GameObject>();
+        SkillEffectList = new();
+        PlayerEffectList = new();
+        BossSkillEffectList = new();
     }
 
     GameObject FindEffect(string EffectName, List<GameObject> targetList)
@@ -91,65 +100,43 @@ public class InstanceManager : MonoBehaviour
                 one.SetActive(false);
         }
     }
-    public void NormalAttackEffectCreate(string EffectName)
-    {
-        GameObject effect = FindEffect(EffectName, SkillEffectList);
-        if (effect != null)
-        {
-            effect.SetActive(true);
-        }
-        else
-        {
-            if (EffectName.Equals("Normal_Attack_Effect"))
-                effect = Instantiate<GameObject>(Normal_Attack_Effect, JY_CharacterListManager.s_instance.playerList[0].transform);
-            else if (EffectName.Equals("Normal_Attack_Effect2"))
-                effect = Instantiate<GameObject>(Normal_Attack_Effect2, JY_CharacterListManager.s_instance.playerList[0].transform);
-            else if (EffectName.Equals("Normal_Attack_Effect3"))
-                effect = Instantiate<GameObject>(Normal_Attack_Effect3, JY_CharacterListManager.s_instance.playerList[0].transform);
-            effect.transform.localPosition = new Vector3(0, 1f, 1f);
-            effect.gameObject.name = EffectName;
-            SkillEffectList.Add(effect);
-        }
-    }
-    public void SkillEffectCreate(string EffectName)
-    {
-        GameObject effect = FindEffect(EffectName, SkillEffectList);
-        if (effect != null)
-        {
-            effect.SetActive(true);
-        }
-        else
-        {
-            if (EffectName.Equals("Skill_1_Effect"))
-                effect = Instantiate<GameObject>(Skill_1_Effect, JY_CharacterListManager.s_instance.playerList[0].transform);
-            else if (EffectName.Equals("Skill_1_Effect2"))
-                effect = Instantiate<GameObject>(Skill_1_Effect2, JY_CharacterListManager.s_instance.playerList[0].transform);
-            else if (EffectName.Equals("Skill_2_Effect"))
-                effect = Instantiate<GameObject>(Skill_2_Effect, JY_CharacterListManager.s_instance.playerList[0].transform);
-            else if (EffectName.Equals("Skill_2_Effect2"))
-                effect = Instantiate<GameObject>(Skill_2_Effect2, JY_CharacterListManager.s_instance.playerList[0].transform);
-            else if (EffectName.Equals("Skill_2_Effect3"))
-                effect = Instantiate<GameObject>(Skill_2_Effect3, JY_CharacterListManager.s_instance.playerList[0].transform);
-            effect.transform.localPosition = Vector3.forward;
-            if (EffectName.Equals("Skill_1_Effect2"))
-                effect.transform.localPosition = new Vector3(0, 0, 2);
-            else if (EffectName.Equals("Skill_2_Effect1") || EffectName.Equals("Skill_2_Effect3"))
-                effect.transform.localPosition = new Vector3(0, 2, 1);
-            effect.gameObject.name = EffectName;
-            SkillEffectList.Add(effect);
-        }
-    }
+    public void NormalAttackEffectCreate(string EffectName, Transform parent)
+    {        
+        GameObject effect = null;
+        if (EffectName.Equals("Normal_Attack_Effect"))
+            effect = Instantiate(Normal_Attack_Effect, parent);
+        else if (EffectName.Equals("Normal_Attack_Effect2"))
+            effect = Instantiate(Normal_Attack_Effect2, parent);
+        else if (EffectName.Equals("Normal_Attack_Effect3"))
+            effect = Instantiate(Normal_Attack_Effect3, parent);
 
-    public void PlayerEffectOff(string EffectName)
-    {
-        foreach (GameObject one in SkillEffectList)
-        {
-            if (one.name.Equals(EffectName))
-            {
-                one.SetActive(false);
-            }
-        }
+        effect.transform.localPosition = new Vector3(0, 1f, 1f);        
+
+        SkillEffectList.Add(effect.GetComponent<PlayerEffect>());
     }
+    public void SkillEffectCreate(string EffectName, Transform parent)
+    {        
+        GameObject effect = null;
+        if (EffectName.Equals("Skill_1_Effect"))
+            effect = Instantiate<GameObject>(Skill_1_Effect, parent);
+        else if (EffectName.Equals("Skill_1_Effect2"))
+            effect = Instantiate<GameObject>(Skill_1_Effect2, parent);
+        else if (EffectName.Equals("Skill_2_Effect"))
+            effect = Instantiate<GameObject>(Skill_2_Effect, parent);
+        else if (EffectName.Equals("Skill_2_Effect2"))
+            effect = Instantiate<GameObject>(Skill_2_Effect2, parent);
+        else if (EffectName.Equals("Skill_2_Effect3"))
+            effect = Instantiate<GameObject>(Skill_2_Effect3, parent);
+
+        effect.transform.localPosition = Vector3.forward;
+        if (EffectName.Equals("Skill_1_Effect2"))
+            effect.transform.localPosition = new Vector3(0, 0, 2);
+        else if (EffectName.Equals("Skill_2_Effect1") || EffectName.Equals("Skill_2_Effect3"))
+            effect.transform.localPosition = new Vector3(0, 2, 1);
+        
+        SkillEffectList.Add(effect.GetComponent<PlayerEffect>());
+    }
+    
     public void ExtraEffectOff(string EffectName)
     {
         foreach (GameObject one in PlayerEffectList)
@@ -160,10 +147,12 @@ public class InstanceManager : MonoBehaviour
             }
         }
     }
+    
+    // 피격 시, 사망 시에만 실행함. 실행중인 이펙트들을 모두 Off하고 리스트를 클리어.
     public void StopAllSkillEffect()
     {
-        foreach (GameObject one in SkillEffectList)
-            one.SetActive(false);
+        SkillEffectList.ForEach(e => e.EffectOff());        
+        SkillEffectList.Clear();
     }
     public void StopAllBossEffect()
     {

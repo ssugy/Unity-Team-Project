@@ -1633,7 +1633,6 @@ GameObject:
   m_Component:
   - component: {fileID: 386840837}
   - component: {fileID: 386840838}
-  - component: {fileID: 386840839}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1737,31 +1736,6 @@ MonoBehaviour:
     - "\u58F0\u97F3\u8BBE\u7F6E\r"
     - "\u70B9\u51FB\u5C4F\u5E55\u5F00\u59CB\u6E38\u620F"
   currentLanguage: 0
---- !u!114 &386840839
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 386840836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90b39bbae2953ec4286dabaf979d9b11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BossSkillEffectList: []
-  Normal_Attack_Effect: {fileID: 1789270911803724, guid: a14bb74b93db57546ba55237fe1f152c, type: 3}
-  Normal_Attack_Effect2: {fileID: 1789270911803724, guid: 710fafb343e06b54ea23701b66ee3b51, type: 3}
-  Normal_Attack_Effect3: {fileID: 1942681157837952, guid: b2070fed02193214aaa9d4dbe51748a1, type: 3}
-  Skill_1_Effect: {fileID: 1893723492503102, guid: b970436477c2aa64893132d40802a427, type: 3}
-  Skill_1_Effect2: {fileID: 1210069404974878, guid: fd969fc416411b8488549146e54316e9, type: 3}
-  Skill_2_Effect: {fileID: 1294101409476956, guid: 198094adc52841941a899a53be5f864c, type: 3}
-  Skill_2_Effect2: {fileID: 6810844234100877735, guid: 2aebf52f79e730740934d0afbdff28a6, type: 3}
-  Skill_2_Effect3: {fileID: 1789270911803724, guid: 84ee1fb645e4d71428f2fac64f3b3869, type: 3}
-  LevelUpEffect: {fileID: 8166768042605032452, guid: 249229ea8e1e2a9478a2083c1141829e, type: 3}
-  Boss_Skill_Effect: {fileID: 1714681308540598, guid: 5cbc537826220e04592d5a41a0dd985f, type: 3}
-  Boss_Skill_Effect2: {fileID: 1893033738566276, guid: 8c8e34050a922f84fbc572368f896777, type: 3}
-  Boss_Dead_Effect: {fileID: 8166768042605032452, guid: e8966f56dc4ef3f48bec7bd909be9a9a, type: 3}
 --- !u!1 &456443822
 GameObject:
   m_ObjectHideFlags: 0
@@ -7646,6 +7620,63 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1885446386
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1885446388}
+  - component: {fileID: 1885446387}
+  m_Layer: 0
+  m_Name: InstanceManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1885446387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885446386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90b39bbae2953ec4286dabaf979d9b11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BossSkillEffectList: []
+  Normal_Attack_Effect: {fileID: 1789270911803724, guid: a14bb74b93db57546ba55237fe1f152c, type: 3}
+  Normal_Attack_Effect2: {fileID: 1789270911803724, guid: 710fafb343e06b54ea23701b66ee3b51, type: 3}
+  Normal_Attack_Effect3: {fileID: 1942681157837952, guid: b2070fed02193214aaa9d4dbe51748a1, type: 3}
+  Skill_1_Effect: {fileID: 1893723492503102, guid: b970436477c2aa64893132d40802a427, type: 3}
+  Skill_1_Effect2: {fileID: 1210069404974878, guid: fd969fc416411b8488549146e54316e9, type: 3}
+  Skill_2_Effect: {fileID: 1294101409476956, guid: 198094adc52841941a899a53be5f864c, type: 3}
+  Skill_2_Effect2: {fileID: 6810844234100877735, guid: 2aebf52f79e730740934d0afbdff28a6, type: 3}
+  Skill_2_Effect3: {fileID: 1789270911803724, guid: 84ee1fb645e4d71428f2fac64f3b3869, type: 3}
+  LevelUpEffect: {fileID: 8166768042605032452, guid: 249229ea8e1e2a9478a2083c1141829e, type: 3}
+  Boss_Skill_Effect: {fileID: 1714681308540598, guid: 5cbc537826220e04592d5a41a0dd985f, type: 3}
+  Boss_Skill_Effect2: {fileID: 1893033738566276, guid: 8c8e34050a922f84fbc572368f896777, type: 3}
+  Boss_Dead_Effect: {fileID: 8166768042605032452, guid: e8966f56dc4ef3f48bec7bd909be9a9a, type: 3}
+--- !u!4 &1885446388
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885446386}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.8000001, y: 1.0500001, z: 89.9}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1907926022
 GameObject:
   m_ObjectHideFlags: 0
@@ -8379,6 +8410,50 @@ MonoBehaviour:
   fpsFontSize: 60
   fpsFontColor: {r: 1, g: 1, b: 1, a: 0}
   fpsText: {fileID: 2087303368}
+--- !u!1 &2099276744
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2099276745}
+  - component: {fileID: 2099276746}
+  m_Layer: 0
+  m_Name: GarbageCollecting
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2099276745
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099276744}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2099276746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099276744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0cd023e19f5daf409134f7ef015e00f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2107640948
 GameObject:
   m_ObjectHideFlags: 0

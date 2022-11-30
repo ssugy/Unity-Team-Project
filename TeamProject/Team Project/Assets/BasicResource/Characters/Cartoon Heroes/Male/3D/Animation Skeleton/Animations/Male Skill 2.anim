@@ -130977,13 +130977,6 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0
-    functionName: PlayerAllEffectOff
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
   - time: 0.033333335
     functionName: SkillAttackEffect
     data: 
@@ -131003,24 +130996,17 @@ AnimationClip:
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
-    intParameter: 4
-    messageOptions: 0
-  - time: 1.2
-    functionName: WeaponEffectOn
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
+    intParameter: 2
     messageOptions: 0
   - time: 1.2
     functionName: SkillAttackEffect
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
-    intParameter: 2
+    intParameter: 4
     messageOptions: 0
-  - time: 1.3666667
-    functionName: TurnAttackDamage
+  - time: 1.2
+    functionName: WeaponEffectOn
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -131033,6 +131019,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 1.3666667
+    functionName: TurnAttackDamage
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 1.6666666
     functionName: WeaponEffectOff
     data: 
@@ -131040,30 +131033,9 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.8
-    functionName: PlayerEffectOff
-    data: Skill_2_Effect3
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 1.8
-    functionName: PlayerEffectOff
-    data: Skill_2_Effect
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
   - time: 1.9333333
     functionName: StartRecoverSP
     data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 3
-    functionName: PlayerEffectOff
-    data: Skill_2_Effect2
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
@@ -131076,14 +131048,14 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 3.4
-    functionName: UnFreezePlayer
+    functionName: EnableAtk
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 3.4
-    functionName: EnableAtk
+    functionName: UnFreezePlayer
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

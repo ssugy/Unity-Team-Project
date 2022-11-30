@@ -25547,13 +25547,6 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0
-    functionName: PlayerAllEffectOff
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
   - time: 0.033333335
     functionName: StartRecoverSP
     data: 
@@ -25561,8 +25554,8 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.6666667
-    functionName: EnableAtk
+  - time: 0.06666667
+    functionName: PlayerAllEffectOff
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -25570,6 +25563,13 @@ AnimationClip:
     messageOptions: 0
   - time: 0.6666667
     functionName: UnFreezePlayer
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.6666667
+    functionName: EnableAtk
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

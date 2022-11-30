@@ -299,13 +299,13 @@ public class Player : MonoBehaviourPun, IPunObservable
         switch (AttackNum)
         {
             case 0:
-                InstanceManager.s_instance.NormalAttackEffectCreate("Normal_Attack_Effect");
+                InstanceManager.s_instance.NormalAttackEffectCreate("Normal_Attack_Effect", transform);
                 break;
             case 1:
-                InstanceManager.s_instance.NormalAttackEffectCreate("Normal_Attack_Effect2");
+                InstanceManager.s_instance.NormalAttackEffectCreate("Normal_Attack_Effect2", transform);
                 break;
             case 2:
-                InstanceManager.s_instance.NormalAttackEffectCreate("Normal_Attack_Effect3");
+                InstanceManager.s_instance.NormalAttackEffectCreate("Normal_Attack_Effect3", transform);
                 break;
         }
     }
@@ -314,21 +314,26 @@ public class Player : MonoBehaviourPun, IPunObservable
         switch (AttackNum)
         {
             case 0:
-                InstanceManager.s_instance.SkillEffectCreate("Skill_1_Effect");
+                InstanceManager.s_instance.SkillEffectCreate("Skill_1_Effect", transform);
                 break;
             case 1:
-                InstanceManager.s_instance.SkillEffectCreate("Skill_1_Effect2");
+                InstanceManager.s_instance.SkillEffectCreate("Skill_1_Effect2", transform);
                 break;
             case 2:
-                InstanceManager.s_instance.SkillEffectCreate("Skill_2_Effect");
+                InstanceManager.s_instance.SkillEffectCreate("Skill_2_Effect", transform);
                 break;
             case 3:
-                InstanceManager.s_instance.SkillEffectCreate("Skill_2_Effect2");
+                InstanceManager.s_instance.SkillEffectCreate("Skill_2_Effect2", transform);
                 break;
             case 4:
-                InstanceManager.s_instance.SkillEffectCreate("Skill_2_Effect3");
+                InstanceManager.s_instance.SkillEffectCreate("Skill_2_Effect3", transform);
                 break;
         }
+    }
+    // 피격/사망 시에만 실행됨.
+    public void PlayerAllEffectOff()
+    {
+        InstanceManager.s_instance.StopAllSkillEffect();
     }
     public void PowerStrike()       // 스킬 1.
     {
@@ -378,15 +383,8 @@ public class Player : MonoBehaviourPun, IPunObservable
             StartCoroutine(BattleUI.instance.Cooldown(4f, BattleUI.instance.skill_2, BattleUI.instance.cool_2));
         }
     }
-
-    public void PlayerEffectOff(string EffectName)
-    {
-        InstanceManager.s_instance.PlayerEffectOff(EffectName);
-    }
-    public void PlayerAllEffectOff()
-    {
-        InstanceManager.s_instance.StopAllSkillEffect();
-    }
+    
+    
     public void JumpAttack()        // 스킬 3.
     {
         if (PhotonNetwork.InRoom)
@@ -783,8 +781,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
         else
         {
-            SoundHit();
-            InstanceManager.s_instance.StopAllSkillEffect();
+            SoundHit();            
             playerAni.SetFloat("isAttacked", (float)_damage / playerStat.HP);
         }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy_HP_UI : MonoBehaviour
 {
     public static Enemy_HP_UI instance;
-    private Queue<HP_Bar> poolHP_Bar = new Queue<HP_Bar>();
+    private Queue<HP_Bar> poolHP_Bar = new();
     public GameObject hp_Bar;
     public int poolSize;    
 
@@ -15,13 +15,6 @@ public class Enemy_HP_UI : MonoBehaviour
         instance = this;
         Initialize(poolSize);
     }
-
-    private HP_Bar CreateNewObject()
-    {
-        var newObj = Instantiate(hp_Bar, transform).GetComponent<HP_Bar>();
-        newObj.gameObject.SetActive(false);
-        return newObj;
-    }
     private void Initialize(int count)
     {
         for (int i = 0; i < count; i++)
@@ -29,6 +22,13 @@ public class Enemy_HP_UI : MonoBehaviour
             poolHP_Bar.Enqueue(CreateNewObject());
         }
     }
+    private HP_Bar CreateNewObject()
+    {
+        var newObj = Instantiate(hp_Bar, transform).GetComponent<HP_Bar>();
+        newObj.gameObject.SetActive(false);
+        return newObj;
+    }
+    
     public static HP_Bar GetObject()
     {
         // 빌려줄 수 있는 오브젝트가 1개라도 있으면
