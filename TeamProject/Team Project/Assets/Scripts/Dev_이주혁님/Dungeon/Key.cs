@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Key : MonoBehaviour
 {
@@ -20,5 +21,11 @@ public class Key : MonoBehaviour
         door.isLocked = false;
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Key);
         Destroy(gameObject);
+
+        if (SceneManager.GetActiveScene().name == "06. Dungeon_Fire")
+        {
+            DungeonManager.instance.dungeonExplanation.text = DungeonManager.instance.explanationList[1];
+            DungeonManager.instance.dungeonProgress.fillAmount += DungeonManager.instance.progressAmount;
+        }
     }
 }

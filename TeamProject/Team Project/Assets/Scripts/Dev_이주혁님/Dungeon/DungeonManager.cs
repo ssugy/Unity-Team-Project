@@ -30,7 +30,7 @@ public class DungeonManager : MonoBehaviour
     float progressCalc()
     {
         if (SceneManager.GetActiveScene().name == "06. Dungeon_Fire")
-            return 1f / 3f;
+            return 1f / 4f;
         else
             return 1f / 2f;
     }
