@@ -164,7 +164,9 @@ public class Player : MonoBehaviourPun, IPunObservable
     public Weapon rWeapon;
     public Shield lWeapon;
       
-    private Dictionary<int, int> EXP_TABLE;      
+    private Dictionary<int, int> EXP_TABLE;
+
+    private Coroutine syncro;
 
     private void Awake()
     {                
@@ -223,15 +225,17 @@ public class Player : MonoBehaviourPun, IPunObservable
         controller.ObserveEveryValueChanged(_ => _.isGrounded).ThrottleFrame(100).Subscribe(_ => isGround = _);
         // UniRx를 이용하여 isGrounded 프로퍼티가 0.3초 이상 유지되어야 상태가 전이되게끔 함. isGrounded가 정교하지 않기 때문.
 
-        StartCoroutine(SyncroAvatar(3f));        
+        syncro = StartCoroutine(SyncroAvatar());        
     }
 
-    IEnumerator SyncroAvatar(float _time)
+    IEnumerator SyncroAvatar()
     {
-        Debug.Log("아바타 동기화");
-        AvatarSet();
-        yield return new WaitForSeconds(_time);
-        StartCoroutine(SyncroAvatar(3f));
+        Debug.Log("아바타 동기화");        
+        while (true)
+        {
+            AvatarSet();
+            yield return new WaitForSeconds(3f);
+        }        
     }
 
     void Move()
@@ -806,6 +810,9 @@ public class Player : MonoBehaviourPun, IPunObservable
             Transform target = enemys[Random.Range(0, enemys.Length)].transform;
             // target을 LookAt할 때 플레이어의 y축 외 다른 축의 회전이 발생하지 않게 하기 위해 Vector3.up을 매개변수로 추가함.      
             transform.LookAt(target, Vector3.up);
+            Quaternion tmp = transform.rotation;
+            tmp.x = 0f;
+            transform.rotation = tmp;
         }
     }
     public void LevelUp()
@@ -973,6 +980,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                 GameObject weaponSrc = Resources.Load<GameObject>("Item/Weapon/" + weaponName);
                 GameObject weapon = Instantiate(weaponSrc, rWeaponDummy);
                 weapon.name = string.Copy(weaponSrc.name);
+                weapon.layer = LayerMask.NameToLayer("OtherPlayer");
             }
 
             string shieldName = (string)stream.ReceiveNext();
@@ -992,6 +1000,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                 GameObject shieldSrc = Resources.Load<GameObject>("Item/Shield/" + shieldName);
                 GameObject shield = Instantiate(shieldSrc, lWeaponDummy);
                 shield.name = string.Copy(shieldSrc.name);
+                shield.layer = LayerMask.NameToLayer("OtherPlayer");
             }
 
         }
