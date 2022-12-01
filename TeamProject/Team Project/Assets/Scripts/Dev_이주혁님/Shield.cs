@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Shield : MonoBehaviour
 {
+    public int level;                       // 방패 장착 가능 유저 레벨
     public float defPro;                    // 막기 사용 시 적용될 방어율.    
     public Player player; 
     

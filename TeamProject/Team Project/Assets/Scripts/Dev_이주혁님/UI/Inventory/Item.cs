@@ -50,7 +50,11 @@ public class Item
     }
 
     public void Use() => effects.ForEach(e => e.ExecuteRole(this));    
-    public void Equip() => effects[0].ExecuteRole(this);    
+    public void Equip()
+    {
+        //if ()
+        effects[0].ExecuteRole(this);
+    } 
     public void Unequip()
     {
         this.equipedState = EquipState.UNEQUIPED;
