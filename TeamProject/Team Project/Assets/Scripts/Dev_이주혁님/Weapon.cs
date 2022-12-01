@@ -58,7 +58,7 @@ public class Weapon : MonoBehaviour
                     // 공속 증가
                     case EquipOption.EquipAttrib.AttribAtkSpeed:
                         value = _item.option.options[e];
-                        atkSpeed -= atkSpeed * value / 100.0f;
+                        atkSpeed += atkSpeed * value / 100.0f;
                         player.playerAni.SetFloat("AtkSpeed", atkSpeed);
                         break;
                     // 공격력 증가
