@@ -333,15 +333,23 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (rWeapon == null)
         {
-            BattleUI.instance.equipEmpty.text = "무기를 착용하지 않았습니다.";
-            BattleUI.instance.equipEmpty.gameObject.SetActive(true);
+            if (photonView.IsMine || GameManager.s_instance.currentScene.Equals(GameManager.SceneName.World))
+            {
+                BattleUI.instance.equipEmpty.text = "무기를 착용하지 않았습니다.";
+                BattleUI.instance.equipEmpty.gameObject.SetActive(true);
+            }
+            
             return;
         }
         if (enableAtk)
         {
             SetRotate();
             playerAni.Play("Player Skill 1");
-            StartCoroutine(BattleUI.instance.Cooldown(4f, BattleUI.instance.skill_1, BattleUI.instance.cool_1));
+            if (photonView.IsMine || GameManager.s_instance.currentScene.Equals(GameManager.SceneName.World))
+            {
+                StartCoroutine(BattleUI.instance.Cooldown
+                    (4f, BattleUI.instance.skill_1, BattleUI.instance.cool_1));
+            }            
         }
     }
 
@@ -357,15 +365,22 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (rWeapon == null)
         {
-            BattleUI.instance.equipEmpty.text = "무기를 착용하지 않았습니다.";
-            BattleUI.instance.equipEmpty.gameObject.SetActive(true);
+            if (photonView.IsMine || GameManager.s_instance.currentScene.Equals(GameManager.SceneName.World))
+            {
+                BattleUI.instance.equipEmpty.text = "무기를 착용하지 않았습니다.";
+                BattleUI.instance.equipEmpty.gameObject.SetActive(true);
+            }
             return;
         }
         if (enableAtk)
         {
             SetRotate();
             playerAni.Play("Player Skill 2");
-            StartCoroutine(BattleUI.instance.Cooldown(4f, BattleUI.instance.skill_2, BattleUI.instance.cool_2));
+            if (photonView.IsMine || GameManager.s_instance.currentScene.Equals(GameManager.SceneName.World))
+            {
+                StartCoroutine(BattleUI.instance.Cooldown
+                    (4f, BattleUI.instance.skill_2, BattleUI.instance.cool_2));
+            }            
         }
     }
     
@@ -383,15 +398,22 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (rWeapon == null)
         {
-            BattleUI.instance.equipEmpty.text = "무기를 착용하지 않았습니다.";
-            BattleUI.instance.equipEmpty.gameObject.SetActive(true);
+            if (photonView.IsMine || GameManager.s_instance.currentScene.Equals(GameManager.SceneName.World))
+            {
+                BattleUI.instance.equipEmpty.text = "무기를 착용하지 않았습니다.";
+                BattleUI.instance.equipEmpty.gameObject.SetActive(true);
+            }
             return;
         }
         if (enableAtk)
         {
             SetRotate();
             playerAni.Play("Player Skill 3");
-            StartCoroutine(BattleUI.instance.Cooldown(8f, BattleUI.instance.skill_3, BattleUI.instance.cool_3));
+            if (photonView.IsMine || GameManager.s_instance.currentScene.Equals(GameManager.SceneName.World))
+            {
+                StartCoroutine(BattleUI.instance.Cooldown
+                    (8f, BattleUI.instance.skill_3, BattleUI.instance.cool_3));
+            }            
         }
     }
 
@@ -408,16 +430,22 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (rWeapon == null)
         {
-            BattleUI.instance.equipEmpty.text = "무기를 착용하지 않았습니다.";
-            BattleUI.instance.equipEmpty.gameObject.SetActive(true);
+            if (photonView.IsMine || GameManager.s_instance.currentScene.Equals(GameManager.SceneName.World))
+            {
+                BattleUI.instance.equipEmpty.text = "무기를 착용하지 않았습니다.";
+                BattleUI.instance.equipEmpty.gameObject.SetActive(true);
+            }
             return;
         }
         if (enableAtk)
         {
             SetRotate();
             playerAni.Play("Player Skill 4");
-            if (photonView.IsMine)
-                StartCoroutine(BattleUI.instance.Cooldown(10f, BattleUI.instance.skill_4, BattleUI.instance.cool_4));
+            if (photonView.IsMine || GameManager.s_instance.currentScene.Equals(GameManager.SceneName.World))
+            {
+                StartCoroutine(BattleUI.instance.Cooldown
+                    (10f, BattleUI.instance.skill_4, BattleUI.instance.cool_4));
+            }            
         }
     }
 
@@ -890,6 +918,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         SaveData();             
         JY_CharacterListManager.s_instance.playerList.Remove(this);
         JY_CharacterListManager.s_instance.invenList.Remove(GetComponent<Inventory>());
+        StopCoroutine(syncro);
     }
     
     public void AvatarSet()
@@ -980,7 +1009,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                 GameObject weaponSrc = Resources.Load<GameObject>("Item/Weapon/" + weaponName);
                 GameObject weapon = Instantiate(weaponSrc, rWeaponDummy);
                 weapon.name = string.Copy(weaponSrc.name);
-                weapon.layer = LayerMask.NameToLayer("OtherPlayer");
+                weapon.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("OtherPlayer");
             }
 
             string shieldName = (string)stream.ReceiveNext();
@@ -1000,7 +1029,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                 GameObject shieldSrc = Resources.Load<GameObject>("Item/Shield/" + shieldName);
                 GameObject shield = Instantiate(shieldSrc, lWeaponDummy);
                 shield.name = string.Copy(shieldSrc.name);
-                shield.layer = LayerMask.NameToLayer("OtherPlayer");
+                shield.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("OtherPlayer");
             }
 
         }
