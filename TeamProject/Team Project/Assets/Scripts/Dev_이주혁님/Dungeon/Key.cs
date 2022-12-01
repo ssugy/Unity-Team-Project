@@ -24,8 +24,7 @@ public class Key : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name == "06. Dungeon_Fire")
         {
-            DungeonManager.instance.dungeonExplanation.text = DungeonManager.instance.explanationList[1];
-            DungeonManager.instance.dungeonProgress.fillAmount += DungeonManager.instance.progressAmount;
+            DungeonManager.instance.DungeonProgress(1);
         }
     }
 }

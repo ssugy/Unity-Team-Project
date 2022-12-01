@@ -6,13 +6,14 @@ using Photon.Pun;
 
 public class Dragon : Enemy
 {    
-    public float skillCool;    
+    public float skillCool;
     [Header("스킬 공격 관련")]
     public float skillDistance;
     public Transform shooter;       // 화염구를 발사할 위치.
-    private GameObject fireballPrefab;    
-    
-
+    private GameObject fireballPrefab;
+    [Header("진행도 관련")]
+    public bool ProgressionMonster;
+    public int explanationNum;
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
@@ -127,6 +128,11 @@ public class Dragon : Enemy
             DropGold();
             DropItem();
             Destroy(gameObject, 4);
+            if (ProgressionMonster)
+            {
+                if (DungeonManager.instance != null)
+                    DungeonManager.instance.DungeonProgress(explanationNum);
+            }
         }
     }
     void StopNav()

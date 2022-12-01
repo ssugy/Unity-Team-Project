@@ -307,6 +307,7 @@ public class JY_Boss_FireDungeon : Enemy
             anim.SetTrigger("isDead");
             FreezeEnemy();
 
+            DungeonManager.instance.DungeonProgress(4);
             questProgress();
             DropExp();
             DropGold();

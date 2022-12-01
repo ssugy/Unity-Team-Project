@@ -13,5 +13,5 @@ public class DungeonTrigger : MonoBehaviour
             DungeonManager.instance.dungeonProgress.fillAmount += DungeonManager.instance.progressAmount;
             Destroy(gameObject);
         }
-    }    
+    }
 }

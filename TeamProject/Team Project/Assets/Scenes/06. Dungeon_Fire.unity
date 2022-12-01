@@ -134,6 +134,14 @@ PrefabInstance:
       propertyPath: curHealth
       value: 250
       objectReference: {fileID: 0}
+    - target: {fileID: 1295775362, guid: db7565f2be8946c499d96ca21f82a480, type: 3}
+      propertyPath: explanationNum
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295775362, guid: db7565f2be8946c499d96ca21f82a480, type: 3}
+      propertyPath: ProgressionMonster
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 251427240539823624, guid: db7565f2be8946c499d96ca21f82a480, type: 3}
       propertyPath: m_Name
       value: Monster_4 (1)
@@ -3886,6 +3894,7 @@ MonoBehaviour:
   - "\uC5F4\uC1E0\uB97C \uC0BC\uD0A8 \uC6A9\uC744 \uC4F0\uB7EC\uB728\uB9AC\uACE0\n\uC5F4\uC1E0\uB97C
     \uCC3E\uC544 \uBB38\uC744 \uC5EC\uC138\uC694."
   - "\uB358\uC804\uC758 \uC8FC\uC778\uC744 \uC4F0\uB7EC\uB728\uB9AC\uC138\uC694."
+  - "\uC9C4\uD589 \uC644\uB8CC"
 --- !u!4 &459644939
 Transform:
   m_ObjectHideFlags: 0
@@ -3897,9 +3906,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1846440641}
-  - {fileID: 1733610735}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 30
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18549,65 +18556,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e40d0d78f9b25084fa4852b7d2672aa4, type: 3}
---- !u!1 &1733610733
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1733610735}
-  - component: {fileID: 1733610734}
-  - component: {fileID: 1733610736}
-  m_Layer: 0
-  m_Name: Second_Trigger
-  m_TagString: DungeonTrigger
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!65 &1733610734
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1733610733}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!4 &1733610735
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1733610733}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 47.88, y: -2.75, z: 90.53}
-  m_LocalScale: {x: 4, y: 5, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 459644939}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1733610736
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1733610733}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35840a14f8b3b8248a5b07b10684cfac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  num: 2
 --- !u!114 &1758124408 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6448476278223814790, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
@@ -18626,6 +18574,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1295775362, guid: db7565f2be8946c499d96ca21f82a480, type: 3}
+      propertyPath: explanationNum
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295775362, guid: db7565f2be8946c499d96ca21f82a480, type: 3}
+      propertyPath: ProgressionMonster
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 251427240539823624, guid: db7565f2be8946c499d96ca21f82a480, type: 3}
       propertyPath: m_Name
       value: Monster_4
@@ -19316,65 +19272,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db7565f2be8946c499d96ca21f82a480, type: 3}
---- !u!1 &1846440639
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1846440641}
-  - component: {fileID: 1846440640}
-  - component: {fileID: 1846440642}
-  m_Layer: 0
-  m_Name: First_Trigger
-  m_TagString: DungeonTrigger
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!65 &1846440640
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1846440639}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!4 &1846440641
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1846440639}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 24.12, y: -6.26, z: 54.22}
-  m_LocalScale: {x: 4, y: 5, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 459644939}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1846440642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1846440639}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35840a14f8b3b8248a5b07b10684cfac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  num: 1
 --- !u!1 &1950379388
 GameObject:
   m_ObjectHideFlags: 0

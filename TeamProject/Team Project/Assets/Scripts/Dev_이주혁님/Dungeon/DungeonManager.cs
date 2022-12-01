@@ -34,4 +34,9 @@ public class DungeonManager : MonoBehaviour
         else
             return 1f / 2f;
     }
+    public void DungeonProgress(int num)
+    {
+        dungeonExplanation.text = explanationList[num];
+        dungeonProgress.fillAmount += progressAmount;
+    }
 }
