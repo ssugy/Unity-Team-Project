@@ -18,7 +18,7 @@ public class InstanceManager : MonoBehaviour
     public List<PlayerEffect> SkillEffectList;
     public List<GameObject> PlayerEffectList;
     public List<GameObject> BossSkillEffectList;
-    [Header("플레이어 이펙트")]
+    [Header("플레이어 공격 이펙트")]
     public GameObject Normal_Attack_Effect;
     public GameObject Normal_Attack_Effect2;
     public GameObject Normal_Attack_Effect3;
@@ -27,6 +27,7 @@ public class InstanceManager : MonoBehaviour
     public GameObject Skill_2_Effect;
     public GameObject Skill_2_Effect2;
     public GameObject Skill_2_Effect3;
+    [Header("플레이어 기타 이펙트")]
     public GameObject LevelUpEffect;
     [Header("보스 스킬 이펙트")]
     public GameObject Boss_Skill_Effect;
@@ -100,39 +101,60 @@ public class InstanceManager : MonoBehaviour
                 one.SetActive(false);
         }
     }
-    public void NormalAttackEffectCreate(string EffectName, Transform parent)
+    public void NormalAttackEffectCreate(int _effectNum, Transform _parent)
     {        
-        GameObject effect = null;
-        if (EffectName.Equals("Normal_Attack_Effect"))
-            effect = Instantiate(Normal_Attack_Effect, parent);
-        else if (EffectName.Equals("Normal_Attack_Effect2"))
-            effect = Instantiate(Normal_Attack_Effect2, parent);
-        else if (EffectName.Equals("Normal_Attack_Effect3"))
-            effect = Instantiate(Normal_Attack_Effect3, parent);
+        GameObject effect;
+        switch (_effectNum)
+        {
+            case 0:
+                effect = Instantiate(Normal_Attack_Effect, _parent);
+                break;
+            case 1:
+                effect = Instantiate(Normal_Attack_Effect2, _parent);
+                break;
+            case 2:
+                effect = Instantiate(Normal_Attack_Effect3, _parent);
+                break;
+            default:
+                return;
+        }        
 
         effect.transform.localPosition = new Vector3(0, 1f, 1f);        
 
         SkillEffectList.Add(effect.GetComponent<PlayerEffect>());
     }
-    public void SkillEffectCreate(string EffectName, Transform parent)
-    {        
-        GameObject effect = null;
-        if (EffectName.Equals("Skill_1_Effect"))
-            effect = Instantiate<GameObject>(Skill_1_Effect, parent);
-        else if (EffectName.Equals("Skill_1_Effect2"))
-            effect = Instantiate<GameObject>(Skill_1_Effect2, parent);
-        else if (EffectName.Equals("Skill_2_Effect"))
-            effect = Instantiate<GameObject>(Skill_2_Effect, parent);
-        else if (EffectName.Equals("Skill_2_Effect2"))
-            effect = Instantiate<GameObject>(Skill_2_Effect2, parent);
-        else if (EffectName.Equals("Skill_2_Effect3"))
-            effect = Instantiate<GameObject>(Skill_2_Effect3, parent);
 
-        effect.transform.localPosition = Vector3.forward;
-        if (EffectName.Equals("Skill_1_Effect2"))
-            effect.transform.localPosition = new Vector3(0, 0, 2);
-        else if (EffectName.Equals("Skill_2_Effect1") || EffectName.Equals("Skill_2_Effect3"))
-            effect.transform.localPosition = new Vector3(0, 2, 1);
+    public void SkillEffectCreate(int _effectNum, Transform _parent)
+    {        
+        GameObject effect;
+        switch (_effectNum)
+        {
+            // 스킬1 Power Strike 이펙트
+            case 0:
+                effect = Instantiate(Skill_1_Effect, _parent);
+                effect.transform.localPosition = Vector3.forward;
+                break;
+            case 1:
+                effect = Instantiate(Skill_1_Effect2, _parent);
+                effect.transform.localPosition = new Vector3(0, 0, 2);
+                break;
+
+            // 스킬2 Turn Attack 이펙트
+            case 2:
+                effect = Instantiate(Skill_2_Effect, _parent);
+                effect.transform.localPosition = new Vector3(0, 2, 1);
+                break;
+            case 3:
+                effect = Instantiate(Skill_2_Effect2, _parent);
+                effect.transform.localPosition = Vector3.forward;
+                break;
+            case 4:
+                effect = Instantiate(Skill_2_Effect3, _parent);
+                effect.transform.localPosition = new Vector3(0, 2, 1);
+                break;
+            default:
+                return;
+        }       
         
         SkillEffectList.Add(effect.GetComponent<PlayerEffect>());
     }

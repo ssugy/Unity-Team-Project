@@ -222,8 +222,32 @@ public class Player : MonoBehaviourPun, IPunObservable
         playerStat.CurSP = playerStat.SP;               
         controller.ObserveEveryValueChanged(_ => _.isGrounded).ThrottleFrame(100).Subscribe(_ => isGround = _);
         // UniRx를 이용하여 isGrounded 프로퍼티가 0.3초 이상 유지되어야 상태가 전이되게끔 함. isGrounded가 정교하지 않기 때문.
+
+        StartCoroutine(SyncroAvatar(2f));
+
+        if (!PhotonNetwork.InRoom)
+            return;
+
+        if (!photonView.IsMine)        
+            ChangeLayersRecursively(transform, "OtherPlayer");
         
-        AvatarSet();        
+    }
+
+    public static void ChangeLayersRecursively(Transform trans, string name)
+    {
+        trans.gameObject.layer = LayerMask.NameToLayer(name);
+        foreach (Transform child in trans)
+        {
+            ChangeLayersRecursively(child, name);
+        }
+    }
+
+    IEnumerator SyncroAvatar(float _time)
+    {
+        Debug.Log("아바타 동기화");
+        AvatarSet();
+        yield return new WaitForSeconds(_time);
+        StartCoroutine(SyncroAvatar(10f));
     }
 
     void Move()
@@ -296,40 +320,13 @@ public class Player : MonoBehaviourPun, IPunObservable
     }
     public void NormalAttackEffect(int AttackNum)
     {
-        switch (AttackNum)
-        {
-            case 0:
-                InstanceManager.s_instance.NormalAttackEffectCreate("Normal_Attack_Effect", transform);
-                break;
-            case 1:
-                InstanceManager.s_instance.NormalAttackEffectCreate("Normal_Attack_Effect2", transform);
-                break;
-            case 2:
-                InstanceManager.s_instance.NormalAttackEffectCreate("Normal_Attack_Effect3", transform);
-                break;
-        }
+        InstanceManager.s_instance.NormalAttackEffectCreate(AttackNum, transform);        
     }
     public void SkillAttackEffect(int AttackNum)
     {
-        switch (AttackNum)
-        {
-            case 0:
-                InstanceManager.s_instance.SkillEffectCreate("Skill_1_Effect", transform);
-                break;
-            case 1:
-                InstanceManager.s_instance.SkillEffectCreate("Skill_1_Effect2", transform);
-                break;
-            case 2:
-                InstanceManager.s_instance.SkillEffectCreate("Skill_2_Effect", transform);
-                break;
-            case 3:
-                InstanceManager.s_instance.SkillEffectCreate("Skill_2_Effect2", transform);
-                break;
-            case 4:
-                InstanceManager.s_instance.SkillEffectCreate("Skill_2_Effect3", transform);
-                break;
-        }
+        InstanceManager.s_instance.SkillEffectCreate(AttackNum, transform);        
     }
+
     // 피격/사망 시에만 실행됨.
     public void PlayerAllEffectOff()
     {
@@ -584,9 +581,6 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         enableAtk = false;
     }
-
-
-
 
     public void InitializeStat()                  // 스탯 초기화
     {
@@ -906,20 +900,24 @@ public class Player : MonoBehaviourPun, IPunObservable
         JY_CharacterListManager.s_instance.playerList.Remove(this);
         JY_CharacterListManager.s_instance.invenList.Remove(GetComponent<Inventory>());
     }
-        
-
+    
     public void AvatarSet()
     {
         if (setChara == null) return;
 
         for (int i = 0; i < 4; i++)        
             subOptionLoad(i, playerStat.customized[i]);        
-    }
+    }    
+
     public void subOptionLoad(int currentOption, int sub)
     {
         DeleteSubOption(currentOption);
         {
-            GameObject addedObj = setChara.AddItem(setChara.itemGroups[currentOption], sub);
+            GameObject tmp = setChara.AddItem(setChara.itemGroups[currentOption], sub);
+            if (!PhotonNetwork.InRoom)
+                return;
+            if (!photonView.IsMine)
+                tmp.layer = LayerMask.NameToLayer("OtherPlayer");
         }
     }
     void DeleteSubOption(int currentOption)
@@ -951,7 +949,9 @@ public class Player : MonoBehaviourPun, IPunObservable
             stream.SendNext(playerStat.atkPoint);
             stream.SendNext(playerStat.defMag);
             stream.SendNext(gameObject.name);
+
             stream.SendNext(playerStat.customized);
+
             if (rWeapon == null)            
                 stream.SendNext(string.Empty);            
             else            
@@ -971,8 +971,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             playerStat.defMag = (float)stream.ReceiveNext();
             gameObject.name = (string)stream.ReceiveNext();
 
-            playerStat.customized = (int[])stream.ReceiveNext();
-            AvatarSet();
+            playerStat.customized = (int[])stream.ReceiveNext();            
 
             string weaponName= (string)stream.ReceiveNext();
             if (weaponName.Equals(string.Empty))

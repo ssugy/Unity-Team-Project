@@ -20,9 +20,7 @@ public class AvatarSceneManager : MonoBehaviour
 
     // 초기 셀렉트 상태.
     private Steps currentStep = Steps.SELECT_JOB;
-    private MoreOptions currentOption = MoreOptions.FACE;
-    private int currentOptionPanel = 0;
-
+    private MoreOptions currentOption = MoreOptions.FACE;    
 
     public GameObject zoomSlider;
     public GameObject popupToLobby;
@@ -372,7 +370,12 @@ public class AvatarSceneManager : MonoBehaviour
         //    그것이 currentOption이다.
         // 4. current Option값은 추후 targetScript.itemGroups[ current Option ] 이런식으로 사용된다.
         currentOption = (MoreOptions)mapOptionNames[strOptionNames[option]];
-        options[currentOptionPanel].SetActive(true);
+
+        // 선택한 옵션 패널을 활성화함.
+        options[option].SetActive(true);
+
+        // currentBlendOption은 어떤 커스터마이징 옵션을 수정할 것인지를 나타냄.
+        // 활성화된 옵션 패널과 일치해야함.
         switch ((MoreOptions)option)
         {
             case MoreOptions.FACE:
@@ -394,13 +397,15 @@ public class AvatarSceneManager : MonoBehaviour
     public void HideAllOption() => options.ForEach(e => e.SetActive(false));    
 
     public void OnClickOption(int option)
-    {
-        currentOptionPanel = option;
+    {        
         if (mapOptionNames.ContainsKey(strOptionNames[option]))        
             ShowOption(option);
         // 얼굴 A에서 얼굴 B로 변경하는 등, 옵션을 변경할 때 슬라이더의 이벤트를 호출하기 위함.
         // 값이 바뀌지 않으면 이벤트가 호출되지 않음.
-        sliders.ForEach(e => { if (e.transform.parent.parent.parent.parent.gameObject.activeSelf) e.value -= 0.01f; });
+        sliders.ForEach(e => { 
+            if (e.transform.parent.parent.parent.parent.gameObject.activeSelf) 
+                e.value -= 0.01f; 
+        });
     }
 
     // head1나 hair2등의 subOption 선택버튼을 눌렀을때 기존에 존재하는 head 또는 hair를 삭제한다.

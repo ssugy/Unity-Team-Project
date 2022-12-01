@@ -11,18 +11,13 @@ public class NameCheck : MonoBehaviour
     InputField field;
     Text text;
     private string oldValue = "";
-    // Start is called before the first frame update
+    
     void Start()
     {
         field = GetComponent<InputField>();
         text = field.textComponent;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void OnValueChanged(string str)
     {
         if (text != null)
@@ -42,6 +37,7 @@ public class NameCheck : MonoBehaviour
 
     private bool HasSpecialChars(string yourString)
     {
+        // 문자열에 문자나 숫자가 아닌 특수문자가 있으면 true를 반환.
         return yourString.Any(ch => !Char.IsLetterOrDigit(ch));
     }
 
