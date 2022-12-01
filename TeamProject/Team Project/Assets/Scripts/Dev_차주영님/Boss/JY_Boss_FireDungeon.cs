@@ -94,8 +94,8 @@ public class JY_Boss_FireDungeon : Enemy
                     totalTime = 0f;
                     if (distance <= 2f && !isAttack)
                         FreezeEnemy();
-                    else if (distance > 2f && !isAttack)
-                        UnfreezeEnemy();
+                    /*else if (distance > 2f && !isAttack)
+                        UnfreezeEnemy();*/
 
                     if (atkTime >= attackCool)
                     {
@@ -356,6 +356,7 @@ public class JY_Boss_FireDungeon : Enemy
     // 부위파괴 함수
     public void PartDestruction(string partName)
     {
+        isStop = true;
         isStun = true;
         if (partName.Equals("BossSholderHitBox"))
         {
@@ -380,7 +381,6 @@ public class JY_Boss_FireDungeon : Enemy
             case 2:
                 break;
         }
-        Debug.Log(partCnt);
         anim.SetTrigger("Stun");
     }
     
@@ -409,10 +409,14 @@ public class JY_Boss_FireDungeon : Enemy
     }
 
     // 부위파괴 그로기상태 들어갔다가 일어날 때 사용하는 함수.
-    public void stunWakeUp()
+    public void StunWakeUp()
     {
         anim.SetTrigger("StunWakeUP");
+    }
+    public void StunReset()
+    {
         isStun = false;
+        isStop = false;
         isAwake = true;
     }
 

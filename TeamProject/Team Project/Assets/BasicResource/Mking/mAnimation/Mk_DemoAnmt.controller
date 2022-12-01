@@ -526,7 +526,7 @@ AnimatorStateMachine:
     m_Position: {x: -120, y: 130, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2993035543120902674}
-    m_Position: {x: -30, y: -160, z: 0}
+    m_Position: {x: -20, y: -160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4606719461151076031}
     m_Position: {x: 620, y: -270, z: 0}
@@ -617,7 +617,7 @@ AnimatorStateTransition:
   serializedVersion: 3
   m_TransitionDuration: 0
   m_TransitionOffset: 0
-  m_ExitTime: 1
+  m_ExitTime: 0.99939
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -879,7 +879,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 4cd8bcc1e2b8e8945b4e1a6b7f28e704, type: 3}
+  m_Motion: {fileID: 7400000, guid: eec2d1f18f93e814d853b3ed99d19cdf, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -964,7 +964,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MK_getUpFront
-  m_Speed: 1
+  m_Speed: 0.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -8335767613881523048}

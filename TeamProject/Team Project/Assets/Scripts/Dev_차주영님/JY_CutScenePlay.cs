@@ -30,6 +30,7 @@ public class JY_CutScenePlay : MonoBehaviour
             if (firstPlay == true)
             {
                 JY_Boss_FireDungeon.s_instance.isAwake = true;
+                JY_UIManager.instance.partdestructionUIButton.SetActive(true);
                 hpBarBoss.Recognize(boss);
             }
         }       

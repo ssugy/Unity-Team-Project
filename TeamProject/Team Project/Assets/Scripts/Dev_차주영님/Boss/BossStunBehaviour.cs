@@ -12,7 +12,6 @@ public class BossStunBehaviour : StateMachineBehaviour
             AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BOSS_HIT);
             JY_Boss_FireDungeon.s_instance.isAwake = false;
             InstanceManager.s_instance.StopAllBossEffect();
-            JY_Boss_FireDungeon.s_instance.Invoke("stunWakeUp", 5f);
         }
     }
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

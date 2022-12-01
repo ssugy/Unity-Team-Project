@@ -17,7 +17,8 @@ public class JY_Bullet : MonoBehaviour
             JY_Boss_FireDungeon.s_instance.PartDestruction(other.gameObject.name);
             Destroy(gameObject);
         }
-        else
-            Destroy(gameObject, 5f);
+        /*else
+            Destroy(gameObject, 5f);*/
+
     }
 }

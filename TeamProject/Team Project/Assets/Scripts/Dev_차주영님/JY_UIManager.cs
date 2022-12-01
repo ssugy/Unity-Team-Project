@@ -11,6 +11,7 @@ public class JY_UIManager : MonoBehaviour
     public Transform questMenuGroup;
     public GameObject alarmUI;
     public GameObject partdestructionUI;
+    public GameObject partdestructionUIButton;
     public Image WhiteFade;
 
     public Text alarmText;
