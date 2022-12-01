@@ -223,23 +223,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         controller.ObserveEveryValueChanged(_ => _.isGrounded).ThrottleFrame(100).Subscribe(_ => isGround = _);
         // UniRx를 이용하여 isGrounded 프로퍼티가 0.3초 이상 유지되어야 상태가 전이되게끔 함. isGrounded가 정교하지 않기 때문.
 
-        StartCoroutine(SyncroAvatar(2f));
-
-        if (!PhotonNetwork.InRoom)
-            return;
-
-        if (!photonView.IsMine)        
-            ChangeLayersRecursively(transform, "OtherPlayer");
-        
-    }
-
-    public static void ChangeLayersRecursively(Transform trans, string name)
-    {
-        trans.gameObject.layer = LayerMask.NameToLayer(name);
-        foreach (Transform child in trans)
-        {
-            ChangeLayersRecursively(child, name);
-        }
+        StartCoroutine(SyncroAvatar(3f));        
     }
 
     IEnumerator SyncroAvatar(float _time)
@@ -247,7 +231,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         Debug.Log("아바타 동기화");
         AvatarSet();
         yield return new WaitForSeconds(_time);
-        StartCoroutine(SyncroAvatar(10f));
+        StartCoroutine(SyncroAvatar(3f));
     }
 
     void Move()
@@ -917,7 +901,10 @@ public class Player : MonoBehaviourPun, IPunObservable
             if (!PhotonNetwork.InRoom)
                 return;
             if (!photonView.IsMine)
-                tmp.layer = LayerMask.NameToLayer("OtherPlayer");
+            {
+                tmp.GetComponentInChildren<SkinnedMeshRenderer>().gameObject.layer 
+                    = LayerMask.NameToLayer("OtherPlayer");
+            }            
         }
     }
     void DeleteSubOption(int currentOption)
