@@ -15,6 +15,7 @@ public class JY_PartDestruction : MonoBehaviour, IPointerDownHandler, IPointerUp
     MainCamController mainCamControl;
     Vector3 originPos;
     Vector3 targetPos;
+    Vector3 shootVec;
     // Start is called before the first frame update
     void Awake()
     {
@@ -48,16 +49,9 @@ public class JY_PartDestruction : MonoBehaviour, IPointerDownHandler, IPointerUp
     }
     public void OnPointerUp(PointerEventData eventData)
     {
-        //±¤¼±À» ½ð´Ù.
-        Ray ray = Camera.main.ScreenPointToRay(eventData.position);
-        RaycastHit hitinfo;
-        if(Physics.Raycast(ray, out hitinfo, Mathf.Infinity))
-        {
-            Vector3 shootVec = hitinfo.point - JY_CharacterListManager.s_instance.playerList[0].rWeaponDummy.position;
-            GameObject bullet = GameObject.Instantiate<GameObject>(Bullet, JY_CharacterListManager.s_instance.playerList[0].rWeaponDummy.transform.position, Quaternion.identity, JY_CharacterListManager.s_instance.playerList[0].rWeaponDummy);
-            Rigidbody bulletRigid = bullet.GetComponent<Rigidbody>();
-            bulletRigid.velocity = shootVec.normalized * 50f;
-        }
+        GameObject bullet = GameObject.Instantiate<GameObject>(Bullet, JY_CharacterListManager.s_instance.playerList[0].rWeaponDummy.transform.position, Quaternion.identity, JY_CharacterListManager.s_instance.playerList[0].rWeaponDummy);
+        Rigidbody bulletRigid = bullet.GetComponent<Rigidbody>();
+        bulletRigid.velocity = shootVec.normalized * 50f;
 
         isShoot = false;
         mainCam.transform.localPosition = originPos;
@@ -69,6 +63,11 @@ public class JY_PartDestruction : MonoBehaviour, IPointerDownHandler, IPointerUp
     }
     public void OnDrag(PointerEventData eventData)
     {
+        //±¤¼±À» ½ð´Ù.
+        Ray ray = Camera.main.ScreenPointToRay(eventData.position);
+        RaycastHit hitinfo;
+        if (Physics.Raycast(ray, out hitinfo, Mathf.Infinity))
+            shootVec = hitinfo.point - JY_CharacterListManager.s_instance.playerList[0].rWeaponDummy.position;
         JY_UIManager.instance.TranslateAimUI(eventData.position);
     }
 }
