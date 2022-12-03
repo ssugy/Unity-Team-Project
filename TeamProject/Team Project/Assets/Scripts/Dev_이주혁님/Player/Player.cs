@@ -969,7 +969,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         {
             stream.SendNext(playerStat.HP);
             stream.SendNext(playerStat.CurHP);
-            stream.SendNext(playerStat.atkPoint);
+            
             stream.SendNext(playerStat.defMag);
             stream.SendNext(gameObject.name);
 
@@ -990,7 +990,9 @@ public class Player : MonoBehaviourPun, IPunObservable
         {
             playerStat.HP = (int)stream.ReceiveNext();
             playerStat.CurHP = (int)stream.ReceiveNext();
-            playerStat.atkPoint = (int)stream.ReceiveNext();
+
+            playerStat.atkPoint = 0;
+
             playerStat.defMag = (float)stream.ReceiveNext();
             gameObject.name = (string)stream.ReceiveNext();
 
@@ -998,11 +1000,11 @@ public class Player : MonoBehaviourPun, IPunObservable
 
             string weaponName= (string)stream.ReceiveNext();
             if (weaponName.Equals(string.Empty))
-            { 
-                while (this.rWeaponDummy.GetComponentInChildren<Weapon>() != null)                
+            {
+                while (this.rWeaponDummy.GetComponentInChildren<Weapon>() != null)
                     DestroyImmediate(this.rWeaponDummy.GetComponentInChildren<Weapon>().gameObject);
             }
-            else if (rWeapon==null || !weaponName.Equals(rWeapon.name))
+            else if (rWeapon == null || !weaponName.Equals(rWeapon.name)) 
             {
                 while (this.rWeaponDummy.GetComponentInChildren<Weapon>() != null)
                     DestroyImmediate(this.rWeaponDummy.GetComponentInChildren<Weapon>().gameObject);
