@@ -12,7 +12,6 @@ public class InfoPanel : MonoBehaviour
     public Text nameText;           // 아이템 이름.
     public Text typeText;           // 아이템 타입.
     public Text explanationText;    // 아이템 설명.
-    public GameObject QuickSlot;    // 아이템 퀵슬롯 등록 버튼
     [Space(32)]
     [Header("사용/파괴 버튼")]
     public Button useButton;
@@ -24,18 +23,22 @@ public class InfoPanel : MonoBehaviour
     [Header("추가옵션 UI")]
     public List<Text> options;
     public List<string> optionNames;
+    [Header("퀵슬롯 관련 인스턴스")]
+    public Button QuickSlot;                // 아이템 퀵슬롯 등록 버튼
+    public JY_QuickSlot QuickslotScript;    //퀵슬롯 스크립트
 
     // 아이템 패널을 출력하는 메소드. 인벤토리의 아이템을 클릭하면 해당 슬롯의 아이템 정보를 받아와 출력한다.
     public void SetInformation(Item _item, Slot _slot)
     {        
         useButton.onClick.RemoveAllListeners();         // 사용 버튼에 할당된 메소드를 초기화.
         destroyButton.onClick.RemoveAllListeners();     // 파괴 버튼에 할당된 메소드를 초기화.
+        QuickSlot.onClick.RemoveAllListeners();
         icon.sprite = _item.image;                      // 선택된 아이템의 이미지로 아이콘을 교체.
         nameText.text = _item.name;                     // 선택된 아이템의 이름으로 텍스트를 교체.
         explanationText.text = _item.explanation;       // 선택된 아이템의 설명으로 텍스트를 교체.
         useButton.gameObject.SetActive(true);           // 사용 버튼을 활성화함. (재료 아이템은 사용이 비활성화.)
         destroyButton.gameObject.SetActive(true);       // 파괴 버튼을 활성화함. (장착된 장비 아이템은 파괴가 비활성화.)
-        QuickSlot.SetActive(false);
+        QuickSlot.gameObject.SetActive(false);
         switch (_item.type)                             // 아이템 타입에 따라 다른 기능을 수행.
         {
             case ItemType.EQUIPMENT:
@@ -55,7 +58,11 @@ public class InfoPanel : MonoBehaviour
                 }
                 break;
             case ItemType.CONSUMABLE:
-                QuickSlot.SetActive(true);
+                QuickSlot.gameObject.SetActive(true);
+                if (_item.name.Equals(QuickslotScript.EquipItem))
+                    QuickSlot.onClick.AddListener(() => UnequipQuickSlot());
+                else
+                    QuickSlot.onClick.AddListener(() => EquipQuickSlot(_item));
                 typeText.text = "소비";
                 useButtonText.text = "사용";
                 useButton.onClick.AddListener(()=>_item.Use());     // 사용 버튼을 누르면 소비 아이템의 효과가 발동.
@@ -104,5 +111,18 @@ public class InfoPanel : MonoBehaviour
                 }
             }
         }
+    }
+
+    void EquipQuickSlot(Item _item)
+    {
+        Debug.Log("등록");
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.CLICK_01);
+        QuickslotScript.EquipQuickSlot(_item);
+    }
+    void UnequipQuickSlot()
+    {
+        Debug.Log("해제");
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.CLICK_01);
+        QuickslotScript.ClearQuickSlot();
     }
 }

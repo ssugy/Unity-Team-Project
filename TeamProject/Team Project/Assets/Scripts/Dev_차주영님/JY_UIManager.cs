@@ -194,8 +194,6 @@ public class JY_UIManager : MonoBehaviour
         }
 
     }
-
-
     public void InitializeStatus()
     {
         JY_CharacterListManager.s_instance.playerList[0].InitializeStat();

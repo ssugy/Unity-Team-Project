@@ -21,6 +21,7 @@ public class BattleUI : MonoBehaviour
     public Button skill_3;
     public Button skill_4;
     public Button evasion;
+    public Button Quickslot;
     public EventTrigger lArm;           // lArm 기능은 버튼이 아닌 이벤트트리거를 사용함.
     private EventTrigger.Entry lArm_PointerDown;
     private EventTrigger.Entry lArm_PointerUp;

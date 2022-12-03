@@ -69,7 +69,8 @@ public class AudioManager : MonoBehaviour
         PLAYER_SHIELD,
         BGM_DUNGEON_01,
         BGM_DUNGEON_02,
-        BGM_LOBBY
+        BGM_LOBBY,
+        PLAYER_POTION
     }
     
     public AudioClip[] clips;   // enum의 순서를 따라가야됨
