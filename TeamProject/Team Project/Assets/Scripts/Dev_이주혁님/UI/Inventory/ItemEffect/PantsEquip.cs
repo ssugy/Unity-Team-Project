@@ -42,12 +42,7 @@ public class PantsEquip : ItemEffect
         if (JY_CharacterListManager.s_instance.invenList[0].onChangeItem != null)
         {
             JY_CharacterListManager.s_instance.invenList[0].onChangeItem();
-        }
-        if (InventoryUI.instance != null)
-        {
-            InventoryUI.instance.legIcon.sprite = _item.image;
-            InventoryUI.instance.legIcon.gameObject.SetActive(true);
-        }
+        }        
     }
     public override int GetType()
     {

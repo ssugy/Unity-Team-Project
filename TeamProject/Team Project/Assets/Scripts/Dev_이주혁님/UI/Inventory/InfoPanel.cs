@@ -11,6 +11,7 @@ public class InfoPanel : MonoBehaviour
     public Image icon;              // 아이템 아이콘.
     public Text nameText;           // 아이템 이름.
     public Text typeText;           // 아이템 타입.
+    public Text levelText;          // 아이템 레벨 제한.
     public Text explanationText;    // 아이템 설명.
     [Space(32)]
     [Header("사용/파괴 버튼")]
@@ -28,7 +29,7 @@ public class InfoPanel : MonoBehaviour
     public JY_QuickSlot QuickslotScript;    //퀵슬롯 스크립트
 
     // 아이템 패널을 출력하는 메소드. 인벤토리의 아이템을 클릭하면 해당 슬롯의 아이템 정보를 받아와 출력한다.
-    public void SetInformation(Item _item, Slot _slot)
+    public void SetInformation(Item _item)
     {        
         useButton.onClick.RemoveAllListeners();         // 사용 버튼에 할당된 메소드를 초기화.
         destroyButton.onClick.RemoveAllListeners();     // 파괴 버튼에 할당된 메소드를 초기화.
@@ -37,27 +38,32 @@ public class InfoPanel : MonoBehaviour
         nameText.text = _item.name;                     // 선택된 아이템의 이름으로 텍스트를 교체.
         explanationText.text = _item.explanation;       // 선택된 아이템의 설명으로 텍스트를 교체.
         useButton.gameObject.SetActive(true);           // 사용 버튼을 활성화함. (재료 아이템은 사용이 비활성화.)
+        useButton.interactable = true;
         destroyButton.gameObject.SetActive(true);       // 파괴 버튼을 활성화함. (장착된 장비 아이템은 파괴가 비활성화.)
         QuickSlot.gameObject.SetActive(false);
         switch (_item.type)                             // 아이템 타입에 따라 다른 기능을 수행.
         {
             case ItemType.EQUIPMENT:
                 typeText.text = "장비";
+                levelText.gameObject.SetActive(true);
+                levelText.text = $"레벨 {_item.level} 이상\n장착 가능";
                 if (_item.equipedState == EquipState.UNEQUIPED)         // 장착 해제 상태면.
                 {
                     useButtonText.text = "장착";
-                    //useButton.onClick.AddListener(() => _item.Equip());
-                    useButton.onClick.AddListener(() => iUi.Equip(_item, _slot));
+                    useButton.onClick.AddListener(() => _item.Equip());
+                    // 장비 제한 레벨이 캐릭터 레벨보다 높으면 장착 버튼이 상호 작용이 불가됨.
+                    if (_item.level > JY_CharacterListManager.s_instance.playerList[0].playerStat.level)
+                        useButton.interactable = false;
                 }
                 else if (_item.equipedState == EquipState.EQUIPED)      // 장착 상태면.
                 {
                     destroyButton.gameObject.SetActive(false);
                     useButtonText.text = "해제";
-                    //useButton.onClick.AddListener(() => _item.Unequip());
-                    useButton.onClick.AddListener(() => iUi.Unequip(_item, _slot));
+                    useButton.onClick.AddListener(() => _item.Unequip());                    
                 }
                 break;
             case ItemType.CONSUMABLE:
+                levelText.gameObject.SetActive(false);
                 QuickSlot.gameObject.SetActive(true);
                 if (_item.name.Equals(QuickslotScript.EquipItem))
                     QuickSlot.onClick.AddListener(() => UnequipQuickSlot());
@@ -69,6 +75,7 @@ public class InfoPanel : MonoBehaviour
                 useButton.onClick.AddListener(() => JY_CharacterListManager.s_instance.invenList[0].RemoveItem(_item));      // 사용 버튼을 누르면 아이템이 사라짐.
                 break;
             case ItemType.INGREDIENTS:
+                levelText.gameObject.SetActive(false);
                 typeText.text = "재료";
                 useButton.gameObject.SetActive(false);
                 break;
@@ -79,8 +86,7 @@ public class InfoPanel : MonoBehaviour
         // 추가 옵션 값 표시
         ShowOptions(_item);
 
-        destroyButton.onClick.AddListener(() => //Inventory.instance.RemoveItem(_item));
-        iUi.DestroyItem(_item, _slot));
+        destroyButton.onClick.AddListener(() => iUi.DestroyItem(_item));
     }   
 
     private void ShowOptions(Item _item)

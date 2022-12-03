@@ -34,12 +34,7 @@ public class TopEquip : ItemEffect
         if (JY_CharacterListManager.s_instance.invenList[0].onChangeItem != null)
         {
             JY_CharacterListManager.s_instance.invenList[0].onChangeItem();
-        }
-        if (InventoryUI.instance != null)
-        {
-            InventoryUI.instance.chestIcon.sprite = _item.image;
-            InventoryUI.instance.chestIcon.gameObject.SetActive(true);
-        }
+        }        
     }
     public override int GetType()
     {

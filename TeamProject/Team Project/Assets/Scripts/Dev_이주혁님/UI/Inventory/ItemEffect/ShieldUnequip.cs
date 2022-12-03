@@ -22,11 +22,6 @@ public class ShieldUnequip : ItemEffect
             Destroy(JY_CharacterListManager.s_instance.playerList[0].lWeaponDummy.GetComponentInChildren<Staff>().gameObject);
         }
         if (JY_CharacterListManager.s_instance.invenList[0].onChangeItem != null)
-            JY_CharacterListManager.s_instance.invenList[0].onChangeItem();
-        if (InventoryUI.instance != null)
-        {
-            InventoryUI.instance.shieldIcon.sprite = null;
-            InventoryUI.instance.shieldIcon.gameObject.SetActive(false);
-        }        
+            JY_CharacterListManager.s_instance.invenList[0].onChangeItem();              
     }
 }

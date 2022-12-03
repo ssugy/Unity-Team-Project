@@ -130,6 +130,7 @@ public class Inventory : MonoBehaviour
                 return true;
             }
         }
+
         if (items.Count < SlotCnt)
         {
             _item.itemCount = 1;

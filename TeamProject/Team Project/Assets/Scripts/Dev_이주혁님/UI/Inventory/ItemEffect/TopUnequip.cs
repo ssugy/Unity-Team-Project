@@ -24,10 +24,6 @@ public class TopUnequip : ItemEffect
 
         if (JY_CharacterListManager.s_instance.invenList[0].onChangeItem != null)
             JY_CharacterListManager.s_instance.invenList[0].onChangeItem();
-        if (InventoryUI.instance != null)
-        {
-            InventoryUI.instance.chestIcon.sprite = null;
-            InventoryUI.instance.chestIcon.gameObject.SetActive(false);
-        }
+        
     }    
 }

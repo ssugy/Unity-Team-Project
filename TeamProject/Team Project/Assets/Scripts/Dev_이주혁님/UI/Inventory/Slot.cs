@@ -63,7 +63,7 @@ public class Slot : MonoBehaviour
     {
         if (!isEmpty)
         {
-            infoPanel.SetInformation(item, this);
+            infoPanel.SetInformation(item);
             infoPanel.gameObject.SetActive(true);            
         }
     }
