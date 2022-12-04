@@ -7,18 +7,31 @@ using UnityEngine.Playables;
 public class CutsceneBoss_1 : MonoBehaviour
 {
     public Camera cineCam;    
-    public Enemy boss;        
+    public JY_Boss_FireDungeon boss;        
     public HP_Bar_Boss hpBarBoss;
     public PlayableDirector director;
-    
+
+    IEnumerator BossWakeUp()
+    {
+        yield return new WaitForSeconds(2f);
+        // 보스를 깨움.
+        boss.isAwake = true;
+    }
+
     public void OnAwakenBoss()
     {
-        Debug.Log("보스전 시작");
-        JY_Boss_FireDungeon.s_instance.isAwake = true;
+        StartCoroutine(BossWakeUp());
+
+        // 부위파괴 버튼 활성화.
         JY_UIManager.instance.partdestructionUIButton.SetActive(true);
+
+        // 보스 HP바 UI 활성화.
         hpBarBoss.Recognize(boss);
+
         // 보스전 BGM 재생.
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BossBGM_01, true, 1f);
+
+        // 컷신용 카메라 off
         cineCam.enabled = false;        
     }
 
@@ -27,12 +40,12 @@ public class CutsceneBoss_1 : MonoBehaviour
         // 멀티 플레이 시 플레이어 중 누구라도 먼저 보스룸에 진입 시 컷씬이 재생되고 보스룸으로 이동함.
         if (other.CompareTag("Player"))
         {
-            // Collider를 Off해줌.
+            // 오브젝트의 Collider를 Off해줌. (두 명이 동시에 보스룸에 입장했을 때 중복 실행을 막기 위함)
             GetComponent<Collider>().enabled = false;
 
             // 재생중인 던전 BGM을 off함.
             if (AudioManager.s_instance.bgmAudioSource != null)
-                AudioManager.s_instance.SoundFadeInOut(AudioManager.s_instance.nowplayName, 0, 1f);
+                AudioManager.s_instance.SoundFadeInOut(AudioManager.s_instance.nowplayName, 0, 2f);
 
             // 조이스틱의 OnPointerUp을 실행함. (포인터업 시 드래그 중인 오브젝트를 null로 만듦)
             FloatingJoystick.instance.OnPointerUp(FloatingJoystick.instance.eventData);           
