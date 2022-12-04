@@ -67,10 +67,10 @@ public class JY_CutScenePlay : MonoBehaviour
                     break;
                 }
             }
-            
-            //JY_Boss_FireDungeon.s_instance.isAwake = true;
-            //JY_UIManager.instance.partdestructionUIButton.SetActive(true);
-            //hpBarBoss.Recognize(boss);            
+
+            JY_Boss_FireDungeon.s_instance.isAwake = true;
+            JY_UIManager.instance.partdestructionUIButton.SetActive(true);
+            hpBarBoss.Recognize(boss);
         }       
     }
     IEnumerator CutScene_1()
