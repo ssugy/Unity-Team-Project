@@ -40,11 +40,7 @@ public class JY_CutScenePlay : MonoBehaviour
 
 
             // 조이스틱을 평형 상태로 만들어 줌.
-            FloatingJoystick.instance.OnPointerUp(null);
-            
-            // 플레이어가 움직이지 못하게 함.
-            JY_CharacterListManager.s_instance.playerList[0].enableMove = false;
-            JY_CharacterListManager.s_instance.playerList[0].movement = Vector3.zero;
+            FloatingJoystick.instance.OnPointerUp(FloatingJoystick.instance.eventData);
 
             // 플레이어의 위치를 보스룸 시작 지점으로 이동함. Character Controller 컴포넌트가 켜져 있으면
             // 포지셔닝이 불가능하므로 Controller를 off 했다가 포지셔닝 후 다시 켜줌.
