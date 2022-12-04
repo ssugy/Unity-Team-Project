@@ -20,7 +20,7 @@ public class CutsceneBoss_2 : MonoBehaviour
 
     public void OnSecondPhase()
     {
-        
+        StartCoroutine(BossWakeUp());
               
 
         // 보스전 BGM 재생.
