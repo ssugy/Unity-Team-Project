@@ -65,9 +65,9 @@ public class InfoPanel : MonoBehaviour
             case ItemType.CONSUMABLE:
                 levelText.gameObject.SetActive(false);
                 QuickSlot.gameObject.SetActive(true);
-                if (_item.name.Equals(QuickslotScript.EquipItem))
+                if (_item.name.Equals(QuickslotScript.EquipItem.name))
                     QuickSlot.onClick.AddListener(() => UnequipQuickSlot());
-                else
+                else if (!_item.name.Equals(QuickslotScript.EquipItem.name) || QuickslotScript.EquipItem==null) 
                     QuickSlot.onClick.AddListener(() => EquipQuickSlot(_item));
                 typeText.text = "소비";
                 useButtonText.text = "사용";

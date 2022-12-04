@@ -8,9 +8,11 @@ public class JY_QuickSlot : MonoBehaviour
     public Image SlotIcon;
     public Text SlotCount;
     public Item EquipItem;
+    Item EmptySlot;
     Button button;
     private void Start()
     {
+        EmptySlot = new Item();
         button = GetComponent<Button>();
     }
     public void EquipQuickSlot(Item _item)
@@ -39,7 +41,7 @@ public class JY_QuickSlot : MonoBehaviour
     }
     public void ClearQuickSlot()
     {
-        EquipItem = null;
+        EquipItem = EmptySlot;
         SlotIcon.sprite = null;
         SlotIcon.gameObject.SetActive(false);
         button.onClick.RemoveAllListeners();
