@@ -224,9 +224,9 @@ public class AudioManager : MonoBehaviour
     private float bgmVolumePivot;
     private float effectVolumePivot;
     private float beforeEffectVolumePivot;
-    private AudioSource bgmAudioSource;
+    public AudioSource bgmAudioSource;
     public AudioSource NOWPLAY { get { return bgmAudioSource; } }
-    SOUND_NAME nowplayName;
+    public SOUND_NAME nowplayName;
     private bool isBGMMute;
     private bool isEffectMute;
 

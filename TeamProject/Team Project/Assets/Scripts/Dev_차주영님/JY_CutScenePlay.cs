@@ -34,6 +34,11 @@ public class JY_CutScenePlay : MonoBehaviour
         // 멀티 플레이 시 플레이어 중 누구라도 먼저 보스룸에 진입 시 컷씬이 재생되고 보스룸으로 이동함.
         if (other.CompareTag("Player"))
         {
+            // 던전 BGM을 off함.
+            if (AudioManager.s_instance.bgmAudioSource != null)
+                AudioManager.s_instance.SoundFadeInOut(AudioManager.s_instance.nowplayName, 0, 1f);
+
+
             // 조이스틱을 평형 상태로 만들어 줌.
             FloatingJoystick.instance.OnPointerUp(null);
             
@@ -67,9 +72,9 @@ public class JY_CutScenePlay : MonoBehaviour
                 }
             }
             
-            JY_Boss_FireDungeon.s_instance.isAwake = true;
-            JY_UIManager.instance.partdestructionUIButton.SetActive(true);
-            hpBarBoss.Recognize(boss);            
+            //JY_Boss_FireDungeon.s_instance.isAwake = true;
+            //JY_UIManager.instance.partdestructionUIButton.SetActive(true);
+            //hpBarBoss.Recognize(boss);            
         }       
     }
     IEnumerator CutScene_1()
