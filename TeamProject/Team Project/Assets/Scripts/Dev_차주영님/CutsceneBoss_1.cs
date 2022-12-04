@@ -21,7 +21,7 @@ public class CutsceneBoss_1 : MonoBehaviour
         // 보스전 BGM 재생.
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BossBGM_01, true, 1f);
         cineCam.enabled = false;
-        JY_CharacterListManager.s_instance.playerList[0].playerJoysitck = FloatingJoystick.instance;
+        //JY_CharacterListManager.s_instance.playerList[0].playerJoysitck = FloatingJoystick.instance;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -38,7 +38,7 @@ public class CutsceneBoss_1 : MonoBehaviour
 
             // 조이스틱을 평형 상태로 만들어 줌.
 
-            JY_CharacterListManager.s_instance.playerList[0].playerJoysitck = null;
+            //JY_CharacterListManager.s_instance.playerList[0].playerJoysitck = null;
 
 
             // 플레이어의 위치를 보스룸 시작 지점으로 이동함. Character Controller 컴포넌트가 켜져 있으면
