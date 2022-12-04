@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Timeline;
 using UnityEngine.Playables;
 
@@ -20,8 +19,7 @@ public class CutsceneBoss_1 : MonoBehaviour
         hpBarBoss.Recognize(boss);
         // 보스전 BGM 재생.
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BossBGM_01, true, 1f);
-        cineCam.enabled = false;
-        //JY_CharacterListManager.s_instance.playerList[0].playerJoysitck = FloatingJoystick.instance;
+        cineCam.enabled = false;        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -36,10 +34,8 @@ public class CutsceneBoss_1 : MonoBehaviour
             if (AudioManager.s_instance.bgmAudioSource != null)
                 AudioManager.s_instance.SoundFadeInOut(AudioManager.s_instance.nowplayName, 0, 1f);
 
-            // 조이스틱을 평형 상태로 만들어 줌.
-
-            //JY_CharacterListManager.s_instance.playerList[0].playerJoysitck = null;
-
+            // 조이스틱의 OnPointerUp을 실행함. (포인터업 시 드래그 중인 오브젝트를 null로 만듦)
+            FloatingJoystick.instance.OnPointerUp(FloatingJoystick.instance.eventData);           
 
             // 플레이어의 위치를 보스룸 시작 지점으로 이동함. Character Controller 컴포넌트가 켜져 있으면
             // 포지셔닝이 불가능하므로 Controller를 off 했다가 포지셔닝 후 다시 켜줌.
@@ -66,9 +62,7 @@ public class CutsceneBoss_1 : MonoBehaviour
                         JY_CharacterListManager.s_instance.playerList[0].GetComponent<Animator>());
                     break;
                 }
-            }
-
-            
+            }            
         }       
     }   
 }

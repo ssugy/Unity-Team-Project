@@ -23,11 +23,13 @@ public class FloatingJoystick : Joystick
         OnDrag(_eventData);
     }
     public override void OnPointerUp(PointerEventData _eventData)
-    {
-        eventData = null;
+    {        
+        // 현재 이벤트 데이터가 인식하고 있는, 드래그 중인 오브젝트를 null로 바꿔줌.
+        // 드래그 중인 오브젝트가 없으므로 OnDrag가 발생하지 않음.
+        _eventData.pointerDrag = null;
         input = Vector2.zero;
         handle.anchoredPosition = Vector2.zero;
         joystick.localPosition = initial;
     }
-
+        
 }
