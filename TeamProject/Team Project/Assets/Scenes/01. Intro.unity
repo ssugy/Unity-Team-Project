@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.3708985, g: 0.3783704, b: 0.35722548, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5264,6 +5264,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b8011335492578246a933b6182dff4f1, type: 3}
   - {fileID: 8300000, guid: ef12dc1322f516b4796b77caac2a8a8d, type: 3}
   - {fileID: 8300000, guid: 23b784937da61f34c90d8e8ff109f51d, type: 3}
+  bgmAudioSource: {fileID: 0}
+  nowplayName: 0
 --- !u!1 &1464214702
 GameObject:
   m_ObjectHideFlags: 0
@@ -7144,7 +7146,7 @@ MonoBehaviour:
   LevelUpEffect: {fileID: 8166768042605032452, guid: 249229ea8e1e2a9478a2083c1141829e, type: 3}
   Boss_Skill_Effect: {fileID: 1714681308540598, guid: 5cbc537826220e04592d5a41a0dd985f, type: 3}
   Boss_Skill_Effect2: {fileID: 1893033738566276, guid: 8c8e34050a922f84fbc572368f896777, type: 3}
-  Boss_Dead_Effect: {fileID: 8166768042605032452, guid: e8966f56dc4ef3f48bec7bd909be9a9a, type: 3}
+  Boss_Dead_Effect: {fileID: 1312838344612490, guid: 268294f28a34a3446bdde40b6e6559b5, type: 3}
 --- !u!4 &1885446388
 Transform:
   m_ObjectHideFlags: 0
