@@ -518,6 +518,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         if (other.tag == "Buff")
         {
             Buff buff = other.GetComponent<Buff>();
+            AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Buff_Get);
             switch (buff.type)
             {
                 case Buff.Type.AtkPoint:

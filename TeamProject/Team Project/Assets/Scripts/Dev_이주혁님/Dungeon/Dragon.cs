@@ -29,7 +29,7 @@ public class Dragon : Enemy
     
     void FixedUpdate()
     {
-        if (nav.velocity != Vector3.zero)
+        if (nav.velocity.magnitude < 0.1f)
         {
             anim.SetBool("isWalk", true);
         }
@@ -145,7 +145,9 @@ public class Dragon : Enemy
     }
     void ShootFire()
     {
-        Instantiate(fireballPrefab, shooter.position, transform.rotation);
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Dragon_Fire);
+        GameObject fireball = Instantiate(fireballPrefab, shooter.position, Quaternion.identity);
+        fireball.transform.LookAt(target);
     }
     void SoundGrowl()
     {
