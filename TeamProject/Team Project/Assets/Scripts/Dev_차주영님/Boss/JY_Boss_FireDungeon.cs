@@ -306,7 +306,7 @@ public class JY_Boss_FireDungeon : Enemy
             FreezeEnemy();
 
             DungeonManager.instance.DungeonProgress(4);
-            questProgress();
+            JY_QuestManager.s_instance.QuestProgress(1);
             DropExp();
             DropGold();
             DropItem();
@@ -314,7 +314,6 @@ public class JY_Boss_FireDungeon : Enemy
             Destroy(gameObject,10f);
         }
     }
-
     /// <summary>
     /// 스킬에 따른 다른 피격모션 재생, 플레이어가 어떤 스킬로 보스에게 공격했냐에 따라서 보스의 피격 애니매이션을 결정하는 함수.
     /// </summary>

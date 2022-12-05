@@ -32,12 +32,12 @@ public class JY_QuestData : MonoBehaviour
         managerData.Add(0, questData_1);
 
         Dictionary<int, string> questData_2 = new Dictionary<int, string>();
-        questData_2.Add(0, "두 머리의 괴물 처치");
+        questData_2.Add(0, "미후왕 처치");
         questData_2.Add(1, "화염 던전 가장 안쪽에 있는 보스를 처치하시오.");
         questData_2.Add(2, "마을의 기사단장");
-        questData_2.Add(3, "두 머리 괴물");
+        questData_2.Add(3, "미후황");
         questData_2.Add(4, "1");
-        questData_2.Add(5, "화염 던전의 가장 깊은 곳에는 두 머리를 가진 끔찍한 괴물이 있다네. 그 괴물은 굉장히 위험하다네.");
+        questData_2.Add(5, "화염 던전의 가장 깊은 곳에는 원숭이의 형상을 한 끔찍한 괴물이 있다네. 그 괴물은 큰 방망이를 들고 있어 매우 위험하다네");
         questData_2.Add(6, "스켈레톤을 처치한 것을 보아 자네는 깊은 곳까지 갈 수 있을테지, 그 괴물을 처치해 주겠는가?");
         questData_2.Add(7, "보상 : Exp 30, 1000 골드");
         questData_2.Add(8, "정말로 해치우다니! 자네 정말 대단하군.");

@@ -74,7 +74,15 @@ public class JY_QuestManager : MonoBehaviour
                     JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress[3] == 0)
                     JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress[1]++;
                 break;
-            
+            case 1:
+                if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress2[2] == 1 &&
+                    JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress2[3] == 0)
+                {
+                    Debug.Log("enter");
+                    JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress2[1]++;
+                }
+
+                break;
         }
     }
 
