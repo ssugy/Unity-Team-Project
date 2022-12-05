@@ -10,10 +10,11 @@ public class CutsceneBoss_2 : MonoBehaviour
     public Camera cineCam;
     public JY_Boss_FireDungeon boss;
     public PlayableDirector director;
+    public GameObject phase2_Light;
 
     IEnumerator BossWakeUp()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         // 보스를 깨움.
         boss.isAwake = true;
     }
@@ -47,8 +48,9 @@ public class CutsceneBoss_2 : MonoBehaviour
             // 보스의 공격 스피드를 제어하는 파라미터를 변경.
             boss.GetComponent<Animator>().SetFloat("AttackSpeed", 1.05f);
             boss.CurHealth = boss.maxHealth;
-            boss.transform.position = new Vector3(48f, 0f, 140f);
+            boss.transform.position = new Vector3(48f, 0f, 130f);
             boss.transform.rotation = Quaternion.identity;
+            phase2_Light.SetActive(true);
 
             // 재생중인 던전 BGM을 off함.
             if (AudioManager.s_instance.bgmAudioSource != null)

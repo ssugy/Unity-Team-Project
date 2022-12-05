@@ -275,9 +275,7 @@ public class JY_Boss_FireDungeon : Enemy
     {
         curHealth -= _damage;
         Vector3 reactVec = transform.position - _player; // ³Ë¹é °Å¸®.
-        StartCoroutine(OnDamage(reactVec * 0.2f));
-        hpbar = Enemy_HP_UI.GetObject();
-        hpbar.Recognize(this);
+        StartCoroutine(OnDamage(reactVec * 0.2f));        
         if (EffectManager.Instance != null)
             EffectManager.Instance.PlayHitEffect(transform.position + offset, transform.rotation.eulerAngles, transform);
     }
