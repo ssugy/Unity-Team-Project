@@ -29,6 +29,7 @@ public class InstanceManager : MonoBehaviour
     public GameObject Skill_2_Effect3;
     [Header("플레이어 기타 이펙트")]
     public GameObject LevelUpEffect;
+    public GameObject HealingEffect;
     [Header("보스 스킬 이펙트")]
     public GameObject Boss_Skill_Effect;
     public GameObject Boss_Skill_Effect2;
@@ -56,15 +57,16 @@ public class InstanceManager : MonoBehaviour
     {
         GameObject effect = FindEffect(EffectName,PlayerEffectList);
         if (effect != null)
-        {
             effect.SetActive(true);
-            effect.transform.localPosition = Vector3.forward;
-        }
         else
         {
-            if(EffectName.Equals("LevelUpEffect"))
+            if (EffectName.Equals("LevelUpEffect"))
+            {
                 effect = Instantiate<GameObject>(LevelUpEffect, JY_CharacterListManager.s_instance.playerList[0].transform);
-            effect.transform.localPosition = Vector3.forward;
+                effect.transform.localPosition = Vector3.forward;
+            }
+            else if(EffectName.Equals("HealingEffect"))
+                effect = Instantiate<GameObject>(HealingEffect, JY_CharacterListManager.s_instance.playerList[0].transform);
             effect.gameObject.name = EffectName;
             PlayerEffectList.Add(effect);
         }
@@ -159,14 +161,11 @@ public class InstanceManager : MonoBehaviour
         SkillEffectList.Add(effect.GetComponent<PlayerEffect>());
     }
     
-    public void ExtraEffectOff(string EffectName)
+    public void ExtraEffectOff()
     {
         foreach (GameObject one in PlayerEffectList)
         {
-            if (one.name.Equals(EffectName))
-            {
-                one.SetActive(false);
-            }
+            one.SetActive(false);
         }
     }
     
