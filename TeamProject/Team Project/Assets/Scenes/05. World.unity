@@ -795,7 +795,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &187457974
 GameObject:
@@ -865,7 +865,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &192035082
 GameObject:
@@ -1408,11 +1408,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 269679143}
   m_CullTransparentMesh: 1
---- !u!20 &284176636 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 4631150791619066725, guid: a9964792db6f84043943c3bc2ad0d4ce, type: 3}
-  m_PrefabInstance: {fileID: 4631150791880149913}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &300533768
 GameObject:
   m_ObjectHideFlags: 0
@@ -3954,7 +3949,7 @@ RectTransform:
   - {fileID: 269679144}
   - {fileID: 56635036}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4276,7 +4271,7 @@ RectTransform:
   - {fileID: 2014089244}
   - {fileID: 1855835280}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6423,7 +6418,7 @@ Transform:
   - {fileID: 1725837822}
   - {fileID: 192035083}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 212.5, z: 0}
 --- !u!1 &1060747794
 GameObject:
@@ -8350,15 +8345,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 949996144}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c8d05221712ab04682eddb873c75695, type: 3}
+  m_Script: {fileID: 11500000, guid: 00fd1b5f56d9b4246aa3bbb741f7f7d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcNum: 2
-  questMark: {fileID: 0}
-  questMark_Gray: {fileID: 0}
-  questMark_Complete: {fileID: 0}
-  targetCam: {fileID: 0}
-  NpcPortrait: {fileID: 21300000, guid: b6aba91b65832ff42803dffcdc2983e5, type: 3}
+  TYPE: 2
+  NAME: "\uB9C8\uC744\uC758 \uAD50\uAD6C\uC7A5"
 --- !u!1 &1434380599
 GameObject:
   m_ObjectHideFlags: 0
@@ -8664,6 +8655,7 @@ MonoBehaviour:
     equipedState: 0
     name: 
     itemCount: 0
+    level: 0
     explanation: 
     image: {fileID: 0}
     effects: []
@@ -10017,7 +10009,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1585740664
 GameObject:
@@ -10651,7 +10643,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1722222362
 GameObject:
@@ -11406,7 +11398,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1878639123
 GameObject:
@@ -12193,7 +12185,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2051922327}
   - component: {fileID: 2051922326}
-  - component: {fileID: 2051922325}
   - component: {fileID: 2051922324}
   - component: {fileID: 2051922328}
   m_Layer: 0
@@ -12202,7 +12193,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2051922324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12215,8 +12206,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fe0269d16341e5498e0c53c7c7bcc1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCam: {fileID: 764654248}
-  minimapCam: {fileID: 284176636}
   dialogCam: {fileID: 2051922326}
   BattleUI: {fileID: 6448476278223814789}
   DialogUI: {fileID: 1585740664}
@@ -12228,21 +12217,12 @@ MonoBehaviour:
   rejectionButton: {fileID: 1060747794}
   finishButton: {fileID: 709306658}
   exitButton: {fileID: 1562662599}
-  npc: {fileID: 1725837821}
   player: {fileID: 0}
   dummy_1: {fileID: 515894000}
   dummy_2: {fileID: 300533768}
   paths:
   - {fileID: 1693786403}
   - {fileID: 155665059}
---- !u!81 &2051922325
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2051922323}
-  m_Enabled: 1
 --- !u!20 &2051922326
 Camera:
   m_ObjectHideFlags: 0
@@ -12250,7 +12230,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2051922323}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
@@ -12271,7 +12251,7 @@ Camera:
   field of view: 45
   orthographic: 0
   orthographic size: 5
-  m_Depth: -1
+  m_Depth: 2
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 187319
@@ -12293,8 +12273,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2051922323}
-  m_LocalRotation: {x: -0, y: -0.27982888, z: -0, w: -0.96005}
-  m_LocalPosition: {x: 4.180006, y: 1.5, z: 15.59}
+  m_LocalRotation: {x: 0.111189544, y: 0.26026234, z: -0.03018701, w: 0.9586392}
+  m_LocalPosition: {x: 2.9038434, y: 1.7983694, z: 13.652098}
   m_LocalScale: {x: 1.0000002, y: 1, z: 1.0000002}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14589,6 +14569,7 @@ MonoBehaviour:
     equipedState: 0
     name: 
     itemCount: 0
+    level: 0
     explanation: 
     image: {fileID: 0}
     effects: []

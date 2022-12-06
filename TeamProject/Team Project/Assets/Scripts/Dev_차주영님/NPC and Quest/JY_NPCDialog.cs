@@ -4,9 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class JY_NPCDialog : MonoBehaviour
-{
-    public Camera mainCam;
-    public Camera minimapCam;
+{    
     public Camera dialogCam;
     public GameObject BattleUI;
 
@@ -18,8 +16,7 @@ public class JY_NPCDialog : MonoBehaviour
     public GameObject acceptButton;
     public GameObject rejectionButton;
     public GameObject finishButton;
-    public GameObject exitButton;
-    public GameObject npc;
+    public GameObject exitButton;    
     public GameObject player;
 
     public GameObject dummy_1;
@@ -33,9 +30,7 @@ public class JY_NPCDialog : MonoBehaviour
     }
 
     public void EnterNpcDialog()
-    {        
-        minimapCam.gameObject.SetActive(false);
-        mainCam.gameObject.SetActive(false);
+    {               
         dialogCam.gameObject.SetActive(true);
         dialogCam.GetComponent<Cinemachine.CinemachineDollyCart>().m_Position = 0;
         dialogCam.GetComponent<Cinemachine.CinemachineDollyCart>().m_Path = paths[JY_QuestManager.s_instance.selectNpcNum];        
@@ -164,9 +159,7 @@ public class JY_NPCDialog : MonoBehaviour
         scriptText.text = JY_QuestManager.s_instance.QuestData[questNum][dialogPartNum];
     }
     public void quitNpcDialog()
-    {
-        minimapCam.gameObject.SetActive(true);
-        mainCam.gameObject.SetActive(true);
+    {        
         dialogCam.gameObject.SetActive(false);
         nextButton.SetActive(false);
         acceptButton.SetActive(false);

@@ -5,15 +5,11 @@ using UnityEngine;
 public class Key_Drop : MonoBehaviour
 {
     private Enemy enemy;
-    public Door door;      // 해당 열쇠가 열 문.    
-    bool keyDrop;
-    
-            
+    public Door door;      // 해당 열쇠가 열 문.                       
 
     private void Start()
     {
-        enemy = GetComponent<Enemy>();
-        keyDrop = false;
+        enemy = GetComponent<Enemy>();        
     }
 
     public void PickUpKey()
@@ -25,10 +21,10 @@ public class Key_Drop : MonoBehaviour
     private void Update()
     {
         // 몬스터가 사망하면 실행됨.
-        if (enemy.CurHealth <= 0 && !keyDrop) 
+        if (enemy.CurHealth <= 0) 
         {
             PickUpKey();
-            keyDrop = true;
+            Destroy(this);
         }
     }
 }
