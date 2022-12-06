@@ -30,8 +30,8 @@ public class JY_NPCDialog : MonoBehaviour
     }
 
     public void EnterNpcDialog()
-    {               
-        dialogCam.gameObject.SetActive(true);
+    {
+        dialogCam.enabled = true;
         dialogCam.GetComponent<Cinemachine.CinemachineDollyCart>().m_Position = 0;
         dialogCam.GetComponent<Cinemachine.CinemachineDollyCart>().m_Path = paths[JY_QuestManager.s_instance.selectNpcNum];        
         
@@ -159,8 +159,8 @@ public class JY_NPCDialog : MonoBehaviour
         scriptText.text = JY_QuestManager.s_instance.QuestData[questNum][dialogPartNum];
     }
     public void quitNpcDialog()
-    {        
-        dialogCam.gameObject.SetActive(false);
+    {
+        dialogCam.enabled = false;
         nextButton.SetActive(false);
         acceptButton.SetActive(false);
         rejectionButton.SetActive(false);
