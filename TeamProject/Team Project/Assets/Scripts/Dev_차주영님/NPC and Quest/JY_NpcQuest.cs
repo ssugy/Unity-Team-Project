@@ -8,8 +8,7 @@ public class JY_NpcQuest : MonoBehaviour
     public int npcNum;
     public GameObject questMark;
     public GameObject questMark_Gray;
-    public GameObject questMark_Complete;
-    public Transform targetCam;
+    public GameObject questMark_Complete;    
     public Sprite NpcPortrait;
 
 

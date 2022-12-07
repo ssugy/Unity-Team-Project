@@ -16,26 +16,19 @@ public class JY_NPCDialog : MonoBehaviour
     public GameObject acceptButton;
     public GameObject rejectionButton;
     public GameObject finishButton;
-    public GameObject exitButton;    
-    public GameObject player;
+    public GameObject exitButton;
+    public GameObject shopButton;
 
-    public GameObject dummy_1;
-    public GameObject dummy_2;
     public List<Cinemachine.CinemachinePath> paths;
     int dialogPartNum;
 
-    private void OnEnable()
-    {
-        player = JY_CharacterListManager.s_instance.playerList[0].gameObject;
-    }
 
     public void EnterNpcDialog()
     {
         dialogCam.enabled = true;
         dialogCam.GetComponent<Cinemachine.CinemachineDollyCart>().m_Position = 0;
         dialogCam.GetComponent<Cinemachine.CinemachineDollyCart>().m_Path = paths[JY_QuestManager.s_instance.selectNpcNum];        
-        
-        NPCCamPosition(JY_QuestManager.s_instance.selectNpcNum);
+               
         DialogUI.SetActive(true);
         DialogPortrait.sprite = JY_QuestManager.s_instance.NPCPortrait;
         BattleUI.SetActive(false);
@@ -169,20 +162,5 @@ public class JY_NPCDialog : MonoBehaviour
         DialogUI.SetActive(false);
         BattleUI.SetActive(true);
         JY_UIManager.instance.StatusDataRenew();
-    }
-
-    public void NPCCamPosition(int NPCNum)
-    {
-        switch (NPCNum)
-        {
-            case 0:
-                dialogCam.transform.position = dummy_1.transform.position;
-                dialogCam.transform.rotation = dummy_1.transform.rotation;
-                break;
-            case 1:
-                dialogCam.transform.position = dummy_2.transform.position;
-                dialogCam.transform.rotation = dummy_2.transform.rotation;
-                break;
-        }
     }
 }
