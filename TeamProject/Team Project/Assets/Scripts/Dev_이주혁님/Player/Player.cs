@@ -157,6 +157,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     [HideInInspector] public bool isGaurd; // 방패막기 스킬 플래그
     [HideInInspector] public bool isKnockBack;  //넉백 플래그
     Vector3 KnockbackVec;                       //넉백 방향 벡터
+    int HitPoint;                               //경직수치
 
     public Transform rWeaponDummy;              // 오른손 무기 더미.
     public GameObject WeaponEffect;
@@ -193,11 +194,12 @@ public class Player : MonoBehaviourPun, IPunObservable
         enableAtk = true;
         isGaurd = false;
         enableRecoverSP = true;
-
+        
         movement = Vector3.zero;
         rotateSpeed = 5f;
         moveSpeed = 8f;
         gravity = 0f;
+        HitPoint = 0;
         KnockbackVec = Vector3.zero;
 
         WeaponEffect.transform.SetParent(rWeaponDummy);
@@ -779,7 +781,6 @@ public class Player : MonoBehaviourPun, IPunObservable
             //피했음
             return;
         }
-        WeaponEffectOff();
         playerStat.CurHP -= _damage;
 
         if (isGaurd)
@@ -792,8 +793,14 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
         else
         {
-            SoundHit();            
-            playerAni.SetFloat("isAttacked", (float)_damage / playerStat.HP);
+            SoundHit();
+            HitPoint++;
+            Invoke("HitPointReset", 2.0f);
+            if (HitPoint >= 2)
+            {
+                playerAni.SetFloat("isAttacked", (float)_damage / playerStat.HP);
+                HitPoint -= 2;
+            }
         }
 
         if (playerStat.CurHP <= 0)
@@ -808,6 +815,10 @@ public class Player : MonoBehaviourPun, IPunObservable
                     KnockbackVec = KnockBackDir(Enemy);
             }
         }
+    }
+    void HitPointReset()
+    {
+        HitPoint = 0;
     }
     public void DamageReset()
     {

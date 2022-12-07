@@ -30,12 +30,12 @@ public class JY_QuickSlot : MonoBehaviour
             _item.Use();
             JY_CharacterListManager.s_instance.invenList[0].RemoveItem(_item);
             SlotCount.text = _item.itemCount.ToString();
-            AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.PLAYER_POTION);
         }
         if (_item.itemCount <= 0)
         {
             SlotCount.text="0";
             button.onClick.RemoveAllListeners();
+            ClearQuickSlot();
         }
 
     }
