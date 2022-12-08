@@ -463,7 +463,14 @@ public class Player : MonoBehaviourPun, IPunObservable
             Time.deltaTime + new Vector3(0, gravity * Time.deltaTime, 0));
 
     public Vector3 KnockBackDir(Collider attacked) => JY_CharacterListManager.s_instance.playerList[0].transform.position - attacked.transform.position;
-    public void PlayerKnockBack(Vector3 dir) => controller.Move(dir * 6f * Time.deltaTime);
+    public void PlayerKnockBack(Vector3 dir) 
+    {
+        if(dir == Vector3.zero)
+        {
+            dir = (JY_CharacterListManager.s_instance.playerList[0].transform.position - Camera.main.transform.position).normalized;
+        }
+            controller.Move(dir * 4f * Time.deltaTime);
+    }
     void StopKnockBack()
     {
         isKnockBack = false;
@@ -813,8 +820,9 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (JY_Boss_FireDungeon.s_instance != null)
         {
-            if (JY_Boss_FireDungeon.s_instance.isJump)
+            if (JY_Boss_FireDungeon.s_instance.JumpAttackArea.gameObject.activeSelf==true)
             {
+                playerAni.SetFloat("isAttacked", (float)_damage / playerStat.HP);
                 isKnockBack = true;
                 if (Enemy != null)
                     KnockbackVec = KnockBackDir(Enemy);

@@ -42,6 +42,7 @@ public class CutsceneBoss_1 : MonoBehaviour
         {
             // 오브젝트의 Collider를 Off해줌. (두 명이 동시에 보스룸에 입장했을 때 중복 실행을 막기 위함)
             GetComponent<Collider>().enabled = false;
+            DungeonManager.instance.dungeonGuide.SetActive(false);
 
             // 재생중인 던전 BGM을 off함.
             if (AudioManager.s_instance.bgmAudioSource != null)
