@@ -648,8 +648,8 @@ public class Player : MonoBehaviourPun, IPunObservable
     public void SetState()
     {
         //Health
-        playerStat.HP = 210 + playerStat.health * 20 + playerStat.strength * 5;   // 1레벨 스탯 기준 400
-        playerStat.HpRecover = 10 + playerStat.health / 5;                          
+        playerStat.HP = 500 + playerStat.health * 40 + playerStat.strength * 10;   // 1레벨 스탯 기준 400(변경전
+        playerStat.HpRecover = 13 + playerStat.health / 5;                          
         playerStat.CurHP = playerStat.CurHP;
         //Stemina
         playerStat.SP = 46 + playerStat.stamina * 4 + playerStat.strength * 1;    // 1레벨 스탯 기준 80
@@ -659,7 +659,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         playerStat.criPro = (20f + Sigma(2f, 1.03f, playerStat.dexterity)) / 100f;
         playerStat.defMag = 1 - Mathf.Pow(1.02f, -(playerStat.defPoint + playerStat.addedDefPoint));
         if (rWeapon != null)
-            playerStat.atkPoint = rWeapon.atkPoint + Mathf.CeilToInt(Sigma(2f, 1.02f, playerStat.strength) + Sigma(1f, 1.1f, playerStat.dexterity));       
+            playerStat.atkPoint = rWeapon.atkPoint + Mathf.CeilToInt(Sigma(2f, 1.03f, playerStat.strength) + Sigma(1f, 1.2f, playerStat.dexterity));       
         else        
             playerStat.atkPoint = 0;
 
@@ -670,8 +670,8 @@ public class Player : MonoBehaviourPun, IPunObservable
     public void SetStateOption()
     {
         //Health
-        playerStat.HP = 210 + playerStat.tmpHealth * 20 + playerStat.tmpStrength * 5 + playerStat.addedHP;   // 1레벨 스탯 기준 400
-        playerStat.HpRecover = 10 + playerStat.tmpHealth / 5;
+        playerStat.HP = 500 + playerStat.tmpHealth * 40 + playerStat.tmpStrength * 10 + playerStat.addedHP;   // 1레벨 스탯 기준 400
+        playerStat.HpRecover = 13 + playerStat.tmpHealth / 5;
         playerStat.CurHP = playerStat.CurHP;
         //Stemina
         playerStat.SP = 46 + playerStat.tmpStamina * 4 + playerStat.tmpStrength * 1 + playerStat.addedSP;    // 1레벨 스탯 기준 80
@@ -681,7 +681,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         playerStat.criPro = (20f + Sigma(2f, 1.03f, playerStat.tmpDexterity)) / 100f;
         playerStat.defMag = 1 - Mathf.Pow(1.02f, -(playerStat.defPoint + playerStat.addedDefPoint));
         if (rWeapon != null)
-            playerStat.atkPoint = rWeapon.atkPoint + Mathf.CeilToInt(Sigma(2f, 1.02f, playerStat.tmpStrength) + Sigma(1f, 1.1f, playerStat.tmpDexterity));
+            playerStat.atkPoint = rWeapon.atkPoint + Mathf.CeilToInt(Sigma(2f, 1.03f, playerStat.tmpStrength) + Sigma(1f, 1.2f, playerStat.tmpDexterity));
         else
             playerStat.atkPoint = 0;
 

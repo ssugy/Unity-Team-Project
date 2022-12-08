@@ -844,6 +844,10 @@ PrefabInstance:
       value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 1295775362, guid: db7565f2be8946c499d96ca21f82a480, type: 3}
+      propertyPath: maxHealth
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295775362, guid: db7565f2be8946c499d96ca21f82a480, type: 3}
       propertyPath: explanationNum
       value: 3
       objectReference: {fileID: 0}
@@ -25802,10 +25806,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30f858d1025ad6f49ba9338a971861d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1500
+  maxHealth: 2400
   defMag: 0.5
-  atkPoint: 20
-  atkMag: 1.1
+  atkPoint: 60
+  atkMag: 1.3
   offset: {x: 0, y: 0, z: 0}
   dropExp: 0
   dropGold: 0
@@ -33787,6 +33791,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1604177661}
     m_Modifications:
+    - target: {fileID: 1295775362, guid: db7565f2be8946c499d96ca21f82a480, type: 3}
+      propertyPath: maxHealth
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 1295775362, guid: db7565f2be8946c499d96ca21f82a480, type: 3}
       propertyPath: explanationNum
       value: 2

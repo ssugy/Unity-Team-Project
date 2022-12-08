@@ -1841,9 +1841,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fd14eada434f834fb7cb572dd364dc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 350
+  maxHealth: 700
   defMag: 0.5
-  atkPoint: 50
+  atkPoint: 80
   atkMag: 1.5
   offset: {x: 0, y: 1.5, z: 0}
   dropExp: 50
@@ -1868,6 +1868,8 @@ MonoBehaviour:
   skillCool: 5
   skillDistance: 3
   shooter: {fileID: 5635370030993390824}
+  ProgressionMonster: 0
+  explanationNum: 0
 --- !u!195 &7393200756165185175
 NavMeshAgent:
   m_ObjectHideFlags: 0

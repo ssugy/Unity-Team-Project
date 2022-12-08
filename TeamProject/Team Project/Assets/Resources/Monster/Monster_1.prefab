@@ -368,8 +368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d2a47c69af48f146aa614613ab53026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 80
-  curHealth: 80
+  maxHealth: 120
   defMag: 0.2
   atkPoint: 30
   atkMag: 1.05
@@ -440,7 +439,10 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 213394764}
+  - {fileID: 3071264374105026308}
+  - {fileID: -8220844928495443776}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -458,8 +460,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
-  m_SynchronizeLayers: []
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 0
+    Name: isWalk
+  - Type: 9
+    SynchronizeType: 0
+    Name: isDead
+  - Type: 9
+    SynchronizeType: 0
+    Name: isAttacked
+  - Type: 9
+    SynchronizeType: 0
+    Name: isAttack
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
 --- !u!114 &-8220844928495443776
 MonoBehaviour:
   m_ObjectHideFlags: 0
