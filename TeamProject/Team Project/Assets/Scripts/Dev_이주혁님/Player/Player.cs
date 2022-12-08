@@ -459,7 +459,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     }
     void _Roll() => playerAni.SetBool("isRoll", false);
 
-    public void RollMove() => controller.Move(transform.forward * 6f *
+    public void RollMove() => controller.Move(transform.forward * 10f *
             Time.deltaTime + new Vector3(0, gravity * Time.deltaTime, 0));
 
     public Vector3 KnockBackDir(Collider attacked) => JY_CharacterListManager.s_instance.playerList[0].transform.position - attacked.transform.position;
@@ -712,12 +712,13 @@ public class Player : MonoBehaviourPun, IPunObservable
             * Random.Range(0.95f, 1.05f));
         return _damage;
     }
+    // 공격이들어가는 5개의 스킬이 모두 같은 소리가 나기 때문에 사운드를 외부로 빼둠.
     public void Attack(Collider _enemy)
     {        
         Enemy enemy = _enemy.GetComponent<Enemy>();
         if (enemy != null)
         {
-            SoundAttack();
+            //SoundAttack();
             int damage = AttackDamage(rWeapon.atkMag, enemy.defMag);
             enemy.IsAttacked(damage, transform.position);            
         }        
@@ -733,6 +734,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             {
                 Attack(col);
             }
+            AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.PlayerSkill_1_PowerStrike);
         }
     }
     public void TurnAttackDamage()
@@ -746,6 +748,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             {
                 Attack(col);
             }
+            AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.PLAYER_ATTACK);
         }
     }
     public void JumpAttackDamage()
@@ -758,6 +761,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             {
                 Attack(col);
             }
+            AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.PLAYER_ATTACK);
         }
     }
     public void WarcryDamage()
@@ -770,6 +774,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             {
                 Attack(col);
             }
+            AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.PLAYER_ATTACK);
         }
     }    
 
@@ -895,10 +900,14 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.PLAYER_SHIELD);
     }
-    void SoundAttack()
-    {
-        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.PLAYER_ATTACK);
-    }
+    //void SoundAttack()
+    //{
+    //    AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.PLAYER_ATTACK);
+    //}
+    //void SoundPlayerSkill_01()
+    //{
+    //    AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.PlayerSkill_1_PowerStrike);
+    //}
 
     // 플레이어 스크립트에서 인포, 인벤 데이터를 JInfoData로 옮기는 메소드가 필요.
     public void SaveData()

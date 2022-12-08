@@ -72,7 +72,8 @@ public class AudioManager : MonoBehaviour
         BGM_LOBBY,
         PLAYER_POTION,
         Dragon_Fire,
-        Buff_Get
+        Buff_Get,
+        PlayerSkill_1_PowerStrike
     }
     
     public AudioClip[] clips;   // enum의 순서를 따라가야됨

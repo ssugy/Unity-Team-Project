@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 방패 방어 애니매이션 스크립트
 public class BlockBehaviour : StateMachineBehaviour
 {
     public float curDef;

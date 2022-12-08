@@ -17,7 +17,7 @@ public class JY_Guide : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        calcVec(target_1);
+        //calcVec(target_1);
     }
     void calcVec(Transform target)
     {

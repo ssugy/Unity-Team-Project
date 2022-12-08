@@ -42,7 +42,10 @@ public class Weapon : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {        
         if (other.CompareTag("Enemy"))
+        {
+            AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.PLAYER_ATTACK);
             player.Attack(other);                       
+        }
     }
 
     public void ApplyOptions(Item _item)
