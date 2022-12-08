@@ -21,6 +21,7 @@ public class JY_Boss_FireDungeon : Enemy
     [Header("보스 공격 범위 콜라이더")]
     public BoxCollider JumpAttackArea;
     public BoxCollider MeleeAttackArea;
+    public BoxCollider KickAttackArea;
     public Transform BossWeapon;
     [Header("보스 관련 인스턴스")]
     public GameObject BossWeaponFire;
@@ -343,6 +344,7 @@ public class JY_Boss_FireDungeon : Enemy
     public void MeleeAreaDisEnable()
     {
         MeleeAttackArea.gameObject.SetActive(false);
+        KickAttackArea.gameObject.SetActive(false);
         JumpAttackArea.gameObject.SetActive(false);
     }
 
@@ -429,5 +431,13 @@ public class JY_Boss_FireDungeon : Enemy
     public void MeleeColliderOff()
     {
         MeleeAttackArea.gameObject.SetActive(false);
+    }
+    public void KickColliderOn()
+    {
+        KickAttackArea.gameObject.SetActive(true);
+    }
+    public void KickColliderOff()
+    {
+        KickAttackArea.gameObject.SetActive(false);
     }
 }
