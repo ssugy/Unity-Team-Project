@@ -459,7 +459,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     }
     void _Roll() => playerAni.SetBool("isRoll", false);
 
-    public void RollMove() => controller.Move(transform.forward * 10f *
+    public void RollMove() => controller.Move(transform.forward * 13f *
             Time.deltaTime + new Vector3(0, gravity * Time.deltaTime, 0));
 
     public Vector3 KnockBackDir(Collider attacked) => JY_CharacterListManager.s_instance.playerList[0].transform.position - attacked.transform.position;
