@@ -306,7 +306,9 @@ public class JY_Boss_FireDungeon : Enemy
             FreezeEnemy();
 
             DungeonManager.instance.DungeonProgress(4);
+            DungeonManager.instance.SetDungeonGuide(4);
             JY_QuestManager.s_instance.QuestProgress(1);
+            AudioManager.s_instance.SoundFadeInOut(AudioManager.s_instance.nowplayName,0f,0.3f);
             DropExp();
             DropGold();
             DropItem();

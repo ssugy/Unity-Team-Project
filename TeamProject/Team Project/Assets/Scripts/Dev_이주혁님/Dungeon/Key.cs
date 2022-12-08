@@ -25,6 +25,7 @@ public class Key : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "06. Dungeon_Fire")
         {
             DungeonManager.instance.DungeonProgress(1);
+            DungeonManager.instance.SetDungeonGuide(1);
         }
     }
 }

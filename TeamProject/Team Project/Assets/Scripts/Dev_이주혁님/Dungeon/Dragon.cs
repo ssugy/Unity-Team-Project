@@ -131,7 +131,10 @@ public class Dragon : Enemy
             if (ProgressionMonster)
             {
                 if (DungeonManager.instance != null)
+                {
                     DungeonManager.instance.DungeonProgress(explanationNum);
+                    DungeonManager.instance.SetDungeonGuide(explanationNum);
+                }
             }
         }
     }

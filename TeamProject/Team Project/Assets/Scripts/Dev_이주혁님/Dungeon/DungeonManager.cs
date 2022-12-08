@@ -8,6 +8,7 @@ public class DungeonManager : MonoBehaviour
 {
     public static DungeonManager instance;
     public GameObject dungeonPanel;
+    public GameObject dungeonGuide;
     public Text dungeonExplanation;
     public Image dungeonProgress;
     public float progressAmount;
@@ -38,5 +39,26 @@ public class DungeonManager : MonoBehaviour
     {
         dungeonExplanation.text = explanationList[num];
         dungeonProgress.fillAmount += progressAmount;
+    }
+
+    public void SetDungeonGuide(int num)
+    {
+        JY_Guide guide = dungeonGuide.GetComponent<JY_Guide>();
+        switch (num)
+        {
+            case 1:
+                guide.TARGET = guide.target_2;
+                break;
+            case 2:
+                guide.TARGET = guide.target_3;
+                break;
+            case 3:
+                guide.TARGET = guide.target_4;
+                break;
+            case 4:
+                guide.TARGET = null;
+                dungeonGuide.SetActive(false);
+                break;
+        }
     }
 }
