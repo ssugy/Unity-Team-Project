@@ -467,7 +467,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if(dir == Vector3.zero)
         {
-            dir = (JY_CharacterListManager.s_instance.playerList[0].transform.position - Camera.main.transform.position).normalized;
+            dir = (Camera.main.transform.position - JY_CharacterListManager.s_instance.playerList[0].transform.position).normalized;
         }
             controller.Move(dir * 4f * Time.deltaTime);
     }
