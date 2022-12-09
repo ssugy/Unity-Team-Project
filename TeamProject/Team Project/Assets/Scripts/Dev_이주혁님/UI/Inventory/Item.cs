@@ -30,7 +30,7 @@ public class Item
         level = _level;
         option = _option;
     }
-
+    
     public ItemType type = ItemType.NONE;
     public EquipState equipedState = EquipState.NONE;
     public string name = "null";    
@@ -38,19 +38,10 @@ public class Item
     public int level;
     [TextArea(3, 5)]
     public string explanation = "null";
-    public Sprite image = null;
-    public List<ItemEffect> effects = null;
-    private int itemID;    
-    public EquipOption option = null;
-    public void SetID(int id)
-    {
-        itemID = id;
-    }
+    public Sprite image = null;         // 아이템 아이콘.
 
-    public int GetID()
-    {
-        return itemID;
-    }
+    public List<ItemEffect> effects = null;
+    public EquipOption option = null;        
 
     public void Use() => effects.ForEach(e => e.ExecuteRole(this));    
     public void Equip() => effects[0].ExecuteRole(this);    

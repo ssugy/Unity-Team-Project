@@ -265,8 +265,9 @@ public class Enemy : MonoBehaviourPun, IPunObservable
         {
             if (Random.Range(0f, 1f) <= dropPro[i])
             {
-                FieldItem tmp = Instantiate<GameObject>(fieldItem, transform.position, Quaternion.identity).GetComponent<FieldItem>();
-                tmp.itemID = dropItem[i];
+                // FieldItem 프리팹을 인스턴스화하고 아이템 데이터베이스에서 아이템을 복사함.
+                FieldItem tmp = Instantiate(fieldItem, transform.position, Quaternion.identity).GetComponent<FieldItem>();                
+                tmp.item = ItemDatabase.s_instance.itemDB[dropItem[i]].Copy();
             }
             
         }        

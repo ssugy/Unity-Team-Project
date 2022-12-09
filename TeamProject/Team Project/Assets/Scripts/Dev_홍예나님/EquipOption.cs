@@ -116,10 +116,10 @@ public class EquipOption
     {
         options = new Dictionary<EquipAttrib, float>();
         if (optionList != null && valueList != null)
-        for(int i = 0; i < optionList.Count; i++)
-        {
-            options.Add(optionList[i], valueList[i]);
-        }
+            for(int i = 0; i < optionList.Count; i++)
+            {
+                options.Add(optionList[i], valueList[i]);
+            }
     }
 
     private void EquipOptionWeapon()

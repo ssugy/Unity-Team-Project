@@ -944,7 +944,8 @@ public class Player : MonoBehaviourPun, IPunObservable
     }
     public void OnDisable()
     {        
-        SaveData();             
+        SaveData();           
+        // 씬이 전환되어 캐릭터가 삭제될 때 플레이어 리스트와 인벤토리 리스트를 정리함.
         JY_CharacterListManager.s_instance.playerList.Remove(this);
         JY_CharacterListManager.s_instance.invenList.Remove(GetComponent<Inventory>());
         StopCoroutine(syncro);

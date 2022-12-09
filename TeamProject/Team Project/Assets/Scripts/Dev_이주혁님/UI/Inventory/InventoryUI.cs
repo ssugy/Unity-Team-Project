@@ -18,13 +18,36 @@ public class InventoryUI : MonoBehaviour
     public GameObject inventoryPanel;        
     public Slot[] slots;
     public Transform slotHolder;
-    
+    private void Awake()
+    {
+        instance = this;
+        inventory = JY_CharacterListManager.s_instance.invenList[0];
+        slots = slotHolder.GetComponentsInChildren<Slot>();
+    }
+    private void OnEnable()
+    {
+        instance ??= this;
+
+        // 인벤토리를 열었을 때, 골드 소지량과 인벤토리 아이콘을 갱신해 줌.
+        UpdateGold();
+        RedrawSlotUI();
+
+        // 이후, OnChangeItem 이벤트를 구독합니다.
+        inventory.onChangeItem += RedrawSlotUI;
+    }
+    private void OnDisable()
+    {
+        instance = null;
+        // 이벤트를 해제합니다. 인벤토리가 다시 켜질 때 구독됩니다.
+        inventory.onChangeItem -= RedrawSlotUI;
+    }
 
     // 개별 슬롯들과 장비 아이콘들을 그림.
     private void RedrawSlotUI()
     {
-        // CopyToTemp 함수는 redraw할때 한번만 해야 한다.
+        // 인벤토리 UI를 갱신하는 메소드에서 해당 함수 호출이 필요한 지 재고 필요.
         JY_CharacterListManager.s_instance.playerList[0].playerStat.CopyToTemp();
+
         Array.ForEach(slots, e => e.RemoveSlot());               
         for (int i = 0; i < inventory.items.Count; i++)
         {
@@ -127,33 +150,7 @@ public class InventoryUI : MonoBehaviour
     public void UpdateGold()
     {
         gold.text = JY_CharacterListManager.s_instance.playerList[0].playerStat.Gold.ToString();
-    }
-
-    private void Awake()
-    {
-        instance ??= this;
-        inventory = JY_CharacterListManager.s_instance.invenList[0];
-        slots = slotHolder.GetComponentsInChildren<Slot>();
-    }
-    
-    private void OnEnable()
-    {
-        instance ??= this;
-
-        // 인벤토리를 열었을 때, 골드 소지량과 인벤토리 아이콘을 갱신해 줌.
-        UpdateGold();
-        RedrawSlotUI();
-
-        // 첫번째 RedrawSlotUI를 호출하여 장착된 Icon들을 초기화 시킵니다.
-        // 이후, OnChangeItem 이벤트를 설정합니다.
-        inventory.onChangeItem += RedrawSlotUI;
-    }
-    private void OnDisable()
-    {
-        instance = null;
-        // 이벤트를 해제합니다. 다시들어올때 다시 설정합니다.
-        inventory.onChangeItem -= RedrawSlotUI;
-    }
+    }            
 
     // 해당 메소드들이 실행되면 RedrawSlotUI가 실행되므로 UpdatSlotUI는 필요없음.       
     public void DestroyItem(Item _item) => inventory.RemoveItem(_item);    
