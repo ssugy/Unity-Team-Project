@@ -11,13 +11,11 @@ public class JY_Guide : MonoBehaviour
     [HideInInspector]public Transform target;
     public Transform TARGET { set { target = value; } }
     Player player;
-    int state;
     // Start is called before the first frame update
     void Start()
     {
         player = JY_CharacterListManager.s_instance.playerList[0];
         target = target_1;
-        state = 0;
     }
 
     // Update is called once per frame

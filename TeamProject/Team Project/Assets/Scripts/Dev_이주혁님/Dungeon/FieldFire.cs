@@ -10,11 +10,11 @@ public class FieldFire : MonoBehaviour
 
     private void OnEnable()
     {
-        Invoke("ActiveFalseSelf", 4f);
+        Invoke("DestroySelf", 4f);
     }
-    void ActiveFalseSelf()
+    void DestroySelf()
     {
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
     private void OnTriggerEnter(Collider other)
     {
