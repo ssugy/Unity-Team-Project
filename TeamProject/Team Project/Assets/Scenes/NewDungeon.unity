@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37690857, g: 0.27781683, b: 0.26629424, a: 1}
+  m_IndirectSpecularColor: {r: 0.37690774, g: 0.27781713, b: 0.26629606, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7429,6 +7429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dungeonPanel: {fileID: 1069458828}
+  dungeonGuide: {fileID: 0}
   dungeonExplanation: {fileID: 1069458827}
   dungeonProgress: {fileID: 1069458829}
   progressAmount: 0
@@ -17825,6 +17826,28 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 432110, guid: 016266da9182cd04792d16aaf281683f, type: 3}
   m_PrefabInstance: {fileID: 536778295}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &540306371 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 834918803994594808, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
+  m_PrefabInstance: {fileID: 1069458824}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &540306372 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7525328720172032209, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
+  m_PrefabInstance: {fileID: 1069458824}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &540396747
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36012,6 +36035,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2525137564631132036, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
+      propertyPath: minimapImage
+      value: 
+      objectReference: {fileID: 540306371}
+    - target: {fileID: 2525137564631132036, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
+      propertyPath: minimapPlayerImage
+      value: 
+      objectReference: {fileID: 540306372}
     - target: {fileID: 2719631113284853971, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -36058,6 +36089,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2910133838251766178, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3032448886340007986, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3071896105869211833, guid: e4c7db6263b331c4393899ad180b06e2, type: 3}
