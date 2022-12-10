@@ -17,23 +17,60 @@ public class PlayerStat
 {
     [Header("조정 가능")]
     public int health;
-    public int stamina, strength, dexterity;
-    // 장비 교체시 임시 적용되는 수치
-    public int tmpHealth, tmpStamina, tmpStrength, tmpDexterity;
-    public float addedCriticalPro, addedShieldDef;
-    public int addedDefPoint, addedHP, addedSP, addedAvoid, addedRecover;
+    public int stamina, strength, dexterity;    
 
     [Header("조정 불가")]
     public EJob job;
     public EGender gender;
     public int[] customized;
-    public Dictionary<EquipPart, Item> equiped = new Dictionary<EquipPart, Item>();    
+    public Dictionary<EquipPart, Item> equiped = new Dictionary<EquipPart, Item>();
+
+    // 장비 옵션으로 상승하는 스탯. 해당 스탯이 변경되면 Status UI를 갱신.
+    private int addedHealth, addedStamina, addedStrength, addedDexterity;
+    public int AddedHealth
+    { 
+        get => addedHealth; 
+        set 
+        {
+            addedHealth = value;
+            JY_UIManager.instance?.StatusDataRenew();
+        } }    
+    public int AddedStamina
+    {
+        get => addedStamina;
+        set
+        {
+            addedStamina = value;
+            JY_UIManager.instance?.StatusDataRenew();
+        }
+    }
+    public int AddedStrength
+    {
+        get => addedStrength;
+        set
+        {
+            addedStrength = value;
+            JY_UIManager.instance?.StatusDataRenew();
+        }
+    }
+    public int AddedDexterity
+    {
+        get => addedDexterity;
+        set
+        {
+            addedDexterity = value;
+            JY_UIManager.instance?.StatusDataRenew();
+        }
+    }
+    public float addedCriPro;
+    public int addedDefPoint, addedHP, addedSP, addedAvoid, addedRecover;
 
     public int statPoint, level, Exp, HP;
+    public float SP;
     private int curExp;
     public int CurExp           // 프로퍼티를 사용하여 현재 경험치가 증가했을 때만 LevelUp을 판정.
     {
-        get { return curExp; }
+        get => curExp;
         set
         {
             curExp = value;
@@ -53,8 +90,7 @@ public class PlayerStat
             else if (curHP > HP)            
                 curHP = HP;            
         }
-    }
-    public float SP;
+    }    
     private float curSP;
     public float CurSP
     {
@@ -93,8 +129,10 @@ public class PlayerStat
     }
     public bool isDead;
 
+    // 스탯 초기화 혹은 캐릭터 생성 시 사용되는 초기 스탯.
     public void InitialStat(EJob _job)
     {
+        statPoint = (level - 1) * 3;
         switch (_job)
         {
             case EJob.WARRIOR:
@@ -110,26 +148,7 @@ public class PlayerStat
                 dexterity = 9;
                 break;
         }        
-    }
-
-    public void CopyToTemp()
-    {
-        tmpHealth = health;
-        tmpStamina = stamina;
-        tmpStrength = strength;
-        tmpDexterity = dexterity;
-
-        // 추가되는 모든 수치는 0으로 초기화.
-        addedCriticalPro = 0;
-        addedDefPoint = 0;
-        addedHP = 0;
-        addedSP = 0;
-        addedAvoid = 0;
-        addedRecover = 0;
-        addedShieldDef = 0;
-    }
-
-    // 캐릭터 생성 시, 혹은 스탯 초기화 시 할당할 클래스별 초기스탯.
+    }    
 }
 
 
@@ -221,9 +240,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             playerStat.dexterity = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[3];
         }
         JY_UIManager.instance?.StatusDataRenew();
-        SetState();
-        playerStat.CurHP = playerStat.HP;
-        playerStat.CurSP = playerStat.SP;               
+        SetState();                       
         controller.ObserveEveryValueChanged(_ => _.isGrounded).ThrottleFrame(100).Subscribe(_ => isGround = _);
         // UniRx를 이용하여 isGrounded 프로퍼티가 0.3초 이상 유지되어야 상태가 전이되게끔 함. isGrounded가 정교하지 않기 때문.
 
@@ -491,8 +508,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     {        
         playerAni.SetBool("isLArm", false);
     }
-
-    //사용하지않는 함수로 리팩토링시 제거
+    
     public void WeaponEffectOn()
     {
         if (WeaponEffect != null)
@@ -609,40 +625,39 @@ public class Player : MonoBehaviourPun, IPunObservable
     }
 
     public void InitializeStat()                  // 스탯 초기화
-    {
-        playerStat.statPoint = (playerStat.level - 1) * 3;
+    {        
         playerStat.InitialStat(playerStat.job);
         SetState();               
         JY_UIManager.instance.StatusDataRenew();
     }
     public void StatUp(Adjustable _stat)
     {
-        if (playerStat.statPoint > 0)
+        if (playerStat.statPoint <= 0)
+            return;
+
+        switch (_stat)
         {
-            switch (_stat)
-            {
-                case Adjustable.HEALTH:
-                    --playerStat.statPoint;
-                    ++playerStat.health;
-                    SetState();
-                    break;
-                case Adjustable.STAMINA:
-                    --playerStat.statPoint;
-                    ++playerStat.stamina;
-                    SetState();
-                    break;
-                case Adjustable.STRENGTH:
-                    --playerStat.statPoint;
-                    ++playerStat.strength;
-                    SetState();
-                    break;
-                case Adjustable.DEXTERITY:
-                    --playerStat.statPoint;
-                    ++playerStat.dexterity;
-                    SetState();
-                    break;
-            }
-        }        
+            case Adjustable.HEALTH:
+                --playerStat.statPoint;
+                ++playerStat.health;
+                SetState();
+                break;
+            case Adjustable.STAMINA:
+                --playerStat.statPoint;
+                ++playerStat.stamina;
+                SetState();
+                break;
+            case Adjustable.STRENGTH:
+                --playerStat.statPoint;
+                ++playerStat.strength;
+                SetState();
+                break;
+            case Adjustable.DEXTERITY:
+                --playerStat.statPoint;
+                ++playerStat.dexterity;
+                SetState();
+                break;
+        }
         JY_UIManager.instance.StatusDataRenew();        
     }       
     // Adjustable 스탯으로부터 기타 스탯을 연산함.
@@ -655,44 +670,27 @@ public class Player : MonoBehaviourPun, IPunObservable
     public void SetState()
     {
         //Health
-        playerStat.HP = 500 + playerStat.health * 40 + playerStat.strength * 10;   // 1레벨 스탯 기준 400(변경전
-        playerStat.HpRecover = 13 + playerStat.health / 5;                          
+        playerStat.HP = 500 + (playerStat.health + playerStat.AddedHealth) * 40
+            + (playerStat.strength + playerStat.AddedStrength) * 10 + playerStat.addedHP;
+        playerStat.HpRecover = 13 + (playerStat.health + playerStat.AddedHealth) / 5;                          
         playerStat.CurHP = playerStat.CurHP;
         //Stemina
-        playerStat.SP = 46 + playerStat.stamina * 4 + playerStat.strength * 1;    // 1레벨 스탯 기준 80
-        playerStat.SpRecover = 10 + playerStat.stamina / 5;
+        playerStat.SP = 46 + (playerStat.stamina + playerStat.AddedStamina) * 4
+            + (playerStat.strength + playerStat.AddedStrength) + playerStat.addedSP;
+        playerStat.SpRecover = 10 + (playerStat.stamina + playerStat.AddedStamina) / 5;
         playerStat.CurSP = playerStat.CurSP;
         //Strength and Dexterity
-        playerStat.criPro = (20f + Sigma(2f, 1.03f, playerStat.dexterity)) / 100f;
+        playerStat.criPro = (20f + Sigma(2f, 1.03f, playerStat.dexterity + playerStat.AddedDexterity))
+            / 100f + playerStat.addedCriPro;
         playerStat.defMag = 1 - Mathf.Pow(1.02f, -(playerStat.defPoint + playerStat.addedDefPoint));
         if (rWeapon != null)
-            playerStat.atkPoint = rWeapon.atkPoint + Mathf.CeilToInt(Sigma(2f, 1.03f, playerStat.strength) + Sigma(1f, 1.2f, playerStat.dexterity));       
-        else        
-            playerStat.atkPoint = 0;
+            playerStat.atkPoint
+                = rWeapon.atkPoint + Mathf.CeilToInt(Sigma(2f, 1.03f, playerStat.strength + playerStat.AddedStrength)
+                + Sigma(1f, 1.2f, playerStat.dexterity + playerStat.AddedDexterity));
 
-        // 크리티컬 확률을 원상복귀한다.
-        playerStat.addedCriticalPro = 0;
-    }
-    //옵션이 적용된 플레이어 상태값 계산 : 아이템 교체시 적용
-    public void SetStateOption()
-    {
-        //Health
-        playerStat.HP = 500 + playerStat.tmpHealth * 40 + playerStat.tmpStrength * 10 + playerStat.addedHP;   // 1레벨 스탯 기준 400
-        playerStat.HpRecover = 13 + playerStat.tmpHealth / 5;
-        playerStat.CurHP = playerStat.CurHP;
-        //Stemina
-        playerStat.SP = 46 + playerStat.tmpStamina * 4 + playerStat.tmpStrength * 1 + playerStat.addedSP;    // 1레벨 스탯 기준 80
-        playerStat.SpRecover = 10 + playerStat.tmpStamina / 5;
-        playerStat.CurSP = playerStat.CurSP;
-        //Strength and Dexterity
-        playerStat.criPro = (20f + Sigma(2f, 1.03f, playerStat.tmpDexterity)) / 100f;
-        playerStat.defMag = 1 - Mathf.Pow(1.02f, -(playerStat.defPoint + playerStat.addedDefPoint));
-        if (rWeapon != null)
-            playerStat.atkPoint = rWeapon.atkPoint + Mathf.CeilToInt(Sigma(2f, 1.03f, playerStat.tmpStrength) + Sigma(1f, 1.2f, playerStat.tmpDexterity));
         else
             playerStat.atkPoint = 0;
-
-    }
+    }    
 
     // 특별히 사용하기 위해 만든 시그마 연산용 함수. 일반적인 시그마 연산에는 사용하지 말 것.
     public float Sigma(float a, float b, int c)
@@ -707,7 +705,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     public int AttackDamage(float _atkMag, float _enemyDef)
     {
         float _criDamage;
-        if (Random.Range(0f, 1f) <= playerStat.criPro + playerStat.addedCriticalPro)
+        if (playerStat.criPro + playerStat.addedCriPro >= Random.Range(0f, 1f)) 
         {
             _criDamage = PlayerStat.criMag;
         }
@@ -793,6 +791,8 @@ public class Player : MonoBehaviourPun, IPunObservable
             //피했음
             return;
         }
+        
+        // _damage는 방패 방어 및 플레이어의 방어력이 반영된 값임.
         playerStat.CurHP -= _damage;
 
         if (isGaurd)
@@ -907,15 +907,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     void SoundShield()
     {
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.PLAYER_SHIELD);
-    }
-    //void SoundAttack()
-    //{
-    //    AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.PLAYER_ATTACK);
-    //}
-    //void SoundPlayerSkill_01()
-    //{
-    //    AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.PlayerSkill_1_PowerStrike);
-    //}
+    }    
 
     // 플레이어 스크립트에서 인포, 인벤 데이터를 JInfoData로 옮기는 메소드가 필요.
     public void SaveData()

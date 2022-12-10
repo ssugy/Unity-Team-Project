@@ -7,9 +7,9 @@ using UnityEngine;
 public class EquipOption
 {
     public EquipType part;
-    public Dictionary<EquipAttrib, float> options = new Dictionary<EquipAttrib, float>();
-    public List<EquipAttrib> optionList = new List<EquipAttrib>();
-    public List<float> valueList = new List<float>();
+    public Dictionary<EquipAttrib, float> options = new();
+    public List<EquipAttrib> optionList = new();
+    public List<float> valueList = new();
     private const int MAX_OPTIONS = 3;
     public enum EquipType
     {
@@ -22,50 +22,51 @@ public class EquipOption
     public enum EquipAttrib
     {
         // 무기 속성
-        AttribAtkSpeed,         // 공속 증가 (5퍼센트 ~ 20퍼센트사이 랜덤)
-        AttribAtkPower,         // 공격력 추가 (1에서부터 ~ 최대 40)
-        AtrribAtkCritical,      // 치명타 확률 증가 (1~40퍼센트) +연산입니다.
-        AtrribAtkHP,            // 체력 1 ~ 20까지 증가
-        AtrribAtkStrength,      // 근력 1 ~ 20까지 증가
-        AtrribAtkStamina,       // 스태미나 1 ~ 20까지 증가
-        AtrribAtkDex,           // 민첩 1 ~ 20까지 증가
+        AttribAtkSpeed,         // 공속 증가 (5퍼센트 ~ 20퍼센트사이 랜덤)        
+        AtrribAtkCriPro,        // 치명타 확률 증가 (5~20퍼센트) +연산입니다.
+        AttribAtkPoint,         // 공격력 추가 (5에서부터 ~ 최대 20)
+        AtrribAtkHealth,        // 체력 5 ~ 20까지 증가
+        AtrribAtkStamina,       // 지구력 5 ~ 20까지 증가
+        AtrribAtkStrength,      // 근력 5 ~ 20까지 증가        
+        AtrribAtkDexterity,     // 민첩 5 ~ 20까지 증가
 
         // 옷 속성
-        AttribArmorDef,         // 방어력 증가 (1에서부터 ~ 최대 40)
-        AttribArmorHPMax,       // 체력 최대치 1 ~ 20까지 증가
-        AttribArmorStaminaMax,  // 스태미나 최대치 1 ~ 20까지 증가
-        AttribArmorHP,          // 체력 1 ~ 20까지 증가
-        AtrribArmorStrength,    // 근력 1 ~ 20까지 증가
-        AttribArmorStamina,     //스태미나 1 ~ 20까지 증가
-        AtrribArmorDex,         // 민첩 1 ~ 20까지 증가
-        AtrribArmorRecover,     // 생명력 물약이 회복시키는 회복량 100~500%증가
-        AtrribArmorAvoid,       // 회피 확률 %증가 (1~40프로)
+        AttribArmorDef,         // 방어력 증가 (5 ~ 20)
+        AttribArmorHP,          // HP 5 ~ 20까지 증가
+        AttribArmorSP,          // SP 5 ~ 20까지 증가
+        AttribArmorHealth,      // 체력 5 ~ 20까지 증가
+        AttribArmorStamina,     // 지구력 5 ~ 20까지 증가
+        AtrribArmorStrength,    // 근력 5 ~ 20까지 증가        
+        AtrribArmorDexterity,   // 민첩 5 ~ 20까지 증가
+        AtrribArmorRecover,     // 생명력 물약이 회복시키는 회복량 5~20% 증가
+        AtrribArmorAvoid,       // 회피 확률 %증가 (5~20프로)
 
         //방패 속성
-        AttribShieldDef,        // 방어시 추가로 데미지 1~20% 감소
-        
+        AttribShieldDef,        // 방어시 추가로 데미지 5~20% 감소
+
         AttribNone
     }
+
     // 무기용 속성표
     private EquipAttrib[] weaponOptions = 
     {
         EquipAttrib.AttribAtkSpeed,
-        EquipAttrib.AttribAtkPower,
-        EquipAttrib.AtrribAtkCritical,      
-        EquipAttrib.AtrribAtkHP,            
+        EquipAttrib.AttribAtkPoint,
+        EquipAttrib.AtrribAtkCriPro,      
+        EquipAttrib.AtrribAtkHealth,            
         EquipAttrib.AtrribAtkStrength,      
         EquipAttrib.AtrribAtkStamina,       
-        EquipAttrib.AtrribAtkDex
+        EquipAttrib.AtrribAtkDexterity
     };
     private EquipAttrib[] clothOptions =
     {
         EquipAttrib.AttribArmorDef,
-        EquipAttrib.AttribArmorHPMax,
-        EquipAttrib.AttribArmorStaminaMax,
         EquipAttrib.AttribArmorHP,
+        EquipAttrib.AttribArmorSP,
+        EquipAttrib.AttribArmorHealth,
         EquipAttrib.AtrribArmorStrength,
         EquipAttrib.AttribArmorStamina,
-        EquipAttrib.AtrribArmorDex,
+        EquipAttrib.AtrribArmorDexterity,
         EquipAttrib.AtrribArmorRecover,
         EquipAttrib.AtrribArmorAvoid
     };
@@ -73,12 +74,12 @@ public class EquipOption
     {
         // 옷과 동일
         EquipAttrib.AttribArmorDef,
-        EquipAttrib.AttribArmorHPMax,
-        EquipAttrib.AttribArmorStaminaMax,
         EquipAttrib.AttribArmorHP,
+        EquipAttrib.AttribArmorSP,
+        EquipAttrib.AttribArmorHealth,
         EquipAttrib.AtrribArmorStrength,
         EquipAttrib.AttribArmorStamina,
-        EquipAttrib.AtrribArmorDex,
+        EquipAttrib.AtrribArmorDexterity,
         EquipAttrib.AtrribArmorRecover,
         EquipAttrib.AtrribArmorAvoid,
         // 방패 추가 사양
@@ -172,13 +173,13 @@ public class EquipOption
         {
             attrib = EquipAttrib.AttribNone;
             value = 0;
+            return false;
         }
         else
         {
             attrib = optionList[idx];
             value = options[attrib];
             return true;
-        }
-        return false;
+        }        
     }
 }

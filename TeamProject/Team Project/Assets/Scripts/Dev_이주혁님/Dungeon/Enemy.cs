@@ -198,10 +198,8 @@ public class Enemy : MonoBehaviourPun, IPunObservable
             //int damage = Mathf.CeilToInt(atkPoint * atkMag * (1 - player.playerStat.defMag) * Random.Range(0.95f, 1.05f));
             float damage = atkPoint * atkMag * (1 - player.playerStat.defMag) * Random.Range(0.95f, 1.05f);
             if (damage > 0)
-            {
-                // 실드 추가 방어 적용
-                damage = (1.0f - player.playerStat.addedShieldDef) * damage;
-                player.IsAttacked(Mathf.CeilToInt(damage),hitbox);
+            {                               
+                player.IsAttacked(Mathf.CeilToInt(damage), hitbox);
             }
         }
     }
@@ -256,7 +254,7 @@ public class Enemy : MonoBehaviourPun, IPunObservable
     }
     protected void DropGold()
     {
-        FieldGold tmp = Instantiate<GameObject>(fieldGold, transform.position, Quaternion.identity).GetComponent<FieldGold>();
+        FieldGold tmp = Instantiate(fieldGold, transform.position, Quaternion.identity).GetComponent<FieldGold>();
         tmp.ammount = Random.Range(dropGold, (int)(dropGold * 1.15f));
     }
     protected void DropItem()

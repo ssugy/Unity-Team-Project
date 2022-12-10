@@ -160,7 +160,6 @@ public class JY_NPCDialog : MonoBehaviour
         finishButton.SetActive(false);
         exitButton.SetActive(false);
         DialogUI.SetActive(false);
-        BattleUI.SetActive(true);
-        JY_UIManager.instance.StatusDataRenew();
+        BattleUI.SetActive(true);        
     }
 }

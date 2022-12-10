@@ -44,10 +44,7 @@ public class InventoryUI : MonoBehaviour
 
     // 개별 슬롯들과 장비 아이콘들을 그림.
     private void RedrawSlotUI()
-    {
-        // 인벤토리 UI를 갱신하는 메소드에서 해당 함수 호출이 필요한 지 재고 필요.
-        JY_CharacterListManager.s_instance.playerList[0].playerStat.CopyToTemp();
-
+    {        
         Array.ForEach(slots, e => e.RemoveSlot());               
         for (int i = 0; i < inventory.items.Count; i++)
         {

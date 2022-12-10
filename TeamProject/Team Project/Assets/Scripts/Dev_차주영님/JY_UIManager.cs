@@ -18,20 +18,25 @@ public class JY_UIManager : MonoBehaviour
     public Text nameText;
     public Text levelText;
     public Text healthText;
-    public Text steminaText;
+    public Text staminaText;
     public Text strengthText;
     public Text dexterityText;
     public Text SPText;
 
-    bool profileSwitch;
+    private Player player;
     bool questMenuSwitch;
+
     private void Awake()
     { 
-        instance ??= this;
-        profileSwitch = false;
-        //profileMenuSwitch = false;
-        questMenuSwitch = false;
-        nameText.text = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].name;        
+        instance ??= this;        
+        questMenuSwitch = false;             
+    }
+
+    private void Start()
+    {
+        player = JY_CharacterListManager.s_instance.playerList[0];
+        // 선택된 캐릭터의 이름을 불러옴.
+        nameText.text = player.name;
     }
 
     private void OnEnable()
@@ -43,24 +48,6 @@ public class JY_UIManager : MonoBehaviour
         instance = null;
     }
 
-    //프로필 On/Off 함수
-    public void switchProfile()
-    {
-        if(profileSwitch == false)
-        {
-            //profileGroup.gameObject.SetActive(true);
-            profileSwitch = true;
-        }
-        else
-        {
-            //profileGroup.gameObject.SetActive(false);
-            //profileMenuGroup.gameObject.SetActive(false);
-            //StatusMenuGroup.gameObject.SetActive(false);
-            profileSwitch = false;
-            //statusSwitch = false;
-            //profileMenuSwitch = false;
-        }
-    }
 
     //퀘스트 메뉴 On/Off함수
     public void switchQuestMenu()
@@ -129,13 +116,17 @@ public class JY_UIManager : MonoBehaviour
     }
 
     public void StatusDataRenew()
-    {    
-        levelText.text = "Lv." + JY_CharacterListManager.s_instance.playerList[0].playerStat.level.ToString();
-        healthText.text = "체력: " + JY_CharacterListManager.s_instance.playerList[0].playerStat.health.ToString();
-        steminaText.text = "지구력: " + JY_CharacterListManager.s_instance.playerList[0].playerStat.stamina.ToString();
-        strengthText.text = "근력: " + JY_CharacterListManager.s_instance.playerList[0].playerStat.strength.ToString();
-        dexterityText.text = "민첩: " + JY_CharacterListManager.s_instance.playerList[0].playerStat.dexterity.ToString();
-        SPText.text = "스탯 포인트:"+ JY_CharacterListManager.s_instance.playerList[0].playerStat.statPoint.ToString(); 
+    {
+        levelText.text = $"Lv.{player.playerStat.level}";
+        healthText.text = $"체력: {player.playerStat.health} " +
+            $"+ ({player.playerStat.AddedHealth})";
+        staminaText.text = $"지구력: {player.playerStat.stamina} " +
+            $"+ ({player.playerStat.AddedStamina})";
+        strengthText.text = $"근력: {player.playerStat.strength} " +
+            $"+ ({player.playerStat.AddedStrength})";
+        dexterityText.text = $"민첩: {player.playerStat.dexterity} " +
+            $"+ ({player.playerStat.AddedDexterity})";
+        SPText.text = $"스탯 포인트: {player.playerStat.statPoint}"; 
     }
 
     void WhiteFadeIn()
@@ -157,46 +148,12 @@ public class JY_UIManager : MonoBehaviour
     }
     public void statusControl(int StatType)
     {
-        switch (StatType)
-        {
-            case 0:
-                JY_CharacterListManager.s_instance.playerList[0].StatUp(Adjustable.HEALTH);
-                break;
-            case 1:
-                JY_CharacterListManager.s_instance.playerList[0].StatUp(Adjustable.STAMINA);
-                break;
-            case 2:
-                JY_CharacterListManager.s_instance.playerList[0].StatUp(Adjustable.STRENGTH);
-                break;
-            case 3:
-                JY_CharacterListManager.s_instance.playerList[0].StatUp(Adjustable.DEXTERITY);
-                break;
-        }
-
-    }
-
-    public void statusControl_minus(int StatType)
-    {
-        switch (StatType)
-        {
-            case 0:
-                JY_CharacterListManager.s_instance.playerList[0].StatUp(Adjustable.HEALTH);
-                break;
-            case 1:
-                JY_CharacterListManager.s_instance.playerList[0].StatUp(Adjustable.STAMINA);
-                break;
-            case 2:
-                JY_CharacterListManager.s_instance.playerList[0].StatUp(Adjustable.STRENGTH);
-                break;
-            case 3:
-                JY_CharacterListManager.s_instance.playerList[0].StatUp(Adjustable.DEXTERITY);
-                break;
-        }
-
-    }
+        player.StatUp((Adjustable)StatType);       
+    }  
+    
     public void InitializeStatus()
     {
-        JY_CharacterListManager.s_instance.playerList[0].InitializeStat();
+        player.InitializeStat();
     }
     public void ActiveAimUI(bool state)
     {

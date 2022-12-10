@@ -28,11 +28,12 @@ public class Shield : MonoBehaviour
     }
     public void ApplyOptions(Item _item)
     {
-        float value = 0f;
+        if (player == null)
+            return;
 
         if (_item != null && _item.option != null && _item.option.optionList != null)
         {
-            //player.playerStat.CopyToTemp();
+            float value;            
             foreach (var e in _item.option.optionList)
             {
                 switch (e)
@@ -42,74 +43,117 @@ public class Shield : MonoBehaviour
                         value = _item.option.options[e];
                         player.playerStat.addedDefPoint += (int)value;
                         break;
-                    // 최대 체력(Max HP) 증가
-                    case EquipOption.EquipAttrib.AttribArmorHPMax:
+                    // HP 증가
+                    case EquipOption.EquipAttrib.AttribArmorHP:
                         value = _item.option.options[e];
-                        if (player != null && player.playerStat != null)
-                        {
-                            player.playerStat.addedHP += (int)value;
-                        }
+                        player.playerStat.addedHP += (int)value;
                         break;
-                    // 최대 스태미나(Max SP) 증가
-                    case EquipOption.EquipAttrib.AttribArmorStaminaMax:
+                    // SP 증가
+                    case EquipOption.EquipAttrib.AttribArmorSP:
                         value = _item.option.options[e];
-                        if (player != null && player.playerStat != null)
-                        {
-                            player.playerStat.addedSP += (int)value;
-                        }
+                        player.playerStat.addedSP += (int)value;
                         break;
-                    // 체력(Health) 증가
-                    case EquipOption.EquipAttrib.AtrribAtkHP:
+                    // 체력 증가
+                    case EquipOption.EquipAttrib.AttribArmorHealth:
                         value = _item.option.options[e];
-                        if (player != null && player.playerStat != null)
-                        {
-                            player.playerStat.tmpHealth += (int)value;
-                        }
+                        player.playerStat.AddedHealth += (int)value;
                         break;
                     // 근력 증가
-                    case EquipOption.EquipAttrib.AtrribAtkStrength:
+                    case EquipOption.EquipAttrib.AtrribArmorStrength:
                         value = _item.option.options[e];
-                        if (player != null && player.playerStat != null)
-                        {
-                            player.playerStat.tmpStrength += (int)value;
-                        }
+                        player.playerStat.AddedStrength += (int)value;
                         break;
-                    // 스태미나 증가
-                    case EquipOption.EquipAttrib.AtrribAtkStamina:
+                    // 지구력 증가
+                    case EquipOption.EquipAttrib.AttribArmorStamina:
                         value = _item.option.options[e];
-                        if (player != null && player.playerStat != null)
-                        {
-                            player.playerStat.tmpStamina += (int)value;
-                        }
+                        player.playerStat.AddedStamina += (int)value;
                         break;
                     // 민첩 증가
-                    case EquipOption.EquipAttrib.AtrribAtkDex:
+                    case EquipOption.EquipAttrib.AtrribArmorDexterity:
                         value = _item.option.options[e];
-                        if (player != null && player.playerStat != null)
-                        {
-                            player.playerStat.tmpDexterity += (int)value;
-                        }
+                        player.playerStat.AddedDexterity += (int)value;
                         break;
-                    // 치명타 확률 증가
-                    case EquipOption.EquipAttrib.AtrribAtkCritical:
+                    // 물약 효율 증가
+                    case EquipOption.EquipAttrib.AtrribArmorRecover:
                         value = _item.option.options[e];
-                        if (player != null && player.playerStat != null)
-                        {
-                            player.playerStat.addedCriticalPro += value;
-                        }
+                        player.playerStat.addedRecover += (int)value;
                         break;
-                    // 데미지 추가 감소 (1~20퍼센트 사이)
+                    // 회피율 증가
+                    case EquipOption.EquipAttrib.AtrribArmorAvoid:
+                        value = _item.option.options[e];
+                        player.playerStat.addedAvoid += (int)value;
+                        break;
+                    // 방어 시 데미지 추가 감소 (1~20퍼센트 사이)
                     case EquipOption.EquipAttrib.AttribShieldDef:
                         value = _item.option.options[e];
-                        if (player != null && player.playerStat != null)
-                        {
-                            player.playerStat.addedShieldDef += value / 100.0f;
-                        }
+                        defPro += value / 100.0f;
                         break;
                 }
-                // temp값을 이용해 플레이어 능력치를 새로 계산
-                player.SetStateOption();
+                
+            }            
+            player.SetState();
+        }
+    }
+    public void ReturnOptions(Item _item)
+    {
+        if (player == null)
+            return;
+
+        if (_item != null && _item.option != null && _item.option.optionList != null)
+        {
+            float value;
+            foreach (var e in _item.option.optionList)
+            {
+                switch (e)
+                {                    
+                    case EquipOption.EquipAttrib.AttribArmorDef:
+                        value = _item.option.options[e];
+                        player.playerStat.addedDefPoint -= (int)value;
+                        break;
+                    // HP 증가
+                    case EquipOption.EquipAttrib.AttribArmorHP:
+                        value = _item.option.options[e];
+                        player.playerStat.addedHP -= (int)value;
+                        break;
+                    // SP 증가
+                    case EquipOption.EquipAttrib.AttribArmorSP:
+                        value = _item.option.options[e];
+                        player.playerStat.addedSP -= (int)value;
+                        break;
+                    // 체력 증가
+                    case EquipOption.EquipAttrib.AttribArmorHealth:
+                        value = _item.option.options[e];
+                        player.playerStat.AddedHealth -= (int)value;
+                        break;
+                    // 근력 증가
+                    case EquipOption.EquipAttrib.AtrribArmorStrength:
+                        value = _item.option.options[e];
+                        player.playerStat.AddedStrength -= (int)value;
+                        break;
+                    // 지구력 증가
+                    case EquipOption.EquipAttrib.AttribArmorStamina:
+                        value = _item.option.options[e];
+                        player.playerStat.AddedStamina -= (int)value;
+                        break;
+                    // 민첩 증가
+                    case EquipOption.EquipAttrib.AtrribArmorDexterity:
+                        value = _item.option.options[e];
+                        player.playerStat.AddedDexterity -= (int)value;
+                        break;
+                    // 물약 효율 증가
+                    case EquipOption.EquipAttrib.AtrribArmorRecover:
+                        value = _item.option.options[e];
+                        player.playerStat.addedRecover -= (int)value;
+                        break;
+                    // 회피율 증가
+                    case EquipOption.EquipAttrib.AtrribArmorAvoid:
+                        value = _item.option.options[e];
+                        player.playerStat.addedAvoid -= (int)value;
+                        break;                    
+                }
+
             }
+            player.SetState();
         }
     }
 }

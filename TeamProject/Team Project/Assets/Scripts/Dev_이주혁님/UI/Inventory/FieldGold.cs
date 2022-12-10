@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class FieldGold : MonoBehaviour
 {
-    public int ammount;
-    public int rotateSpeed;     // 아이템 아이콘 회전 속도.
+    public int ammount;   
     public int deleteTime;    
-    public FieldGold(int _ammount,int _rotateSpeed = 60,int _deleteTime = 30)
+    public FieldGold(int _ammount,int _deleteTime = 30)
     {
-        ammount = _ammount;
-        rotateSpeed = _rotateSpeed;
+        ammount = _ammount;        
         deleteTime = _deleteTime;
     }    
     private void Start()

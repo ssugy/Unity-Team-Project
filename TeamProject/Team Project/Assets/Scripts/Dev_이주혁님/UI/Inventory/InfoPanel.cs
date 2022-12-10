@@ -105,15 +105,28 @@ public class InfoPanel : MonoBehaviour
         if (_item.option != null && options.Count > 0)
         {
             for(int i = 0; i < options.Count; i++)
-            {
-                EquipOption.EquipAttrib attrib;
-                float val;
-                bool valid = _item.option.GetOptionValue(i, out attrib, out val);
-                if (valid)
+            {                
+                if (_item.option.GetOptionValue(i, out EquipOption.EquipAttrib attrib, out float val))
                 {
                     options[i].gameObject.SetActive(true);
                     // 옵션 표기를 바꿀 필요가 있음.
-                    options[i].text = string.Format("{0}: {1:F2}%", optionNames[(int)attrib], val);
+                    switch ((int)attrib)
+                    {
+                        // 퍼센트가 아닌 고정 수치를 올려주는 옵션들.
+                        case int n when (n >= 2 && n <= 13):
+                            {
+                                options[i].text 
+                                    = string.Format("{0}: {1}", optionNames[(int)attrib], (int)val);
+                                break;
+                            }
+                        // 퍼센트로 능력치를 상승시키는 옵션들.
+                        default:
+                            {
+                                options[i].text 
+                                    = string.Format("{0}: {1:F2}%", optionNames[(int)attrib], val);
+                                break;
+                            }
+                    }                    
                 }
                 else
                 {

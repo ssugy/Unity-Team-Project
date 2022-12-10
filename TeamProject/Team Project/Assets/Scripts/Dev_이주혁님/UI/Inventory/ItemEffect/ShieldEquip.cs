@@ -23,7 +23,12 @@ public class ShieldEquip : ItemEffect
             _item.equipedState = EquipState.EQUIPED;
             // 이미 장착한 아이템이 있는 경우 _tmp.effects[1].ExecuteRole(_tmp);에서 현재 장착한 아이템을 파괴하기 때문에, 무기/방패 인스턴스 생성은 그 다음에 해주어야 한다.
             GameObject shieldSrc = Resources.Load<GameObject>("Item/Shield/" + _item.image.name);
-            GameObject shield = Instantiate<GameObject>(shieldSrc, player.lWeaponDummy);
+            GameObject shield = Instantiate(shieldSrc, player.lWeaponDummy);
+            Shield shieldComp = shield.GetComponent<Shield>();
+            if (shieldComp != null)
+            {
+                shieldComp.ApplyOptions(_item);
+            }
             shield.name = string.Copy(shieldSrc.name);
         }                
 

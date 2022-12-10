@@ -12,9 +12,10 @@ public class WeaponUnequip : ItemEffect
             _val.equipedState = EquipState.UNEQUIPED;
             JY_CharacterListManager.s_instance.playerList[0].playerStat.equiped.Remove(EquipPart.WEAPON);
         }
-
-        while (JY_CharacterListManager.s_instance.playerList[0].rWeaponDummy.GetComponentInChildren<Weapon>() != null)
+        Weapon weaponComp;
+        if ((weaponComp = JY_CharacterListManager.s_instance.playerList[0].rWeaponDummy.GetComponentInChildren<Weapon>()) != null)
         {
+            weaponComp.ReturnOptions(_item);
             DestroyImmediate(JY_CharacterListManager.s_instance.playerList[0].rWeaponDummy.GetComponentInChildren<Weapon>().gameObject);
         }
 

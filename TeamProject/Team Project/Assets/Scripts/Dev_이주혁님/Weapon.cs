@@ -48,13 +48,15 @@ public class Weapon : MonoBehaviour
         }
     }
 
+    // 무기를 장착했을 때 추가옵션을 적용함.
     public void ApplyOptions(Item _item)
     {
-        float value = 0f;
+        if (player == null)
+            return;        
 
         if (_item != null && _item.option != null && _item.option.optionList != null) 
         {
-            //player.playerStat.CopyToTemp();
+            float value;            
             foreach (var e in _item.option.optionList)
             {
                 switch (e)
@@ -66,54 +68,80 @@ public class Weapon : MonoBehaviour
                         player.playerAni.SetFloat("AtkSpeed", atkSpeed);
                         break;
                     // 공격력 증가
-                    case EquipOption.EquipAttrib.AttribAtkPower:
+                    case EquipOption.EquipAttrib.AttribAtkPoint:
                         value = _item.option.options[e];
                         atkPoint += (int)value;
                         break;
                     // 체력(Health) 증가
-                    case EquipOption.EquipAttrib.AtrribAtkHP:
+                    case EquipOption.EquipAttrib.AtrribAtkHealth:
                         value = _item.option.options[e];
-                        if (player != null && player.playerStat != null)
-                        {
-                            player.playerStat.tmpHealth += (int)value;
-                        }
+                        player.playerStat.AddedHealth += (int)value;
                         break;
                     // 근력 증가
                     case EquipOption.EquipAttrib.AtrribAtkStrength:
                         value = _item.option.options[e];
-                        if (player != null && player.playerStat != null)
-                        {
-                            player.playerStat.tmpStrength += (int)value;
-                        }
+                        player.playerStat.AddedStrength += (int)value;
                         break;
-                    // 스태미나 증가
+                    // 지구력 증가
                     case EquipOption.EquipAttrib.AtrribAtkStamina:
                         value = _item.option.options[e];
-                        if (player != null && player.playerStat != null)
-                        {
-                            player.playerStat.tmpStamina += (int)value;
-                        }
+                        player.playerStat.AddedStamina += (int)value;
                         break;
                     // 민첩 증가
-                    case EquipOption.EquipAttrib.AtrribAtkDex:
+                    case EquipOption.EquipAttrib.AtrribAtkDexterity:
                         value = _item.option.options[e];
-                        if (player != null && player.playerStat != null)
-                        {
-                            player.playerStat.tmpDexterity += (int)value;
-                        }
+                        player.playerStat.AddedDexterity += (int)value;
                         break;
                     // 치명타 확률 증가
-                    case EquipOption.EquipAttrib.AtrribAtkCritical:
+                    case EquipOption.EquipAttrib.AtrribAtkCriPro:
                         value = _item.option.options[e];
-                        if (player != null && player.playerStat != null)
-                        {
-                            player.playerStat.addedCriticalPro += value;
-                        }
+                        player.playerStat.addedCriPro += value;
                         break;
                 }
-                // temp값을 이용해 플레이어 능력치를 새로 계산
-                player.SetStateOption();
+                
+            }            
+            player.SetState();
+        }
+    }
+    // 무기를 장착 해제했을 때 추가옵션을 제거함.
+    public void ReturnOptions(Item _item)
+    {
+        if (player == null)
+            return;
+
+        if (_item != null && _item.option != null && _item.option.optionList != null)
+        {
+            float value;            
+            foreach (var e in _item.option.optionList)
+            {
+                switch (e)
+                {
+                    // 공격력과 공격 속도는 무기를 장착 해제했을 때
+                    // 각각 0, 1f로 초기화되므로 여기서 되돌릴 필요 없음.
+                    
+                    case EquipOption.EquipAttrib.AtrribAtkHealth:
+                        value = _item.option.options[e];
+                        player.playerStat.AddedHealth -= (int)value;
+                        break;
+                    case EquipOption.EquipAttrib.AtrribAtkStrength:
+                        value = _item.option.options[e];
+                        player.playerStat.AddedStrength -= (int)value;
+                        break;
+                    case EquipOption.EquipAttrib.AtrribAtkStamina:
+                        value = _item.option.options[e];
+                        player.playerStat.AddedStamina -= (int)value;
+                        break;
+                    case EquipOption.EquipAttrib.AtrribAtkDexterity:
+                        value = _item.option.options[e];
+                        player.playerStat.AddedDexterity -= (int)value;
+                        break;                    
+                    case EquipOption.EquipAttrib.AtrribAtkCriPro:
+                        value = _item.option.options[e];
+                        player.playerStat.addedCriPro -= value;
+                        break;
+                }
             }
+            player.SetState();
         }
     }
 }

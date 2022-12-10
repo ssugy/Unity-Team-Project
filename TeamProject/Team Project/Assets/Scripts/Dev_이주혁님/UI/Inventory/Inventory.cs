@@ -36,6 +36,15 @@ public class Inventory : MonoBehaviour
             });
         }
 
+        if (JY_CharacterListManager.s_instance.invenList.Count > 0)
+        {
+            // 장비 장착이 다 끝난 다음에 HP, SP를 셋팅해줘야 씬이 시작될 때 HP, SP가 가득 찬 상태로 시작.
+            JY_CharacterListManager.s_instance.playerList[0].playerStat.CurHP
+                = JY_CharacterListManager.s_instance.playerList[0].playerStat.HP;
+            JY_CharacterListManager.s_instance.playerList[0].playerStat.CurSP
+                = JY_CharacterListManager.s_instance.playerList[0].playerStat.SP;
+        }        
+
         if (onChangeItem != null)
             onChangeItem();
     }
