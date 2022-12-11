@@ -5,8 +5,7 @@ using static EquipOption;
 
 public class Weapon : MonoBehaviour
 {
-    public int atkPoint;                // 무기별 공격력.
-    public int level;                   // 장착 가능한 플레이어 레벨
+    public int atkPoint;                // 무기별 공격력.    
     public float atkSpeed;
     public float atkMag;                // 일반공격을 사용할 때, 혹은 스킬을 사용할 때 미리 정해둔 배율이 여기에 대입됨.
     public Player player;    
@@ -62,38 +61,38 @@ public class Weapon : MonoBehaviour
                 switch (e)
                 {
                     // 공속 증가
-                    case EquipOption.EquipAttrib.AttribAtkSpeed:
+                    case EquipOption.EquipAttrib.AtkSpeed:
                         value = _item.option.options[e];
                         atkSpeed += atkSpeed * value / 100.0f;
                         player.playerAni.SetFloat("AtkSpeed", atkSpeed);
                         break;
                     // 공격력 증가
-                    case EquipOption.EquipAttrib.AttribAtkPoint:
+                    case EquipOption.EquipAttrib.AtkPoint:
                         value = _item.option.options[e];
                         atkPoint += (int)value;
                         break;
                     // 체력(Health) 증가
-                    case EquipOption.EquipAttrib.AtrribAtkHealth:
+                    case EquipOption.EquipAttrib.Health:
                         value = _item.option.options[e];
                         player.playerStat.AddedHealth += (int)value;
                         break;
                     // 근력 증가
-                    case EquipOption.EquipAttrib.AtrribAtkStrength:
+                    case EquipOption.EquipAttrib.Strength:
                         value = _item.option.options[e];
                         player.playerStat.AddedStrength += (int)value;
                         break;
                     // 지구력 증가
-                    case EquipOption.EquipAttrib.AtrribAtkStamina:
+                    case EquipOption.EquipAttrib.Stamina:
                         value = _item.option.options[e];
                         player.playerStat.AddedStamina += (int)value;
                         break;
                     // 민첩 증가
-                    case EquipOption.EquipAttrib.AtrribAtkDexterity:
+                    case EquipOption.EquipAttrib.Dexterity:
                         value = _item.option.options[e];
                         player.playerStat.AddedDexterity += (int)value;
                         break;
                     // 치명타 확률 증가
-                    case EquipOption.EquipAttrib.AtrribAtkCriPro:
+                    case EquipOption.EquipAttrib.CriPro:
                         value = _item.option.options[e];
                         player.playerStat.addedCriPro += value;
                         break;
@@ -119,23 +118,23 @@ public class Weapon : MonoBehaviour
                     // 공격력과 공격 속도는 무기를 장착 해제했을 때
                     // 각각 0, 1f로 초기화되므로 여기서 되돌릴 필요 없음.
                     
-                    case EquipOption.EquipAttrib.AtrribAtkHealth:
+                    case EquipOption.EquipAttrib.Health:
                         value = _item.option.options[e];
                         player.playerStat.AddedHealth -= (int)value;
                         break;
-                    case EquipOption.EquipAttrib.AtrribAtkStrength:
+                    case EquipOption.EquipAttrib.Strength:
                         value = _item.option.options[e];
                         player.playerStat.AddedStrength -= (int)value;
                         break;
-                    case EquipOption.EquipAttrib.AtrribAtkStamina:
+                    case EquipOption.EquipAttrib.Stamina:
                         value = _item.option.options[e];
                         player.playerStat.AddedStamina -= (int)value;
                         break;
-                    case EquipOption.EquipAttrib.AtrribAtkDexterity:
+                    case EquipOption.EquipAttrib.Dexterity:
                         value = _item.option.options[e];
                         player.playerStat.AddedDexterity -= (int)value;
                         break;                    
-                    case EquipOption.EquipAttrib.AtrribAtkCriPro:
+                    case EquipOption.EquipAttrib.CriPro:
                         value = _item.option.options[e];
                         player.playerStat.addedCriPro -= value;
                         break;

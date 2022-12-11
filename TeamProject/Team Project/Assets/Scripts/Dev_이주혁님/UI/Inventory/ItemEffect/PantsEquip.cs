@@ -51,47 +51,47 @@ public class PantsEquip : ItemEffect
                 switch (e)
                 {
                     // 방어력 증가
-                    case EquipOption.EquipAttrib.AttribArmorDef:
+                    case EquipOption.EquipAttrib.DefPoint:
                         value = _item.option.options[e];
                         player.playerStat.addedDefPoint += (int)value;
                         break;
                     // 최대 체력(Max HP) 증가
-                    case EquipOption.EquipAttrib.AttribArmorHP:
+                    case EquipOption.EquipAttrib.HP:
                         value = _item.option.options[e];
                         player.playerStat.addedHP += (int)value;
                         break;
                     // 최대 스태미나(Max SP) 증가
-                    case EquipOption.EquipAttrib.AttribArmorSP:
+                    case EquipOption.EquipAttrib.SP:
                         value = _item.option.options[e];
                         player.playerStat.addedSP += (int)value;
                         break;
                     // 체력(Health) 증가
-                    case EquipOption.EquipAttrib.AttribArmorHealth:
+                    case EquipOption.EquipAttrib.Health:
                         value = _item.option.options[e];
                         player.playerStat.AddedHealth += (int)value;
                         break;
                     // 근력 증가
-                    case EquipOption.EquipAttrib.AtrribArmorStrength:
+                    case EquipOption.EquipAttrib.Strength:
                         value = _item.option.options[e];
                         player.playerStat.AddedStrength += (int)value;
                         break;
                     // 스태미나 증가
-                    case EquipOption.EquipAttrib.AttribArmorStamina:
+                    case EquipOption.EquipAttrib.Stamina:
                         value = _item.option.options[e];
                         player.playerStat.AddedStamina += (int)value;
                         break;
                     // 민첩 증가
-                    case EquipOption.EquipAttrib.AtrribArmorDexterity:
+                    case EquipOption.EquipAttrib.Dexterity:
                         value = _item.option.options[e];
                         player.playerStat.AddedDexterity += (int)value;
                         break;
                     // 회피 확률 증가
-                    case EquipOption.EquipAttrib.AtrribArmorAvoid:
+                    case EquipOption.EquipAttrib.AvoidPro:
                         value = _item.option.options[e];
                         player.playerStat.addedAvoid += (int)value;
                         break;
                     // 회복약 효율 증가
-                    case EquipOption.EquipAttrib.AtrribArmorRecover:
+                    case EquipOption.EquipAttrib.PotionRecover:
                         value = _item.option.options[e];
                         player.playerStat.addedRecover += (int)value;
                         break;

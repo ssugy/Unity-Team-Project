@@ -15,6 +15,8 @@ public enum EquipPart { WEAPON, SHIELD, HELMET, CHEST, LEG }
 [System.Serializable]
 public class PlayerStat
 {
+    public int statPointPerLevel = 5;            // 레벨업 당 지급되는 스탯 포인트.
+
     [Header("조정 가능")]
     public int health;
     public int stamina, strength, dexterity;    
@@ -132,7 +134,7 @@ public class PlayerStat
     // 스탯 초기화 혹은 캐릭터 생성 시 사용되는 초기 스탯.
     public void InitialStat(EJob _job)
     {
-        statPoint = (level - 1) * 3;
+        statPoint = (level - 1) * statPointPerLevel;
         switch (_job)
         {
             case EJob.WARRIOR:
@@ -155,7 +157,7 @@ public class PlayerStat
 public class Player : MonoBehaviourPun, IPunObservable
 {    
     //public static Player instance;
-    public PlayerStat playerStat;
+    public PlayerStat playerStat;    
     public Transform camAxis;                     // 메인 카메라 축.      
     public FloatingJoystick playerJoysitck;          // 조이스틱 입력을 받아옴.
     [Header("플레이어의 컴포넌트")]
@@ -871,7 +873,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     public void LevelUp()
     {
         ++playerStat.level;
-        playerStat.statPoint += 3;
+        playerStat.statPoint += playerStat.statPointPerLevel;
         playerStat.CurExp -= playerStat.Exp;              
         if (EXP_TABLE.TryGetValue(playerStat.level,out int _exp))
         {

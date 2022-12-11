@@ -321,7 +321,7 @@ public class AvatarSceneManager : MonoBehaviour
         for (int i = 0; i < mLWeapon.childCount; i++)
             Destroy(mLWeapon.GetChild(i).gameObject);
         GameObject weaponSrc = Resources.Load<GameObject>("Item/Weapon/Sword_1");
-        GameObject shieldSrc = Resources.Load<GameObject>("Item/Shield/Shield_2");
+        GameObject shieldSrc = Resources.Load<GameObject>("Item/Shield/Shield_1");
         if (weaponSrc != null)
             Instantiate(weaponSrc, fRWeapon);
         if (shieldSrc != null)
@@ -344,8 +344,8 @@ public class AvatarSceneManager : MonoBehaviour
             Destroy(mRWeapon.GetChild(i).gameObject);
         for (int i = 0; i < mLWeapon.childCount; i++)
             Destroy(mLWeapon.GetChild(i).gameObject);
-        GameObject weaponSrc = Resources.Load<GameObject>("Item/Weapon/Dagger_2");
-        GameObject shieldSrc = Resources.Load<GameObject>("Item/Shield/Staff_2");
+        GameObject weaponSrc = Resources.Load<GameObject>("Item/Weapon/Dagger_1");
+        GameObject shieldSrc = Resources.Load<GameObject>("Item/Shield/Staff_1");
         if (weaponSrc != null)
             Instantiate(weaponSrc, fRWeapon);
         if (shieldSrc != null)

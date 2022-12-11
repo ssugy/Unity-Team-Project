@@ -109,11 +109,33 @@ public class InfoPanel : MonoBehaviour
                 if (_item.option.GetOptionValue(i, out EquipOption.EquipAttrib attrib, out float val))
                 {
                     options[i].gameObject.SetActive(true);
-                    // 옵션 표기를 바꿀 필요가 있음.
+
+                    switch (_item.option.tiers[i])
+                    {
+                        case EquipOption.EquipTier.Tres:
+                            {
+                                ColorUtility.TryParseHtmlString("#A240FFFF", out Color color);
+                                options[i].color = color;
+                                break;
+                            }
+                        case EquipOption.EquipTier.Duo:
+                            {
+                                ColorUtility.TryParseHtmlString("#406AFFFF", out Color color);
+                                options[i].color = color;
+                                break;
+                            }
+                        case EquipOption.EquipTier.Unus:
+                            {
+                                ColorUtility.TryParseHtmlString("#686868FF", out Color color);
+                                options[i].color = color;
+                                break;
+                            }
+                    }                    
+                   
                     switch ((int)attrib)
                     {
                         // 퍼센트가 아닌 고정 수치를 올려주는 옵션들.
-                        case int n when (n >= 2 && n <= 13):
+                        case int n when (n == 2 || (n >= 4 && n <= 9) || n == 11):
                             {
                                 options[i].text 
                                     = string.Format("{0}: {1}", optionNames[(int)attrib], (int)val);

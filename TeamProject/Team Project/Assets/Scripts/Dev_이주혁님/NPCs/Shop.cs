@@ -17,16 +17,24 @@ public class Shop : MonoBehaviour
     public Text infoExplain;
 
     public Button buy;
+    public Slot_Shop firstList; // 상점 목록 첫번째 아이템.
     public Text goldText;
+
+    private void Awake()
+    {
+        shop = this;
+    }
+
     private void OnEnable()
     {
         goldText.text = JY_CharacterListManager.s_instance.playerList[0].playerStat.Gold.ToString();
+        shop ??= this;
+        // 상점 패널이 열릴 때 첫번째 아이템이 선택된 상태로 시작하게끔 함.
+        firstList.OnClick();
     }
-
-    // Start is called before the first frame update
+    
     void Start()
-    {
-        shop = this;
+    {        
         buy.onClick.RemoveAllListeners();
         buy.onClick.AddListener(() => BuyItem());
     }    
