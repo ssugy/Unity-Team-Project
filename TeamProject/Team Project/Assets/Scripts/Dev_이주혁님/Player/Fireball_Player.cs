@@ -18,6 +18,11 @@ public class Fireball_Player : MonoBehaviour
         else
         {
             transform.Translate(Vector3.forward * Time.deltaTime * 12f);
+            int layerMask = 1 << 11;
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 3f, layerMask);
+            if (colliders.Length > 0)
+                target = colliders[0];
+            
         }
     }
     private void OnEnable()
