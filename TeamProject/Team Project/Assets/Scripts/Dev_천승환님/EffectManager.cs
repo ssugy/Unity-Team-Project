@@ -16,11 +16,11 @@ public class EffectManager : MonoBehaviour
     public ParticleSystem commonHitEffectPrefab;
     
 
-    public void PlayHitEffect(Vector3 pos, Vector3 normal, Transform parent = null)
+    public void PlayHitEffect(Vector3 pos, Quaternion normal, Transform parent = null)
     {
         var targetPrefab = commonHitEffectPrefab;
 
-        var effect = Instantiate(targetPrefab, pos, Quaternion.LookRotation(normal));
+        var effect = Instantiate(targetPrefab, pos, normal);
 
         if (parent != null) effect.transform.SetParent(parent);
 

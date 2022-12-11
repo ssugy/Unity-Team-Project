@@ -278,7 +278,7 @@ public class JY_Boss_FireDungeon : Enemy
         Vector3 reactVec = transform.position - _player; // 넉백 거리.
         StartCoroutine(OnDamage(reactVec * 0.2f));        
         if (EffectManager.Instance != null)
-            EffectManager.Instance.PlayHitEffect(transform.position + offset, transform.rotation.eulerAngles, transform);
+            EffectManager.Instance.PlayHitEffect(transform.position + offset, transform.rotation, transform);
     }
 
     // 어택에서 이어져서, 데미지를 처리하는 구문, 사망했는지 여부도 처리

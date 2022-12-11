@@ -97,7 +97,7 @@ public class Dragon : Enemy
         StartCoroutine(OnDamage(reactVec, _damage));
         hpbar = Enemy_HP_UI.GetObject();
         hpbar.Recognize(this);
-        EffectManager.Instance.PlayHitEffect(transform.position + offset, transform.rotation.eulerAngles, transform);
+        EffectManager.Instance.PlayHitEffect(transform.position + offset, transform.rotation, transform);
     }
     protected IEnumerator OnDamage(Vector3 reactVec, int _damage)
     {        

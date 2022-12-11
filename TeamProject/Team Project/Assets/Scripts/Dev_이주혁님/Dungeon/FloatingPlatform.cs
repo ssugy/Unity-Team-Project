@@ -21,13 +21,19 @@ public class FloatingPlatform : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") || other.CompareTag("Evasion") || other.CompareTag("Dead") || other.CompareTag("Attacked"))         
+        if (other.CompareTag("Player") || other.CompareTag("Evasion") 
+            || other.CompareTag("Dead") || other.CompareTag("Attacked"))         
             other.GetComponent<Player>().isGround = true;
         
     }
     private void OnTriggerStay(Collider other)
     {
-        other.GetComponent<Player>().isGround = true;
-        other.GetComponent<CharacterController>().Move((endPos - transform.localPosition).normalized * Time.deltaTime * moveSpeed);                
+        if (other.CompareTag("Player") || other.CompareTag("Evasion") 
+            || other.CompareTag("Dead") || other.CompareTag("Attacked"))
+        {
+            other.GetComponent<Player>().isGround = true;
+            other.GetComponent<CharacterController>().
+                Move((endPos - transform.localPosition).normalized * Time.deltaTime * moveSpeed);
+        }                           
     }    
 }
