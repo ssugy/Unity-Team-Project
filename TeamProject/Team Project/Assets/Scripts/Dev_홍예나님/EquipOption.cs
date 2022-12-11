@@ -15,9 +15,10 @@ public class EquipOption
     // 장비의 타입. 무기/방어구/방패로 나뉨.
     public enum EquipType
     {
-        EquipTypeWeapon,
-        EquipTypeArmor,
-        EquipTypeShield
+        Weapon,
+        Armour,
+        Shield,
+        Staff            
     }
     // 장비 옵션의 티어. 숫자가 높을 수록 상급.
     public enum EquipTier
@@ -97,6 +98,15 @@ public class EquipOption
         EquipAttrib.AvoidPro,        
         EquipAttrib.ShieldDef
     };
+    private EquipAttrib[] staffOptions =
+    {        
+        EquipAttrib.CriPro,
+
+        EquipAttrib.Health,
+        EquipAttrib.Strength,
+        EquipAttrib.Stamina,
+        EquipAttrib.Dexterity
+    };
     public EquipOption(EquipType _part)
     {
         this.part = _part;
@@ -130,19 +140,24 @@ public class EquipOption
         EquipAttrib[] _options;        
         switch (_part)
         {
-            case EquipType.EquipTypeWeapon:
+            case EquipType.Weapon:            
                 {
                     _options = weaponOptions;
                     break;
                 }                
-            case EquipType.EquipTypeArmor:
+            case EquipType.Armour:
                 {
                     _options = armourOptions;
                     break;
                 }
-            case EquipType.EquipTypeShield:
+            case EquipType.Shield:
                 {
                     _options = shieldOptions;
+                    break;
+                }
+            case EquipType.Staff:
+                {
+                    _options = staffOptions;
                     break;
                 }
             default:

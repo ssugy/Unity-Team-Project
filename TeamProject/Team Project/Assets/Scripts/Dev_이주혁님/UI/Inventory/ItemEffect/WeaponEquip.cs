@@ -40,6 +40,6 @@ public class WeaponEquip : ItemEffect
     }
     public override int GetType()
     {
-        return (int)EquipOption.EquipType.EquipTypeWeapon;
+        return (int)EquipOption.EquipType.Weapon;
     }
 }

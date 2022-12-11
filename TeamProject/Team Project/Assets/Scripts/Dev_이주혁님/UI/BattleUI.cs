@@ -25,6 +25,7 @@ public class BattleUI : MonoBehaviour
     public EventTrigger lArm;           // lArm 기능은 버튼이 아닌 이벤트트리거를 사용함.
     private EventTrigger.Entry lArm_PointerDown;
     private EventTrigger.Entry lArm_PointerUp;
+    private EventTrigger.Entry lArm_PointerClick;
 
     [Header("UI 버튼")]
     public Button revive;
@@ -41,10 +42,6 @@ public class BattleUI : MonoBehaviour
     public Image cool_3;
     public Image cool_4;
 
-    [Header("방패 업/다운 시 표시할 스프라이트")]
-    public Sprite upFrame;
-    public Sprite downFrame;
-
     [Header("팝업 메시지")]
     public Text equipEmpty;
     public Text getKey;
@@ -56,6 +53,11 @@ public class BattleUI : MonoBehaviour
 
     [Header("버프 레이아웃")]
     public Transform BuffLayout;
+
+    [Header("왼손 버튼에 할당될 스프라이트")]
+    public Image lArm_Icon;
+    public Sprite guard;
+    public Sprite magic;
 
     private void OnEnable()
     {
@@ -78,17 +80,8 @@ public class BattleUI : MonoBehaviour
         skill_3.onClick.AddListener(player.JumpAttack);        
         skill_4.onClick.AddListener(player.Warcry);        
         evasion.onClick.AddListener(player.Roll);
-        // 이하는 이벤트트리거에 동적으로 pointer up/down 이벤트에 함수를 할당하는 방법. (매개변수 필요)
-        lArm_PointerDown = new EventTrigger.Entry();
-        lArm_PointerDown.eventID = EventTriggerType.PointerDown;
-        lArm_PointerDown.callback.AddListener((data) => { player.LArmDown((PointerEventData)data); });
-        lArm_PointerDown.callback.AddListener((data) => { LArmDown_Frame((PointerEventData)data); });
-        lArm_PointerUp = new EventTrigger.Entry();
-        lArm_PointerUp.eventID = EventTriggerType.PointerUp;
-        lArm_PointerUp.callback.AddListener((data) => { player.LArmUp((PointerEventData)data); });
-        lArm_PointerUp.callback.AddListener((data) => { LArmUp_Frame((PointerEventData)data); });
-        lArm.triggers.Add(lArm_PointerDown);
-        lArm.triggers.Add(lArm_PointerUp);
+
+        Guard();
 
         // 게임 매니저를 이용하여 부활하면 마을로 돌아가도록 함.
         revive.onClick.AddListener(() => NetworkManager.s_instance.LeaveRoom());
@@ -108,17 +101,7 @@ public class BattleUI : MonoBehaviour
         solo.onClick.AddListener(() => StartCoroutine(EnterDungeon(1)));
         doppio.onClick.AddListener(() => StartCoroutine(EnterDungeon(2)));
     }    
-
-    void LArmDown_Frame(PointerEventData data)
-    {
-        Image frame = lArm.transform.GetComponent<Image>();
-        frame.sprite = downFrame;
-    }
-    void LArmUp_Frame(PointerEventData data)
-    {
-        Image frame = lArm.transform.GetComponent<Image>();
-        frame.sprite = upFrame;
-    }   
+     
     public IEnumerator Cooldown(float _cooltime, Button _button, Image _image)
     {
         _button.interactable = false;
@@ -174,5 +157,36 @@ public class BattleUI : MonoBehaviour
         yield return new WaitForSeconds(2f);
         solo.interactable = true;
         doppio.interactable = true;
+    }
+
+    // 왼손 무기 버튼에 방어 기능을 할당.
+    public void Guard()
+    {
+        lArm_Icon.sprite = guard;
+
+        // 기존에 등록된 이벤트를 삭제.
+        lArm.triggers.Clear();
+
+        // 이하는 이벤트트리거에 동적으로 pointer up/down 이벤트에 함수를 할당하는 방법. (매개변수 필요)
+        lArm_PointerDown = new();
+        lArm_PointerDown.eventID = EventTriggerType.PointerDown;
+        lArm_PointerDown.callback.AddListener((data) => { player.LArmDown(); });
+        lArm_PointerUp = new();
+        lArm_PointerUp.eventID = EventTriggerType.PointerUp;
+        lArm_PointerUp.callback.AddListener((data) => { player.LArmUp(); });
+        lArm.triggers.Add(lArm_PointerDown);
+        lArm.triggers.Add(lArm_PointerUp);
+    }
+    public void Magic()
+    {        
+        lArm_Icon.sprite = magic;
+
+        // 기존에 등록된 이벤트를 삭제.
+        lArm.triggers.Clear();
+
+        lArm_PointerClick = new();
+        lArm_PointerClick.eventID = EventTriggerType.PointerClick;
+        lArm_PointerClick.callback.AddListener((data) => { player.Fireball(); });
+        lArm.triggers.Add(lArm_PointerClick);
     }
 }

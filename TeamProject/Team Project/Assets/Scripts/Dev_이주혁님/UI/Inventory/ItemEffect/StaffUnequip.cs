@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ItemEft/ShieldUnequip")]
-public class ShieldUnequip : ItemEffect
+[CreateAssetMenu(menuName = "ItemEft/StaffUnequip")]
+public class StaffUnequip : ItemEffect
 {
     public override void ExecuteRole(Item _item)
     {        
@@ -13,11 +13,11 @@ public class ShieldUnequip : ItemEffect
             JY_CharacterListManager.s_instance.playerList[0].playerStat.equiped.Remove(EquipPart.SHIELD);
         }
 
-        Shield shieldComp;
-        if ((shieldComp = JY_CharacterListManager.s_instance.playerList[0].lWeaponDummy.GetComponentInChildren<Shield>()) != null) 
+        Staff staffComp;
+        if ((staffComp = JY_CharacterListManager.s_instance.playerList[0].lWeaponDummy.GetComponentInChildren<Staff>()) != null) 
         {
-            shieldComp.ReturnOptions(_item);
-            DestroyImmediate(JY_CharacterListManager.s_instance.playerList[0].lWeaponDummy.GetComponentInChildren<Shield>().gameObject);
+            staffComp.ReturnOptions(_item);
+            DestroyImmediate(JY_CharacterListManager.s_instance.playerList[0].lWeaponDummy.GetComponentInChildren<Staff>().gameObject);
         }        
 
         if (JY_CharacterListManager.s_instance.invenList[0].onChangeItem != null)

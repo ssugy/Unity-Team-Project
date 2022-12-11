@@ -13,12 +13,8 @@ public class Fireball : MonoBehaviour
     }
     private void OnEnable()
     {
-        Invoke("DestroySelf", 4f);
-    }
-    void DestroySelf()
-    {
-        Destroy(gameObject);
-    }
+        Destroy(gameObject, 4f);        
+    }    
 
     private void OnTriggerEnter(Collider other)
     {

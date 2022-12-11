@@ -5,15 +5,19 @@ using UnityEngine;
 public class Shield : MonoBehaviour
 {    
     public float defPro;                    // 막기 사용 시 적용될 방어율.    
-    public Player player; 
+    [HideInInspector] public Player player; 
     
     private void OnEnable()
     {        
         player = GetComponentInParent<Player>();
         if (player != null)
         {
-            player.lWeapon = this;
+            player.shield = this;
+            player.staff = null;
             player.SetState();
+
+            if (BattleUI.instance != null)
+                BattleUI.instance.Guard();
         }
         
     }
@@ -21,7 +25,7 @@ public class Shield : MonoBehaviour
     {
         if (player != null)
         {
-            player.lWeapon = null;
+            player.shield = null;
             player.SetState();
         }
     }

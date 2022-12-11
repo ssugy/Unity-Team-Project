@@ -100,8 +100,8 @@ public class PlayerStat
         set 
         {
             curSP = value;
-            if (curSP < 0)            
-                curSP = 0;            
+            if (curSP < -5)            
+                curSP = -5;            
             else if (curSP > SP)            
                 curSP = SP;            
         }
@@ -184,7 +184,8 @@ public class Player : MonoBehaviourPun, IPunObservable
     public GameObject WeaponEffect;
     public Transform lWeaponDummy;              // 왼손 무기 더미.
     public Weapon rWeapon;
-    public Shield lWeapon;
+    public Shield shield;
+    public Staff staff;
       
     private Dictionary<int, int> EXP_TABLE;
 
@@ -321,7 +322,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             BattleUI.instance.equipEmpty.gameObject.SetActive(true);
             return;
         }
-        if (enableAtk)
+        if (enableAtk && (playerStat.CurSP > 0))
         {
             //SetRotate();
             playerAni.SetTrigger("isAttack");
@@ -362,7 +363,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             
             return;
         }
-        if (enableAtk)
+        if (enableAtk && (playerStat.CurSP > 0)) 
         {
             SetRotate();
             playerAni.Play("Player Skill 1");
@@ -393,7 +394,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             }
             return;
         }
-        if (enableAtk)
+        if (enableAtk && (playerStat.CurSP > 0))
         {
             SetRotate();
             playerAni.Play("Player Skill 2");
@@ -426,7 +427,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             }
             return;
         }
-        if (enableAtk)
+        if (enableAtk && (playerStat.CurSP > 0))
         {
             SetRotate();
             playerAni.Play("Player Skill 3");
@@ -458,7 +459,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             }
             return;
         }
-        if (enableAtk)
+        if (enableAtk && (playerStat.CurSP > 0))
         {
             SetRotate();
             playerAni.Play("Player Skill 4");
@@ -472,9 +473,12 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     public void Roll()
     {
-        playerAni.SetBool("isRoll", true);
-        CancelInvoke("_Roll");
-        Invoke("_Roll", 0.4f);
+        if (enableAtk && (playerStat.CurSP > 0))
+        {
+            playerAni.SetBool("isRoll", true);
+            CancelInvoke("_Roll");
+            Invoke("_Roll", 0.4f);
+        }            
     }
     void _Roll() => playerAni.SetBool("isRoll", false);
 
@@ -496,9 +500,9 @@ public class Player : MonoBehaviourPun, IPunObservable
         KnockbackVec = Vector3.zero;
 
     }
-    public void LArmDown(PointerEventData data)
+    public void LArmDown()
     {
-        if (lWeapon == null)
+        if (shield == null)
         {
             BattleUI.instance.equipEmpty.text = "방패를 착용하지 않았습니다.";
             BattleUI.instance.equipEmpty.gameObject.SetActive(true);
@@ -506,11 +510,23 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
         playerAni.SetBool("isLArm", true);
     }
-    public void LArmUp(PointerEventData data)
+    public void LArmUp()
     {        
         playerAni.SetBool("isLArm", false);
     }
-    
+    public void Fireball()
+    {
+        if (staff == null)
+        {
+            BattleUI.instance.equipEmpty.text = "스태프를 착용하지 않았습니다.";
+            BattleUI.instance.equipEmpty.gameObject.SetActive(true);
+            return;
+        }
+        if(playerStat.CurSP>0)
+            playerAni.SetTrigger("isFire");
+    }
+
+
     public void WeaponEffectOn()
     {
         if (WeaponEffect != null)
@@ -724,10 +740,10 @@ public class Player : MonoBehaviourPun, IPunObservable
     {        
         Enemy enemy = _enemy.GetComponent<Enemy>();
         if (enemy != null)
-        {
-            //SoundAttack();
+        {            
             int damage = AttackDamage(rWeapon.atkMag, enemy.defMag);
-            enemy.IsAttacked(damage, transform.position);            
+            enemy.IsAttacked(damage, transform.position);
+            enemy.target = transform;
         }        
     }
     public void PowerStrikeDamage()
@@ -783,7 +799,20 @@ public class Player : MonoBehaviourPun, IPunObservable
             }
             AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.PLAYER_ATTACK);
         }
-    }    
+    }
+    public void FireballDamage()
+    {
+        GameObject src = Resources.Load<GameObject>("Prefabs/Fireball_Player");
+        Fireball_Player fireball = Instantiate(src, staff.shootPoint.position,
+            transform.rotation).GetComponent<Fireball_Player>();
+        fireball.damage = staff.atkDmg;
+        fireball.player = transform;
+        int layerMask = 1 << 11;        
+        if (Physics.SphereCast(transform.position + transform.forward * 3f, 3f, transform.forward, out RaycastHit hitInfo, 5f, layerMask))
+        {            
+            fireball.target = hitInfo.collider;
+        }        
+    }
 
     public void IsAttacked(int _damage, Collider Enemy)
     {
@@ -887,6 +916,10 @@ public class Player : MonoBehaviourPun, IPunObservable
     public void ResetAttackTrigger()   
     {
         playerAni.ResetTrigger("isAttack");
+    }
+    public void ResetMagicTrigger()
+    {
+        playerAni.ResetTrigger("isFire");
     }
     public void questExp(int exp)
     {
@@ -1003,10 +1036,10 @@ public class Player : MonoBehaviourPun, IPunObservable
                 stream.SendNext(string.Empty);            
             else            
                 stream.SendNext(rWeapon.name);
-            if (lWeapon == null)
+            if (shield == null)
                 stream.SendNext(string.Empty);
             else
-                stream.SendNext(lWeapon.name);
+                stream.SendNext(shield.name);
 
 
         }
@@ -1046,7 +1079,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                 while (this.lWeaponDummy.GetComponentInChildren<Staff>() != null)
                     DestroyImmediate(this.lWeaponDummy.GetComponentInChildren<Staff>().gameObject);
             }
-            else if (lWeapon == null || !shieldName.Equals(lWeapon.name))
+            else if (shield == null || !shieldName.Equals(shield.name))
             {
                 while (this.lWeaponDummy.GetComponentInChildren<Shield>() != null)
                     DestroyImmediate(this.lWeaponDummy.GetComponentInChildren<Shield>().gameObject);

@@ -2981,6 +2981,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStat:
+    statPointPerLevel: 5
     health: 0
     stamina: 0
     strength: 0
@@ -3026,7 +3027,8 @@ MonoBehaviour:
   WeaponEffect: {fileID: 1157836330088897736}
   lWeaponDummy: {fileID: 2952390939901109010}
   rWeapon: {fileID: 0}
-  lWeapon: {fileID: 0}
+  shield: {fileID: 0}
+  staff: {fileID: 0}
 --- !u!114 &784678566230183479
 MonoBehaviour:
   m_ObjectHideFlags: 0

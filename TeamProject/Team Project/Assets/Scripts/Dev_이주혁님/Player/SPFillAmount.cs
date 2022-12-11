@@ -36,7 +36,10 @@ public class SPFillAmount : MonoBehaviour
             isExhausted = false;
         }
         barFront.fillAmount = (float)stat.CurSP / stat.SP;
-        barText.text = ((int)stat.CurSP).ToString() + " / " + ((int)stat.SP).ToString();
+        if (stat.CurSP < 0)            
+            barText.text = "0 / " + ((int)stat.SP).ToString();        
+        else
+            barText.text = ((int)stat.CurSP).ToString() + " / " + ((int)stat.SP).ToString();
 
     }
 }

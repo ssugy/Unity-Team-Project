@@ -39,7 +39,7 @@ public class TopEquip : ItemEffect
     }
     public override int GetType()
     {
-        return (int)EquipOption.EquipType.EquipTypeArmor;
+        return (int)EquipOption.EquipType.Armour;
     }
     private void ApplyOptions(Player player, Item _item)
     {
