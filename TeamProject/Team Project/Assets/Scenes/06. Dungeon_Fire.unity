@@ -848,6 +848,10 @@ PrefabInstance:
       value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 1295775362, guid: db7565f2be8946c499d96ca21f82a480, type: 3}
+      propertyPath: targetRange
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295775362, guid: db7565f2be8946c499d96ca21f82a480, type: 3}
       propertyPath: explanationNum
       value: 3
       objectReference: {fileID: 0}
@@ -2192,12 +2196,16 @@ PrefabInstance:
       value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 7393200756165185172, guid: db7565f2be8946c499d96ca21f82a480, type: 3}
+      propertyPath: m_Drag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7393200756165185172, guid: db7565f2be8946c499d96ca21f82a480, type: 3}
       propertyPath: m_Mass
       value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 7393200756165185172, guid: db7565f2be8946c499d96ca21f82a480, type: 3}
       propertyPath: m_IsKinematic
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db7565f2be8946c499d96ca21f82a480, type: 3}
@@ -22670,7 +22678,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1219407567
 Transform:
   m_ObjectHideFlags: 0
@@ -33822,6 +33830,10 @@ PrefabInstance:
       value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 1295775362, guid: db7565f2be8946c499d96ca21f82a480, type: 3}
+      propertyPath: targetRange
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295775362, guid: db7565f2be8946c499d96ca21f82a480, type: 3}
       propertyPath: explanationNum
       value: 2
       objectReference: {fileID: 0}
@@ -34518,12 +34530,16 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7393200756165185172, guid: db7565f2be8946c499d96ca21f82a480, type: 3}
+      propertyPath: m_Drag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7393200756165185172, guid: db7565f2be8946c499d96ca21f82a480, type: 3}
       propertyPath: m_Mass
       value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 7393200756165185172, guid: db7565f2be8946c499d96ca21f82a480, type: 3}
       propertyPath: m_IsKinematic
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db7565f2be8946c499d96ca21f82a480, type: 3}
@@ -46192,6 +46208,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7503241612611708536, guid: 65a438cf0a2a1474dacb51e5f903dcde, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7503241613146746618, guid: 65a438cf0a2a1474dacb51e5f903dcde, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
@@ -46243,6 +46263,22 @@ PrefabInstance:
     - target: {fileID: 7503241613258777675, guid: 65a438cf0a2a1474dacb51e5f903dcde, type: 3}
       propertyPath: m_Name
       value: Fire Dungeon
+      objectReference: {fileID: 0}
+    - target: {fileID: 7503241613259610429, guid: 65a438cf0a2a1474dacb51e5f903dcde, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7503241613259780473, guid: 65a438cf0a2a1474dacb51e5f903dcde, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7503241613259787741, guid: 65a438cf0a2a1474dacb51e5f903dcde, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7503241613295850250, guid: 65a438cf0a2a1474dacb51e5f903dcde, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7503241613473364028, guid: 65a438cf0a2a1474dacb51e5f903dcde, type: 3}
       propertyPath: m_LocalPosition.y

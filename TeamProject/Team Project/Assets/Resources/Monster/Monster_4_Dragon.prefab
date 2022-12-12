@@ -1755,6 +1755,7 @@ GameObject:
   - component: {fileID: 3846305544410695601}
   - component: {fileID: -7366758392195524724}
   - component: {fileID: -4536718879022763569}
+  - component: {fileID: 1583557602380672502}
   m_Layer: 11
   m_Name: Monster_4_Dragon
   m_TagString: Enemy
@@ -1770,7 +1771,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 251427240539823624}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.921991, y: 4, z: 63.106785}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1828,7 +1829,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 3.2, y: 4, z: 4}
-  m_Center: {x: 0, y: 2, z: -0.1}
+  m_Center: {x: 0, y: 3, z: -0.1}
 --- !u!114 &1295775362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1859,7 +1860,7 @@ MonoBehaviour:
   fieldGold: {fileID: 1498403948531744, guid: fa2c57d3f28a5e6419393e8bc3eeb32a, type: 3}
   targetRadius: 3
   targetRange: 3
-  attackDistance: 1.7
+  attackDistance: 3
   attackCool: 3
   target: {fileID: 0}
   originPos: {x: 0, y: 0, z: 0}
@@ -1969,6 +1970,20 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!136 &1583557602380672502
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251427240539823624}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.73
+  m_Height: 1.87
+  m_Direction: 0
+  m_Center: {x: 0, y: 1.96, z: 2.26}
 --- !u!1 &251427240539825292
 GameObject:
   m_ObjectHideFlags: 0
