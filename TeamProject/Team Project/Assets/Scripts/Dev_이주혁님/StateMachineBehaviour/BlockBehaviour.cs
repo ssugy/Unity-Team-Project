@@ -12,15 +12,18 @@ public class BlockBehaviour : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         curDef = animator.GetComponent<Player>().playerStat.defMag;
+        animator.GetComponent<Player>().enableRecoverSP = false;
+        animator.GetComponent<Player>().isGaurd = true;
+        animator.GetComponent<Player>().playerStat.defMag = animator.GetComponent<Player>().shield.defPro;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        animator.GetComponent<Player>().enableRecoverSP = false;
-        animator.GetComponent<Player>().isGaurd = true;
-        animator.GetComponent<Player>().playerStat.defMag = animator.GetComponent<Player>().shield.defPro;
+    {        
         animator.GetComponent<Player>().UseStamina(usingStamina * Time.deltaTime * 0.3f);
+        if (animator.GetComponent<Player>().playerStat.CurSP <= 0)
+            animator.GetComponent<Player>().LArmUp();
+
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

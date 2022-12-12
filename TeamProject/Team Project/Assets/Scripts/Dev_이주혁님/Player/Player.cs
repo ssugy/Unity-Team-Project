@@ -322,9 +322,8 @@ public class Player : MonoBehaviourPun, IPunObservable
             BattleUI.instance.equipEmpty.gameObject.SetActive(true);
             return;
         }
-        if (enableAtk && (playerStat.CurSP > 0))
-        {
-            //SetRotate();
+        if (enableAtk && (playerStat.CurSP > 1))
+        {            
             playerAni.SetTrigger("isAttack");
         }              
     }
@@ -363,7 +362,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             
             return;
         }
-        if (enableAtk && (playerStat.CurSP > 0)) 
+        if (enableAtk && (playerStat.CurSP > 1)) 
         {
             SetRotate();
             playerAni.Play("Player Skill 1");
@@ -394,7 +393,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             }
             return;
         }
-        if (enableAtk && (playerStat.CurSP > 0))
+        if (enableAtk && (playerStat.CurSP > 1))
         {
             SetRotate();
             playerAni.Play("Player Skill 2");
@@ -427,7 +426,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             }
             return;
         }
-        if (enableAtk && (playerStat.CurSP > 0))
+        if (enableAtk && (playerStat.CurSP > 1))
         {
             SetRotate();
             playerAni.Play("Player Skill 3");
@@ -459,7 +458,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             }
             return;
         }
-        if (enableAtk && (playerStat.CurSP > 0))
+        if (enableAtk && (playerStat.CurSP > 1))
         {
             SetRotate();
             playerAni.Play("Player Skill 4");
@@ -473,7 +472,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     public void Roll()
     {
-        if (enableAtk && (playerStat.CurSP > 0))
+        if (enableAtk && (playerStat.CurSP > 1))
         {
             playerAni.SetBool("isRoll", true);
             CancelInvoke("_Roll");
@@ -522,7 +521,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             BattleUI.instance.equipEmpty.gameObject.SetActive(true);
             return;
         }
-        if(playerStat.CurSP>0)
+        if (playerStat.CurSP > 1) 
             playerAni.SetTrigger("isFire");
     }
 
@@ -871,17 +870,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     public void UseStamina(float _stamina)
     {
         playerStat.CurSP -= _stamina;
-    }
-    public void Exhausted()     // 스테미너를 전부 소진하면 행동을 할 수 없음.
-    {
-        playerAni.SetBool("isExhausted", true);        
-        DisableAtk();
-    }
-    public void Recovered()     // 스태미너가 모두 회복되면 Exhausted 상태에서 회복함.
-    {
-        playerAni.SetBool("isExhausted", false);
-        EnableAtk();
-    }
+    }    
 
     void LookTarget()
     {
