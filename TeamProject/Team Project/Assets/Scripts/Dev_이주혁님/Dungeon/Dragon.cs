@@ -150,7 +150,7 @@ public class Dragon : Enemy
     {
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Dragon_Fire);
         GameObject fireball = Instantiate(fireballPrefab, shooter.position, Quaternion.identity);
-        fireball.transform.LookAt(target);
+        fireball.transform.LookAt(target.position + new Vector3(0, 1f, 0f));
     }
     void SoundGrowl()
     {
