@@ -8,7 +8,8 @@ public class JY_NpcQuest : MonoBehaviour
     public int npcNum;
     public GameObject questMark;
     public GameObject questMark_Gray;
-    public GameObject questMark_Complete;    
+    public GameObject questMark_Complete;
+    public GameObject questMark_Minimap;
     public Sprite NpcPortrait;
 
 
@@ -36,13 +37,17 @@ public class JY_NpcQuest : MonoBehaviour
             case 0:
                 //퀘스트 미수령 상태일 경우
                 if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress[2] == 0)
+                {
                     questMark.SetActive(true);
+                    questMark_Minimap.SetActive(true);
+                }
                 //퀘스트 수령 상태이며 퀘스트 완료 가능 상태일 경우
                 else if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress[2] == 1 &&
                         JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress[1] >= int.Parse(JY_QuestManager.s_instance.QuestData[0][4]) &&
                         JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress[3] == 0)
                 {
                     questMark.SetActive(false);
+                    questMark_Minimap.SetActive(true);
                     questMark_Gray.SetActive(false);
                     questMark_Complete.SetActive(true);
                 }
@@ -51,6 +56,7 @@ public class JY_NpcQuest : MonoBehaviour
                         JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress[3] == 0)
                 {
                     questMark.SetActive(false);
+                    questMark_Minimap.SetActive(true);
                     questMark_Gray.SetActive(true);
                     questMark_Complete.SetActive(false);
                 }
@@ -58,6 +64,7 @@ public class JY_NpcQuest : MonoBehaviour
                 else
                 {
                     questMark.SetActive(false);
+                    questMark_Minimap.SetActive(false);
                     questMark_Gray.SetActive(false);
                     questMark_Complete.SetActive(false);
                 }
@@ -65,13 +72,17 @@ public class JY_NpcQuest : MonoBehaviour
             case 1:
                 //퀘스트 미수령 상태일 경우
                 if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress[3] == 1 && JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress2[2] == 0)
+                {
                     questMark.SetActive(true);
+                    questMark_Minimap.SetActive(true);
+                }
                 //퀘스트 수령 상태이며 퀘스트 완료 가능 상태일 경우
                 else if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress2[2] == 1 &&
                         JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress2[1] >= int.Parse(JY_QuestManager.s_instance.QuestData[1][4]) &&
                         JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress2[3] == 0)
                 {
                     questMark.SetActive(false);
+                    questMark_Minimap.SetActive(true);
                     questMark_Gray.SetActive(false);
                     questMark_Complete.SetActive(true);
                 }
@@ -80,6 +91,7 @@ public class JY_NpcQuest : MonoBehaviour
                         JY_CharacterListManager.s_instance.jInfoData.infoDataList[selectNum].questProgress2[3] == 0)
                 {
                     questMark.SetActive(false);
+                    questMark_Minimap.SetActive(true);
                     questMark_Gray.SetActive(true);
                     questMark_Complete.SetActive(false);
                 }
@@ -87,6 +99,7 @@ public class JY_NpcQuest : MonoBehaviour
                 else
                 {
                     questMark.SetActive(false);
+                    questMark_Minimap.SetActive(false);
                     questMark_Gray.SetActive(false);
                     questMark_Complete.SetActive(false);
                 }
