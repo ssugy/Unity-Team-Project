@@ -39,10 +39,10 @@ public class LobbyUI : MonoBehaviour
         //소스이미지 로드
         sourceImg_R = Resources.Load<Sprite>("UI_Change/Button Background/Background_r_red");
         sourceImg_B = Resources.Load<Sprite>("UI_Change/Button Background/Background_r_grey");
-        warriorM = Resources.Load<Sprite>("UI_Change/Portrait/27");
-        warriorF = Resources.Load<Sprite>("UI_Change/Portrait/7");
-        magicianM = Resources.Load<Sprite>("UI_Change/Portrait/21");
-        magicianF = Resources.Load<Sprite>("UI_Change/Portrait/6");        
+        warriorM = Resources.Load<Sprite>("UI_Change/Portrait/m_warrior");
+        warriorF = Resources.Load<Sprite>("UI_Change/Portrait/f_warrior");
+        magicianM = Resources.Load<Sprite>("UI_Change/Portrait/m_magician");
+        magicianF = Resources.Load<Sprite>("UI_Change/Portrait/f_magician");        
     }
 
     void Start()

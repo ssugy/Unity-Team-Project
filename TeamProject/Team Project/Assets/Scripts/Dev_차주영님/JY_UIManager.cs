@@ -23,6 +23,8 @@ public class JY_UIManager : MonoBehaviour
     public Text dexterityText;
     public Text SPText;
 
+    public Image portrait;
+
     private Player player;
     bool questMenuSwitch;
 
@@ -32,11 +34,40 @@ public class JY_UIManager : MonoBehaviour
         questMenuSwitch = false;             
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
         player = JY_CharacterListManager.s_instance.playerList[0];
         // 선택된 캐릭터의 이름을 불러옴.
         nameText.text = player.name;
+        yield return null;
+        switch(player.playerStat.gender, player.playerStat.job)
+        {
+            case (EGender.FEMALE, EJob.WARRIOR):
+                {
+                    portrait.sprite = Resources.Load<Sprite>("UI_Change/Portrait/f_warrior");
+                    break;
+                }
+            case (EGender.FEMALE, EJob.MAGICIAN):
+                {
+                    portrait.sprite = Resources.Load<Sprite>("UI_Change/Portrait/f_magician");
+                    break;
+                }             
+            case (EGender.MALE, EJob.WARRIOR):
+                {
+                    portrait.sprite = Resources.Load<Sprite>("UI_Change/Portrait/m_warrior");
+                    break;                    
+                }
+            case (EGender.MALE, EJob.MAGICIAN):
+                {
+                    portrait.sprite = Resources.Load<Sprite>("UI_Change/Portrait/m_magician");
+                    break;
+                }
+            default:
+                {
+                    Debug.Log("에러");
+                    break;
+                }
+        }
     }
 
     private void OnEnable()
