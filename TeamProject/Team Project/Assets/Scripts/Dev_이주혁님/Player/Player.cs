@@ -1019,7 +1019,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             if (shield != null)
                 stream.SendNext(shield.name);
             else if (staff != null)
-                stream.SendNext(shield.name);
+                stream.SendNext(staff.name);
             else
                 stream.SendNext(string.Empty);
             
