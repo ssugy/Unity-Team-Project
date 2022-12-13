@@ -17,7 +17,12 @@ public class Shield : MonoBehaviour
             player.SetState();
 
             if (BattleUI.instance != null)
-                BattleUI.instance.Guard();
+            {
+                if (!Photon.Pun.PhotonNetwork.InRoom)
+                    BattleUI.instance.Guard();
+                else if (player.photonView.IsMine)
+                    BattleUI.instance.Guard();
+            }
         }
         
     }

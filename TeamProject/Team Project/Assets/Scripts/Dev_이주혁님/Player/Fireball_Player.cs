@@ -27,7 +27,7 @@ public class Fireball_Player : MonoBehaviour
     }
     private void OnEnable()
     {
-        Destroy(gameObject, 3f);
+        Destroy(gameObject, 2f);
     }
     
 

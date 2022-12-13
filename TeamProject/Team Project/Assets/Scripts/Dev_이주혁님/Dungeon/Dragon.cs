@@ -140,11 +140,11 @@ public class Dragon : Enemy
     }
     void StopNav()
     {
-        nav.enabled = false;
+        nav.isStopped = true;
     }
     void StartNav()
     {
-        nav.enabled = true;
+        nav.isStopped = false;
     }
     void ShootFire()
     {

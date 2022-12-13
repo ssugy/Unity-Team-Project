@@ -17,9 +17,13 @@ public class Staff : MonoBehaviour
             player.staff = this;
             player.shield = null;
             player.SetState();
-
             if (BattleUI.instance != null)
-                BattleUI.instance.Magic();
+            {
+                if (!Photon.Pun.PhotonNetwork.InRoom)
+                    BattleUI.instance.Magic();
+                else if(player.photonView.IsMine)
+                    BattleUI.instance.Magic();
+            }            
         }
     }
     private void OnDisable()

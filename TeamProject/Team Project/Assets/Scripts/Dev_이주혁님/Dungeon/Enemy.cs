@@ -12,8 +12,7 @@ public class Enemy : MonoBehaviourPun, IPunObservable
     public int CurHealth
     {
         get => curHealth;
-        set => curHealth = value;         
-        
+        set => curHealth = value;                 
     }
     
     public float defMag;              // ¹æ¾îÀ².
@@ -50,6 +49,8 @@ public class Enemy : MonoBehaviourPun, IPunObservable
     protected bool isStop;
     public float totalTime = 0f;
 
+    protected float stoppingDist;
+
 
     private void Awake()
     {        
@@ -62,6 +63,7 @@ public class Enemy : MonoBehaviourPun, IPunObservable
         atkTime = 0f;
         isStop = false;
         CurHealth = maxHealth;
+        stoppingDist = nav.stoppingDistance;
     }
     protected void Start()
     {        
@@ -74,34 +76,26 @@ public class Enemy : MonoBehaviourPun, IPunObservable
         RaycastHit[] hit;
 
         hit = Physics.SphereCastAll(transform.position, 1f ,transform.forward, 1f, LayerMask.GetMask("Wall"));
-        if(hit.Length > 0 )
-        {
-            isBorder = true;
-        }
-        else
-        {
-            isBorder = false;
-        }
-        
-        
+        if(hit.Length > 0 )        
+            isBorder = true;        
+        else        
+            isBorder = false;                      
     }
 
     private void FixedUpdate()
     {
-        if (nav.velocity != Vector3.zero)
-        {
-            anim.SetBool("isWalk", true);
-        }
-        else
-        {
+        if (nav.velocity != Vector3.zero)        
+            anim.SetBool("isWalk", true);        
+        else        
             anim.SetBool("isWalk", false);
-        }
+        
 
         atkTime += Time.fixedDeltaTime;        
         if (target != null)
-        {
-            
+        {            
             nav.SetDestination(target.position);
+            nav.stoppingDistance = stoppingDist;
+
             float distance = Vector3.Distance(transform.position, target.position);
             if (!isStop)
             {
@@ -129,27 +123,21 @@ public class Enemy : MonoBehaviourPun, IPunObservable
                 curHealth = maxHealth;
             }
             
-            StopToWall();
-            if (isBorder)
-            {
-                totalTime += Time.fixedDeltaTime;
-            }
-            else
-            {
-                totalTime = 0f;
-            }
+            StopToWall();            
+            totalTime = isBorder ? totalTime + Time.deltaTime : 0f;
+            
             if (totalTime>=5f)
             {
                 totalTime = 0f;
                 target = null;
                 Invoke("ReStartTarget", 2f);
                 curHealth = maxHealth;
-            }
-           
+            }           
         }
         else
         {
-            nav.SetDestination(originPos);            
+            nav.SetDestination(originPos);
+            nav.stoppingDistance = 0f;
             UnfreezeEnemy();
         }
       
@@ -194,9 +182,9 @@ public class Enemy : MonoBehaviourPun, IPunObservable
     {
         Player player = _player.GetComponent<Player>();
         if (player != null)
-        {
-            //int damage = Mathf.CeilToInt(atkPoint * atkMag * (1 - player.playerStat.defMag) * Random.Range(0.95f, 1.05f));
-            float damage = atkPoint * atkMag * (1 - player.playerStat.defMag) * Random.Range(0.95f, 1.05f);
+        {            
+            float damage = atkPoint * atkMag * (1 - player.playerStat.defMag) 
+                * Random.Range(0.95f, 1.05f);
             if (damage > 0)
             {                               
                 player.IsAttacked(Mathf.CeilToInt(damage), hitbox);
@@ -205,7 +193,8 @@ public class Enemy : MonoBehaviourPun, IPunObservable
     }
     public virtual void IsAttacked(int _damage, Vector3 _player)
     {
-        photonView.RPC("IsAttacked_Do", RpcTarget.All, _damage, _player);
+        //photonView.RPC("IsAttacked_Do", RpcTarget.All, _damage, _player);
+        IsAttacked_Do(_damage, _player);
     }   
     [PunRPC]
     public virtual void IsAttacked_Do(int _damage, Vector3 _player)
