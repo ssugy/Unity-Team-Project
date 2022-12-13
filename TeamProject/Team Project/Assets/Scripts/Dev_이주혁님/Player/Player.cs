@@ -1040,7 +1040,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                 while (this.rWeaponDummy.GetComponentInChildren<Weapon>() != null)
                     DestroyImmediate(this.rWeaponDummy.GetComponentInChildren<Weapon>().gameObject);
             }
-            else if (rWeapon == null || !weaponName.Equals(rWeapon.name)) 
+            else if (!weaponName.Equals(rWeapon.name)) 
             {
                 while (this.rWeaponDummy.GetComponentInChildren<Weapon>() != null)
                     DestroyImmediate(this.rWeaponDummy.GetComponentInChildren<Weapon>().gameObject);
@@ -1058,7 +1058,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                 while (this.lWeaponDummy.GetComponentInChildren<Staff>() != null)
                     DestroyImmediate(this.lWeaponDummy.GetComponentInChildren<Staff>().gameObject);
             }
-            else if (!lWeaponName.Equals(shield?.name) || !lWeaponName.Equals(staff?.name))
+            else if (!(lWeaponName.Equals(shield?.name) || lWeaponName.Equals(staff?.name)))
             {
                 while (this.lWeaponDummy.GetComponentInChildren<Shield>() != null)
                     DestroyImmediate(this.lWeaponDummy.GetComponentInChildren<Shield>().gameObject);

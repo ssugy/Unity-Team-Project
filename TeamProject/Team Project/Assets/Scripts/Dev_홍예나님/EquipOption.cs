@@ -196,6 +196,8 @@ public class EquipOption
                     break;
                 }
         }
+
+        // 옵션 개수만큼 티어 배열을 생성.
         tiers = new EquipTier[num];
 
         for (int i = 0; i < num; i++)
