@@ -6,7 +6,7 @@ public class JY_Exp : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        JY_CharacterListManager.s_instance.playerList[0].questExp(1500);
+        JY_CharacterListManager.s_instance.playerList[0].questExp(150);
         Destroy(gameObject);
     }
 }
