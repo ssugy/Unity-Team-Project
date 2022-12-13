@@ -16,7 +16,7 @@ public class BossFireball : Fireball
     }
     private void OnEnable()
     {
-        Invoke("DestroySelf", 4f);
+        Destroy(gameObject, 4f);
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Boss_FireBall);
         isCollision = false;
         col = GetComponent<SphereCollider>();
@@ -29,7 +29,7 @@ public class BossFireball : Fireball
             isCollision = true;
             col.enabled = false;
             GameObject tmpExplosion = GameObject.Instantiate<GameObject>(Explosion, transform.position, Quaternion.identity);
-            Invoke("DestroySelf", 1f);
+            Destroy(gameObject, 1f);
         }
         else if (other.CompareTag("Player"))
         {

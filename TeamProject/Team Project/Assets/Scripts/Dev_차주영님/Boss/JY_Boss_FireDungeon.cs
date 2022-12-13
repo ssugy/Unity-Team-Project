@@ -269,17 +269,12 @@ public class JY_Boss_FireDungeon : Enemy
     // 보스가 플레이어한테 공격 받았으면에 대한 판정
     public override void IsAttacked(int _damage, Vector3 _player)
     {
-        photonView.RPC("IsAttacked_Do", RpcTarget.All, _damage, _player);
-    }
-    [PunRPC]
-    public override void IsAttacked_Do(int _damage, Vector3 _player)
-    {
         curHealth -= _damage;
         Vector3 reactVec = transform.position - _player; // 넉백 거리.
-        StartCoroutine(OnDamage(reactVec * 0.2f));        
+        StartCoroutine(OnDamage(reactVec * 0.2f));
         if (EffectManager.Instance != null)
             EffectManager.Instance.PlayHitEffect(transform.position + offset, transform.rotation, transform);
-    }
+    }    
 
     // 어택에서 이어져서, 데미지를 처리하는 구문, 사망했는지 여부도 처리
     protected new IEnumerator OnDamage(Vector3 reactVec)

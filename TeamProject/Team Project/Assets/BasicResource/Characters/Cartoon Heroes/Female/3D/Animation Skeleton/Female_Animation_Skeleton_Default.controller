@@ -288,7 +288,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Female Fire
+  m_Name: Female Magic
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -1389,7 +1389,7 @@ AnimatorStateMachine:
     m_Position: {x: 2310, y: -240, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3312844681946344903}
-    m_Position: {x: 3050, y: 20, z: 0}
+    m_Position: {x: 2600, y: -100, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8429003261552108409}
     m_Position: {x: 2790, y: -380, z: 0}
@@ -1605,7 +1605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bee3e795cffee9144be919259ffb043f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  usingStamina: 30
+  usingStamina: 15
 --- !u!1102 &3512782344781271729
 AnimatorState:
   serializedVersion: 6

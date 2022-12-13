@@ -193,19 +193,13 @@ public class Enemy : MonoBehaviourPun, IPunObservable
     }
     public virtual void IsAttacked(int _damage, Vector3 _player)
     {
-        //photonView.RPC("IsAttacked_Do", RpcTarget.All, _damage, _player);
-        IsAttacked_Do(_damage, _player);
-    }   
-    [PunRPC]
-    public virtual void IsAttacked_Do(int _damage, Vector3 _player)
-    {
         curHealth -= _damage;
         Vector3 reactVec = transform.position - _player; // ³Ë¹é °Å¸®.
         StartCoroutine(OnDamage(reactVec));
         hpbar = Enemy_HP_UI.GetObject();
         hpbar.Recognize(this);
         EffectManager.Instance.PlayHitEffect(transform.position + offset, transform.rotation, transform);
-    }
+    }       
     protected IEnumerator OnDamage(Vector3 reactVec)
     {        
         yield return new WaitForSeconds(0.1f);
