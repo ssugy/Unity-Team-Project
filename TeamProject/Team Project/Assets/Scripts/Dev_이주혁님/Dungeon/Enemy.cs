@@ -66,7 +66,9 @@ public class Enemy : MonoBehaviourPun, IPunObservable
         stoppingDist = nav.stoppingDistance;
     }
     protected void Start()
-    {        
+    {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
         StartCoroutine(Targeting());        
     }
 
@@ -84,6 +86,9 @@ public class Enemy : MonoBehaviourPun, IPunObservable
 
     private void FixedUpdate()
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
         if (nav.velocity != Vector3.zero)        
             anim.SetBool("isWalk", true);        
         else        
