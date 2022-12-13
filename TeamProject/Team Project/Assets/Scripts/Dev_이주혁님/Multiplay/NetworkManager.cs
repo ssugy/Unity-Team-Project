@@ -63,41 +63,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         currentRoom = PhotonNetwork.CurrentRoom;
         Debug.Log("매칭 시작");
         Debug.Log("방 이름: " + PhotonNetwork.CurrentRoom.Name);
-        PhotonNetwork.LoadLevel(int.Parse(PhotonNetwork.CurrentRoom.Name.Substring(0, 1)));
+        int index = int.Parse(PhotonNetwork.CurrentRoom.Name.Substring(0, 1));
+        PhotonNetwork.LoadLevel(index);
+        GameManager.s_instance.ActiveScene = (GameManager.SceneName)index;
+        GameManager.s_instance.currentScene = (GameManager.SceneName)index;
     }
 
-
-    /*
-    // 누군가가 방에 들어왔을 때 호출되는 함수.
-    public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
-    {
-        Debug.Log("입장한 사용자: " + newPlayer.NickName);
-        Debug.Log("방 이름: " + PhotonNetwork.CurrentRoom.Name);
-        // 방이 꽉 차면 던전 씬 진입.
-        if (PhotonNetwork.CurrentRoom.MaxPlayers.Equals(PhotonNetwork.CurrentRoom.PlayerCount))
-        {
-            // 더 이상 사람이 참가할 수 없게 함.
-            PhotonNetwork.CurrentRoom.IsOpen = false;
-           // GameManager.s_instance.LoadScene(int.Parse(PhotonNetwork.CurrentRoom.Name.Substring(0, 1)));
-            PhotonNetwork.LoadLevel(int.Parse(PhotonNetwork.CurrentRoom.Name.Substring(0, 1)));
-        }
-    }
-    
-    // 자신이 방에 참가했을 때 호출되는 함수.
-    public override void OnJoinedRoom()
-    {
-        currentRoom = PhotonNetwork.CurrentRoom;
-        Debug.Log("매칭 시작");
-        Debug.Log("방 이름: " + PhotonNetwork.CurrentRoom.Name);
-        // 방이 꽉 차면 던전 씬 진입.
-        if (PhotonNetwork.CurrentRoom.MaxPlayers.Equals(PhotonNetwork.CurrentRoom.PlayerCount))
-        {
-            PhotonNetwork.CurrentRoom.IsOpen = false;
-            //GameManager.s_instance.LoadScene(int.Parse(PhotonNetwork.CurrentRoom.Name.Substring(0, 1)));
-            PhotonNetwork.LoadLevel(int.Parse(PhotonNetwork.CurrentRoom.Name.Substring(0, 1)));
-        }
-    }
-    */
     public override void OnLeftRoom()
     {
         Debug.Log("방을 나감");

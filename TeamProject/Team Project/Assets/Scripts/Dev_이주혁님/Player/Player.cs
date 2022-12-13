@@ -1089,7 +1089,10 @@ public class Player : MonoBehaviourPun, IPunObservable
                 GameObject shieldSrc = Resources.Load<GameObject>("Item/Shield/" + lWeaponName);
                 GameObject shield = Instantiate(shieldSrc, lWeaponDummy);
                 shield.name = string.Copy(shieldSrc.name);
-                shield.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("OtherPlayer");
+                for (int i = 0; i < shield.transform.childCount; i++)
+                {
+                    shield.transform.GetChild(i).gameObject.layer = LayerMask.NameToLayer("OtherPlayer");
+                }
             }
             else if (shield != null)
             {
@@ -1101,7 +1104,11 @@ public class Player : MonoBehaviourPun, IPunObservable
                 GameObject shieldSrc = Resources.Load<GameObject>("Item/Shield/" + lWeaponName);
                 GameObject shield = Instantiate(shieldSrc, lWeaponDummy);
                 shield.name = string.Copy(shieldSrc.name);
-                shield.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("OtherPlayer");
+                for(int i = 0; i < shield.transform.childCount; i++)
+                {
+                    shield.transform.GetChild(i).gameObject.layer = LayerMask.NameToLayer("OtherPlayer");                    
+                }
+                
             }
             else if (staff != null)
             {
@@ -1113,7 +1120,10 @@ public class Player : MonoBehaviourPun, IPunObservable
                 GameObject shieldSrc = Resources.Load<GameObject>("Item/Shield/" + lWeaponName);
                 GameObject shield = Instantiate(shieldSrc, lWeaponDummy);
                 shield.name = string.Copy(shieldSrc.name);
-                shield.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("OtherPlayer");
+                for (int i = 0; i < shield.transform.childCount; i++)
+                {
+                    shield.transform.GetChild(i).gameObject.layer = LayerMask.NameToLayer("OtherPlayer");
+                }
             }
         }
     }
