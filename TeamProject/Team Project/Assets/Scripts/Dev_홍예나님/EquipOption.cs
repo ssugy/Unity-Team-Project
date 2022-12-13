@@ -7,7 +7,7 @@ using UnityEngine;
 public class EquipOption
 {   
     public EquipType part;
-    public EquipTier[] tiers = new EquipTier[3];
+    public EquipTier[] tiers;
     public Dictionary<EquipAttrib, float> options = new();
     public List<EquipAttrib> optionList = new();
     public List<float> valueList = new();    
@@ -196,6 +196,7 @@ public class EquipOption
                     break;
                 }
         }
+        tiers = new EquipTier[num];
 
         for (int i = 0; i < num; i++)
         {
