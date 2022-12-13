@@ -251,10 +251,11 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     IEnumerator SyncroAvatar()
     {
-        Debug.Log("아바타 동기화");        
+             
         while (true)
         {
             AvatarSet();
+            Debug.Log("아바타 동기화");
             yield return new WaitForSeconds(3f);
         }        
     }
