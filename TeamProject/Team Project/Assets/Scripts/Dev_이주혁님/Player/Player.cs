@@ -1010,12 +1010,12 @@ public class Player : MonoBehaviourPun, IPunObservable
 
             stream.SendNext(playerStat.customized);
 
-            /*
+            
             if (rWeapon != null)            
                 stream.SendNext(rWeapon.name);            
             else
                 stream.SendNext(string.Empty);
-
+            /*
             if (shield != null)
                 stream.SendNext(shield.name);
             else if (staff != null)
@@ -1036,7 +1036,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
             playerStat.customized = (int[])stream.ReceiveNext();            
 
-            /*
+            
             string weaponName= (string)stream.ReceiveNext();
             if (weaponName.Equals(string.Empty))
             {
@@ -1052,7 +1052,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                 weapon.name = string.Copy(weaponSrc.name);
                 weapon.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("OtherPlayer");
             }
-
+            /*
             string lWeaponName = (string)stream.ReceiveNext();
             if (lWeaponName.Equals(string.Empty))
             {
