@@ -1014,15 +1014,15 @@ public class Player : MonoBehaviourPun, IPunObservable
             if (rWeapon != null)            
                 stream.SendNext(rWeapon.name);            
             else
-                stream.SendNext(string.Empty);
-            /*
+                stream.SendNext(string.Empty);   
+            
             if (shield != null)
                 stream.SendNext(shield.name);
             else if (staff != null)
                 stream.SendNext(shield.name);
             else
                 stream.SendNext(string.Empty);
-            */
+            
         }
         else
         {
@@ -1043,6 +1043,15 @@ public class Player : MonoBehaviourPun, IPunObservable
                 while (this.rWeaponDummy.GetComponentInChildren<Weapon>() != null)
                     DestroyImmediate(this.rWeaponDummy.GetComponentInChildren<Weapon>().gameObject);
             }
+            else if (rWeapon == null)
+            {
+                while (this.rWeaponDummy.GetComponentInChildren<Weapon>() != null)
+                    DestroyImmediate(this.rWeaponDummy.GetComponentInChildren<Weapon>().gameObject);
+                GameObject weaponSrc = Resources.Load<GameObject>("Item/Weapon/" + weaponName);
+                GameObject weapon = Instantiate(weaponSrc, rWeaponDummy);
+                weapon.name = string.Copy(weaponSrc.name);
+                weapon.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("OtherPlayer");
+            }          
             else if (!weaponName.Equals(rWeapon.name)) 
             {
                 while (this.rWeaponDummy.GetComponentInChildren<Weapon>() != null)
@@ -1052,7 +1061,8 @@ public class Player : MonoBehaviourPun, IPunObservable
                 weapon.name = string.Copy(weaponSrc.name);
                 weapon.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("OtherPlayer");
             }
-            /*
+
+            
             string lWeaponName = (string)stream.ReceiveNext();
             if (lWeaponName.Equals(string.Empty))
             {
@@ -1061,7 +1071,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                 while (this.lWeaponDummy.GetComponentInChildren<Staff>() != null)
                     DestroyImmediate(this.lWeaponDummy.GetComponentInChildren<Staff>().gameObject);
             }
-            else if (!(lWeaponName.Equals(shield?.name) || lWeaponName.Equals(staff?.name)))
+            else if ((shield == null && staff == null))
             {
                 while (this.lWeaponDummy.GetComponentInChildren<Shield>() != null)
                     DestroyImmediate(this.lWeaponDummy.GetComponentInChildren<Shield>().gameObject);
@@ -1073,8 +1083,30 @@ public class Player : MonoBehaviourPun, IPunObservable
                 shield.name = string.Copy(shieldSrc.name);
                 shield.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("OtherPlayer");
             }
-            */
+            else if (shield != null)
+            {
+                while (this.lWeaponDummy.GetComponentInChildren<Shield>() != null)
+                    DestroyImmediate(this.lWeaponDummy.GetComponentInChildren<Shield>().gameObject);
+                while (this.lWeaponDummy.GetComponentInChildren<Staff>() != null)
+                    DestroyImmediate(this.lWeaponDummy.GetComponentInChildren<Staff>().gameObject);
 
+                GameObject shieldSrc = Resources.Load<GameObject>("Item/Shield/" + lWeaponName);
+                GameObject shield = Instantiate(shieldSrc, lWeaponDummy);
+                shield.name = string.Copy(shieldSrc.name);
+                shield.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("OtherPlayer");
+            }
+            else if (staff != null)
+            {
+                while (this.lWeaponDummy.GetComponentInChildren<Shield>() != null)
+                    DestroyImmediate(this.lWeaponDummy.GetComponentInChildren<Shield>().gameObject);
+                while (this.lWeaponDummy.GetComponentInChildren<Staff>() != null)
+                    DestroyImmediate(this.lWeaponDummy.GetComponentInChildren<Staff>().gameObject);
+
+                GameObject shieldSrc = Resources.Load<GameObject>("Item/Shield/" + lWeaponName);
+                GameObject shield = Instantiate(shieldSrc, lWeaponDummy);
+                shield.name = string.Copy(shieldSrc.name);
+                shield.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("OtherPlayer");
+            }
         }
     }
 }
