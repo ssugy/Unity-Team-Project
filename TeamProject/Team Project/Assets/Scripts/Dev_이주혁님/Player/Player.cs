@@ -974,8 +974,11 @@ public class Player : MonoBehaviourPun, IPunObservable
                 return;
             if (!photonView.IsMine)
             {
-                tmp.GetComponentInChildren<SkinnedMeshRenderer>().gameObject.layer 
-                    = LayerMask.NameToLayer("OtherPlayer");
+                SkinnedMeshRenderer temp = tmp.GetComponentInChildren<SkinnedMeshRenderer>();
+                if (temp != null)
+                {
+                    temp.gameObject.layer = LayerMask.NameToLayer("OtherPlayer");
+                }                
             }            
         }
     }
