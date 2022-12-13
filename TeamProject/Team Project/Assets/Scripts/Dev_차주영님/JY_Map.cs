@@ -64,11 +64,10 @@ public class JY_Map : MonoBehaviour
         if (player != null && TestOnOff)
         {
             Vector2 mapArea = new Vector2(Vector3.Distance(Left.position, Right.position), Vector3.Distance(Bottom.position, Top.position));
-            Vector2 charPos = new Vector2(Vector3.Distance(Left.position, new Vector3(player.transform.position.x,0f,0f)),
-                                          Vector3.Distance(Bottom.position, new Vector3(0f,0f,player.transform.position.z)) );
+            Vector2 charPos = new Vector2(Vector3.Distance(new Vector3(Left.position.x,0f,0f), new Vector3(player.transform.position.x,0f,0f)),
+                                          Vector3.Distance(new Vector3(0f,0f,Bottom.position.z), new Vector3(0f,0f,player.transform.position.z)) );
 
             Vector2 normalPos = new Vector2(charPos.x / mapArea.x, charPos.y / mapArea.y);
-
             minimapPlayerImage.rectTransform.anchoredPosition = new Vector2(minimapImage.rectTransform.sizeDelta.x * normalPos.x, minimapImage.rectTransform.sizeDelta.y * normalPos.y);
         }
     }
