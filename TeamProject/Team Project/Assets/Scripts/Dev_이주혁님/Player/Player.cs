@@ -1043,15 +1043,6 @@ public class Player : MonoBehaviourPun, IPunObservable
                 while (this.rWeaponDummy.GetComponentInChildren<Weapon>() != null)
                     DestroyImmediate(this.rWeaponDummy.GetComponentInChildren<Weapon>().gameObject);
             }
-            else if (rWeapon == null)
-            {
-                while (this.rWeaponDummy.GetComponentInChildren<Weapon>() != null)
-                    DestroyImmediate(this.rWeaponDummy.GetComponentInChildren<Weapon>().gameObject);
-                GameObject weaponSrc = Resources.Load<GameObject>("Item/Weapon/" + weaponName);
-                GameObject weapon = Instantiate(weaponSrc, rWeaponDummy);
-                weapon.name = string.Copy(weaponSrc.name);
-                weapon.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("OtherPlayer");
-            }          
             else if (!weaponName.Equals(rWeapon.name)) 
             {
                 while (this.rWeaponDummy.GetComponentInChildren<Weapon>() != null)
