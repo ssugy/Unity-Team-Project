@@ -12,7 +12,23 @@ public class Enemy : MonoBehaviourPun, IPunObservable
     public int CurHealth
     {
         get => curHealth;
-        set => curHealth = value;                 
+        set
+        {
+            curHealth = value;
+            if (curHealth >= maxHealth)
+                curHealth = maxHealth;
+            else if(curHealth <= 0)
+            {
+                hitbox.enabled = false;
+                anim.SetTrigger("isDead");
+                FreezeEnemy();
+                questProgress();
+                DropExp();
+                DropGold();
+                DropItem();
+                Destroy(gameObject, 4);
+            }            
+        }                
     }
     
     public float defMag;              // 방어율.
@@ -205,29 +221,22 @@ public class Enemy : MonoBehaviourPun, IPunObservable
             return;
         curHealth -= _damage;
         Vector3 reactVec = transform.position - _player; // 넉백 거리.
+        anim.SetTrigger("isAttacked");
+        reactVec = reactVec.normalized;
+        reactVec += Vector3.up;
+        StartCoroutine(KnockBack(reactVec));
+
+        photonView.RPC("HitEffect", RpcTarget.Others);
         
+    }    
+    
+    [PunRPC]
+    public virtual void HitEffect()
+    {
         hpbar = Enemy_HP_UI.GetObject();
         hpbar.Recognize(this);
         EffectManager.Instance.PlayHitEffect(transform.position + offset, transform.rotation, transform);
-        if (curHealth > 0)
-        {
-            anim.SetTrigger("isAttacked");
-            reactVec = reactVec.normalized;
-            reactVec += Vector3.up;
-            StartCoroutine(KnockBack(reactVec));
-        }
-        else
-        {
-            hitbox.enabled = false;
-            anim.SetTrigger("isDead");
-            FreezeEnemy();
-            questProgress();
-            DropExp();
-            DropGold();
-            DropItem();
-            Destroy(gameObject, 4);
-        }
-    }            
+    }
 
     // 경험치와 골드를 드랍. 아이템은 플레이어의 스탯에 직접 반영되는 것이 아닌 필드에 드랍되므로 별도의 메소드를 사용.
     protected void DropExp()
@@ -311,6 +320,7 @@ public class Enemy : MonoBehaviourPun, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
+        
         if (stream.IsWriting)
         {
             stream.SendNext(curHealth);
@@ -319,5 +329,6 @@ public class Enemy : MonoBehaviourPun, IPunObservable
         {
             CurHealth = (int)stream.ReceiveNext();
         }
+        
     }
 }
