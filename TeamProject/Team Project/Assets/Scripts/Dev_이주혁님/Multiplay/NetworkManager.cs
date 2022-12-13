@@ -25,6 +25,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void Connect() => PhotonNetwork.ConnectUsingSettings();
     public void Disconnect() => PhotonNetwork.Disconnect();
+    // 방을 떠나면 OnConnectedToMaster가 실행됨. 마스터 서버로 되돌아가기 때문.
+    public void LeaveRoom()
+    {
+        currentRoom = null;
+        if (PhotonNetwork.InRoom) PhotonNetwork.LeaveRoom();
+    }
 
     // 최대 인원수를 임시로 1명으로 해놓음.
     // 방 이름은 가려는 던전의 씬 번호 + 방 번호.
@@ -50,15 +56,18 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         if (currentRoom == null)
             StartCoroutine(Matching(_dungeonNum, _people, ++roomNum));
     }
-    
 
-    // 방을 떠나면 OnConnectedToMaster가 실행됨. 마스터 서버로 되돌아가기 때문.
-    public void LeaveRoom()
+    // 자신이 방에 참가했을 때 호출되는 함수.
+    public override void OnJoinedRoom()
     {
-        currentRoom = null;
-        if (PhotonNetwork.InRoom) PhotonNetwork.LeaveRoom();
+        currentRoom = PhotonNetwork.CurrentRoom;
+        Debug.Log("매칭 시작");
+        Debug.Log("방 이름: " + PhotonNetwork.CurrentRoom.Name);
+        PhotonNetwork.LoadLevel(int.Parse(PhotonNetwork.CurrentRoom.Name.Substring(0, 1)));
     }
-    
+
+
+    /*
     // 누군가가 방에 들어왔을 때 호출되는 함수.
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
@@ -69,13 +78,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             // 더 이상 사람이 참가할 수 없게 함.
             PhotonNetwork.CurrentRoom.IsOpen = false;
-            GameManager.s_instance.LoadScene(int.Parse(PhotonNetwork.CurrentRoom.Name.Substring(0, 1)));
+           // GameManager.s_instance.LoadScene(int.Parse(PhotonNetwork.CurrentRoom.Name.Substring(0, 1)));
+            PhotonNetwork.LoadLevel(int.Parse(PhotonNetwork.CurrentRoom.Name.Substring(0, 1)));
         }
     }
-    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
-    {
-        Debug.Log("나간 사용자: " + otherPlayer.NickName);
-    }
+    
     // 자신이 방에 참가했을 때 호출되는 함수.
     public override void OnJoinedRoom()
     {
@@ -86,12 +93,18 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CurrentRoom.MaxPlayers.Equals(PhotonNetwork.CurrentRoom.PlayerCount))
         {
             PhotonNetwork.CurrentRoom.IsOpen = false;
-            GameManager.s_instance.LoadScene(int.Parse(PhotonNetwork.CurrentRoom.Name.Substring(0, 1)));
+            //GameManager.s_instance.LoadScene(int.Parse(PhotonNetwork.CurrentRoom.Name.Substring(0, 1)));
+            PhotonNetwork.LoadLevel(int.Parse(PhotonNetwork.CurrentRoom.Name.Substring(0, 1)));
         }
     }
+    */
     public override void OnLeftRoom()
     {
         Debug.Log("방을 나감");
+    }
+    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
+    {
+        Debug.Log("나간 사용자: " + otherPlayer.NickName);
     }
 
 

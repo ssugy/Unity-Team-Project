@@ -67,8 +67,9 @@ public class Enemy : MonoBehaviourPun, IPunObservable
     }
     protected void Start()
     {
-        if (!PhotonNetwork.IsMasterClient)
-            return;
+        if (!PhotonNetwork.IsMasterClient)                   
+            return;        
+            
         StartCoroutine(Targeting());        
     }
 
@@ -196,38 +197,37 @@ public class Enemy : MonoBehaviourPun, IPunObservable
             }
         }
     }
+
+    [PunRPC]
     public virtual void IsAttacked(int _damage, Vector3 _player)
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
         curHealth -= _damage;
         Vector3 reactVec = transform.position - _player; // 넉백 거리.
-        StartCoroutine(OnDamage(reactVec));
+        
         hpbar = Enemy_HP_UI.GetObject();
         hpbar.Recognize(this);
         EffectManager.Instance.PlayHitEffect(transform.position + offset, transform.rotation, transform);
-    }       
-    protected IEnumerator OnDamage(Vector3 reactVec)
-    {        
-        yield return new WaitForSeconds(0.1f);
-        if(curHealth > 0)
-        {            
+        if (curHealth > 0)
+        {
             anim.SetTrigger("isAttacked");
             reactVec = reactVec.normalized;
             reactVec += Vector3.up;
             StartCoroutine(KnockBack(reactVec));
-            
         }
         else
         {
             hitbox.enabled = false;
             anim.SetTrigger("isDead");
-            FreezeEnemy();                   
+            FreezeEnemy();
             questProgress();
             DropExp();
             DropGold();
             DropItem();
             Destroy(gameObject, 4);
-        }       
-    }    
+        }
+    }            
 
     // 경험치와 골드를 드랍. 아이템은 플레이어의 스탯에 직접 반영되는 것이 아닌 필드에 드랍되므로 별도의 메소드를 사용.
     protected void DropExp()
@@ -299,10 +299,7 @@ public class Enemy : MonoBehaviourPun, IPunObservable
     {
         isStop = false;
     }
-    public void ReStartTarget()
-    {
-        StartCoroutine(Targeting());
-    }
+    
     public IEnumerator KnockBack(Vector3 _dir)
     {
         for (int i = 0; i < 20; i++)

@@ -28,7 +28,7 @@ public class BossFireball : Fireball
         {
             isCollision = true;
             col.enabled = false;
-            GameObject tmpExplosion = GameObject.Instantiate<GameObject>(Explosion, transform.position, Quaternion.identity);
+            GameObject tmpExplosion = Instantiate(Explosion, transform.position, Quaternion.identity);
             Destroy(gameObject, 1f);
         }
         else if (other.CompareTag("Player"))

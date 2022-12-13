@@ -1008,7 +1008,10 @@ public class Player : MonoBehaviourPun, IPunObservable
         {
             stream.SendNext(playerStat.HP);
             stream.SendNext(playerStat.CurHP);
-            
+
+            stream.SendNext(playerStat.atkPoint);
+            stream.SendNext(playerStat.criPro);
+
             stream.SendNext(playerStat.defMag);
             stream.SendNext(gameObject.name);
 
@@ -1033,7 +1036,8 @@ public class Player : MonoBehaviourPun, IPunObservable
             playerStat.HP = (int)stream.ReceiveNext();
             playerStat.CurHP = (int)stream.ReceiveNext();
 
-            playerStat.atkPoint = 0;
+            playerStat.atkPoint = (int)stream.ReceiveNext();
+            playerStat.criPro = (float)stream.ReceiveNext();
 
             playerStat.defMag = (float)stream.ReceiveNext();
             gameObject.name = (string)stream.ReceiveNext();
