@@ -6,8 +6,7 @@ using UnityEngine.UI;
 public class Shop : MonoBehaviour
 {
     public static Shop shop;
-    public Item selected;
-    public int price;
+    public Item selected;   
 
     public GameObject infoPanel;
     public Image infoIcon;
@@ -69,7 +68,7 @@ public class Shop : MonoBehaviour
     public void BuyItem()
     {
         // 플레이어의 소지금이 아이템 가격보다 적은 지 체크. 소지금이 적다면 리턴.
-        if (JY_CharacterListManager.s_instance.playerList[0].playerStat.Gold < price)
+        if (JY_CharacterListManager.s_instance.playerList[0].playerStat.Gold < selected.price)
         {
             Debug.Log("구매 실패");
             return;
@@ -80,7 +79,7 @@ public class Shop : MonoBehaviour
         if (JY_CharacterListManager.s_instance.invenList[0].AddItem(selected, false))
         {
             Debug.Log("구매 성공");
-            JY_CharacterListManager.s_instance.playerList[0].playerStat.Gold -= price;
+            JY_CharacterListManager.s_instance.playerList[0].playerStat.Gold -= selected.price;
             goldText.text = JY_CharacterListManager.s_instance.playerList[0].playerStat.Gold.ToString();
             return;
         }
