@@ -1753,9 +1753,8 @@ GameObject:
   - component: {fileID: 1295775362}
   - component: {fileID: 7393200756165185175}
   - component: {fileID: 3846305544410695601}
-  - component: {fileID: -7366758392195524724}
   - component: {fileID: -4536718879022763569}
-  - component: {fileID: 1583557602380672502}
+  - component: {fileID: -7366758392195524724}
   m_Layer: 11
   m_Name: Monster_4_Dragon
   m_TagString: Enemy
@@ -1860,17 +1859,14 @@ MonoBehaviour:
   fieldGold: {fileID: 1498403948531744, guid: fa2c57d3f28a5e6419393e8bc3eeb32a, type: 3}
   targetRadius: 3
   targetRange: 3
-  attackDistance: 3
+  attackDistance: 4.2
   attackCool: 3
   target: {fileID: 0}
-  originPos: {x: 0, y: 0, z: 0}
-  originRotateion: {x: 0, y: 0, z: 0, w: 0}
-  totalTime: 0
-  skillCool: 5
-  skillDistance: 3
-  shooter: {fileID: 5635370030993390824}
+  skillCool: 4
+  skillDistance: 5
   ProgressionMonster: 0
   explanationNum: 0
+  shooter: {fileID: 5635370030993390824}
 --- !u!195 &7393200756165185175
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1885,7 +1881,7 @@ NavMeshAgent:
   m_Acceleration: 5
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 1
+  m_StoppingDistance: 4.2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -1913,47 +1909,11 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 1295775362}
-  - {fileID: -7366758392195524724}
   - {fileID: -4536718879022763569}
+  - {fileID: -7366758392195524724}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &-7366758392195524724
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 251427240539823624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowLayerWeightsInspector: 1
-  ShowParameterInspector: 1
-  m_SynchronizeParameters:
-  - Type: 4
-    SynchronizeType: 0
-    Name: isWalk
-  - Type: 9
-    SynchronizeType: 0
-    Name: isAttack
-  - Type: 9
-    SynchronizeType: 0
-    Name: isDead
-  - Type: 9
-    SynchronizeType: 0
-    Name: isAttacked
-  - Type: 9
-    SynchronizeType: 0
-    Name: isSkill
-  - Type: 9
-    SynchronizeType: 0
-    Name: isWakeUp
-  m_SynchronizeLayers:
-  - SynchronizeType: 0
-    LayerIndex: 0
 --- !u!114 &-4536718879022763569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1970,20 +1930,42 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
---- !u!136 &1583557602380672502
-CapsuleCollider:
+--- !u!114 &-7366758392195524724
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 251427240539823624}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.73
-  m_Height: 1.87
-  m_Direction: 0
-  m_Center: {x: 0, y: 1.96, z: 2.26}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 1
+    Name: isWalk
+  - Type: 9
+    SynchronizeType: 1
+    Name: isAttack
+  - Type: 9
+    SynchronizeType: 1
+    Name: isDead
+  - Type: 9
+    SynchronizeType: 1
+    Name: isAttacked
+  - Type: 9
+    SynchronizeType: 1
+    Name: isSkill
+  - Type: 9
+    SynchronizeType: 1
+    Name: isWakeUp
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
 --- !u!1 &251427240539825292
 GameObject:
   m_ObjectHideFlags: 0

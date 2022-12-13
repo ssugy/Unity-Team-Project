@@ -280,8 +280,8 @@ GameObject:
   - component: {fileID: 213394764}
   - component: {fileID: 213394765}
   - component: {fileID: -1000459021518463146}
-  - component: {fileID: 3071264374105026308}
   - component: {fileID: -8220844928495443776}
+  - component: {fileID: -1260581951656076066}
   m_Layer: 11
   m_Name: Monster_1
   m_TagString: Enemy
@@ -396,12 +396,9 @@ MonoBehaviour:
   fieldGold: {fileID: 1498403948531744, guid: fa2c57d3f28a5e6419393e8bc3eeb32a, type: 3}
   targetRadius: 3
   targetRange: 5
-  attackDistance: 1.2
+  attackDistance: 1.5
   attackCool: 2.5
   target: {fileID: 0}
-  originPos: {x: 0, y: 0, z: 0}
-  originRotateion: {x: 0, y: 0, z: 0, w: 0}
-  totalTime: 0
 --- !u!195 &213394765
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -444,12 +441,28 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 213394764}
-  - {fileID: 3071264374105026308}
   - {fileID: -8220844928495443776}
+  - {fileID: -1260581951656076066}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &3071264374105026308
+--- !u!114 &-8220844928495443776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713781036754730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &-1260581951656076066
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -469,32 +482,16 @@ MonoBehaviour:
     Name: isWalk
   - Type: 9
     SynchronizeType: 1
-    Name: isDead
-  - Type: 9
-    SynchronizeType: 1
     Name: isAttacked
   - Type: 9
     SynchronizeType: 1
     Name: isAttack
+  - Type: 4
+    SynchronizeType: 1
+    Name: isDead
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
---- !u!114 &-8220844928495443776
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1713781036754730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!1 &1753159918419610
 GameObject:
   m_ObjectHideFlags: 0

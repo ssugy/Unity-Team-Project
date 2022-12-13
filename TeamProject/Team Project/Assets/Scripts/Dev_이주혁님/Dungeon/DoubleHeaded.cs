@@ -21,12 +21,12 @@ public class DoubleHeaded : Enemy
 
     private void Awake()
     {
-        rigid = GetComponent<Rigidbody>();
+        
         hitbox = GetComponent<Collider>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
         originPos = transform.position;
-        originRotateion = transform.rotation;
+        originRot = transform.rotation;
         atkTime = 0f;
         skillTime = 0f;
     }
@@ -84,7 +84,7 @@ public class DoubleHeaded : Enemy
             anim.SetBool("isWalk", false);
         }
     }
-    public override void IsAttacked(int _damage, Vector3 _player)
+    public override void OnDamage(int _damage, Vector3 _player)
     {
         curHealth -= _damage;       
         if (curHealth <= 0)

@@ -5,140 +5,131 @@ using UnityEngine.AI;
 using Photon.Pun;
 
 public class Dragon : Enemy
-{    
-    public float skillCool;
+{
+    public override int CurHealth
+    {
+        get => curHealth;
+        set
+        {
+            curHealth = value;
+            if (curHealth >= maxHealth)
+                curHealth = maxHealth;
+            else if (curHealth <= 0 && !isDead)
+            {
+                isDead = true;
+                hitbox.enabled = false;
+                anim.SetBool("isDead", true);
+
+                FreezeEnemy();                
+
+                DropExp();
+                DropGold();
+                DropItem();
+
+                Destroy(gameObject, 4);                               
+                if (ProgressionMonster)
+                {
+                    if (DungeonManager.instance != null)
+                    {
+                        DungeonManager.instance.DungeonProgress(explanationNum);
+                        DungeonManager.instance.SetDungeonGuide(explanationNum);
+                    }
+                }
+            }
+        }
+    }
+
     [Header("스킬 공격 관련")]
+    public float skillCool;
     public float skillDistance;
-    public Transform shooter;       // 화염구를 발사할 위치.
-    private GameObject fireballPrefab;
+
     [Header("진행도 관련")]
     public bool ProgressionMonster;
     public int explanationNum;
-    private void Awake()
+
+    public Transform shooter;       // 화염구를 발사할 위치.
+    private GameObject fireballPrefab;
+
+    protected override void Awake()
     {
-        rigid = GetComponent<Rigidbody>();
-        hitbox = GetComponent<BoxCollider>();        
-        nav = GetComponent<NavMeshAgent>();
-        anim = GetComponentInChildren<Animator>();
-        originPos = transform.position;
-        atkTime = 0f;
+        base.Awake();
+        // 위까진 Enemy와 공통.
         fireballPrefab = Resources.Load<GameObject>("Monster\\Fireball");
-        isStop = false;
-        curHealth = maxHealth;
     }
-    
+
     void FixedUpdate()
     {
-        if (nav.velocity.magnitude < 0.1f)
-        {
-            anim.SetBool("isWalk", true);
-        }
-        else
-        {
-            anim.SetBool("isWalk", false);
-        }
+        if (!PhotonNetwork.IsMasterClient)
+            return;
 
-        atkTime += Time.fixedDeltaTime;
-        if (nav.enabled)
+        anim.SetBool("isWalk", false);
+        if (!isStop)
         {
-            if (target != null)
-            {
-                nav.SetDestination(target.position);
-                float distance = Vector3.Distance(transform.position, target.position);
-                if (!isStop)
-                {
-                    Vector3 dir = target.transform.position - this.transform.position;
-                    this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime);
-                    anim.SetBool("isWalk", true);
-                }
-                
-                if (distance <= attackDistance)
-                {
-                    FreezeEnemy();
-                    if (atkTime >= attackCool)
-                    {
-                        anim.SetTrigger("isAttack");
-                        atkTime = 0f;
-                        isStop = true;
-                    }
-                }
-                else if (distance >= 20f)
-                {
-                    target = null;
-                    StartCoroutine(Targeting());
-                }
-                else if (distance > skillDistance && atkTime >= skillCool) 
-                {
-                    anim.SetTrigger("isSkill");
-                    atkTime = 0f;
-                    isStop = true;
-                }
-            }
-            else
-            {
-                nav.SetDestination(originPos);
-                UnfreezeEnemy();
-            }
-        }
-               
+            Move();
+            Rotate();
+            Attack();
+        }               
     }
 
-    public override void IsAttacked(int _damage, Vector3 _player)
+    protected override void Attack()
     {
-        curHealth -= _damage;
-        Vector3 reactVec = transform.position - _player; // 넉백 거리.
-        StartCoroutine(OnDamage(reactVec, _damage));
-        hpbar = Enemy_HP_UI.GetObject();
-        hpbar.Recognize(this);
-        EffectManager.Instance.PlayHitEffect(transform.position + offset, transform.rotation, transform);
-    }
-    protected IEnumerator OnDamage(Vector3 reactVec, int _damage)
-    {        
-        yield return new WaitForSeconds(0.1f);
+        if (target != null)
+        {
+            atkTime += Time.fixedDeltaTime;
+            float distance = Vector3.Distance(transform.position, target.position);
+            if (distance <= attackDistance && atkTime >= attackCool)
+            {
+                atkTime = 0f;
+                anim.SetTrigger("isAttack");
+            }
+            // 거리가 너무 멀어지면 타겟이 풀림.
+            else if (distance >= 20f)
+            {
+                atkTime = 0f;
+                target = null;
+                curHealth = maxHealth;
+                StartCoroutine(ReTargeting(2f));
+            }
+            else if (distance > skillDistance && atkTime >= skillCool)
+            {
+                atkTime = 0f;
+                anim.SetTrigger("isSkill");                
+            }
 
-        if (curHealth > 0)
-        {
-            if (_damage >= (0.2f * maxHealth))
+            // 10초 이상 공격을 못하면 타겟이 풀림.
+            if (atkTime > 10f)
             {
-                anim.SetTrigger("isAttacked");
-            }
-            else
-            {
-                anim.SetTrigger("isWakeUp");
-            }            
-            reactVec = reactVec.normalized;
-            reactVec += Vector3.up;
-            rigid.AddForce(reactVec * 10, ForceMode.Impulse);
-        }
-        else
-        {
-            hitbox.enabled = false;
-            anim.SetTrigger("isDead");                                
-            reactVec = reactVec.normalized;
-            reactVec += Vector3.up;
-            rigid.AddForce(reactVec * 10, ForceMode.Impulse);
-            DropExp();
-            DropGold();
-            DropItem();
-            Destroy(gameObject, 4);
-            if (ProgressionMonster)
-            {
-                if (DungeonManager.instance != null)
-                {
-                    DungeonManager.instance.DungeonProgress(explanationNum);
-                    DungeonManager.instance.SetDungeonGuide(explanationNum);
-                }
+                atkTime = 0f;
+                target = null;
+                curHealth = maxHealth;
+                StartCoroutine(ReTargeting(2f));
             }
         }
     }
-    void StopNav()
+
+    [PunRPC]
+    public override void OnDamage(int _damage, Vector3 _attacker)
     {
-        nav.isStopped = true;
-    }
-    void StartNav()
-    {
-        nav.isStopped = false;
-    }
+        // 마스터(호스트)에서만 연산을 함.
+        if (!PhotonNetwork.IsMasterClient)
+            return;        
+
+        // 데미지와 넉백 연산. 피격 애니메이션 트리거를 Set
+        CurHealth -= _damage;
+        if (_damage >= (0.2f * maxHealth))        
+            anim.SetTrigger("isAttacked");
+        
+        Vector3 reactVec = transform.position - _attacker; // 넉백 거리.        
+        reactVec = reactVec.normalized;
+        reactVec += Vector3.up;
+        StartCoroutine(KnockBack(reactVec));        
+
+        // 피격에 따른 이펙트 출력과 UI 활성화는 모든 클라이언트에게.
+        photonView.RPC("HitEffect", RpcTarget.All);
+
+        anim.SetTrigger("isWakeUp");
+    }   
+    
     void ShootFire()
     {
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Dragon_Fire);

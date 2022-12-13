@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviourPun, IPunObservable
     [Header("몬스터 스탯 관련 프로퍼티")]
     public int maxHealth;             // 최대 체력.
     protected int curHealth;             // 현재 체력.
-    public int CurHealth
+    public virtual int CurHealth
     {
         get => curHealth;
         set
@@ -17,15 +17,19 @@ public class Enemy : MonoBehaviourPun, IPunObservable
             curHealth = value;
             if (curHealth >= maxHealth)
                 curHealth = maxHealth;
-            else if(curHealth <= 0)
+            else if(curHealth <= 0 && !isDead)
             {
+                isDead = true;
                 hitbox.enabled = false;
-                anim.SetTrigger("isDead");
+                anim.SetBool("isDead", true);
+
                 FreezeEnemy();
                 questProgress();
+
                 DropExp();
                 DropGold();
                 DropItem();
+
                 Destroy(gameObject, 4);
             }            
         }                
@@ -51,130 +55,142 @@ public class Enemy : MonoBehaviourPun, IPunObservable
     public float attackCool;    
 
     public Transform target;        // 타겟. (플레이어)                    
-    public Vector3 originPos;      // 몬스터의 초기 위치.    
-    public Quaternion originRotateion;
-    protected Rigidbody rigid;
+    protected Vector3 originPos;      // 몬스터의 초기 위치.    
+    protected Quaternion originRot;   // 몬스터의 초기 회전.
+       
     protected Collider hitbox;    
     protected NavMeshAgent nav;
     protected Animator anim;
-    protected float atkTime;      // 공격 쿨타임. Unirx로 교체예정.
+   
     protected HP_Bar hpbar;         // HP 바.
-    protected float attackTime;    // 몬스터가 공격을 하는 시간
+    protected float attackTime;    // 몬스터가 공격을 하는 시간    
     
-    bool isBorder;
-    protected bool isStop;
-    public float totalTime = 0f;
-
+    protected bool isStop = false;
+    protected bool isDead = false;
+    protected float atkTime = 0f;     // 공격 쿨타임. Unirx로 교체예정.
     protected float stoppingDist;
 
-
-    private void Awake()
-    {        
-        rigid = GetComponent<Rigidbody>();
+    protected virtual void Awake()
+    {               
         hitbox = GetComponent<Collider>();        
         nav = GetComponent<NavMeshAgent>();
-        anim = GetComponentInChildren<Animator>();
+        anim = GetComponent<Animator>();
+
         originPos = transform.position;
-        originRotateion = transform.rotation;
-        atkTime = 0f;
-        isStop = false;
+        originRot = transform.rotation;
+        
         CurHealth = maxHealth;
         stoppingDist = nav.stoppingDistance;
     }
-    protected void Start()
+
+    private void Start()
     {
         if (!PhotonNetwork.IsMasterClient)                   
             return;        
             
         StartCoroutine(Targeting());        
     }
-
     
-    void StopToWall()
-    {
-        RaycastHit[] hit;
-
-        hit = Physics.SphereCastAll(transform.position, 1f ,transform.forward, 1f, LayerMask.GetMask("Wall"));
-        if(hit.Length > 0 )        
-            isBorder = true;        
-        else        
-            isBorder = false;                      
-    }
 
     private void FixedUpdate()
     {
         if (!PhotonNetwork.IsMasterClient)
             return;
 
-        if (nav.velocity != Vector3.zero)        
-            anim.SetBool("isWalk", true);        
-        else        
-            anim.SetBool("isWalk", false);
-        
-
-        atkTime += Time.fixedDeltaTime;        
-        if (target != null)
-        {            
-            nav.SetDestination(target.position);
-            nav.stoppingDistance = stoppingDist;
-
-            float distance = Vector3.Distance(transform.position, target.position);
-            if (!isStop)
-            {
-                Vector3 dir = target.transform.position - this.transform.position;
-                this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime);
-                anim.SetBool("isWalk", true);
-            }            
-            
-            if (distance <= attackDistance)
-            {
-                totalTime = 0f;
-                FreezeEnemy();
-                if (atkTime >= attackCool)
-                
-                {
-                    anim.SetTrigger("isAttack");
-                    atkTime = 0f;
-                    isStop = true;
-                }
-            }
-            else if (distance >= 20f)
-            {
-                target = null;
-                StartCoroutine(Targeting());
-                curHealth = maxHealth;
-            }
-            
-            StopToWall();            
-            totalTime = isBorder ? totalTime + Time.deltaTime : 0f;
-            
-            if (totalTime>=5f)
-            {
-                totalTime = 0f;
-                target = null;
-                Invoke("ReStartTarget", 2f);
-                curHealth = maxHealth;
-            }           
-        }
-        else
+        anim.SetBool("isWalk", false);
+        if (!isStop)
         {
-            nav.SetDestination(originPos);
-            nav.stoppingDistance = 0f;
-            UnfreezeEnemy();
-        }
-      
-        
+            Move();
+            Rotate();
+            Attack();
+        }               
+    }
 
-        if (!nav.pathPending && target == null) 
+    protected virtual void Move()
+    {
+        // 타겟이 있을 때 타겟을 향해 이동함 타겟 유무에 따라 정지 거리가 달라짐.
+        // (타겟이 없으면 제자리로 가야 하므로 정지 거리가 0)
+        nav.stoppingDistance = target ? stoppingDist : 0f;
+        nav.SetDestination(target ? target.position : originPos);
+
+        // 현재 nav의 속도가 0이 아니면 isWalk = true
+        anim.SetBool("isWalk", (nav.velocity != Vector3.zero));               
+    }
+
+    protected virtual void Rotate()
+    {
+        // 타겟이 있을 경우 타겟을 바라보도록 함.
+        if (target != null)
+        {
+            Vector3 dir = target.transform.position - this.transform.position;
+            transform.rotation = Quaternion.Lerp(transform.rotation, 
+                Quaternion.LookRotation(dir), Time.deltaTime);
+        }
+        // 타겟이 없을 경우 제자리로 되돌아간 후 원래 방향을 바라보도록 함.
+        else
         {            
-            if (nav.remainingDistance <= nav.stoppingDistance)
-            {                
-                this.transform.rotation = Quaternion.Lerp(this.transform.rotation, originRotateion, Time.deltaTime * 5);
+            if (nav.remainingDistance <= 0.2f)
+            {
+                transform.rotation = Quaternion.Lerp(transform.rotation,
+                    originRot, Time.deltaTime * 5);
             }
         }
     }
 
-    
+    protected virtual void Attack()
+    {                
+        if (target != null)
+        {
+            atkTime += Time.fixedDeltaTime;
+            float distance = Vector3.Distance(transform.position, target.position);
+            if (distance <= attackDistance && atkTime >= attackCool)
+            {
+                atkTime = 0f;
+                anim.SetTrigger("isAttack");
+            }
+            // 거리가 너무 멀어지면 타겟이 풀림.
+            else if (distance >= 15f)
+            {
+                atkTime = 0f;
+                target = null;                
+                curHealth = maxHealth;
+                StartCoroutine(ReTargeting(2f));
+            }
+
+            // 8초 이상 공격을 못하면 타겟이 풀림.
+            if (atkTime > 8f)
+            {
+                atkTime = 0f;                
+                target = null;
+                curHealth = maxHealth;
+                StartCoroutine(ReTargeting(2f));              
+            }
+        }        
+    }
+    // 0.5초 간격으로 전방에 플레이어가 있으면 타겟으로 설정함.    
+    protected IEnumerator Targeting()
+    {
+        yield return new WaitForSeconds(0.5f);
+        RaycastHit[] rayHits =
+            Physics.SphereCastAll(transform.position,
+                                  targetRadius,
+                                  transform.forward,
+                                  targetRange,
+                                  LayerMask.GetMask("Player"));
+        if (rayHits.Length > 0)
+        {
+            target = rayHits[0].transform;
+            atkTime = 1.5f;
+            yield break;
+        }
+        StartCoroutine(Targeting());
+    }
+    protected IEnumerator ReTargeting(float _time)
+    {
+        yield return new WaitForSeconds(_time);
+        StartCoroutine(Targeting());
+    }   
+
     protected void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -183,23 +199,7 @@ public class Enemy : MonoBehaviourPun, IPunObservable
         }
     }  
    
-    protected IEnumerator Targeting()
-    {
-        yield return new WaitForSeconds(0.5f);       
-        RaycastHit[] rayHits =
-            Physics.SphereCastAll(transform.position,
-                                  targetRadius,
-                                  transform.forward,
-                                  targetRange,
-                                  LayerMask.GetMask("Player"));
-        if(rayHits.Length > 0)
-        {
-            target = rayHits[0].transform;
-            atkTime = 1.5f;
-            yield break;
-        }        
-        StartCoroutine(Targeting());
-    }       // 설정된 전방 범위에 플레이어가 있으면 타겟으로 설정함.    
+         
     public virtual void Attack(Collider _player)
     {
         Player player = _player.GetComponent<Player>();
@@ -215,19 +215,24 @@ public class Enemy : MonoBehaviourPun, IPunObservable
     }
 
     [PunRPC]
-    public virtual void IsAttacked(int _damage, Vector3 _player)
+    public virtual void OnDamage(int _damage, Vector3 _attacker)
     {
+        // 마스터(호스트)에서만 연산을 함.
         if (!PhotonNetwork.IsMasterClient)
             return;
-        curHealth -= _damage;
-        Vector3 reactVec = transform.position - _player; // 넉백 거리.
+
+        // 데미지와 넉백 연산. 피격 애니메이션 트리거를 Set
+        CurHealth -= _damage;
         anim.SetTrigger("isAttacked");
+
+        Vector3 reactVec = transform.position - _attacker; // 넉백 거리.        
         reactVec = reactVec.normalized;
         reactVec += Vector3.up;
         StartCoroutine(KnockBack(reactVec));
+        //rigid.AddForce(reactVec * 10, ForceMode.Impulse);
 
-        photonView.RPC("HitEffect", RpcTarget.Others);
-        
+        // 피격에 따른 이펙트 출력과 UI 활성화는 모든 클라이언트에게.
+        photonView.RPC("HitEffect", RpcTarget.All);        
     }    
     
     [PunRPC]
@@ -242,12 +247,9 @@ public class Enemy : MonoBehaviourPun, IPunObservable
     protected void DropExp()
     {
         Player player = JY_CharacterListManager.s_instance.playerList[0];
-        if (player != null) 
-        {
-            player.playerStat.CurExp += dropExp;
-            player.SaveData();
-            JY_CharacterListManager.s_instance.Save();
-        }                   
+        player.playerStat.CurExp += dropExp;
+        player.SaveData();
+        JY_CharacterListManager.s_instance.Save();
     }
     protected void DropGold()
     {
@@ -275,21 +277,15 @@ public class Enemy : MonoBehaviourPun, IPunObservable
 
 
     // 애니메이션 이벤트 함수들.
-    protected void FreezeEnemy()
-    {
-        nav.isStopped = true;
-    }            // 몬스터가 움직이지 못하게 함. nav.isStopped
-    protected void UnfreezeEnemy()
-    {
-        nav.isStopped = false;
-    }          // 몬스터가 움직일 수 있게 함.
+    protected void FreezeEnemy() => isStop = true;               
+    protected void UnfreezeEnemy() => isStop = false;
+
+    // 몬스터가 타겟을 바라봄.  
     protected void LookTarget()
     {
-        if (target != null)
-        {
-            transform.LookAt(target);
-        }
-    }             // 몬스터가 타겟을 바라봄.    
+        if (target != null)        
+            transform.LookAt(target, Vector3.up);        
+    }               
     protected void WakeUp()
     {
         RaycastHit[] rayHits =
@@ -301,34 +297,23 @@ public class Enemy : MonoBehaviourPun, IPunObservable
                 Enemy other = rayHits[i].transform.GetComponent<Enemy>();
                 other.target = this.target;
             }
-
         }
     }                 // 주변에 있는 몬스터를 깨움.    
-    protected void DragunReturn()
-    {
-        isStop = false;
-    }
-    
+        
     public IEnumerator KnockBack(Vector3 _dir)
     {
         for (int i = 0; i < 20; i++)
         {
-            nav.Move(_dir * 0.03f);
+            nav.Move(_dir * 0.02f);
             yield return null;
         }
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        
-        if (stream.IsWriting)
-        {
-            stream.SendNext(curHealth);
-        }
-        else
-        {
-            CurHealth = (int)stream.ReceiveNext();
-        }
-        
+    {        
+        if (stream.IsWriting)        
+            stream.SendNext(curHealth);        
+        else        
+            CurHealth = (int)stream.ReceiveNext();                
     }
 }

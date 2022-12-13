@@ -741,7 +741,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         if (enemy != null)
         {            
             int damage = AttackDamage(rWeapon.atkMag, enemy.defMag);
-            enemy.IsAttacked(damage, transform.position);
+            enemy.OnDamage(damage, transform.position);
             enemy.target = transform;
         }        
     }

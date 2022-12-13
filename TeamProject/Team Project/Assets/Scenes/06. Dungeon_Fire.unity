@@ -25761,37 +25761,37 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isWalk
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: NoramlAttack
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: WhirlAttack
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: JumpAttack
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: KickAttack
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isDead
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: Stun
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isAttacked
   - Type: 3
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: HitNum
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: StunWakeUP
   - Type: 1
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: AttackSpeed
   m_SynchronizeLayers:
   - SynchronizeType: 0
@@ -25856,9 +25856,6 @@ MonoBehaviour:
   attackDistance: 3
   attackCool: 3
   target: {fileID: 0}
-  originPos: {x: 0, y: 0, z: 0}
-  originRotateion: {x: 0, y: 0, z: 0, w: 0}
-  totalTime: 0
   isLook: 0
   isAwake: 0
   isJump: 0

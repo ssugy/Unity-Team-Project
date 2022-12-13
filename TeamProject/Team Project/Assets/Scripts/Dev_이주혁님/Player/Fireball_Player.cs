@@ -42,7 +42,7 @@ public class Fireball_Player : MonoBehaviour
             Enemy enemy = other.GetComponent<Enemy>();
             if (enemy != null)
             {
-                enemy.IsAttacked(damage, Vector3.zero);
+                enemy.OnDamage(damage, Vector3.zero);
                 enemy.target = player;
                 Destroy(gameObject);
             }

@@ -6,6 +6,39 @@ using Photon.Pun;
 
 public class JY_Boss_FireDungeon : Enemy
 {
+    public override int CurHealth
+    {
+        get => base.CurHealth; 
+        set
+        {
+            curHealth = value;
+            if (curHealth >= maxHealth)
+                curHealth = maxHealth;
+            else if (curHealth <= 0 && !isDead)
+            {
+                StopAllCoroutines();
+                hitbox.enabled = false;
+                target = null;
+                isDead = true;
+                isAwake = false;
+                anim.SetTrigger("isDead");
+                FreezeEnemy();
+
+                DungeonManager.instance.DungeonProgress(4);
+                DungeonManager.instance.SetDungeonGuide(4);
+                JY_QuestManager.s_instance.QuestProgress(1);
+                AudioManager.s_instance.SoundFadeInOut(AudioManager.s_instance.nowplayName, 0f, 0.3f);
+                DropExp();
+                DropGold();
+                DropItem();
+                portalCreate();
+                Destroy(gameObject, 10f);
+            }
+
+        }
+    }
+        
+
     public static JY_Boss_FireDungeon instacne;
     public static JY_Boss_FireDungeon s_instance { get { return instacne; } }
     Vector3 tauntVec;
@@ -36,22 +69,21 @@ public class JY_Boss_FireDungeon : Enemy
     public Collider HeadHitBox;
 
     // Start is called before the first frame update
-    void Awake()
+    new void Awake()
     {
-        instacne = this;
-        rigid = GetComponentInChildren<Rigidbody>();
+        instacne = this;        
         hitbox = GetComponent<CapsuleCollider>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
         originPos = transform.position;
-        originRotateion = transform.rotation;
+        originRot = transform.rotation;
         isDead = false;
         HitSkillNum = -1;
         partCnt = 2;
         curHealth = maxHealth;
         angleRange = 30f;
     }
-    private new void Start()
+    private void Start()
     {
         //target = JY_CharacterListManager.s_instance.playerList[0].transform;
         isLook = true;
@@ -92,7 +124,7 @@ public class JY_Boss_FireDungeon : Enemy
 
                 if (distance <= attackDistance)
                 {
-                    totalTime = 0f;
+                    //totalTime = 0f;
                     if (distance <= 2f && !isAttack)
                         FreezeEnemy();
                     /*else if (distance > 2f && !isAttack)
@@ -142,7 +174,7 @@ public class JY_Boss_FireDungeon : Enemy
                 if (JY_CharacterListManager.s_instance.playerList[0].CompareTag("Dead"))
                 {
                     nav.SetDestination(originPos);
-                    transform.rotation = originRotateion;
+                    transform.rotation = originRot;
                     UnfreezeEnemy();
                     target = null;
                     StartCoroutine(Targeting());
@@ -267,51 +299,31 @@ public class JY_Boss_FireDungeon : Enemy
         InstanceManager.s_instance.StopAllBossEffect();
     }
     // 보스가 플레이어한테 공격 받았으면에 대한 판정
-    public override void IsAttacked(int _damage, Vector3 _player)
+    public override void OnDamage(int _damage, Vector3 _attacker)
     {
-        curHealth -= _damage;
-        Vector3 reactVec = transform.position - _player; // 넉백 거리.
-        StartCoroutine(OnDamage(reactVec * 0.2f));
-        if (EffectManager.Instance != null)
-            EffectManager.Instance.PlayHitEffect(transform.position + offset, transform.rotation, transform);
+        // 마스터(호스트)에서만 연산을 함.
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
+        // 데미지와 넉백 연산. 피격 애니메이션 트리거를 Set
+        CurHealth -= _damage;
+        if (_damage >= (0.2f * maxHealth))
+            anim.SetTrigger("isAttacked");
+
+        Vector3 reactVec = transform.position - _attacker; // 넉백 거리.        
+        if (HitSkillNum != -1)
+        {
+            if (!isStun)
+                isAttackedAnimPlay(HitSkillNum);
+            reactVec = reactVec.normalized;
+            reactVec += Vector3.up;
+            StartCoroutine(KnockBack(reactVec));
+        }
+
+        // 피격에 따른 이펙트 출력과 UI 활성화는 모든 클라이언트에게.
+        //photonView.RPC("HitEffect", RpcTarget.All);       
     }    
-
-    // 어택에서 이어져서, 데미지를 처리하는 구문, 사망했는지 여부도 처리
-    protected new IEnumerator OnDamage(Vector3 reactVec)
-    {
-        yield return new WaitForSeconds(0.1f);
-        if (curHealth > 0)
-        {
-            if (HitSkillNum != -1)
-            {
-                if(!isStun)
-                    isAttackedAnimPlay(HitSkillNum);
-                reactVec = reactVec.normalized;
-                reactVec += Vector3.up;
-                StartCoroutine(KnockBack(reactVec));
-            }
-        }
-        else
-        {
-            StopAllCoroutines();
-            hitbox.enabled = false;
-            target = null;
-            isDead = true;
-            isAwake = false;
-            anim.SetTrigger("isDead");
-            FreezeEnemy();
-
-            DungeonManager.instance.DungeonProgress(4);
-            DungeonManager.instance.SetDungeonGuide(4);
-            JY_QuestManager.s_instance.QuestProgress(1);
-            AudioManager.s_instance.SoundFadeInOut(AudioManager.s_instance.nowplayName,0f,0.3f);
-            DropExp();
-            DropGold();
-            DropItem();
-            portalCreate();
-            Destroy(gameObject,10f);
-        }
-    }
+    
     /// <summary>
     /// 스킬에 따른 다른 피격모션 재생, 플레이어가 어떤 스킬로 보스에게 공격했냐에 따라서 보스의 피격 애니매이션을 결정하는 함수.
     /// </summary>
