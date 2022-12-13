@@ -178,7 +178,6 @@ public class Player : MonoBehaviourPun, IPunObservable
     [HideInInspector] public bool isGaurd; // 방패막기 스킬 플래그
     [HideInInspector] public bool isKnockBack;  //넉백 플래그
     Vector3 KnockbackVec;                       //넉백 방향 벡터
-    int HitPoint;                               //경직수치
 
     public Transform rWeaponDummy;              // 오른손 무기 더미.
     public GameObject WeaponEffect;
@@ -221,7 +220,6 @@ public class Player : MonoBehaviourPun, IPunObservable
         rotateSpeed = 5f;
         moveSpeed = 8f;
         gravity = 0f;
-        HitPoint = 0;
         KnockbackVec = Vector3.zero;
 
         WeaponEffect.transform.SetParent(rWeaponDummy);
@@ -817,10 +815,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         // 만일 회피가 작동하면 데미지가 없다.
         if (playerStat.addedAvoid > Random.Range(0,100))
-        {
-            //피했음
             return;
-        }
         
         // _damage는 방패 방어 및 플레이어의 방어력이 반영된 값임.
         playerStat.CurHP -= _damage;
@@ -836,13 +831,9 @@ public class Player : MonoBehaviourPun, IPunObservable
         else
         {
             SoundHit();
-            HitPoint++;
-            Invoke("HitPointReset", 2.0f);
-            if (HitPoint >= 2)
-            {
-                playerAni.SetFloat("isAttacked", (float)_damage / playerStat.HP);
-                HitPoint -= 2;
-            }
+            
+            // 애니매이션에 붙어있는 한방들어오는 데미지 기준으로
+            playerAni.SetFloat("isAttacked", (float)_damage / playerStat.HP);
         }
 
         if (playerStat.CurHP <= 0)
@@ -859,10 +850,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             }
         }
     }
-    void HitPointReset()
-    {
-        HitPoint = 0;
-    }
+
     public void DamageReset()
     {
         playerAni.SetFloat("isAttacked", 0f);
