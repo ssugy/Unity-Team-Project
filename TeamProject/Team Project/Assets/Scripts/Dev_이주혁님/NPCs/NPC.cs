@@ -24,7 +24,8 @@ public class NPC : MonoBehaviour
     public Text dialogText;
     public Text nameText;
 
-    public GameObject shopButton;
+    public GameObject buyButton;
+    public GameObject sellButton;
     public GameObject exitButton;
     public GameObject nextButton;
 
@@ -33,7 +34,7 @@ public class NPC : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag.Equals("Player"))
+        if (other.CompareTag("Player"))
         {
             Debug.Log("대화 버튼 활성화");
             switch (TYPE)
@@ -77,7 +78,8 @@ public class NPC : MonoBehaviour
 
         nextButton.SetActive(false);
         exitButton.SetActive(true);
-        shopButton.SetActive(true);
+        buyButton.SetActive(true);
+        sellButton.SetActive(true);
 
         nameText.text = NAME;
         dialogText.text = "어서 오시게. 지금은 마을 일손이 부족해 내가 상인 역할도 맡고 있지.";
