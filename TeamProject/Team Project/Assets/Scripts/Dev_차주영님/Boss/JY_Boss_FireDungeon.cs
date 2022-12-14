@@ -98,9 +98,13 @@ public class JY_Boss_FireDungeon : Enemy
         HitPoint -= Time.deltaTime * 0.5f;
         atkTime += Time.fixedDeltaTime;
 
-        anim.SetBool("isWalk", false);
+       
         if (!isAwake)
+        {
+            anim.SetBool("isWalk", false);
             return;
+        }
+            
         if (isDead)
             return;
 
@@ -184,7 +188,7 @@ public class JY_Boss_FireDungeon : Enemy
     private IEnumerator JumpMove(Vector3 _target)
     {
         float t = 0f;
-        while (t <= 0.8f)
+        while (t <= 0.6f)
         {
             t += Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, _target, Time.deltaTime *10f);

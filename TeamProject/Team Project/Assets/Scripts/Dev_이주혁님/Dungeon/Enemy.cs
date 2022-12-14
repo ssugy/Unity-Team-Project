@@ -104,7 +104,7 @@ public class Enemy : MonoBehaviourPun, IPunObservable
             return;
 
         atkTime += Time.fixedDeltaTime;
-        anim.SetBool("isWalk", false);
+        //anim.SetBool("isWalk", false);
         if (!isStop)
         {
             Move();
