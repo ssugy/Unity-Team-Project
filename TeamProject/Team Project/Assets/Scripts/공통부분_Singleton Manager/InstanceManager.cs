@@ -15,9 +15,8 @@ public class InstanceManager : MonoBehaviour
     }
     #endregion
 
-    public List<PlayerEffect> SkillEffectList;
-    public List<GameObject> PlayerEffectList;
-    public List<GameObject> BossSkillEffectList;
+    public List<PlayerEffect> PlayerEffectList;    
+    public List<BossEffect> BossEffectList;
 
     [Header("플레이어 공격 이펙트")]
     public GameObject Normal_Attack_Effect;
@@ -41,71 +40,50 @@ public class InstanceManager : MonoBehaviour
 
     private void Start()
     {
-        SkillEffectList = new();
-        PlayerEffectList = new();
-        BossSkillEffectList = new();
+        PlayerEffectList = new();        
+        BossEffectList = new();
     }
 
-    GameObject FindEffect(string EffectName, List<GameObject> targetList)
-    {
-        foreach (GameObject one in targetList)
-        {
-            if (one.name.Equals(EffectName))
-                return one;
-        }
-        return null;
-    }
 
     public void ExtraEffectCreate(string EffectName)
     {
-        GameObject effect = FindEffect(EffectName,PlayerEffectList);
-        if (effect != null)
-            effect.SetActive(true);
-        else
+        GameObject effect;
+        switch (EffectName)
         {
-            if (EffectName.Equals("LevelUpEffect"))
-            {
-                effect = Instantiate<GameObject>(LevelUpEffect, JY_CharacterListManager.s_instance.playerList[0].transform);
+            case "LevelUpEffect":
+                effect = Instantiate(LevelUpEffect, JY_CharacterListManager.s_instance.playerList[0].transform);
                 effect.transform.localPosition = Vector3.forward;
-            }
-            else if(EffectName.Equals("HealingEffect"))
-                effect = Instantiate<GameObject>(HealingEffect, JY_CharacterListManager.s_instance.playerList[0].transform);
-            effect.gameObject.name = EffectName;
-            PlayerEffectList.Add(effect);
+                break;
+            case "HealingEffect":
+                effect = Instantiate(HealingEffect, JY_CharacterListManager.s_instance.playerList[0].transform);
+                break;          
+            default:
+                return;
+        }             
+    }
+    public void BossEffectCreate(string _name, Transform _parent)
+    {
+        GameObject effect;
+        switch (_name)
+        {
+            case "Boss_Skill_Effect":
+                effect = Instantiate(Boss_Skill_Effect, _parent);
+                break;
+            case "Boss_Skill2_Effect":
+                effect = Instantiate(Boss_Skill_Effect2, _parent);
+                effect.transform.localPosition = Vector3.up;
+                break;
+            case "Boss_Dead_Effect":
+                effect = Instantiate(Boss_Dead_Effect, _parent);
+                effect.transform.localPosition = Vector3.forward;
+                break;
+            default:
+                return;
         }
 
+        BossEffectList.Add(effect.GetComponent<BossEffect>());
     }
-    public void BossEffectCreate(string EffectName, Transform boss)
-    {
-        GameObject effect = FindEffect(EffectName, BossSkillEffectList);
-        if (effect != null)
-            effect.SetActive(true);
-        else
-        {
-            if (EffectName.Equals("Boss_Skill_Effect"))
-                effect = Instantiate<GameObject>(Boss_Skill_Effect, boss);
-            else if (EffectName.Equals("Boss_Skill2_Effect") || EffectName.Equals("Boss_Skill2_Effect2") || EffectName.Equals("Boss_Skill2_Effect3"))
-            {
-                effect = Instantiate<GameObject>(Boss_Skill_Effect2, boss);
-                effect.transform.localPosition = Vector3.up;
-            }
-            else if (EffectName.Equals("Boss_Dead_Effect"))
-            {
-                effect = Instantiate<GameObject>(Boss_Dead_Effect, boss);
-                effect.transform.localPosition = Vector3.forward;
-            }
-            effect.name = EffectName;
-            BossSkillEffectList.Add(effect);
-        }
-    }
-    public void BossEffectOff(string EffectName)
-    {
-        foreach (GameObject one in BossSkillEffectList)
-        {
-            if(one.name.Equals(EffectName))
-                one.SetActive(false);
-        }
-    }
+    
     public void NormalAttackEffectCreate(int _effectNum, Transform _parent)
     {        
         GameObject effect;
@@ -126,7 +104,7 @@ public class InstanceManager : MonoBehaviour
 
         effect.transform.localPosition = new Vector3(0, 1f, 1f);        
 
-        SkillEffectList.Add(effect.GetComponent<PlayerEffect>());
+        PlayerEffectList.Add(effect.GetComponent<PlayerEffect>());
     }
 
     public void SkillEffectCreate(int _effectNum, Transform _parent)
@@ -161,32 +139,23 @@ public class InstanceManager : MonoBehaviour
                 return;
         }       
         
-        SkillEffectList.Add(effect.GetComponent<PlayerEffect>());
-    }
-    
-    public void ExtraEffectOff()
-    {
-        foreach (GameObject one in PlayerEffectList)
-        {
-            one.SetActive(false);
-        }
-    }
+        PlayerEffectList.Add(effect.GetComponent<PlayerEffect>());
+    }       
     
     // 피격 시, 사망 시에만 실행함. 실행중인 이펙트들을 모두 Off하고 리스트를 클리어.
     public void StopAllSkillEffect()
     {
-        SkillEffectList.ForEach(e => e.EffectOff());        
-        SkillEffectList.Clear();
+        PlayerEffectList.ForEach(e => e.EffectOff());        
+        PlayerEffectList.Clear();
     }
     public void StopAllBossEffect()
     {
-        foreach (GameObject one in BossSkillEffectList)
-            one.SetActive(false);
+        BossEffectList.ForEach(e => e.EffectOff());
+        BossEffectList.Clear();
     }
     public void ClearList()
     {
-        SkillEffectList.Clear();
-        PlayerEffectList.Clear();
-        BossSkillEffectList.Clear();
+        PlayerEffectList.Clear();        
+        BossEffectList.Clear();
     }
 }

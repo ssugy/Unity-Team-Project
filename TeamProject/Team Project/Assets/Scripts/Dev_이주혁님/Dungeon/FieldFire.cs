@@ -7,15 +7,18 @@ public class FieldFire : MonoBehaviour
 
     // 파이어볼은 방어율을 무시하고 고정적인 100 데미지를 입힌다.
     public int damage;
+    float t = 0f;
 
     private void OnEnable()
     {
-        Invoke("DestroySelf", 4f);
+        Destroy(gameObject, 4f);
     }
-    void DestroySelf()
+
+    private void Update()
     {
-        Destroy(gameObject);
+        t += Time.deltaTime;
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -23,6 +26,20 @@ public class FieldFire : MonoBehaviour
             Player player = other.GetComponent<Player>();
             if (player != null)
                 player.IsAttacked(damage, null);
+            t = 0f;
+        }
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (t >= 0.5f)
+            {
+                Player player = other.GetComponent<Player>();
+                if (player != null)
+                    player.IsAttacked(damage, null);
+                t -= 0.5f;
+            }                       
         }
     }
 

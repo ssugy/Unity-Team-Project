@@ -843,7 +843,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         if (playerStat.CurHP <= 0)
             Die();
-
+        /*
         if (JY_Boss_FireDungeon.s_instance != null)
         {
             if (JY_Boss_FireDungeon.s_instance.JumpAttackArea.gameObject.activeSelf==true)
@@ -853,7 +853,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                 if (Enemy != null)
                     KnockbackVec = KnockBackDir(Enemy);
             }
-        }
+        }*/
     }
 
     public void DamageReset()

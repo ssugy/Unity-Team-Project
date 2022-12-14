@@ -21,11 +21,6 @@ public class EGA_EffectSound : MonoBehaviour
     }
     private void OnEnable()
     {
-        soundComponent.PlayOneShot(clip);
-        Invoke("effectOff", 1.5f);
-    }
-    void effectOff()
-    {
-        InstanceManager.s_instance.ExtraEffectOff();
-    }
+        soundComponent.PlayOneShot(clip);        
+    }    
 }

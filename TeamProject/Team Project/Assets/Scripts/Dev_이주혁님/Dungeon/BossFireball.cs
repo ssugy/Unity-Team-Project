@@ -4,32 +4,36 @@ using UnityEngine;
 
 public class BossFireball : Fireball
 {
-    Vector3 targetVec;
-    public GameObject Explosion;
-    bool isCollision;
-    SphereCollider col;
+    public Transform target;
+
+    public GameObject impact;
+    public GameObject explosion;
+    Collider col;
+
     private void Update()
     {
-        targetVec = JY_CharacterListManager.s_instance.playerList[0].transform.position;
-        if(!isCollision)
-            transform.position = Vector3.MoveTowards(transform.position,targetVec,Time.deltaTime*10f);
+        if (target != null)
+        {
+            transform.position = Vector3.MoveTowards(transform.position,
+                target.position + new Vector3(0, 1f, 0), Time.deltaTime * 8f);
+        }
+
+            
     }
     private void OnEnable()
     {
+        col = GetComponent<Collider>();
         Destroy(gameObject, 4f);
-        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Boss_FireBall);
-        isCollision = false;
-        col = GetComponent<SphereCollider>();
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Boss_FireBall);                
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Terrain") || other.CompareTag("Wall"))
+        if (other.CompareTag("Terrain"))
         {
-            isCollision = true;
-            col.enabled = false;
-            GameObject tmpExplosion = Instantiate(Explosion, transform.position, Quaternion.identity);
-            Destroy(gameObject, 1f);
+            Destroy(gameObject);
+            Instantiate(impact, transform.position, Quaternion.identity);
+            
         }
         else if (other.CompareTag("Player"))
         {
@@ -37,6 +41,7 @@ public class BossFireball : Fireball
             if (player != null)
             {
                 player.IsAttacked(damage, col);
+                Instantiate(explosion, transform.position, Quaternion.identity);
                 Destroy(gameObject);
             }
         }

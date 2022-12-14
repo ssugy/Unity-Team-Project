@@ -67,6 +67,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel(index);
         GameManager.s_instance.ActiveScene = (GameManager.SceneName)index;
         GameManager.s_instance.currentScene = (GameManager.SceneName)index;
+        AudioManager.s_instance.SceneBGMContorl((GameManager.SceneName)index);
     }
 
     public override void OnLeftRoom()

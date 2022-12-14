@@ -38,7 +38,6 @@ public class JY_Boss_FireDungeon : Enemy
 
                 Destroy(gameObject, 10f);
             }
-
         }
     }
         
@@ -50,15 +49,14 @@ public class JY_Boss_FireDungeon : Enemy
     private bool isStun = false;       
 
     [Header("보스 공격 범위 콜라이더")]
-    public BoxCollider JumpAttackArea;    
-    public Transform BossWeapon;
+    public BoxCollider JumpAttackArea;       
 
-    [Header("보스 관련 인스턴스")]
-    public GameObject BossWeaponFire;
+    [Header("보스 관련 인스턴스")]    
     public GameObject FieldFire;
-    public GameObject Fireball;
-    public GameObject BossRoomPortal;
     
+    public GameObject BossRoomPortal;
+    public Transform shooter;
+
     [Header("부위파괴 콜라이더 및 파츠")]
     public GameObject HeadPart;
     public GameObject SholderPart;
@@ -81,8 +79,7 @@ public class JY_Boss_FireDungeon : Enemy
     {
         base.Awake();
         
-        instacne = this;
-             
+        instacne = this;             
         HitPoint = 0f;       
     }
     public void Start()
@@ -101,10 +98,11 @@ public class JY_Boss_FireDungeon : Enemy
         HitPoint -= Time.deltaTime * 0.5f;
         atkTime += Time.fixedDeltaTime;
 
+        anim.SetBool("isWalk", false);
         if (!isAwake)
             return;
 
-        anim.SetBool("isWalk", false);
+        
         if (!isStop)
         {
             nav.isStopped = false;
@@ -127,7 +125,7 @@ public class JY_Boss_FireDungeon : Enemy
             if (distance <= attackDistance && atkTime >= attackCool)
             {
                 atkTime = 0f;
-                RandomAttack(Random.Range(0, 3));
+                RandomAttack(Random.Range(0, 4));
             }            
             // 10미터 이상 멀어지면 점프 공격 사용. 쿨타임이 2초 더 긺.
             else if (distance >= 10f && atkTime >= (attackCool + 1f)) 
@@ -143,22 +141,36 @@ public class JY_Boss_FireDungeon : Enemy
         switch (_num)
         {
             case 0: // 일반 공격.
+            case 1:                
                 anim.SetTrigger("NoramlAttack");
                 break;
-            case 1: // 휠 어택.
+            case 2: // 휠 어택.
                 anim.SetTrigger("WhirlAttack");
                 break;
-            case 2: // 발차기.
+            case 3: // 발차기.
                 anim.SetTrigger("KickAttack");
                 break;            
         }
+    }
+
+    void SetAtkMag(float _value)
+    {
+        atkMag = _value;
     }
     
     public void SwingSound()
     {
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BOSS_SWING);
     }
-   
+    public void WalkSound()
+    {
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BOSS_WALK);
+    }
+    public void JumpSound()
+    {
+        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Boss_JUMP);
+    }
+
     public void HitboxOff()
     {                
         hitbox.enabled = false;
@@ -176,39 +188,32 @@ public class JY_Boss_FireDungeon : Enemy
     private IEnumerator JumpMove(Vector3 _target)
     {
         float t = 0f;
-        while (t <= 2f)
+        while (t <= 0.5f)
         {
             t += Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, _target, Time.deltaTime * 10f);
+            transform.position = Vector3.MoveTowards(transform.position, _target, Time.deltaTime * 8f);
             yield return null;
         }        
-    }
-
-    
-    public void JumpEffect()
-    {        
-        AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Boss_JUMP);
-        InstanceManager.s_instance.BossEffectCreate("Boss_Skill_Effect", this.transform);
-    }     
+    }          
 
     public void FieldFireGenerate(int num)
     {
         for (int i = 0; i < num; i++)
-            FieldFireCreate();
+        {
+            GameObject tmp = Instantiate(FieldFire);
+            tmp.transform.position = transform.position + new Vector3(Random.Range(-3, 3), 0, Random.Range(-3, 3));
+        }            
     }
 
-    public void KickEffect(string EffectName)
+    public void AttacakEffect(string EffectName)
     {
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BOSS_KICK);
-        InstanceManager.s_instance.BossEffectCreate(EffectName, this.transform);
+        InstanceManager.s_instance.BossEffectCreate(EffectName, transform);
     }
-    public void KickEffectOff(string EffectName)
-    {
-        InstanceManager.s_instance.BossEffectOff(EffectName);
-    }
+    
     public void BossDieEffect()
     {
-        InstanceManager.s_instance.BossEffectCreate("Boss_Dead_Effect", this.transform);
+        InstanceManager.s_instance.BossEffectCreate("Boss_Dead_Effect", transform);
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BOSS_DEAD, false, 1f);
     }
 
@@ -217,11 +222,11 @@ public class JY_Boss_FireDungeon : Enemy
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BOSS_HIT);
     }
 
-
     public void StopAllEffect()
     {
         InstanceManager.s_instance.StopAllBossEffect();
     }
+
     // 보스가 플레이어한테 공격 받았으면에 대한 판정
     public override void OnDamage(int _damage, Vector3 _attacker)
     {
@@ -250,25 +255,18 @@ public class JY_Boss_FireDungeon : Enemy
         }
         
         photonView.RPC("HitEffect", RpcTarget.All);       
-    }            
-
-    // 보스 무기에 나오는 불덩어리 - 외부에서 참조, 애니매이션 behaviour에서 제어
-    public void WeaponEffectOnOff(bool state)
-    {
-        BossWeaponFire.SetActive(state);
-    }
-
-    // 바닥에 불덩이(점프 공격 시 불덩어리 나오는 것)
-    void FieldFireCreate()
-    {
-        GameObject tmp = Instantiate<GameObject>(FieldFire);
-        tmp.transform.position = transform.position + new Vector3(Random.Range(-3, 3), 0, Random.Range(-3, 3));
-    }    
+    }           
+              
 
     // 파이어볼 - 봉에서 날라가는 파이어볼
     void ShootFire()
     {
-        Instantiate(Fireball, BossWeapon.position, transform.rotation);
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
+        BossFireball tmp = PhotonNetwork.Instantiate("Monster/BossFireball",
+            shooter.position, transform.rotation).GetComponent<BossFireball>();
+        tmp.target = target;        
     }
 
     // 부위파괴 함수
