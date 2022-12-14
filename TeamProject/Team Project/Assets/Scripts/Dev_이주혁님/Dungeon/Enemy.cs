@@ -51,6 +51,9 @@ public class Enemy : MonoBehaviourPun, IPunObservable
     public float targetRadius;  // 몬스터의 인식 범위.
     public float targetRange;   // 몬스터의 인식 거리
     public float attackDistance;// 몬스터가 공격을 하는 거리.
+    private float rangeAngle = 20f; 
+    // 플레이어가 몬스터 전방으로부터 해당 범위각 내에 있으면 걷기 모션 x.
+
     [Header("쿨타임 관련")]
     public float attackCool;    
 
@@ -125,6 +128,8 @@ public class Enemy : MonoBehaviourPun, IPunObservable
             Vector3 dir = target.transform.position - this.transform.position;
             transform.rotation = Quaternion.Lerp(transform.rotation, 
                 Quaternion.LookRotation(dir), Time.deltaTime);
+            if (CheckInsight(dir))
+                anim.SetBool("isWalk", true);
         }
         // 타겟이 없을 경우 제자리로 되돌아간 후 원래 방향을 바라보도록 함.
         else
@@ -135,6 +140,17 @@ public class Enemy : MonoBehaviourPun, IPunObservable
                     originRot, Time.deltaTime * 5);
             }
         }
+    }
+    // 전방에 플레이어가 있는지를 체크하는 함수 -> 없으면 걷는 모션.
+    protected bool CheckInsight(Vector3 dir)
+    {
+        float t = Mathf.Clamp(Time.deltaTime * 3f, 0f, 0.99f);
+        this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), t);
+        float dot = Vector3.Dot(dir, transform.forward);
+        float theta = Mathf.Acos(dot);
+        float degree = Mathf.Rad2Deg * theta;
+        bool result = degree <= rangeAngle / 2f ? true : false;
+        return result;
     }
 
     protected virtual void Attack()
@@ -197,8 +213,7 @@ public class Enemy : MonoBehaviourPun, IPunObservable
         {
             Attack(other);            
         }
-    }  
-   
+    }     
          
     public virtual void Attack(Collider _player)
     {

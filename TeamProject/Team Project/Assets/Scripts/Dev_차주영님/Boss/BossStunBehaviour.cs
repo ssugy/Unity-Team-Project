@@ -8,10 +8,7 @@ public class BossStunBehaviour : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         {
-            JY_Boss_FireDungeon.s_instance.WeaponEffectOnOff(false);
-            AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.BOSS_HIT);
-            JY_Boss_FireDungeon.s_instance.isAwake = false;
-            InstanceManager.s_instance.StopAllBossEffect();
+            JY_Boss_FireDungeon.s_instance.WeaponEffectOnOff(false);            
         }
     }
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

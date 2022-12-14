@@ -14,9 +14,7 @@ public class PowerStrikeBehaviour : StateMachineBehaviour
     {
         weapon = animator.GetComponent<Player>().rWeapon;
         weapon.atkMag = atkMag;
-        animator.GetComponent<Player>().UseStamina(usingStamina);
-        if (JY_Boss_FireDungeon.s_instance != null)
-            JY_Boss_FireDungeon.s_instance.HitSkillNum = 1;
+        animator.GetComponent<Player>().UseStamina(usingStamina);        
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
