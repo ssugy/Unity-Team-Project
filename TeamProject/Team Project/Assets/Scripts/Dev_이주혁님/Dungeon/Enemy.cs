@@ -68,9 +68,9 @@ public class Enemy : MonoBehaviourPun, IPunObservable
     protected HP_Bar hpbar;         // HP 바.
     protected float attackTime;    // 몬스터가 공격을 하는 시간    
     
-    protected bool isStop = false;
+    public bool isStop = false;
     protected bool isDead = false;
-    protected float atkTime = 0f;     // 공격 쿨타임. Unirx로 교체예정.
+    protected float atkTime = 0f; 
     protected float stoppingDist;
 
     protected virtual void Awake()

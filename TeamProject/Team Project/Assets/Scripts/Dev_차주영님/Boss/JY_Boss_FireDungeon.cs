@@ -114,16 +114,14 @@ public class JY_Boss_FireDungeon : Enemy
         }
         else
         {
-            nav.isStopped = true;
-            nav.velocity = Vector3.zero;
+            nav.isStopped = true;            
         }
     }
 
     protected override void Attack()
     {
         if (target != null)
-        {
-            
+        {            
             float distance = Vector3.Distance(transform.position, target.position);
             // 평타는 3개 중에 랜덤으로 사용함.
             if (distance <= attackDistance && atkTime >= attackCool)
@@ -171,6 +169,8 @@ public class JY_Boss_FireDungeon : Enemy
     }
     public void Jump()
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
         StartCoroutine(JumpMove(target.position));
     }
     private IEnumerator JumpMove(Vector3 _target)

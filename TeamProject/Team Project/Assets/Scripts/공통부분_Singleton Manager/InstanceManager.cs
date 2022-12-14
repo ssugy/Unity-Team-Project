@@ -18,6 +18,7 @@ public class InstanceManager : MonoBehaviour
     public List<PlayerEffect> SkillEffectList;
     public List<GameObject> PlayerEffectList;
     public List<GameObject> BossSkillEffectList;
+
     [Header("플레이어 공격 이펙트")]
     public GameObject Normal_Attack_Effect;
     public GameObject Normal_Attack_Effect2;
@@ -27,9 +28,11 @@ public class InstanceManager : MonoBehaviour
     public GameObject Skill_2_Effect;
     public GameObject Skill_2_Effect2;
     public GameObject Skill_2_Effect3;
+
     [Header("플레이어 기타 이펙트")]
     public GameObject LevelUpEffect;
     public GameObject HealingEffect;
+
     [Header("보스 스킬 이펙트")]
     public GameObject Boss_Skill_Effect;
     public GameObject Boss_Skill_Effect2;
