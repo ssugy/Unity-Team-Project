@@ -22,18 +22,15 @@ public class Key : MonoBehaviour
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.Key);
         Destroy(gameObject);
 
-        if (SceneManager.GetActiveScene().name == "06. Dungeon_Fire")
+        if (DungeonManager.instance.guide.target_2 != null)
         {
-            if(DungeonManager.instance.guide.target_2 != null)
-            {
-                DungeonManager.instance.DungeonProgress(1);
-                DungeonManager.instance.SetDungeonGuide(1);
-            }
-            else
-            {
-                DungeonManager.instance.DungeonProgress(2);
-                DungeonManager.instance.SetDungeonGuide(2);
-            }
+            DungeonManager.instance.DungeonProgress(1);
+            DungeonManager.instance.SetDungeonGuide(1);
+        }
+        else
+        {
+            DungeonManager.instance.DungeonProgress(2);
+            DungeonManager.instance.SetDungeonGuide(2);
         }
     }
 }
