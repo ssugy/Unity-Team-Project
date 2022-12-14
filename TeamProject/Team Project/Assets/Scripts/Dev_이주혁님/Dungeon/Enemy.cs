@@ -100,6 +100,9 @@ public class Enemy : MonoBehaviourPun, IPunObservable
         if (!PhotonNetwork.IsMasterClient)
             return;
 
+        if (isDead)
+            return;
+
         atkTime += Time.fixedDeltaTime;
         anim.SetBool("isWalk", false);
         if (!isStop)

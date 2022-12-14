@@ -101,19 +101,15 @@ public class JY_Boss_FireDungeon : Enemy
         anim.SetBool("isWalk", false);
         if (!isAwake)
             return;
+        if (isDead)
+            return;
 
-        
         if (!isStop)
-        {
-            nav.isStopped = false;
+        {           
             Move();
             Rotate();
             Attack();
-        }
-        else
-        {
-            nav.isStopped = true;            
-        }
+        }        
     }
 
     protected override void Attack()
@@ -188,10 +184,10 @@ public class JY_Boss_FireDungeon : Enemy
     private IEnumerator JumpMove(Vector3 _target)
     {
         float t = 0f;
-        while (t <= 0.5f)
+        while (t <= 0.8f)
         {
             t += Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, _target, Time.deltaTime * 8f);
+            transform.position = Vector3.MoveTowards(transform.position, _target, Time.deltaTime *10f);
             yield return null;
         }        
     }          
@@ -278,19 +274,27 @@ public class JY_Boss_FireDungeon : Enemy
         
         isStun = true;
         anim.SetTrigger("isStun");
-        if (partName.Equals("BossSholderHitBox"))
-        {
-            SholderHitBox.enabled = false;
-            SholderPart.SetActive(false);
-        }
-        else
-        {
-            HeadHitBox.enabled = false;
-            HeadPart.SetActive(false);
-        }
+        if (partName.Equals("BossSholderHitBox"))        
+            photonView.RPC("ShoulderDestruct", RpcTarget.All);
+        
+        else        
+            photonView.RPC("CrownrDestruct", RpcTarget.All);
+        
 
         // 부위 파괴가 발생할 때마다 방어력 감소.
         defMag -= 0.12f;        
+    }
+    [PunRPC]
+    public void ShoulderDestruct()
+    {
+        SholderHitBox.enabled = false;
+        SholderPart.SetActive(false);
+    }
+    [PunRPC]
+    public void CrownDestruct()
+    {
+        HeadHitBox.enabled = false;
+        HeadPart.SetActive(false);
     }
 
     public void UnStunned()

@@ -5161,7 +5161,6 @@ GameObject:
   - component: {fileID: 2155606414023227220}
   - component: {fileID: 6071042943826923496}
   - component: {fileID: 2069785687982303507}
-  - component: {fileID: 1899214189657953740}
   - component: {fileID: 2069785687982303518}
   m_Layer: 11
   m_Name: Boss_1
@@ -5239,47 +5238,6 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
---- !u!114 &1899214189657953740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2071064002752570694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75326d1f443386b4d8ad3b389535fcb4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 1000
-  defMag: 0.4
-  atkPoint: 70
-  atkMag: 1.1
-  offset: {x: 0, y: 0, z: 0}
-  dropExp: 100
-  dropGold: 2000
-  dropItem: 220000002300000024000000
-  dropPro:
-  - 1
-  - 1
-  - 1
-  fieldItem: {fileID: 5869032223344055893, guid: 828de48909114044983e5627a3bc0a0b, type: 3}
-  fieldGold: {fileID: 1498403948531744, guid: fa2c57d3f28a5e6419393e8bc3eeb32a, type: 3}
-  targetRadius: 0
-  targetRange: 0
-  attackDistance: 2
-  attackCool: 3.5
-  target: {fileID: 0}
-  originPos: {x: 0, y: 0, z: 0}
-  originRotateion: {x: 0, y: 0, z: 0, w: 0}
-  totalTime: 0
-  skillCool: 6
-  skillMinimumDistance: 3
-  skillMaximumDistance: 7
-  flame: {fileID: 2070694639956760898}
-  poison: {fileID: 2070570269717622127}
-  earthquake: {fileID: 2071076326091895625}
-  audioManager: {fileID: 0}
 --- !u!195 &2069785687982303518
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -8082,11 +8040,6 @@ PrefabInstance:
 --- !u!4 &2065039178574144709 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4825948614923682, guid: 32c9fd11a72259d45aa26ae41c34c5aa, type: 3}
-  m_PrefabInstance: {fileID: 2069785686663803239}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2071076326091895625 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1314945738539566, guid: 32c9fd11a72259d45aa26ae41c34c5aa, type: 3}
   m_PrefabInstance: {fileID: 2069785686663803239}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2069785687204785067

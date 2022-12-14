@@ -266,6 +266,7 @@ Transform:
   - {fileID: 1268450990390577755}
   - {fileID: 1268450990390637395}
   - {fileID: 1268450990390590305}
+  - {fileID: 1268450991690112711}
   - {fileID: 1268450991542540206}
   - {fileID: 1268450991756488963}
   - {fileID: 1268450990826369344}
@@ -670,7 +671,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 912650456763603540}
-  - {fileID: 1268450991690112711}
   m_Father: {fileID: 1268450990390549435}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -7.5, y: 1.3, z: -81.1}
@@ -2075,7 +2075,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1268450990390571385}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1268450990826369345
 SphereCollider:
@@ -2120,7 +2120,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1268450990390571385}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1268450991542540207
 BoxCollider:
@@ -2254,12 +2254,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1268450991690112710}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.003, y: -0.001, z: -0.107}
+  m_LocalPosition: {x: 0, y: 0.51, z: 0.479}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1268450990390558097}
-  m_RootOrder: 1
+  m_Father: {fileID: 1268450990390571385}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1268450991690112708
 BoxCollider:
@@ -2399,7 +2399,7 @@ Transform:
   - {fileID: 1268450991708618472}
   - {fileID: 1268450991632149445}
   m_Father: {fileID: 1268450990390571385}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1268450991756488962
 GameObject:
@@ -2431,7 +2431,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1268450990390571385}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1268450991756488960
 BoxCollider:
@@ -2476,7 +2476,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1268450990390571385}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1268450992294389698
 SphereCollider:
