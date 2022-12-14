@@ -344,14 +344,16 @@ public class Player : MonoBehaviourPun, IPunObservable
     public void PowerStrike()       // 스킬 1.
     {
         if (PhotonNetwork.InRoom)
+        {           
             photonView.RPC("PowerStrike_Do", RpcTarget.All);
+        }            
         else
             PowerStrike_Do();
     }
 
     [PunRPC]
     public void PowerStrike_Do()
-    {
+    {        
         if (rWeapon == null)
         {
             if (photonView.IsMine || GameManager.s_instance.currentScene.Equals(GameManager.SceneName.World))
@@ -372,6 +374,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                     (4f, BattleUI.instance.skill_1, BattleUI.instance.cool_1));
             }            
         }
+        Debug.Log("스킬 사용.");
     }
 
     public void TurnAttack()        // 스킬 2.
@@ -383,7 +386,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     }
     [PunRPC]
     public void TurnAttack_Do()        // 스킬 2.
-    {
+    {        
         if (rWeapon == null)
         {
             if (photonView.IsMine || GameManager.s_instance.currentScene.Equals(GameManager.SceneName.World))
@@ -1009,6 +1012,9 @@ public class Player : MonoBehaviourPun, IPunObservable
             stream.SendNext(playerStat.HP);
             stream.SendNext(playerStat.CurHP);
 
+            stream.SendNext(playerStat.SP);
+            stream.SendNext(playerStat.CurSP);
+
             stream.SendNext(playerStat.atkPoint);
             stream.SendNext(playerStat.criPro);
 
@@ -1035,6 +1041,9 @@ public class Player : MonoBehaviourPun, IPunObservable
         {
             playerStat.HP = (int)stream.ReceiveNext();
             playerStat.CurHP = (int)stream.ReceiveNext();
+
+            playerStat.SP = (float)stream.ReceiveNext();
+            playerStat.CurSP = (float)stream.ReceiveNext();
 
             playerStat.atkPoint = (int)stream.ReceiveNext();
             playerStat.criPro = (float)stream.ReceiveNext();
