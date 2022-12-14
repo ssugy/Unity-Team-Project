@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37690774, g: 0.27781713, b: 0.26629606, a: 1}
+  m_IndirectSpecularColor: {r: 0.37690857, g: 0.27781683, b: 0.26629424, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7433,6 +7433,7 @@ MonoBehaviour:
   dungeonExplanation: {fileID: 1069458827}
   dungeonProgress: {fileID: 1069458829}
   progressAmount: 0
+  guide: {fileID: 0}
   explanationList:
   - "\uC5B4\uB518\uAC00\uC5D0 \uC5F4\uC1E0\uAC00 \uC788\uC2B5\uB2C8\uB2E4.\n\uC5F4\uC1E0\uB97C
     \uCC3E\uC544 \uBB38\uC744 \uC5EC\uC138\uC694."
@@ -26416,10 +26417,27 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 771073999}
   sceneViewId: 11
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &771073999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771073997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1001 &771292879
 PrefabInstance:
   m_ObjectHideFlags: 0

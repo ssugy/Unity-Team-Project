@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class FloatingPlatform : MonoBehaviour
+public class FloatingPlatform : MonoBehaviourPun
 {
     public Vector3 startPos;
     public Vector3 endPos;
@@ -11,6 +12,9 @@ public class FloatingPlatform : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
         transform.localPosition = Vector3.MoveTowards(transform.localPosition, endPos, Time.deltaTime * moveSpeed);
         if (Vector3.Distance(transform.localPosition, endPos) < 0.1f)
         {
