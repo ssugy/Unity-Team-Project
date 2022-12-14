@@ -24,8 +24,16 @@ public class Key : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name == "06. Dungeon_Fire")
         {
-            DungeonManager.instance.DungeonProgress(1);
-            DungeonManager.instance.SetDungeonGuide(1);
+            if(DungeonManager.instance.guide.target_2 != null)
+            {
+                DungeonManager.instance.DungeonProgress(1);
+                DungeonManager.instance.SetDungeonGuide(1);
+            }
+            else
+            {
+                DungeonManager.instance.DungeonProgress(2);
+                DungeonManager.instance.SetDungeonGuide(2);
+            }
         }
     }
 }

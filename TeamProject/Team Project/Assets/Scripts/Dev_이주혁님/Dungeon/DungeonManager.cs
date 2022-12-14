@@ -12,6 +12,9 @@ public class DungeonManager : MonoBehaviour
     public Text dungeonExplanation;
     public Image dungeonProgress;
     public float progressAmount;
+    int NowProgress;
+    public int NOWPROGRESS { get => NowProgress; }
+    [HideInInspector]public JY_Guide guide;
     [TextArea]
     public List<string> explanationList;    
     // Start is called before the first frame update
@@ -22,6 +25,8 @@ public class DungeonManager : MonoBehaviour
         dungeonProgress.fillAmount = 0f;
         progressAmount = progressCalc();
         dungeonPanel.SetActive(true);
+        guide = dungeonGuide.GetComponent<JY_Guide>();
+        NowProgress = 0;
     }
 
     private void OnDisable()
@@ -38,12 +43,12 @@ public class DungeonManager : MonoBehaviour
     public void DungeonProgress(int num)
     {
         dungeonExplanation.text = explanationList[num];
-        dungeonProgress.fillAmount += progressAmount;
+        dungeonProgress.fillAmount = progressAmount * num;
+        NowProgress = num;
     }
 
     public void SetDungeonGuide(int num)
     {
-        JY_Guide guide = dungeonGuide.GetComponent<JY_Guide>();
         switch (num)
         {
             case 1:

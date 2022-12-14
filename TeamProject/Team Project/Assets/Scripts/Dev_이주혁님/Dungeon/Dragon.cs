@@ -31,8 +31,11 @@ public class Dragon : Enemy
                 {
                     if (DungeonManager.instance != null)
                     {
-                        DungeonManager.instance.DungeonProgress(explanationNum);
-                        DungeonManager.instance.SetDungeonGuide(explanationNum);
+                        if (DungeonManager.instance.NOWPROGRESS != 0)
+                        {
+                            DungeonManager.instance.DungeonProgress(explanationNum);
+                            DungeonManager.instance.SetDungeonGuide(explanationNum);
+                        }
                     }
                 }
             }
