@@ -100,6 +100,7 @@ public class Enemy : MonoBehaviourPun, IPunObservable
         if (!PhotonNetwork.IsMasterClient)
             return;
 
+        atkTime += Time.fixedDeltaTime;
         anim.SetBool("isWalk", false);
         if (!isStop)
         {
@@ -157,7 +158,7 @@ public class Enemy : MonoBehaviourPun, IPunObservable
     {                
         if (target != null)
         {
-            atkTime += Time.fixedDeltaTime;
+            
             float distance = Vector3.Distance(transform.position, target.position);
             if (distance <= attackDistance && atkTime >= attackCool)
             {

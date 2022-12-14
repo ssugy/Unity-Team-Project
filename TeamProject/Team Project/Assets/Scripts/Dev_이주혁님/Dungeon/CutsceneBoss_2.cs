@@ -14,9 +14,11 @@ public class CutsceneBoss_2 : MonoBehaviour
 
     IEnumerator BossWakeUp()
     {
+        boss.CurHealth = boss.maxHealth;
         yield return new WaitForSeconds(3f);
         // 보스를 깨움.
         boss.isAwake = true;
+        
     }
 
     public void OnSecondPhase()
@@ -47,7 +49,7 @@ public class CutsceneBoss_2 : MonoBehaviour
             boss.GetComponent<Animator>().Play("Hit_1");
             // 보스의 공격 스피드를 제어하는 파라미터를 변경.
             boss.GetComponent<Animator>().SetFloat("AttackSpeed", 1.05f);
-            boss.CurHealth = boss.maxHealth;
+            
             boss.transform.position = new Vector3(48f, 0f, 130f);
             boss.transform.rotation = Quaternion.identity;
             phase2_Light.SetActive(true);

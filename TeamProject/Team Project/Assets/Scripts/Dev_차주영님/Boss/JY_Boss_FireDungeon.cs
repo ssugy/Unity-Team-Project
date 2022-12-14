@@ -98,7 +98,8 @@ public class JY_Boss_FireDungeon : Enemy
         if (!PhotonNetwork.IsMasterClient)
             return;
 
-        HitPoint -= Time.deltaTime * 2f;
+        HitPoint -= Time.deltaTime * 0.5f;
+        atkTime += Time.fixedDeltaTime;
 
         if (!isAwake)
             return;
@@ -106,9 +107,15 @@ public class JY_Boss_FireDungeon : Enemy
         anim.SetBool("isWalk", false);
         if (!isStop)
         {
+            nav.isStopped = false;
             Move();
             Rotate();
             Attack();
+        }
+        else
+        {
+            nav.isStopped = true;
+            nav.velocity = Vector3.zero;
         }
     }
 
@@ -116,7 +123,7 @@ public class JY_Boss_FireDungeon : Enemy
     {
         if (target != null)
         {
-            atkTime += Time.fixedDeltaTime;
+            
             float distance = Vector3.Distance(transform.position, target.position);
             // 평타는 3개 중에 랜덤으로 사용함.
             if (distance <= attackDistance && atkTime >= attackCool)
@@ -125,41 +132,11 @@ public class JY_Boss_FireDungeon : Enemy
                 RandomAttack(Random.Range(0, 3));
             }            
             // 10미터 이상 멀어지면 점프 공격 사용. 쿨타임이 2초 더 긺.
-            else if (distance >= 10f && atkTime >= (attackCool + 2f)) 
+            else if (distance >= 10f && atkTime >= (attackCool + 1f)) 
             {
                 atkTime = 0f;
                 anim.SetTrigger("JumpAttack");
-            }
-            /*
-            else if (distance > 8f && isKick)
-            {
-                StopAllCoroutines();
-                atkTime = 0f;
-                InstanceManager.s_instance.StopAllBossEffect();
-                isAttack = true;
-                Vector3 dir = target.transform.position - this.transform.position;
-                this.transform.rotation = Quaternion.LookRotation(dir.normalized);
-                FreezeEnemy();
-                KickOff();
-                StartCoroutine(RandomAttack(3));
-            }
-            if (JY_CharacterListManager.s_instance.playerList[0].CompareTag("Dead"))
-                {
-                    nav.SetDestination(originPos);
-                    transform.rotation = originRot;
-                    UnfreezeEnemy();
-                    target = null;
-                    StartCoroutine(Targeting());
-
-                    if(target = null)
-                    {
-                        isAwake = false;
-                        if (transform.position == originPos)
-                            anim.SetBool("isWalk", true);
-                        else
-                            anim.SetBool("isWalk", false);
-                    }
-                }*/
+            }                      
         }
     }
 
@@ -269,7 +246,7 @@ public class JY_Boss_FireDungeon : Enemy
             Vector3 reactVec = transform.position - _attacker; // 넉백 거리.
             reactVec = reactVec.normalized;
             reactVec += Vector3.up;
-            StartCoroutine(KnockBack(reactVec * 1.5f));
+            StartCoroutine(KnockBack(reactVec));
         }
         
         photonView.RPC("HitEffect", RpcTarget.All);       
