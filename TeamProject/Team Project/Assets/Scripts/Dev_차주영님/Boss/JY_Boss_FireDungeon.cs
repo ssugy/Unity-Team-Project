@@ -85,8 +85,11 @@ public class JY_Boss_FireDungeon : Enemy
              
         HitPoint = 0f;       
     }
-    private void Start()
-    {                
+    public void Start()
+    {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
         StartCoroutine(Targeting());
     }
 
@@ -269,7 +272,7 @@ public class JY_Boss_FireDungeon : Enemy
             StartCoroutine(KnockBack(reactVec * 1.5f));
         }
         
-        //photonView.RPC("HitEffect", RpcTarget.All);       
+        photonView.RPC("HitEffect", RpcTarget.All);       
     }            
 
     // 보스 무기에 나오는 불덩어리 - 외부에서 참조, 애니매이션 behaviour에서 제어

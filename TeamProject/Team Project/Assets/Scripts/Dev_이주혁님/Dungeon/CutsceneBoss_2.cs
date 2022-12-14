@@ -44,7 +44,7 @@ public class CutsceneBoss_2 : MonoBehaviour
             isPlay = true;
             // 보스 체력을 최대로 회복함. 보스를 행동 불가 상태로 만들고 위치를 초기화.
             boss.isAwake = false;
-            boss.GetComponent<Animator>().Play("Mk_hitfFfront");
+            boss.GetComponent<Animator>().Play("Hit_1");
             // 보스의 공격 스피드를 제어하는 파라미터를 변경.
             boss.GetComponent<Animator>().SetFloat("AttackSpeed", 1.05f);
             boss.CurHealth = boss.maxHealth;
