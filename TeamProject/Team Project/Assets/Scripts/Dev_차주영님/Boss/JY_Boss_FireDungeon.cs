@@ -113,7 +113,11 @@ public class JY_Boss_FireDungeon : Enemy
             Move();
             Rotate();
             Attack();
-        }        
+        }
+        else
+        {
+            anim.SetBool("isWalk", false);
+        }
     }
 
     protected override void Attack()
