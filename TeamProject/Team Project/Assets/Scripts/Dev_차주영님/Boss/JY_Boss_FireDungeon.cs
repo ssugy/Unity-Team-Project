@@ -108,6 +108,7 @@ public class JY_Boss_FireDungeon : Enemy
         if (isDead)
             return;
 
+        // free unfreeze에서만 변경됨.
         if (!isStop)
         {           
             Move();
@@ -116,7 +117,8 @@ public class JY_Boss_FireDungeon : Enemy
         }
         else
         {
-            anim.SetBool("isWalk", false);
+            // isstop이 true인경우 실행 = FreezeEnemy인상태 = idle에서 처리하지 못한 상태 = 스킬을 사용중인상태
+            //anim.SetBool("isWalk", false);
         }
     }
 
