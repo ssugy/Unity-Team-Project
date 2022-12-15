@@ -48,7 +48,7 @@ public class CutsceneBoss_2 : MonoBehaviour
             boss.isAwake = false;
             boss.GetComponent<Animator>().Play("Hit_1");
             // 보스의 공격 스피드를 제어하는 파라미터를 변경.
-            boss.GetComponent<Animator>().SetFloat("AttackSpeed", 1.05f);
+            boss.GetComponent<Animator>().SetFloat("AttackSpeed", 1.1f);
             
             boss.transform.position = new Vector3(48f, 0f, 130f);
             boss.transform.rotation = Quaternion.identity;
