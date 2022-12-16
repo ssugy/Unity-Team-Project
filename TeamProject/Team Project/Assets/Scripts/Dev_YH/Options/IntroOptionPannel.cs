@@ -73,4 +73,11 @@ public class IntroOptionPannel : MonoBehaviour
             }
         }
     }
+
+    public void OnOffFrameCheck()
+    {
+        GameObject pannelObj = GameManager.s_instance.gameObject.transform.GetChild(1).gameObject;
+        pannelObj.SetActive(!pannelObj.activeSelf);
+        pannelObj.transform.GetChild(0).GetComponent<FPSChecker>().StartFPSChecker();
+    }
 }

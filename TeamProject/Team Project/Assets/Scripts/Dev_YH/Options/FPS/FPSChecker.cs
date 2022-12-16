@@ -15,10 +15,12 @@ public class FPSChecker : MonoBehaviour
     private void Start()
     {
         fpsFontSize = fpsFontSize == 0 ? 50 : fpsFontSize;  //지정안하면 50기본으로 
-        StartCoroutine("StartFpsChecker");
+        StartFPSChecker();
         lowFPS = 500; // 0으로 초기화 되어있으면 바뀌지 않아서 임의값 지정.
         currentTime = Time.time;
     }
+
+    public void StartFPSChecker() => StartCoroutine("StartFpsChecker");
 
     float fps;
     float maxFPS;
