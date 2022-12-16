@@ -286,9 +286,8 @@ public class JY_Boss_FireDungeon : Enemy
         anim.SetTrigger("isStun");
         if (partName.Equals("BossSholderHitBox"))        
             photonView.RPC("ShoulderDestruct", RpcTarget.All);
-        
         else        
-            photonView.RPC("CrownrDestruct", RpcTarget.All);
+            photonView.RPC("CrownDestruct", RpcTarget.All);
         
 
         // 부위 파괴가 발생할 때마다 방어력 감소.

@@ -2133,7 +2133,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &714038132
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7135,9 +7135,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90b39bbae2953ec4286dabaf979d9b11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SkillEffectList: []
   PlayerEffectList: []
-  BossSkillEffectList: []
+  BossEffectList: []
   Normal_Attack_Effect: {fileID: 1789270911803724, guid: a14bb74b93db57546ba55237fe1f152c, type: 3}
   Normal_Attack_Effect2: {fileID: 1789270911803724, guid: 710fafb343e06b54ea23701b66ee3b51, type: 3}
   Normal_Attack_Effect3: {fileID: 1942681157837952, guid: b2070fed02193214aaa9d4dbe51748a1, type: 3}
