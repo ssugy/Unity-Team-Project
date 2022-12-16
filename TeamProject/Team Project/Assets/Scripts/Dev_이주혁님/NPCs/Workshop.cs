@@ -150,7 +150,9 @@ public class Workshop : MonoBehaviour
     }
     public void UpdatePanel()
     {
-        infoPanel.SetActive(true);        
+        infoPanel.SetActive(true);
+        interact.interactable = true;
+        infoGold.gameObject.SetActive(true);
 
         Array.ForEach(icons, e => e.gameObject.SetActive(false));
         Array.ForEach(texts, e => e.gameObject.SetActive(false));
@@ -205,7 +207,14 @@ public class Workshop : MonoBehaviour
                     infoName.text = $"+{selectedItem.enhanced} {selectedItem.name}";                    
                     infoType.text = "장비";
                     infoLevel.text = "Lv. " + selectedItem.level.ToString();
-                    infoGold.text = ((selectedItem.enhanced + 2) * 200).ToString();
+
+                    // 강화 단계가 10단계 이상이라면.
+                    if (selectedItem.enhanced >= 10)
+                    {
+                        interact.interactable = false;
+                        infoGold.gameObject.SetActive(false);
+                        break;
+                    }
 
                     // 장비 강화 단계에 따라 다른 강화 재료를 사용.
                     icons[0].sprite = selectedItem.enhanced < 5 ?
@@ -218,6 +227,8 @@ public class Workshop : MonoBehaviour
 
                     icons[0].gameObject.SetActive(true);
                     texts[0].gameObject.SetActive(true);
+
+                    infoGold.text = ((selectedItem.enhanced + 2) * 200).ToString();
                     break;
                 }
             default:
@@ -291,7 +302,54 @@ public class Workshop : MonoBehaviour
     }
     void EnhanceItem()
     {
+        // 필요 강화 재료 이름.
+        string name = string.Empty;
+        // 필요 강화 재료 수량.
+        int ammount = (selectedItem.enhanced + 1) * 2;
+        // 필요 금액.
+        int gold = (selectedItem.enhanced + 2) * 200;
+        // 강화 재료가 충분히 있는지 체크.
+        switch (selectedItem.enhanced)
+        {
+            case int n when n >= 0 && n < 5:
+                {
+                    name = ItemDatabase.s_instance.itemDB[37].name;                    
+                    break;
+                }
+            case int n when n >= 5 && n < 10:
+                {
+                    name = ItemDatabase.s_instance.itemDB[38].name;                    
+                    break;
+                }
+            default:
+                {
+                    Debug.Log("강화 단계 오류");
+                    return;
+                }
+        }
+        if (FindIngredientNum(name) < ammount)
+        {
+            Debug.Log("재료 부족으로 강화 실패");
+            return;
+        }
 
+        // 소지 골드가 부족하지 않은지 체크.
+        if (JY_CharacterListManager.s_instance.playerList[0].playerStat.Gold < gold) 
+        {
+            Debug.Log("소지금 부족으로 강화 실패");
+            return;
+        }
+
+        // 아이템 강화 단계를 올리고 골드와 재료를 소모함.
+        JY_CharacterListManager.s_instance.playerList[0].playerStat.Gold -= gold;
+        goldText.text = JY_CharacterListManager.s_instance.playerList[0].playerStat.Gold.ToString();
+        Item tmp = FindIngredientItem(name);
+        mine.RemoveItem(tmp, ammount);
+        selectedItem.enhanced++;
+        Debug.Log("강화 성공");
+
+        // 패널을 업데이트함. 강화 단계가 10단계 이상이라면 더 이상 강화 불가.
+        UpdatePanel();
     }
 
     // 찾으려는 재료 아이템을 검색하여 개수를 반환함. 이름으로 검색.
@@ -307,6 +365,8 @@ public class Workshop : MonoBehaviour
         }       
         return 0;
     }
+
+    // 인벤토리에서 아이템을 검색함.
     Item FindIngredientItem(string _name)
     {
         mine ??= JY_CharacterListManager.s_instance.invenList[0];
