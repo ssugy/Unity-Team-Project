@@ -22,11 +22,12 @@ public class Item
 {
     // 인벤토리를 세이브 파일에 저장할 때 저장하는 항목들. (나머지 데이터는 DB에서 로드함)
     public Item(ItemType _type = ItemType.NONE, EquipState _state = EquipState.NONE, 
-        string _name = null, int _count = 0, EquipOption _option = null)
+        string _name = null, int _count = 0, int _enhanced = 0, EquipOption _option = null)
     {
         type = _type;
         equipedState = _state;
-        name = _name;        
+        name = _name;
+        enhanced = _enhanced;
         itemCount = _count;        
         option = _option;
     }
@@ -36,6 +37,7 @@ public class Item
     public EquipState equipedState = EquipState.NONE;
     public string name = "null";    
     public int itemCount;
+    public int enhanced;    // 강화 수치.
     public EquipOption option = null;
 
     // 세이브 파일에 저장되지 않는 항목들.
@@ -58,6 +60,7 @@ public class Item
         copied.equipedState = this.equipedState;
         copied.name = this.name;
         copied.itemCount = this.itemCount;
+        copied.enhanced = this.enhanced;
         copied.level = this.level;
         copied.price = this.price;
         copied.explanation = this.explanation;

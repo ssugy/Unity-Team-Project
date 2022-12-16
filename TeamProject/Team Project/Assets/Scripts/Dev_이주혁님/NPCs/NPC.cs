@@ -26,6 +26,8 @@ public class NPC : MonoBehaviour
 
     public GameObject buyButton;
     public GameObject sellButton;
+    public GameObject produceButton;
+    public GameObject enhanceButton;
     public GameObject exitButton;
     public GameObject nextButton;
 
@@ -80,6 +82,8 @@ public class NPC : MonoBehaviour
         exitButton.SetActive(true);
         buyButton.SetActive(true);
         sellButton.SetActive(true);
+        produceButton.SetActive(true);
+        enhanceButton.SetActive(true);
 
         nameText.text = NAME;
         dialogText.text = "어서 오시게. 지금은 마을 일손이 부족해 내가 상인 역할도 맡고 있지.";

@@ -35,8 +35,7 @@ public class InfoPanel : MonoBehaviour
         destroyButton.onClick.RemoveAllListeners();     // 파괴 버튼에 할당된 메소드를 초기화.
         QuickSlot.onClick.RemoveAllListeners();
 
-        icon.sprite = _item.image;                      // 선택된 아이템의 이미지로 아이콘을 교체.
-        nameText.text = _item.name;                     // 선택된 아이템의 이름으로 텍스트를 교체.
+        icon.sprite = _item.image;                      // 선택된 아이템의 이미지로 아이콘을 교체.        
         explanationText.text = _item.explanation;       // 선택된 아이템의 설명으로 텍스트를 교체.
 
         useButton.gameObject.SetActive(true);           // 사용 버튼을 활성화함. (재료 아이템은 사용이 비활성화.)
@@ -47,6 +46,7 @@ public class InfoPanel : MonoBehaviour
         switch (_item.type)                             // 아이템 타입에 따라 다른 기능을 수행.
         {
             case ItemType.EQUIPMENT:
+                nameText.text = $"+ {_item.enhanced} " + _item.name;  
                 typeText.text = "장비";
                 levelText.gameObject.SetActive(true);
                 levelText.text = $"레벨 {_item.level} 이상\n장착 가능";
@@ -66,6 +66,7 @@ public class InfoPanel : MonoBehaviour
                 }
                 break;
             case ItemType.CONSUMABLE:
+                nameText.text = _item.name;
                 levelText.gameObject.SetActive(false);
                 QuickSlot.gameObject.SetActive(true);
                 if (_item.name.Equals(QuickslotScript.EquipItem.name))
@@ -78,6 +79,7 @@ public class InfoPanel : MonoBehaviour
                 useButton.onClick.AddListener(() => JY_CharacterListManager.s_instance.invenList[0].RemoveItem(_item));      // 사용 버튼을 누르면 아이템이 사라짐.
                 break;
             case ItemType.INGREDIENTS:
+                nameText.text = _item.name;
                 levelText.gameObject.SetActive(false);
                 typeText.text = "재료";
                 useButton.gameObject.SetActive(false);
