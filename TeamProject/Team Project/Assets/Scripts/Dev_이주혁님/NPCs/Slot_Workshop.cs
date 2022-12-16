@@ -24,9 +24,10 @@ public class Slot_Workshop : MonoBehaviour
         if (Workshop.workshop != null)
         {
             Workshop.workshop.selectedMethod = method;
+            Workshop.workshop.selectedItem = item;
             if (item != null)
             {
-                Workshop.workshop.selectedItem = item;
+                
             }
             Workshop.workshop.UpdatePanel();
         }               

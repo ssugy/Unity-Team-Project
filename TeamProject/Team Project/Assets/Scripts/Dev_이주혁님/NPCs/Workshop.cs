@@ -112,7 +112,7 @@ public class Workshop : MonoBehaviour
                     Text tmp = interact.GetComponentInChildren<Text>();
                     tmp.text = "제작";
 
-                    // 상점 구매 패널이 열릴 때 첫번째 아이템이 선택된 상태로 시작하게끔 함.
+                    // 아이템 제작 패널이 열릴 때 첫번째 아이템이 선택된 상태로 시작하게끔 함.
                     firstList.OnClick();
                     break;
                 }
@@ -192,7 +192,7 @@ public class Workshop : MonoBehaviour
                     {
                         icons[i].sprite = ItemDatabase.s_instance.itemDB[selectedMethod.index[i]].image;
                         texts[i].text
-                            = FindIngredient(ItemDatabase.s_instance.itemDB[selectedMethod.index[i]].name).ToString()
+                            = FindIngredientNum(ItemDatabase.s_instance.itemDB[selectedMethod.index[i]].name).ToString()
                             + " / " + selectedMethod.ammount[i];
                         icons[i].gameObject.SetActive(true);
                         texts[i].gameObject.SetActive(true);
@@ -202,7 +202,7 @@ public class Workshop : MonoBehaviour
             case WorkshopType.ENHANCE:
                 {
                     infoIcon.sprite = selectedItem.image;
-                    infoName.text = $"+ {selectedItem.enhanced} " + selectedItem.name;                    
+                    infoName.text = $"+{selectedItem.enhanced} {selectedItem.name}";                    
                     infoType.text = "장비";
                     infoLevel.text = "Lv. " + selectedItem.level.ToString();
                     infoGold.text = ((selectedItem.enhanced + 2) * 200).ToString();
@@ -212,8 +212,8 @@ public class Workshop : MonoBehaviour
                         ItemDatabase.s_instance.itemDB[37].image
                         : ItemDatabase.s_instance.itemDB[38].image;
                     texts[0].text = selectedItem.enhanced < 5 ?
-                            FindIngredient(ItemDatabase.s_instance.itemDB[37].name).ToString()
-                            : FindIngredient(ItemDatabase.s_instance.itemDB[38].name).ToString();
+                            FindIngredientNum(ItemDatabase.s_instance.itemDB[37].name).ToString()
+                            : FindIngredientNum(ItemDatabase.s_instance.itemDB[38].name).ToString();
                     texts[0].text += " / " + ((selectedItem.enhanced + 1) * 2).ToString();
 
                     icons[0].gameObject.SetActive(true);
@@ -250,7 +250,44 @@ public class Workshop : MonoBehaviour
     }
     void ProduceItem()
     {
+        // 재료를 다 갖고 있는지 체크.
+        for (int i = 0; i < selectedMethod.index.Length; i++)
+        {
+            string name = ItemDatabase.s_instance.itemDB[selectedMethod.index[i]].name;
+            if (FindIngredientNum(name) < selectedMethod.ammount[i])
+            {
+                Debug.Log("재료 부족으로 제작 실패");
+                return;
+            }               
+        }
 
+        // 소지 골드가 부족하지 않은지 체크.
+        if (JY_CharacterListManager.s_instance.playerList[0].playerStat.Gold < selectedMethod.gold) 
+        {
+            Debug.Log("소지금 부족으로 제작 실패");
+            return;
+        }
+
+        Item item = ItemDatabase.s_instance.itemDB[selectedMethod.objective].Copy();
+        // 아이템 추가에 성공했으면 (플레이어의 인벤토리가 가득 차지 않았다면)
+        // 아이템 제작으로 얻는 장비는 추가옵션이 붙은 상태로 획득됨.
+        if (mine.AddItem(item, true)) 
+        {
+            Debug.Log("제작 성공");
+            JY_CharacterListManager.s_instance.playerList[0].playerStat.Gold -= selectedMethod.gold;
+            goldText.text = JY_CharacterListManager.s_instance.playerList[0].playerStat.Gold.ToString();
+
+            for (int i = 0; i < selectedMethod.index.Length; i++)
+            {
+                string name = ItemDatabase.s_instance.itemDB[selectedMethod.index[i]].name;
+                Item tmp = FindIngredientItem(name);
+                mine.RemoveItem(tmp, selectedMethod.ammount[i]);
+            }
+            UpdatePanel();
+            return;
+        }
+        else
+            Debug.Log("인벤토리가 가득 차 제작 실패");
     }
     void EnhanceItem()
     {
@@ -258,7 +295,7 @@ public class Workshop : MonoBehaviour
     }
 
     // 찾으려는 재료 아이템을 검색하여 개수를 반환함. 이름으로 검색.
-    int FindIngredient(string _name)
+    int FindIngredientNum(string _name)
     {
         mine ??= JY_CharacterListManager.s_instance.invenList[0];
         foreach(var item in mine.items)
@@ -267,8 +304,19 @@ public class Workshop : MonoBehaviour
             {
                 return item.itemCount;
             }
-        }        
-
+        }       
         return 0;
+    }
+    Item FindIngredientItem(string _name)
+    {
+        mine ??= JY_CharacterListManager.s_instance.invenList[0];
+        foreach (var item in mine.items)
+        {
+            if (item.name.Equals(_name))
+            {
+                return item;
+            }
+        }
+        return null;
     }
 }

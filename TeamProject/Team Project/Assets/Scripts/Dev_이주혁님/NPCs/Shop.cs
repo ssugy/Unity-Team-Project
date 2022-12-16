@@ -79,6 +79,7 @@ public class Shop : MonoBehaviour
                 {
                     title_Buy.SetActive(true);
 
+                    mine ??= JY_CharacterListManager.s_instance.invenList[0];
                     for (int i = 0; i < slots.Length; i++)
                     {
                         if (i == sellList.Length)
@@ -183,13 +184,13 @@ public class Shop : MonoBehaviour
         // 플레이어의 소지금이 아이템 가격보다 적은 지 체크. 소지금이 적다면 리턴.
         if (JY_CharacterListManager.s_instance.playerList[0].playerStat.Gold < selected.price)
         {
-            Debug.Log("구매 실패");
+            Debug.Log("소지금 부족으로 구매 실패");
             return;
         }
             
 
         // 아이템 추가에 성공했으면 (플레이어의 인벤토리가 가득 차지 않았다면)
-        if (JY_CharacterListManager.s_instance.invenList[0].AddItem(selected, false))
+        if (mine.AddItem(selected, false))
         {
             Debug.Log("구매 성공");
             JY_CharacterListManager.s_instance.playerList[0].playerStat.Gold -= selected.price;

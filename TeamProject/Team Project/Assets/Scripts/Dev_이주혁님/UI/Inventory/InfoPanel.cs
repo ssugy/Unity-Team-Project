@@ -46,7 +46,7 @@ public class InfoPanel : MonoBehaviour
         switch (_item.type)                             // 아이템 타입에 따라 다른 기능을 수행.
         {
             case ItemType.EQUIPMENT:
-                nameText.text = $"+ {_item.enhanced} " + _item.name;  
+                nameText.text = $"+{_item.enhanced} {_item.name}";  
                 typeText.text = "장비";
                 levelText.gameObject.SetActive(true);
                 levelText.text = $"레벨 {_item.level} 이상\n장착 가능";

@@ -145,23 +145,37 @@ public class Inventory : MonoBehaviour
     }
 
     // 아이템을 인벤토리에서 삭제하는 코드. 삭제한 후에 인벤토리 UI를 갱신함.
-    public void RemoveItem(Item _item)
+    public bool RemoveItem(Item _item, int _num = 1)
     {
-        if ((int)_item.type >= 2)
+        // 삭제하려는 개수보다 소지 아이템 개수가 적다면 삭제 불가.
+        if (_item.itemCount < _num)
+            return false;
+
+        switch (_item.type)
         {
-            _item.itemCount--;
-            if (_item.itemCount <= 0)
-            {
-                items.Remove(_item);                
-            }
-        }
-        else
-        {
-            items.Remove(_item);
-        }
+            case ItemType.CONSUMABLE:
+            case ItemType.INGREDIENTS:
+                {
+                    _item.itemCount -= _num;
+                    if (_item.itemCount <= 0)                    
+                        items.Remove(_item);
+                    break;
+                }
+            case ItemType.EQUIPMENT:
+                {
+                    items.Remove(_item);
+                    break;
+                }
+            default:
+                {
+                    Debug.Log("아이템 타입 에러");
+                    return false;
+                }
+        }        
 
         if (onChangeItem != null)
             onChangeItem();
+        return true;
     }
 
     // 필드에 있는 아이템과 골드를 줍는 코드.
