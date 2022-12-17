@@ -296,11 +296,19 @@ public class Enemy : MonoBehaviourPun, IPunObservable
 
 
     // 애니메이션 이벤트 함수들.
-    protected void FreezeEnemy() => isStop = true;               
-    protected void UnfreezeEnemy() => isStop = false;
+    protected void FreezeEnemy()
+    {
+        nav.isStopped = true;
+        isStop = true; 
+    }
+    protected void UnfreezeEnemy()
+    {
+        nav.isStopped = false;
+        isStop = false;
+    }
 
-    // 몬스터가 타겟을 바라봄.  
-    protected void LookTarget()
+        // 몬스터가 타겟을 바라봄.  
+        protected void LookTarget()
     {
         if (target != null)        
             transform.LookAt(target, Vector3.up);        
