@@ -3483,7 +3483,6 @@ GameObject:
   m_Component:
   - component: {fileID: 187457977}
   - component: {fileID: 187457976}
-  - component: {fileID: 187457975}
   m_Layer: 0
   m_Name: QuestManager
   m_TagString: Untagged
@@ -3491,18 +3490,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &187457975
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 187457974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff98f05fa7b3bf944929a0c7089e44e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &187457976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3515,6 +3502,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d7fd4513d00ed84fa152f468b9d5b93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  QuestData_1: {fileID: 11400000, guid: 93b6d68f6f153d14cbc323ad7af22f5d, type: 2}
+  QuestData_2: {fileID: 11400000, guid: b014373390066eb4db841c20360f3884, type: 2}
   dialogButton: {fileID: 6448476278223814797}
   dialogUI: {fileID: 1585740664}
   dialogCam: {fileID: 2051922326}

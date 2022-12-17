@@ -10,7 +10,11 @@ public class JY_QuestManager : MonoBehaviour
     public static JY_QuestManager instance;
     public static JY_QuestManager s_instance { get { return instance; } }
     
-    public Dictionary<int, Dictionary<int, string>> QuestData;
+    Dictionary<int, Dictionary<int, string>> questData;
+    public Dictionary<int, Dictionary<int, string>> QuestData { get { return questData; } }
+    public JY_QuestData QuestData_1;
+    public JY_QuestData QuestData_2;
+
     public GameObject dialogButton;
     public GameObject dialogUI;
     public Camera dialogCam;
@@ -33,9 +37,9 @@ public class JY_QuestManager : MonoBehaviour
         if(instance == null)
             instance = this;
 
-        QuestData = new Dictionary<int, Dictionary<int, string>>();
-        JY_QuestData dataCompo = GetComponent<JY_QuestData>();
-        dataCompo.questDataLoad(QuestData);
+        questData = new Dictionary<int, Dictionary<int, string>>();
+        questDataLoad(0,QuestData_1);
+        questDataLoad(1,QuestData_2);
         if (JY_CharacterListManager.s_instance != null)
         {
             selectNum = JY_CharacterListManager.s_instance.selectNum;
@@ -128,5 +132,22 @@ public class JY_QuestManager : MonoBehaviour
         }
         dialogUI.SetActive(false);
         dialogScript.quitNpcDialog();
+    }
+    public void questDataLoad(int _QuestNum,JY_QuestData _QuestData)
+    {
+        Dictionary<int, string> _questData = new Dictionary<int, string>();
+        _questData.Add(0, _QuestData.QUESTNAME);
+        _questData.Add(1, _QuestData.QUESTCONTENT);
+        _questData.Add(2, _QuestData.QUESTNPC);
+        _questData.Add(3, _QuestData.QUESTTARGET);
+        _questData.Add(4, _QuestData.QUESTGOAL.ToString());
+        _questData.Add(5, _QuestData.QUESTDIALOG_1);
+        _questData.Add(6, _QuestData.QUESTDIALOG_2);
+        _questData.Add(7, _QuestData.QUESTDIALOG_REWARD);
+        _questData.Add(8, _QuestData.QUESTDIALOG_3);
+        _questData.Add(9, _QuestData.QUESTDIALOG_4);
+        _questData.Add(10, _QuestData.QUESTDIALOG_5);
+
+        questData.Add(_QuestNum, _questData);
     }
 }
