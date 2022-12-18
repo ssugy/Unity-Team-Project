@@ -43,14 +43,11 @@ public class MainCamController : MonoBehaviour
         camAxis.position = player.position;        
         Vector3 dir = Vector3.Normalize(transform.position - (player.position + new Vector3(0, 0.9f, 0)));
         RaycastHit hitInfo;
-        if (Physics.Raycast(player.position + new Vector3(0, 0.9f, 0), dir, out hitInfo, 6.2f, layerMask)) 
-        {
-            transform.position = hitInfo.point;
-        }
-        else
-        {
-            transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(0f, 1.6f, -6f), Time.deltaTime*2);
-        }
+        if (Physics.Raycast(player.position + new Vector3(0, 0.9f, 0), dir, out hitInfo, 6.2f, layerMask))         
+            transform.position = hitInfo.point;        
+        else        
+            transform.localPosition 
+                = Vector3.Lerp(transform.localPosition, new Vector3(0f, 1.6f, -6f), Time.deltaTime*2);        
     }
         
     void FixedUpdate()

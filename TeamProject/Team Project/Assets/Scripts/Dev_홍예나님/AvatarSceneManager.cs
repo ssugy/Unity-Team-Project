@@ -2,19 +2,14 @@ using CartoonHeroes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-//using static CartoonHeroes.SetCharacter;
 using static GameManager;
-//using Unity.VisualScripting;
-
 
 public class AvatarSceneManager : MonoBehaviour
 {
     private enum Steps { SELECT_JOB, SELECT_BODY, SELECT_NAME, SAVE }
-    private enum MoreOptions { FACE, HAIR, TORSO, LEGS, LAST }
+    private enum MoreOptions { FACE, HAIR, TORSO, LEGS }
     
     const int MIN_NAME_LENGTH = 2;
 
@@ -52,14 +47,15 @@ public class AvatarSceneManager : MonoBehaviour
 
     // 각 Item Group별로 Option(n개)값을 저장하기 위한 변수가 필요합니다
     private List<float> currentBlendOption;
-    private List<float> faceOptions = new List<float>();     // head용 옵션들
-    private List<float> hairOptions = new List<float>();     // hair용 옵션들    
-    private List<float> torsoOptions = new List<float>();    // torso용 옵션들
-    private List<float> legOptions = new List<float>();      // Leg용 옵션들
+    private List<float> faceOptions = new ();     // head용 옵션들
+    private List<float> hairOptions = new ();     // hair용 옵션들    
+    private List<float> torsoOptions = new ();    // torso용 옵션들
+    private List<float> legOptions = new ();      // Leg용 옵션들
     private SkinnedMeshRenderer currentSkinnedMesh = null;
 
-    // 씬을 빠져나갈 때, 타임 스케일을 원래대로.
+    // 씬을 빠져나갈 때, 일시정지된 타임 스케일을 원래대로.
     private void OnDisable() => Time.timeScale = 1f;    
+
     void Start()
     {
 #if UNITY_EDITOR
@@ -73,13 +69,14 @@ public class AvatarSceneManager : MonoBehaviour
 
         // 1. Item group(4개) 별로 MapOptionNames Dictionary를 초기화 합니다. 
         optionSubs = new List<int>();
-        for (int i = 0; i < (int)MoreOptions.LAST; i++)
+        for (int i = 0; i <= (int)MoreOptions.LEGS; i++)
         {
             optionSubs.Add(0);
         }
         mapOptionNames = new Dictionary<string, int>();
+
         // 2. Item Group 별로 setting가능한 blendOption 값(n개)의 갯수를 초기화 합니다.
-        for (int i = 0; i < (int)MoreOptions.LAST; i++)
+        for (int i = 0; i <= (int)MoreOptions.LEGS; i++)
         {
             List<float> blendOption;
             switch ((MoreOptions)i)
@@ -105,10 +102,10 @@ public class AvatarSceneManager : MonoBehaviour
 
         gender = EGender.MALE;
         job = EJob.WARRIOR;
+
         ShowCharacter();
         //첫번째 버튼을 누른것으로 간주함
         ShowOption(0);
-
     }
 
     // key-value 검색을 위한 Dictionary의 초기화, 즉 option 목록을 만든다.
@@ -176,7 +173,8 @@ public class AvatarSceneManager : MonoBehaviour
             ShowCanvas();
         }
         // 이름 글자수가 최소 글자보다 작으면 return.
-        else if (currentStep == Steps.SELECT_NAME && CharacterNameInput.text.Length < MIN_NAME_LENGTH)
+        else if (currentStep == Steps.SELECT_NAME 
+            && CharacterNameInput.text.Length < MIN_NAME_LENGTH)
         {
             nameIssueText.text = "이름이 너무 짧습니다.\r\n다른 이름을 입력하세요.";
             popupNameIssue.SetActive(true);
@@ -186,18 +184,20 @@ public class AvatarSceneManager : MonoBehaviour
         {            
             if (JY_CharacterListManager.s_instance != null)
             {
-                //빈슬롯 찾은 후 작성 및 break
+                // 세이브 파일에서 빈 슬롯을 찾은 후 작성.
                 for (int i = 0; i < 4; i++)
                 {
                     if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].isNull == true)
                     {
-                        if (CharacterNameInput!=null)
+                        if (CharacterNameInput != null)
                         {
                             //스테이터스 작성
                             InfoData tmp = JY_CharacterListManager.s_instance.jInfoData.infoDataList[i];
                             tmp.name = CharacterNameInput.text;
                             tmp.isNull = false;
                             tmp.level = 1;
+
+                            // 플레이어가 선택한 직업과 성별을 세이브 파일에 작성.
                             tmp.job = job;                            
                             tmp.gender = gender;     
                             
@@ -207,7 +207,7 @@ public class AvatarSceneManager : MonoBehaviour
                             tmp.characterAvatar[2] = optionSubs[2];
                             tmp.characterAvatar[3] = optionSubs[3];
 
-                            // 아이템 작성                            
+                            // 직업에 따른 초기 소지 장비와 초기 스탯 작성                            
                             switch (job)
                             {
                                 case EJob.WARRIOR:
@@ -224,7 +224,7 @@ public class AvatarSceneManager : MonoBehaviour
                                         tmp.itemList.Add(new(ItemType.EQUIPMENT, EquipState.EQUIPED, "우든 스태프", 1));
                                         break;
                                     }
-                            }           // 무기
+                            }           // 무기, 스탯
                             switch (optionSubs[1]) 
                             {
                                 case 1:
@@ -263,11 +263,13 @@ public class AvatarSceneManager : MonoBehaviour
                                     }
                                 default: break;
                             } // 하의
+
+                            // 세이브 파일 저장.
                             JY_CharacterListManager.s_instance.jInfoData.infoDataList[i] = tmp;
                             break;
                         }
                     }
-                    // 같은 이름이 있으면 리턴.
+                    // 세이브 파일에 저장된 캐릭터 중 같은 이름이 있으면 리턴.
                     else if (JY_CharacterListManager.s_instance.jInfoData.infoDataList[i].name.Equals(CharacterNameInput.text))
                     {
                         nameIssueText.text = "중복된 이름이 존재합니다.\r\n다른 이름을 입력하세요.";
@@ -296,7 +298,7 @@ public class AvatarSceneManager : MonoBehaviour
         gender = EGender.FEMALE;
         ShowCharacter();
         ShowOption(0);
-        sliders.ForEach(e => { if (e.transform.parent.parent.parent.parent.gameObject.activeSelf) e.value -= 0.01f; });
+        sliders.ForEach(e => e.value -= 0.01f);        
     }
 
     public void OnClickMale()
@@ -304,28 +306,34 @@ public class AvatarSceneManager : MonoBehaviour
         gender = EGender.MALE;
         ShowCharacter();
         ShowOption(0);
-        sliders.ForEach(e => { if (e.transform.parent.parent.parent.parent.gameObject.activeSelf) e.value -= 0.01f; });
+        sliders.ForEach(e => e.value -= 0.01f);        
     }
 
     public void OnClickWarrior()
     {
         job = EJob.WARRIOR;
+
         warriorInfo.SetActive(true);
         magicianInfo.SetActive(false);
+
         for (int i = 0; i < fRWeapon.childCount; i++)
             Destroy(fRWeapon.GetChild(i).gameObject);
         for (int i = 0; i < fLWeapon.childCount; i++)
             Destroy(fLWeapon.GetChild(i).gameObject);
+
         for (int i = 0; i < mRWeapon.childCount; i++)
             Destroy(mRWeapon.GetChild(i).gameObject);
         for (int i = 0; i < mLWeapon.childCount; i++)
             Destroy(mLWeapon.GetChild(i).gameObject);
+
         GameObject weaponSrc = Resources.Load<GameObject>("Item/Weapon/Sword_1");
         GameObject shieldSrc = Resources.Load<GameObject>("Item/Shield/Shield_1");
+
         if (weaponSrc != null)
             Instantiate(weaponSrc, fRWeapon);
         if (shieldSrc != null)
-            Instantiate(shieldSrc, fLWeapon);               
+            Instantiate(shieldSrc, fLWeapon);   
+        
         if (weaponSrc != null)
             Instantiate(weaponSrc, mRWeapon);
         if (shieldSrc != null)
@@ -334,22 +342,28 @@ public class AvatarSceneManager : MonoBehaviour
     public void OnClickMagician()
     {
         job = EJob.MAGICIAN;
+
         warriorInfo.SetActive(false);
         magicianInfo.SetActive(true);
+
         for (int i = 0; i < fRWeapon.childCount; i++)
             Destroy(fRWeapon.GetChild(i).gameObject);
         for (int i = 0; i < fLWeapon.childCount; i++)
             Destroy(fLWeapon.GetChild(i).gameObject);
+
         for (int i = 0; i < mRWeapon.childCount; i++)
             Destroy(mRWeapon.GetChild(i).gameObject);
         for (int i = 0; i < mLWeapon.childCount; i++)
             Destroy(mLWeapon.GetChild(i).gameObject);
+
         GameObject weaponSrc = Resources.Load<GameObject>("Item/Weapon/Dagger_1");
         GameObject shieldSrc = Resources.Load<GameObject>("Item/Shield/Staff_1");
+
         if (weaponSrc != null)
             Instantiate(weaponSrc, fRWeapon);
         if (shieldSrc != null)
-            Instantiate(shieldSrc, fLWeapon);                
+            Instantiate(shieldSrc, fLWeapon);       
+        
         if (weaponSrc != null)
             Instantiate(weaponSrc, mRWeapon);
         if (shieldSrc != null)
@@ -474,33 +488,22 @@ public class AvatarSceneManager : MonoBehaviour
             GameObject addedObj = targetScript.AddItem(targetScript.itemGroups[i], optionSubs[i]);
             currentSkinnedMesh = GetSkinnedMesh();
         }
-        sliders.ForEach(e => { if (e.transform.parent.parent.parent.parent.gameObject.activeSelf) e.value -= 0.01f; });
+        sliders.ForEach(e => e.value -= 0.01f);
     }
     private void OnChangeSlide(int index, float val)
     {
         if (index >= currentBlendOption.Count)
-        {
             return;
-        }
+
         currentBlendOption[index] = val;
-        if (currentSkinnedMesh != null)
-        {
-            if (currentSkinnedMesh.sharedMesh.blendShapeCount > index)
-            {
-                currentSkinnedMesh.SetBlendShapeWeight(index, val);
-            }
-        }
+        if (currentSkinnedMesh != null && currentSkinnedMesh.sharedMesh.blendShapeCount > index)
+            currentSkinnedMesh.SetBlendShapeWeight(index, val);                       
     }
 
-    public void OnChangeSlide1(float val) => OnChangeSlide(0, val);    
-
+    public void OnChangeSlide1(float val) => OnChangeSlide(0, val);   
     public void OnChangeSlide2(float val) => OnChangeSlide(1, val);
-
     public void OnChangeSlide3(float val) => OnChangeSlide(2, val);
-
     public void OnChangeSlide4(float val) => OnChangeSlide(3, val);
-
     public void OnChangeSlide5(float val) => OnChangeSlide(4, val);
-
     public void OnChangeSlide6(float val) => OnChangeSlide(5, val);    
 }

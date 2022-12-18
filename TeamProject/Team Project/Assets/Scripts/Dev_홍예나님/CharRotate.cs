@@ -2,9 +2,6 @@ using CartoonHeroes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using System;
 
 public class CharRotate : MonoBehaviour
 {
@@ -30,6 +27,8 @@ public class CharRotate : MonoBehaviour
         tmp.y = moveY;
         transform.position = tmp;
     }
+
+    // 카메라 줌인/아웃.
     void Zoom()
     {
         float scale = (dragOn.currentDist - dragOn.initialDist) / 1000f;
@@ -44,7 +43,7 @@ public class CharRotate : MonoBehaviour
         else if (dragOn.touch.Count == 2) Zoom();
     }
 
-    // PC에서의 줌 기능은 플레이어 오브젝트를 이동함으로써 구현. (스케일 변경이 아님.)
+    // PC에서의 줌 기능은 플레이어 오브젝트를 카메라에 가깝게/멀게 이동함으로써 구현. (오브젝트 스케일 변경이 아님.)
     public void SetCharacterZoom(float _scale)
     {
         // 최소 최대 스케일을 지정.

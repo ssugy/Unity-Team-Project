@@ -47,74 +47,16 @@ public class Inventory : MonoBehaviour
 
         if (onChangeItem != null)
             onChangeItem();
-    }
-    /*
-    //디버그 전용 나중에 지우면 됨.
-#if UNITY_EDITOR
-    private void Update()
-    {
-        bool isSave = false;
-        // 살라만드라 불덩이
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            AddItem(ItemDatabase.s_instance.itemDB[20].Copy(), 20);
-            isSave = true;
-        }
-        // 소형 포션
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            AddItem(ItemDatabase.s_instance.itemDB[16].Copy(), 16);
-            isSave = true;
-        }
-        // 원형 방패
-        if (Input.GetKeyDown(KeyCode.F3))
-        {
-            AddItem(ItemDatabase.s_instance.itemDB[14].Copy(), 14);
-            isSave = true;
-        }
-        // 널빤지 방패
-        if (Input.GetKeyDown(KeyCode.F4))
-        {
-            AddItem(ItemDatabase.s_instance.itemDB[15].Copy(), 15);
-            isSave = true;
-        }
-        // 철제 도끼
-        if (Input.GetKeyDown(KeyCode.F5))
-        {
-            AddItem(ItemDatabase.s_instance.itemDB[0].Copy(), 0);
-            isSave = true;
-        }
-        // 가벼운 갑옷
-        if (Input.GetKeyDown(KeyCode.F6))
-        {
-            AddItem(ItemDatabase.s_instance.itemDB[23].Copy(), 23);
-            isSave = true;
-        }
-        // 경갑 하의
-        if (Input.GetKeyDown(KeyCode.F7))
-        {
-            AddItem(ItemDatabase.s_instance.itemDB[26].Copy(), 26);
-            isSave = true;
-        }
-        if(isSave)
-        {
-            Player player = JY_CharacterListManager.s_instance.playerList[0];
-            player.SaveData();
-            JY_CharacterListManager.s_instance.Save();
-        }
-    }
-#endif
-    */
+    }    
 
     // 아이템을 인벤토리에 추가하는 코드. 인벤토리가 가득 찼다면 아이템 획득 불가.
     // 아이템을 추가하는 데에 성공했다면 true 반환 후 인벤토리 UI를 갱신함.
     public bool AddItem(Item _item, bool _setOption = true)
     {        
-        // 추가되는 아이템이 이미 인벤토리에 존재하는 소비, 재료 아이템인 경우. (아이템이 겹쳐짐)
+        // 추가되는 아이템이 이미 인벤토리에 존재하는 소비, 재료 아이템인 경우. (소비/재료 아이템은 겹쳐짐)
         if ((int)_item.type >= 2)
         {
-            //먼저 동일한 아이템이 있는지 찾아야 한다.
-            // itemMap 대신 이름으로 검색하도록 함. (효율적이진 않지만 오류가 발생하지 않음)
+            //먼저 동일한 아이템이 있는지 검색     
             foreach (var item in items) 
             {
                 if (item.name.Equals(_item.name))
@@ -132,7 +74,7 @@ public class Inventory : MonoBehaviour
         {
             _item.itemCount = 1;            
             items.Add(_item);
-            // 해당 아이템의 Option을 지정한다. 몬스터에게 드랍된 아이템만 옵션 지정.
+            // 해당 아이템의 추가 옵션을 생성한다. 몬스터에게 드랍되거나, 제작된 장비 아이템에만 추가 옵션 지정.
             if(_setOption)
                 _item.SetOption();
             if (onChangeItem != null)

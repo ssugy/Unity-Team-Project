@@ -21,8 +21,7 @@ public class JY_AvatarLoad : MonoBehaviour
     public Inventory inven;
     
     void Awake()
-    {
-        // 같은 오브젝트를 사용하는 캐릭터리스트매니저에서 싱글톤을 사용 중이므로 DontDestroyOnLoad를 할 필요 없음.
+    {        
         instance = this;
         inven = GetComponent<Inventory>();
     }
@@ -95,8 +94,6 @@ public class JY_AvatarLoad : MonoBehaviour
         }
         LobbyDummyClear(listNum);
     }
-
-
 
     // 원래 들고 있는 무기와 방패를 삭제함.
     public void LobbyDummyClear(int listNum)

@@ -39,6 +39,7 @@ public class LobbyUI : MonoBehaviour
         //소스이미지 로드
         sourceImg_R = Resources.Load<Sprite>("UI_Change/Button Background/Background_r_red");
         sourceImg_B = Resources.Load<Sprite>("UI_Change/Button Background/Background_r_grey");
+
         warriorM = Resources.Load<Sprite>("UI_Change/Portrait/m_warrior");
         warriorF = Resources.Load<Sprite>("UI_Change/Portrait/f_warrior");
         magicianM = Resources.Load<Sprite>("UI_Change/Portrait/m_magician");
@@ -172,7 +173,7 @@ public class LobbyUI : MonoBehaviour
 
     private void SelectCharacter(int _num)
     {
-        //선택 취소 구현
+        // 이미 선택한 캐릭터를 다시 클릭했을 때, 선택 취소 구현
         if (JY_CharacterListManager.s_instance.selectNum == _num)
         {
             JY_CharacterListManager.s_instance.selectNum = -1;
@@ -181,11 +182,12 @@ public class LobbyUI : MonoBehaviour
             PanelSwitch();
             return;
         }
+
         JY_CharacterListManager.s_instance.selectNum = _num;            
         JY_AvatarLoad.s_instance.LoadModelData(_num);        // 선택한 성별 캐릭터 활성화. inventory onenable
+
         // 선택한 캐릭터의 인벤토리를 카피해옴.
-        JY_CharacterListManager.s_instance.CopyInventoryDataToScript(JY_AvatarLoad.s_instance.inven.items);
-        //JY_CharacterListManager.s_instance.CopyInventoryDataToScript(JY_CharacterListManager.s_instance.jInfoData.infoDataList[_num].itemList);
+        JY_CharacterListManager.s_instance.CopyInventoryDataToScript(JY_AvatarLoad.s_instance.inven.items);        
         JY_AvatarLoad.s_instance.inven.items.ForEach(e =>
         {
             if (e.equipedState.Equals(EquipState.EQUIPED))
