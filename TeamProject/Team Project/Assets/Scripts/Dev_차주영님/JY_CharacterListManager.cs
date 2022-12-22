@@ -122,8 +122,6 @@ public class JY_CharacterListManager : MonoBehaviour
 
         // 세이브 파일이 존재하지 않으면 세이브 파일을 생성.
         FileInfo file_Info = new(infoPath);
-
-        
         if (!file_Info.Exists ) 
             InitializeSaveFile();
 
@@ -137,9 +135,7 @@ public class JY_CharacterListManager : MonoBehaviour
             foreach (var item in info.itemList)
             {
                 if (item.option != null)
-                {
                     item.option.MakeDictionary();
-                }
             }
         }
     }
@@ -178,17 +174,24 @@ public class JY_CharacterListManager : MonoBehaviour
         Save();
     }
 
-    // 인벤토리 데이터를 jinfo로 카피.
+    /// <summary>
+    /// 플레이어의 인벤토리에 있는 데이터를 Save하는 함수
+    /// </summary>
+    /// <param name="_source">현재 플레이어의 인벤토리</param>
+    /// <param name="_destination">Save파일에 저장 될 인벤토리</param>
     public static void CopyInventoryData(List<Item> _source, List<Item> _destination)
     {
         _destination.Clear();
         _source.ForEach(e => { _destination.Add(new(e.type, e.equipedState, e.name, e.itemCount, e.enhanced, e.option)); });
     }
 
-    // 세이브 파일로부터 인벤토리를 카피함.
+    /// <summary>
+    /// Save에 저장된 데이터를 인벤토리 데이터로 Load함
+    /// </summary>
+    /// <param name="target">플레이어의 인벤토리정보</param>
     public void CopyInventoryDataToScript(List<Item> target)
     {
-        // target이 null이면 new List를 만들어서 target에 대입. null이 아니면 Clear.
+        // target이 null이면 new List를 만들어서 target에 대입. null이 아닌 경우에도 Clear처리
         (target ??= new()).Clear();  
         foreach(var e in jInfoData.infoDataList[selectNum].itemList)
         {

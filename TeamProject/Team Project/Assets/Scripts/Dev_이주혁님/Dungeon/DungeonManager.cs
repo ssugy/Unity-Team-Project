@@ -40,16 +40,25 @@ public class DungeonManager : MonoBehaviour
         else
             return 1f / 2f;
     }
-    public void DungeonProgress(int num)
+
+    /// <summary>
+    /// 던전 진행상태를 최신화하는 함수
+    /// </summary>
+    /// <param name="step">던전 진행 단계</param>
+    public void DungeonProgress(int step)
     {
-        dungeonExplanation.text = explanationList[num];
-        dungeonProgress.fillAmount = progressAmount * num;
-        NowProgress = num;
+        dungeonExplanation.text = explanationList[step];
+        dungeonProgress.fillAmount = progressAmount * step;
+        NowProgress = step;
     }
 
-    public void SetDungeonGuide(int num)
+    /// <summary>
+    /// 던전 진행 포인터의 타겟 변경 함수
+    /// </summary>
+    /// <param name="step">던전 진행 단계</param>
+    public void SetDungeonGuide(int step)
     {
-        switch (num)
+        switch (step)
         {
             case 1:
                 guide.TARGET = guide.target_2;

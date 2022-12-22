@@ -34,7 +34,7 @@ public class Enemy : MonoBehaviourPun, IPunObservable
             }            
         }                
     }
-    
+
     public float defMag;              // 방어율.
     public int atkPoint;              // 몬스터의 공격력.
     public float atkMag;              // 몬스터의 공격 배율.
@@ -187,29 +187,35 @@ public class Enemy : MonoBehaviourPun, IPunObservable
             }
         }        
     }
-    // 0.5초 간격으로 전방에 플레이어가 있으면 타겟으로 설정함.    
+
+    /// <summary>
+    /// 타겟팅 시스템. 0.5초단위로 체크를 진행하며, SphereCastAll함수를 이용해서 범위안의 타겟을 확인합니다.
+    /// </summary>
+    /// <returns></returns>
     protected IEnumerator Targeting()
     {
-        yield return new WaitForSeconds(0.5f);
-        RaycastHit[] rayHits =
-            Physics.SphereCastAll(transform.position,
-                                  targetRadius,
-                                  transform.forward,
-                                  targetRange,
-                                  LayerMask.GetMask("Player"));
-        if (rayHits.Length > 0)
+        while (true)
         {
-            target = rayHits[0].transform;
-            atkTime = 1.5f;
-            yield break;
+            yield return new WaitForSeconds(0.5f);
+            RaycastHit[] rayHits =
+                Physics.SphereCastAll(transform.position,
+                                      targetRadius,
+                                      transform.forward,
+                                      targetRange,
+                                      LayerMask.GetMask("Player"));
+            if (rayHits.Length > 0)
+            {
+                target = rayHits[0].transform;
+                atkTime = 1.5f;
+                yield break;
+            }
         }
-        StartCoroutine(Targeting());
     }
     protected IEnumerator ReTargeting(float _time)
     {
         yield return new WaitForSeconds(_time);
         StartCoroutine(Targeting());
-    }   
+    }
 
     protected void OnTriggerEnter(Collider other)
     {
@@ -233,6 +239,11 @@ public class Enemy : MonoBehaviourPun, IPunObservable
         }
     }
 
+    /// <summary>
+    /// PunRPC 속성을 사용하게 되면, 몬스터 객체 간 원격 프로시저를 호출하게 된다.(동기화)
+    /// </summary>
+    /// <param name="_damage">받는 데미지량</param>
+    /// <param name="_attacker">공격을 가한 객체의 월드 위치</param>
     [PunRPC]
     public virtual void OnDamage(int _damage, Vector3 _attacker)
     {
@@ -248,16 +259,15 @@ public class Enemy : MonoBehaviourPun, IPunObservable
         reactVec = reactVec.normalized;
         reactVec += Vector3.up;
         StartCoroutine(KnockBack(reactVec));
-        //rigid.AddForce(reactVec * 10, ForceMode.Impulse);
 
-        // 피격에 따른 이펙트 출력과 UI 활성화는 모든 클라이언트에게.
+        // 피격에 따른 이펙트 출력과 UI 활성화는 모든 클라이언트에게 명령 실행
         photonView.RPC("HitEffect", RpcTarget.All);        
     }    
     
     [PunRPC]
     public virtual void HitEffect()
     {
-        hpbar = Enemy_HP_UI.GetObject();
+        hpbar = Enemy_HP_UI.instance.GetObject();
         hpbar.Recognize(this);
         EffectManager.Instance.PlayHitEffect(transform.position + offset, transform.rotation, transform);
     }
@@ -285,7 +295,6 @@ public class Enemy : MonoBehaviourPun, IPunObservable
                 FieldItem tmp = Instantiate(fieldItem, transform.position, Quaternion.identity).GetComponent<FieldItem>();                
                 tmp.item = ItemDatabase.s_instance.itemDB[dropItem[i]].Copy();
             }
-            
         }        
     }
     protected virtual void questProgress()
@@ -308,15 +317,18 @@ public class Enemy : MonoBehaviourPun, IPunObservable
     }
 
         // 몬스터가 타겟을 바라봄.  
-        protected void LookTarget()
+    protected void LookTarget()
     {
         if (target != null)        
             transform.LookAt(target, Vector3.up);        
     }               
+    
+    /// <summary>
+    /// 몬스터가 피격 시, 자신의 주변 몬스터가 깨어나는 함수.
+    /// </summary>
     protected void WakeUp()
     {
-        RaycastHit[] rayHits =
-            Physics.SphereCastAll(transform.position, 4f, transform.forward, 0f, LayerMask.GetMask("Enemy"));
+        RaycastHit[] rayHits = Physics.SphereCastAll(transform.position, 4f, transform.forward, 0f, LayerMask.GetMask("Enemy"));
         if (rayHits.Length > 0)
         {
             for (int i = 0; i < rayHits.Length; ++i)
@@ -325,8 +337,13 @@ public class Enemy : MonoBehaviourPun, IPunObservable
                 other.target = this.target;
             }
         }
-    }                 // 주변에 있는 몬스터를 깨움.    
-        
+    }
+    
+    /// <summary>
+    /// 몬스터 피격 시 뒤로 밀리는 함수
+    /// </summary>
+    /// <param name="_dir">밀려지는 방향</param>
+    /// <returns></returns>
     public IEnumerator KnockBack(Vector3 _dir)
     {
         for (int i = 0; i < 20; i++)
@@ -336,6 +353,11 @@ public class Enemy : MonoBehaviourPun, IPunObservable
         }
     }
 
+    /// <summary>
+    /// Enemy객체의 체력 등의 수치를 동기화 하기 위한 함수
+    /// </summary>
+    /// <param name="stream"></param>
+    /// <param name="info"></param>
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {        
         if (stream.IsWriting)        

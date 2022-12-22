@@ -25,6 +25,7 @@ public class JY_Boss_FireDungeon : Enemy
 
                 FreezeEnemy();
 
+                // 죽었을 때 처리
                 DungeonManager.instance.DungeonProgress(4);
                 DungeonManager.instance.SetDungeonGuide(4);
                 JY_QuestManager.s_instance.QuestProgress(1);
@@ -289,7 +290,6 @@ public class JY_Boss_FireDungeon : Enemy
         else        
             photonView.RPC("CrownDestruct", RpcTarget.All);
         
-
         // 부위 파괴가 발생할 때마다 방어력 감소.
         defMag -= 0.12f;        
     }

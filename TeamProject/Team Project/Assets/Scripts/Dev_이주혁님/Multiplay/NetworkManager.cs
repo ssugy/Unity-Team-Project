@@ -32,9 +32,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.InRoom) PhotonNetwork.LeaveRoom();
     }
 
-    // 최대 인원수를 임시로 1명으로 해놓음.
-    // 방 이름은 가려는 던전의 씬 번호 + 방 번호.
-    // 예를 들어 FIre_Dungeon 방을 생성하면 방 이름은 5_0, 같은 이름이 있다면 5_1, 5_2... 순으로 이어짐.
+    /// <summary>
+    /// 최대 인원수를 임시로 1명으로 해놓음.
+    /// 방 이름은 가려는 던전의 씬 번호 + 방 번호. (5_0, 5_1....)
+    /// </summary>
+    /// <param name="_dungeonNum">Fire던전(5), Dark던전(6)</param>
+    /// <param name="_people">최대 접속 인원</param>
+    /// <param name="roomNum">방번호</param>
     public void MatchMaking(int _dungeonNum, byte _people, byte roomNum)
     {
         StartCoroutine(Matching(_dungeonNum, _people, roomNum));
@@ -100,7 +104,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         Debug.Log(cause);
     }
 
-    // 자신의 캐릭터를 인스턴스화. PhotonNetwork.Instantiate는 반드시 룸 안에 있을 때만 사용할 수 있다.
+    /// <summary>
+    /// 캐릭터를 생성하기 위한 Instatiate함수의 경우 로비인 경우/로비가 아닌 경우를 구분해야되어서 작성한 함수.
+    /// </summary>
+    /// <param name="scene">캐릭터 생성하고자 하는 씬</param>
+    /// <param name="mode">동기, 비동기 모드 확인</param>
     public void SetMine(Scene scene, LoadSceneMode mode)
     {
         // 로딩 씬에서는 인스턴스를 생성하지 않음. 빌드에서의 씬 Index를 통해 로딩씬을 판별.
@@ -117,7 +125,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                         mine.name = PhotonNetwork.LocalPlayer.NickName;
                         JY_CharacterListManager.s_instance.playerList.Insert(0, mine.GetComponent<Player>());
                         JY_CharacterListManager.s_instance.invenList.Insert(0, mine.GetComponent<Inventory>());
-
                     }                    
                     break;
                 case EGender.FEMALE:

@@ -14,7 +14,7 @@ public class JY_Guide : MonoBehaviour
     public Image Checkmark;
     public Transform TARGET { set { target = value; } }
     Player player;
-    // Start is called before the first frame update
+
     void Start()
     {
         player = JY_CharacterListManager.s_instance.playerList[0];
@@ -22,11 +22,15 @@ public class JY_Guide : MonoBehaviour
         state = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
         calcVec(target);
     }
+
+    /// <summary>
+    /// 가이드용 화살표가 향하는 방향 지정
+    /// </summary>
+    /// <param name="target">다음 목적 위치</param>
     void calcVec(Transform target)
     {
         Vector3 dir = (target.position-player.transform.position).normalized;
@@ -37,6 +41,9 @@ public class JY_Guide : MonoBehaviour
         transform.LookAt(target);
     }
 
+    /// <summary>
+    /// 가이드 기능을 off시 사용하는 함수
+    /// </summary>
     public void GuideOnOff()
     {
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.CLICK_01);

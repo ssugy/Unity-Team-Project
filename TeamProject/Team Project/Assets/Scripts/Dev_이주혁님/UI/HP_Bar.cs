@@ -32,6 +32,6 @@ public class HP_Bar : MonoBehaviour
     IEnumerator Return()
     {
         yield return new WaitForSeconds(1f);
-        Enemy_HP_UI.ReturnObject(this);
+        Enemy_HP_UI.instance.ReturnObject(this);
     }
 }

@@ -23,22 +23,16 @@ public class JY_PartDestruction : MonoBehaviour, IPointerDownHandler, IPointerUp
         originPos = Vector3.zero;
         mainCamControl = mainCam.GetComponent<MainCamController>();
     }
-    void Start()
-    {
-    }
 
-    // Update is called once per frame
     void Update()
     {
-        if (isShoot)
+        if (isShoot && mainCam.gameObject.activeSelf)
         {
-            if (mainCam.gameObject.activeSelf)
-            {
-                mainCam.transform.localPosition = targetPos;
-                mainCam.transform.localRotation = Quaternion.Euler(-15f, 0f, 0f);
-            }
+            mainCam.transform.localPosition = targetPos;
+            mainCam.transform.localRotation = Quaternion.Euler(-15f, 0f, 0f);
         }
     }
+
     public void OnPointerDown(PointerEventData eventData)
     {
         mainCamControl.onPartDestruction = true;
@@ -47,9 +41,28 @@ public class JY_PartDestruction : MonoBehaviour, IPointerDownHandler, IPointerUp
         targetPos = originPos + new Vector3(0f,-1f,-1f);
         JY_UIManager.instance.ActiveAimUI(true);
     }
+
+    /// <summary>
+    /// 부위파괴용 투사체를 끌어서 위치를 조정하는 함수
+    /// </summary>
+    /// <param name="eventData"></param>
+    public void OnDrag(PointerEventData eventData)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(eventData.position);
+        RaycastHit hitinfo;
+        if (Physics.Raycast(ray, out hitinfo, Mathf.Infinity))
+            shootVec = hitinfo.point - JY_CharacterListManager.s_instance.playerList[0].rWeaponDummy.position;
+        JY_UIManager.instance.TranslateAimUI(eventData.position);
+    }
+    
+    /// <summary>
+    /// 부위파괴용 투사체를 발사하는 함수
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnPointerUp(PointerEventData eventData)
     {
-        GameObject bullet = GameObject.Instantiate<GameObject>(Bullet, JY_CharacterListManager.s_instance.playerList[0].rWeaponDummy.transform.position, Quaternion.identity, JY_CharacterListManager.s_instance.playerList[0].rWeaponDummy);
+        GameObject bullet = GameObject.Instantiate<GameObject>(Bullet, JY_CharacterListManager.s_instance.playerList[0].rWeaponDummy.transform.position
+                                                            , Quaternion.identity, JY_CharacterListManager.s_instance.playerList[0].rWeaponDummy);
         Rigidbody bulletRigid = bullet.GetComponent<Rigidbody>();
         bulletRigid.velocity = shootVec.normalized * 50f;
 
@@ -59,15 +72,5 @@ public class JY_PartDestruction : MonoBehaviour, IPointerDownHandler, IPointerUp
         JY_UIManager.instance.ActiveAimUI(false);
         mainCamControl.onPartDestruction = false;
         AudioManager.s_instance.SoundPlay(AudioManager.SOUND_NAME.PLYAER_SHOOT);
-
-    }
-    public void OnDrag(PointerEventData eventData)
-    {
-        //광선을 쏜다.
-        Ray ray = Camera.main.ScreenPointToRay(eventData.position);
-        RaycastHit hitinfo;
-        if (Physics.Raycast(ray, out hitinfo, Mathf.Infinity))
-            shootVec = hitinfo.point - JY_CharacterListManager.s_instance.playerList[0].rWeaponDummy.position;
-        JY_UIManager.instance.TranslateAimUI(eventData.position);
     }
 }

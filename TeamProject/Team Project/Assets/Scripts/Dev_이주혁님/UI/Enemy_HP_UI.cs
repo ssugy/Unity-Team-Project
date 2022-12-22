@@ -5,14 +5,14 @@ using UnityEngine;
 public class Enemy_HP_UI : MonoBehaviour
 {
     public static Enemy_HP_UI instance;
-    private Queue<HP_Bar> poolHP_Bar = new();
+    private Queue<HP_Bar> poolHP_Bar;
     public GameObject hp_Bar;
-    public int poolSize;    
+    public int poolSize;        // 인스펙터 창에서 직접 입력
 
-    // Start is called before the first frame update
     void Start()
     {
         instance = this;
+        poolHP_Bar = new();
         Initialize(poolSize);
     }
     private void Initialize(int count)
@@ -28,10 +28,13 @@ public class Enemy_HP_UI : MonoBehaviour
         newObj.gameObject.SetActive(false);
         return newObj;
     }
-    
-    public static HP_Bar GetObject()
+
+    /// <summary>
+    /// 오브젝트 풀링이 가능한지 확인 후 해당하는 오브젝트를 반환.
+    /// </summary>
+    /// <returns></returns>
+    public HP_Bar GetObject()
     {
-        // 빌려줄 수 있는 오브젝트가 1개라도 있으면
         if (instance.poolHP_Bar.Count > 0)
         {
             var obj = instance.poolHP_Bar.Dequeue();            
@@ -45,7 +48,12 @@ public class Enemy_HP_UI : MonoBehaviour
             return newObj;
         }
     }
-    public static void ReturnObject(HP_Bar _bar)
+
+    /// <summary>
+    /// 사용이 끝난 HP_Bar를 회수하는 함수.
+    /// </summary>
+    /// <param name="_bar">사용이 끝난 HP_Bar</param>
+    public void ReturnObject(HP_Bar _bar)
     {                
         _bar.gameObject.SetActive(false);
         if (instance.poolHP_Bar.Count >= 3)

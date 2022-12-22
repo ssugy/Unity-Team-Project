@@ -225,27 +225,33 @@ public class Player : MonoBehaviourPun, IPunObservable
 
         WeaponEffect.transform.SetParent(rWeaponDummy);
         WeaponEffect.SetActive(false);
+
+        // 캐릭터 데이터 로드
         if (JY_CharacterListManager.s_instance != null)
         {
-            playerStat.job = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].job;
-            playerStat.gender = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].gender;
-            playerStat.customized = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].characterAvatar;
-            playerStat.level = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].level;
+            int characterNum = JY_CharacterListManager.s_instance.selectNum;
+            List<InfoData> infoDataList = new List<InfoData>();
+            infoDataList = JY_CharacterListManager.s_instance.jInfoData.infoDataList;
+            playerStat.job          = infoDataList[characterNum].job;
+            playerStat.gender       = infoDataList[characterNum].gender;
+            playerStat.customized   = infoDataList[characterNum].characterAvatar;
+            playerStat.level        = infoDataList[characterNum].level;
+            playerStat.CurExp       = infoDataList[characterNum].exp;
+            playerStat.Gold         = infoDataList[characterNum].gold;
+            playerStat.statPoint    = infoDataList[characterNum].statusPoint;
+            playerStat.health       = infoDataList[characterNum].status[0];
+            playerStat.stamina      = infoDataList[characterNum].status[1];
+            playerStat.strength     = infoDataList[characterNum].status[2];
+            playerStat.dexterity    = infoDataList[characterNum].status[3];
+            // 경험치 테이블에서 필요 경험치 로드
             if (EXP_TABLE.TryGetValue(playerStat.level, out int _exp))
                 playerStat.Exp = _exp;        
-            playerStat.CurExp = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].exp;
-            playerStat.Gold = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].gold;
-            playerStat.statPoint = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].statusPoint;
-            playerStat.health = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[0];
-            playerStat.stamina = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[1];
-            playerStat.strength = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[2];
-            playerStat.dexterity = JY_CharacterListManager.s_instance.jInfoData.infoDataList[JY_CharacterListManager.s_instance.selectNum].status[3];
         }
         JY_UIManager.instance?.StatusDataRenew();
         SetState();                       
-        controller.ObserveEveryValueChanged(_ => _.isGrounded).ThrottleFrame(100).Subscribe(_ => isGround = _);
-        // UniRx를 이용하여 isGrounded 프로퍼티가 0.3초 이상 유지되어야 상태가 전이되게끔 함. isGrounded가 정교하지 않기 때문.
 
+        // 캐릭터controller를 보완하기 위하여 UniRX를 사용함.
+        controller.ObserveEveryValueChanged(_ => _.isGrounded).ThrottleFrame(100).Subscribe(_ => isGround = _);
         syncro = StartCoroutine(SyncroAvatar());        
     }
 

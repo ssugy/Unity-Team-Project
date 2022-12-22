@@ -33,16 +33,12 @@ public class EquipOption
     public enum EquipAttrib
     {
         None,
-
-        // Random.Range(1, 9);
         AtkSpeed,         // 공속 증가 (5퍼센트 ~ 40퍼센트사이 랜덤)
         AtkPoint,         // 공격력 추가 (10에서부터 ~ 최대 80)
 
-        // Random.Range(1, 7);
         CriPro,           // 치명타 확률 증가 (5~30퍼센트)
         DefPoint,         // 방어력 증가 (5 ~ 30)
 
-        // Random.Range(1, 11);
         Health,        // 체력 1 ~ 10까지 증가
         Stamina,       // 지구력 1 ~ 10까지 증가
         Strength,      // 근력 1 ~ 10까지 증가        
@@ -50,7 +46,6 @@ public class EquipOption
         HP,            // HP 50 ~ 500까지 증가
         PotionRecover, // 생명력 물약이 회복시키는 회복량 10~100% 증가        
 
-        // Random.Range(1, 5);
         SP,            // SP 5 ~ 20까지 증가               
         AvoidPro,      // 회피 확률 %증가 (5~20프로)
         ShieldDef      // 방어시 추가로 데미지 5~20% 감소        
@@ -141,30 +136,20 @@ public class EquipOption
         switch (_part)
         {
             case EquipType.Weapon:            
-                {
-                    _options = weaponOptions;
-                    break;
-                }                
+                _options = weaponOptions;
+                break;
             case EquipType.Armour:
-                {
-                    _options = armourOptions;
-                    break;
-                }
+                _options = armourOptions;
+                break;
             case EquipType.Shield:
-                {
-                    _options = shieldOptions;
-                    break;
-                }
+                _options = shieldOptions;
+                break;
             case EquipType.Staff:
-                {
-                    _options = staffOptions;
-                    break;
-                }
+                _options = staffOptions;
+                break;
             default:
-                {
-                    Debug.Log("잘못된 부위 입력");
-                    return;
-                }                
+                Debug.Log("잘못된 부위 입력");
+                return;
         }
 
         // 장비에 붙는 옵션의 개수. 0 ~ 3개 사이 랜덤.
@@ -172,29 +157,21 @@ public class EquipOption
         switch (Random.Range(1, 9))
         {
             case 8:
-                {
-                    num = 3;
-                    break;
-                }
+                num = 3;
+                break;
             case 5:
             case 6:
             case 7:
-                {
-                    num = 2;
-                    break;
-                }
+                num = 2;
+                break;
             case 2:
             case 3:
             case 4:
-                {
-                    num = 1;
-                    break;
-                }
+                num = 1;
+                break;
             default:
-                {
-                    num = 0;
-                    break;
-                }
+                num = 0;
+                break;
         }
 
         // 옵션 개수만큼 티어 배열을 생성.
@@ -203,24 +180,17 @@ public class EquipOption
         for (int i = 0; i < num; i++)
         {
             // 옵션 수치의 티어를 결정. 티어3: 10%, 티어2: 40%, 티어1: 50%
-            
             switch(Random.Range(0, 10))
             {
                 case int n when (n < 1):
-                    {
-                        tiers[i] = EquipTier.Tres;
-                        break;
-                    }
+                    tiers[i] = EquipTier.Tres;
+                    break;
                 case int n when (n < 5):
-                    {
-                        tiers[i] = EquipTier.Duo;
-                        break;
-                    }
+                    tiers[i] = EquipTier.Duo;
+                    break;
                 default:
-                    {
-                        tiers[i] = EquipTier.Unus;
-                        break;
-                    }
+                    tiers[i] = EquipTier.Unus;
+                    break;
             }
 
             // 어떤 옵션을 붙일 것인지 결정. 한 아이템에 중복된 옵션은 붙을 수 없음.
@@ -237,31 +207,21 @@ public class EquipOption
             {
                 case 1:
                 case 2:
-                    {
-                        value = 7f;
-                        break;
-                    }
+                    value = 7f;
+                    break;
                 case 3:
                 case 4:
-                    {
-                        value = 5f;
-                        break;
-                    }
+                    value = 5f;
+                    break;
                 case int n when (n >= 5 && n <= 10):                
-                    {
-                        value = 9f;
-                        break;
-                    }
+                    value = 9f;
+                    break;
                 case int n when (n >= 11):
-                    {
-                        value = 3f;
-                        break;
-                    }
+                    value = 3f;
+                    break;
                 default:
-                    {
-                        Debug.Log("잘못된 인덱스 입력");
-                        return;
-                    }
+                    Debug.Log("잘못된 인덱스 입력");
+                    return;
             }
 
             // 티어에 따라 옵션 수치를 보정.
@@ -269,25 +229,17 @@ public class EquipOption
             switch (tiers[i])
             {
                 case EquipTier.Unus:
-                    {
-                        value *= Random.Range(0f, 0.3f);
-                        break;
-                    }
+                    value *= Random.Range(0f, 0.3f);
+                    break;
                 case EquipTier.Duo:
-                    {
-                        value *= Random.Range(0.31f, 0.8f);                        
-                        break;
-                    }
+                    value *= Random.Range(0.31f, 0.8f);                        
+                    break;
                 case EquipTier.Tres:
-                    {
-                        value *= Random.Range(0.81f, 1f);                        
-                        break;
-                    }
+                    value *= Random.Range(0.81f, 1f);                        
+                    break;
                 default:
-                    {
-                        Debug.Log("잘못된 티어 입력");
-                        return;
-                    }
+                    Debug.Log("잘못된 티어 입력");
+                    return;
             }
 
             // 1은 기본값. Random.Range가 0이면 value는 1이 됨.

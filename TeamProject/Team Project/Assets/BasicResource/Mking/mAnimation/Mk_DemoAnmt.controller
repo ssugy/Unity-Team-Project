@@ -550,13 +550,13 @@ AnimatorStateMachine:
     m_Position: {x: 130, y: -220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2993035543120902674}
-    m_Position: {x: 490, y: 120, z: 0}
+    m_Position: {x: 360, y: 20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4606719461151076031}
     m_Position: {x: 580, y: -380, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7038232801070181251}
-    m_Position: {x: 250, y: 130, z: 0}
+    m_Position: {x: 140, y: 20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4731449339091883382}
     m_Position: {x: 580, y: -330, z: 0}
@@ -565,10 +565,10 @@ AnimatorStateMachine:
     m_Position: {x: 580, y: -280, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1847512620365535678}
-    m_Position: {x: 720, y: 0, z: 0}
+    m_Position: {x: 580, y: 20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3357121545581353674}
-    m_Position: {x: 600, y: -220, z: 0}
+    m_Position: {x: 580, y: -220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4593866932212065882}
     m_Position: {x: 130, y: -380, z: 0}
@@ -1043,7 +1043,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: NoramlAttack
+    m_ConditionEvent: NormalAttack
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7080032375678457399}
@@ -1165,7 +1165,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: NoramlAttack
+    m_ConditionEvent: NormalAttack
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7080032375678457399}
