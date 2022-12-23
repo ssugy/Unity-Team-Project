@@ -236,6 +236,9 @@ public class Player : MonoBehaviourPun, IPunObservable
             playerStat.gender       = infoDataList[characterNum].gender;
             playerStat.customized   = infoDataList[characterNum].characterAvatar;
             playerStat.level        = infoDataList[characterNum].level;
+            // 경험치 테이블에서 필요 경험치 로드 (이건 항상 playerStat.CurExp이거보다 위에 있어야 합니다.)
+            if (EXP_TABLE.TryGetValue(playerStat.level, out int _exp))
+                playerStat.Exp = _exp;        
             playerStat.CurExp       = infoDataList[characterNum].exp;
             playerStat.Gold         = infoDataList[characterNum].gold;
             playerStat.statPoint    = infoDataList[characterNum].statusPoint;
@@ -243,9 +246,6 @@ public class Player : MonoBehaviourPun, IPunObservable
             playerStat.stamina      = infoDataList[characterNum].status[1];
             playerStat.strength     = infoDataList[characterNum].status[2];
             playerStat.dexterity    = infoDataList[characterNum].status[3];
-            // 경험치 테이블에서 필요 경험치 로드
-            if (EXP_TABLE.TryGetValue(playerStat.level, out int _exp))
-                playerStat.Exp = _exp;        
         }
         JY_UIManager.instance?.StatusDataRenew();
         SetState();                       
